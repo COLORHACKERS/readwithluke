@@ -1,6 +1,6 @@
 'use client';
 
-import Header from '../../components/Header';
+import Header from "@/app/components/Header";
 import { useState } from 'react';
 import { Bookmark, Sun, Moon } from 'lucide-react';
 import { motion } from 'framer-motion';
