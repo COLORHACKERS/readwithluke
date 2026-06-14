@@ -24,7 +24,7 @@ export default function BookReader() {
     <div className="min-h-screen bg-[#0a0a0a]">
       <Header />
 
-      <div className="flex items-center justify-center min-h-[calc(100vh-85px)] p-6 bg-[#0a0a0a]">
+      <div className="flex items-center justify-center min-h-[calc(100vh-85px)] p-6">
         <div className="w-full max-w-[1180px] aspect-[6/5] bg-[#f8f1e3] rounded-3xl overflow-hidden border-[16px] border-amber-950 shadow-2xl relative">
           
           <div className={`h-full overflow-auto p-12 md:p-16 ${readerClass}`}>
