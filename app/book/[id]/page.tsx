@@ -1,61 +1,54 @@
-'use client';
+"use client";
 
-import Header from '../../../components/TopHeader';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useParams } from 'next/navigation';
+import Header from "../../../components/TopHeader";
+import Image from "next/image";
+import Link from "next/link";
+import { useParams } from "next/navigation";
 
 export default function BookDetail() {
   const params = useParams();
   const bookId = params?.id as string;
 
   return (
-    <div className="min-h-screen bg-[#f8f5f0] overflow-hidden">
+    <div className="min-h-screen bg-[#f8f1e6] overflow-hidden">
       <Header />
 
-      <div className="flex min-h-[calc(100vh-85px)]">
-        {/* LEFT: Toy Factory Image */}
-        <div className="flex-1 relative hidden lg:block">
+      <main className="grid min-h-[calc(100vh-85px)] grid-cols-1 lg:grid-cols-[60.5%_39.5%] border-t border-[#1b1b1b]/25">
+        <section className="relative min-h-[520px] lg:min-h-[calc(100vh-85px)]">
           <Image
-            src="https://picsum.photos/id/1015/1400/900"
+            src="/images/toy-maker-factory.png"
             alt="Toy Maker Factory"
             fill
             className="object-cover"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/40 to-transparent" />
-        </div>
+        </section>
 
-        {/* RIGHT: Book Info */}
-        <div className="flex-1 bg-white flex flex-col justify-center p-8 lg:p-16">
-          <span className="uppercase tracking-widest text-orange-600 font-semibold text-sm">NEW STORY</span>
-          
-          <h1 className="text-6xl font-bold leading-none mt-4 mb-6 text-[#1a2a44]">
-            TREEHOUSE MYSTERIES
-          </h1>
+        <section className="bg-[#f8f1e6] flex items-start justify-center px-10 py-12 lg:px-14 lg:py-14">
+          <div className="w-full max-w-[520px] pt-4">
+            <p className="mb-6 text-[24px] font-black uppercase tracking-[0.08em] text-[#c6542d]">
+              New Story
+            </p>
 
-          <p className="text-xl text-gray-700 leading-relaxed max-w-md mb-12">
-            Luke discovers a glowing key near the old bait shop and follows clues across the harbor.
-          </p>
+            <h1 className="mb-8 text-[52px] font-black uppercase leading-[0.95] tracking-[-0.04em] text-[#13294b] lg:text-[64px]">
+              Treehouse <br />
+              Mysteries
+            </h1>
 
-          <div className="mb-12">
-            <span className="px-6 py-3 bg-amber-100 text-amber-700 rounded-2xl text-sm font-medium">
-              Level 1
-            </span>
+            <p className="mb-10 max-w-[430px] text-[24px] font-extrabold leading-[1.35] text-[#13294b]">
+              Luke discovers a glowing key near the old bait shop and follows
+              clues across the harbor.
+            </p>
+
+            <Link
+              href={`/book/${bookId}/read`}
+              className="block w-full rounded-[18px] bg-[#c6542d] px-10 py-6 text-center text-[22px] font-black text-white transition hover:bg-[#ad4525]"
+            >
+              Read Story
+            </Link>
           </div>
-
-          <Link
-            href={`/book/${bookId}/read`}
-            className="inline-block bg-[#d97757] hover:bg-[#c76a4a] text-white text-center py-5 px-16 rounded-2xl text-xl font-semibold shadow-lg transition w-full max-w-sm"
-          >
-            Read Story
-          </Link>
-
-          <p className="text-center text-sm text-gray-500 mt-8">
-            Tap to begin your adventure in the Toy Maker Factory
-          </p>
-        </div>
-      </div>
+        </section>
+      </main>
     </div>
   );
 }
