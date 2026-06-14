@@ -1,6 +1,6 @@
 'use client';
 
-import Header from '../components/TopHeader';
+import Header from '../../../components/TopHeader';
 import { useState } from 'react';
 import { Bookmark, Sun, Moon } from 'lucide-react';
 import { motion } from 'framer-motion';
