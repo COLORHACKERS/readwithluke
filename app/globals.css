@@ -1,15 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Comic+Neue:wght@400;700&display=swap');
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background: #f8f1e6;
+}
 
 body {
-  font-family: 'Comic Neue', cursive;
-  background-color: #f8f5f0;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-h1, h2, h3, h4 {
-  font-family: 'Fredoka', sans-serif;
-  font-weight: 700;
+* {
+  box-sizing: border-box;
 }
 
-.prose {
-  font-family: 'Comic Neue', cursive;
+a {
+  color: inherit;
 }

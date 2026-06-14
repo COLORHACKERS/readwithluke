@@ -1,0 +1,114 @@
+.bookReadPage {
+  height: calc(100vh - 86px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 390px;
+  grid-template-rows: 1fr 116px;
+  background: #fff8ee;
+  color: #13294b;
+  margin-top: 0;
+}
+
+.bookReadImage {
+  grid-column: 1;
+  grid-row: 1;
+  overflow: hidden;
+  border-right: 1px solid rgba(19, 41, 75, 0.25);
+  border-bottom: 1px solid rgba(19, 41, 75, 0.25);
+}
+
+.bookReadImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
+.bookReadText {
+  grid-column: 2;
+  grid-row: 1;
+  padding: 92px 42px 36px;
+  background: #fff8ee;
+  border-bottom: 1px solid rgba(19, 41, 75, 0.25);
+}
+
+.readerKicker {
+  margin: 0 0 22px;
+  color: #c6542d;
+  font-size: 20px;
+  font-weight: 1000;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.bookReadText h1 {
+  margin: 0 0 26px;
+  font-family: var(--font-bangers), Georgia, serif;
+  font-size: 58px;
+  line-height: 0.9;
+}
+
+.bookReadText p {
+  font-size: 24px;
+  line-height: 1.45;
+  font-weight: 900;
+}
+
+.startReadingBtn {
+  display: block;
+  margin-top: 30px;
+  background: #c6542d;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  font-weight: 1000;
+  padding: 18px 22px;
+  border-radius: 22px;
+}
+
+.bookReadControls {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 160px;
+  background: #fff8ee;
+}
+
+.readerControl {
+  border: 0;
+  background: transparent;
+  color: #13294b;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 900;
+  display: grid;
+  gap: 8px;
+  place-items: center;
+}
+
+.readerControl span {
+  width: 58px;
+  height: 58px;
+  border-radius: 999px;
+  background: #f4bd36;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.readerControl svg {
+  width: 30px;
+  height: 30px;
+}
+
+.readToMe span {
+  background: #2f88a8;
+  color: white;
+}
+
+.readerControl.disabled {
+  opacity: 0.35;
+  pointer-events: none;
+}

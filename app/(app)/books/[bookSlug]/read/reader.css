@@ -1,0 +1,237 @@
+.readerViewport {
+  position: fixed;
+  top: 78px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  width: 100vw;
+  height: calc(100dvh - 78px);
+
+  background: #d8d2c3;
+  overflow: hidden;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+
+  padding-top: 18px;
+  box-sizing: border-box;
+
+  z-index: 5;
+}
+
+.bookFrame {
+  height: calc(100dvh - 120px);
+  max-width: calc(100vw - 40px);
+
+  aspect-ratio: 6 / 5;
+
+  display: grid;
+  grid-template-columns: 36% 64%;
+
+  background: #f8f1e6;
+  overflow: hidden;
+}
+
+.textPanel {
+  position: relative;
+
+  height: 100%;
+  background: #f8f1e6;
+  color: #13294b;
+
+  padding: 92px 34px 108px;
+  box-sizing: border-box;
+
+  overflow: hidden;
+}
+
+.imagePanel {
+  position: relative;
+  height: 100%;
+  background: #13294b;
+  overflow: hidden;
+}
+
+.imagePanel img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* TOP ICONS */
+
+.readerTopControls {
+  position: absolute;
+  top: 28px;
+  left: 34px;
+  right: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.readerIconBtn {
+  width: 50px;
+  height: 50px;
+
+  border-radius: 999px;
+  border: 0;
+
+  background: #13294b;
+  color: white;
+
+  display: grid;
+  place-items: center;
+
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.readerIconBtn.speaker {
+  background: #0784b7;
+}
+
+/* TEXT */
+
+.readerEyebrow {
+  margin: 0 0 16px;
+
+  color: #c6542d;
+
+  font-size: 13px;
+  font-weight: 1000;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.textPanel h1 {
+  margin: 0 0 24px;
+
+  font-family: var(--font-bangers), Bangers, Impact, sans-serif;
+  font-size: clamp(30px, 3vw, 48px);
+  line-height: 0.92;
+
+  color: #13294b;
+  text-transform: uppercase;
+}
+
+.readerText {
+  margin: 0;
+
+  font-size: clamp(17px, 1.55vw, 23px);
+  line-height: 1.35;
+  font-weight: 900;
+}
+
+.startReadingBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 24px;
+
+  width: 100%;
+  height: 56px;
+
+  border-radius: 18px;
+
+  background: #e8461b;
+  color: white;
+
+  text-decoration: none;
+
+  font-size: 20px;
+  font-weight: 1000;
+}
+
+/* ARROWS */
+
+.readerTextArrows {
+  position: absolute;
+  left: 34px;
+  right: 34px;
+  bottom: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.textArrow {
+  width: 58px;
+  height: 58px;
+
+  border-radius: 999px;
+
+  background: linear-gradient(180deg, #ffd95a 0%, #ffb92e 100%);
+  color: #082f57;
+
+  display: grid;
+  place-items: center;
+
+  text-decoration: none;
+
+  border: 4px solid #fff4c2;
+  box-shadow:
+    0 8px 0 #d88a00,
+    0 14px 22px rgba(8, 47, 87, 0.22);
+}
+
+.textArrow.disabled {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.textPageCount {
+  color: #13294b;
+
+  font-size: 13px;
+  font-weight: 1000;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* SMALLER BROWSERS / IPAD */
+
+@media (max-width: 1000px) {
+  .bookFrame {
+    max-width: calc(100vw - 20px);
+    height: calc(100dvh - 120px);
+  }
+
+  .textPanel {
+    padding: 82px 26px 100px;
+  }
+
+  .readerTopControls {
+    left: 26px;
+    right: 26px;
+  }
+
+  .readerIconBtn {
+    width: 44px;
+    height: 44px;
+  }
+
+  .readerTextArrows {
+    left: 26px;
+    right: 26px;
+  }
+
+  .textArrow {
+    width: 52px;
+    height: 52px;
+  }
+
+  .textPanel h1 {
+    font-size: 34px;
+  }
+
+  .readerText {
+    font-size: 18px;
+  }
+}

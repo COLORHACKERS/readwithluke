@@ -1,32 +1,31 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Bangers, Inter } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const bangers = Bangers({
+  weight: "400",
   subsets: ["latin"],
+  variable: "--font-bangers",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const inter = Inter({
   subsets: ["latin"],
+  variable: "--font-inter",
 });
 
 export const metadata: Metadata = {
   title: "Read With Luke",
-  description: "Magical stories for kids",
+  description: "Stories. Adventures. Games.",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full`}>
-      <body className="min-h-screen bg-[#f8f5f0] antialiased">
-        {children}
-      </body>
+    <html lang="en" className={`${bangers.variable} ${inter.variable}`}>
+      <body>{children}</body>
     </html>
   );
 }

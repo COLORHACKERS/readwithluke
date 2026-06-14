@@ -1,0 +1,176 @@
+.readerViewport {
+  position: fixed;
+  top: 72px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  width: 100vw;
+  height: calc(100dvh - 72px);
+
+  background: #d8d2c3;
+  overflow: hidden;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+
+  padding-top: 18px;
+  z-index: 5;
+}
+
+.bookFrame {
+  height: calc(100dvh - 110px);
+  aspect-ratio: 6 / 5;
+  max-width: 100vw;
+
+  display: grid;
+  grid-template-columns: 36% 64%;
+
+  background: #f8f1e6;
+  overflow: hidden;
+}
+
+/* IMAGE SIDE */
+.imagePanel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #13294b;
+}
+
+.imagePanel img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* TEXT SIDE */
+.textPanel {
+  position: relative;
+  width: 360px;
+  height: 100%;
+  background: #f8f1e6;
+  color: #13294b;
+
+  padding: 74px 30px 96px;
+  overflow: hidden;
+}
+
+.readerPageBadge {
+  display: none;
+}
+
+.readerEyebrow {
+  margin: 0 0 18px;
+  color: #c6542d;
+  font-size: 13px;
+  font-weight: 1000;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.textPanel h1 {
+  margin: 0 0 20px;
+  font-family: var(--font-bangers), Bangers, Impact, sans-serif;
+  font-size: clamp(30px, 3vw, 44px);
+  line-height: 0.9;
+  color: #13294b;
+  text-transform: uppercase;
+}
+
+.readerText {
+  margin: 0;
+  font-size: clamp(17px, 1.5vw, 22px);
+  line-height: 1.35;
+  font-weight: 900;
+}
+
+.startReadingBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 24px;
+  width: 100%;
+  height: 54px;
+
+  border-radius: 18px;
+  background: #e8461b;
+  color: white;
+
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: 1000;
+}
+
+/* BOTTOM CONTROLS */
+.readerCircleControls {
+  position: absolute;
+  left: 30px;
+  right: 30px;
+  bottom: 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.circleControl {
+  border: 0;
+  background: transparent;
+  color: #13294b;
+  text-decoration: none;
+
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+
+  font-size: 12px;
+  font-weight: 1000;
+}
+
+.circleControl span {
+  width: 54px;
+  height: 54px;
+  border-radius: 999px;
+  background: #ffc431;
+  color: #082f57;
+
+  display: grid;
+  place-items: center;
+
+  box-shadow: 0 6px 0 #d88a00;
+}
+
+.readCircle span {
+  background: #0784b7;
+  color: white;
+  box-shadow: 0 6px 0 #05618a;
+}
+
+.circleControl.disabled {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* iPad / smaller browser */
+@media (max-width: 1100px) {
+  .bookFrame {
+    grid-template-columns: minmax(0, 1fr) 320px;
+  }
+
+  .textPanel {
+    width: 320px;
+    padding: 64px 24px 90px;
+  }
+
+  .textPanel h1 {
+    font-size: 34px;
+  }
+
+  .readerText {
+    font-size: 18px;
+  }
+}
