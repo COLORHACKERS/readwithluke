@@ -1,7 +1,7 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Flame, Home } from 'lucide-react';
 
 export default function Header() {
@@ -17,31 +17,29 @@ export default function Header() {
         </Link>
 
         {/* Navigation */}
-        <nav className="flex items-center gap-10 text-lg">
-          <Link href="/" className="flex items-center gap-2 hover:text-orange-600 transition">
-            <Home size={24} />
-            Home
+        <nav className="flex items-center gap-10 text-lg font-medium">
+          <Link href="/" className="flex items-center gap-2 hover:text-orange-600 transition-colors">
+            <Home size={24} /> Home
           </Link>
-          <Link href="/library" className="hover:text-orange-600 transition">Library</Link>
-          <Link href="/progress" className="hover:text-orange-600 transition">My Progress</Link>
-          <Link href="/quests" className="hover:text-orange-600 transition">Quests</Link>
-          <Link href="/rewards" className="hover:text-orange-600 transition">Rewards</Link>
+          <Link href="/library" className="hover:text-orange-600 transition-colors">Library</Link>
+          <Link href="/progress" className="hover:text-orange-600 transition-colors">My Progress</Link>
+          <Link href="/quests" className="hover:text-orange-600 transition-colors">Quests</Link>
+          <Link href="/rewards" className="hover:text-orange-600 transition-colors">Rewards</Link>
         </nav>
 
-        {/* Right Side - Flame + Avatar */}
+        {/* Right Side */}
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-2 bg-orange-100 text-orange-600 px-5 py-2.5 rounded-3xl font-medium">
             <Flame size={26} />
             <span className="text-xl font-bold">12</span>
           </div>
 
-          <div className="w-11 h-11 rounded-2xl overflow-hidden border-2 border-orange-400 shadow-sm">
+          <div className="w-11 h-11 rounded-2xl overflow-hidden border-2 border-orange-400">
             <Image 
               src="https://picsum.photos/id/64/128/128" 
-              alt="Luke" 
+              alt="Profile" 
               width={44} 
               height={44} 
-              className="object-cover"
             />
           </div>
         </div>
