@@ -1,6 +1,7 @@
 'use client';
 
 import Header from '../../../components/TopHeader';
+import Image from 'next/image';
 import { useState } from 'react';
 import { Bookmark, Sun, Moon } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -24,11 +25,11 @@ export default function BookReader() {
     <div className="min-h-screen bg-[#0a0a0a] overflow-hidden relative">
       <Header />
 
-      {/* Background */}
+      {/* Toy Factory Background */}
       <div className="absolute inset-0 z-0">
         <Image
           src="https://picsum.photos/id/1015/1920/1080"
-          alt="Toy Factory"
+          alt="Toy Maker Factory"
           fill
           className="object-cover opacity-40"
           priority
@@ -36,7 +37,7 @@ export default function BookReader() {
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/70 to-black/90" />
       </div>
 
-      {/* 6:5 Reader Box */}
+      {/* Centered 6:5 Reader */}
       <div className="relative z-10 flex items-center justify-center min-h-[calc(100vh-85px)] p-6">
         <div className="w-full max-w-[1180px] aspect-[6/5] bg-[#f8f1e3] rounded-3xl overflow-hidden border-[16px] border-amber-950 shadow-2xl relative">
           
@@ -71,7 +72,7 @@ export default function BookReader() {
       </div>
 
       {/* Floating Controls */}
-      <div className="fixed bottom-8 right-8 z-50">
+      <div className="fixed bottom-8 right-8 z-50 flex flex-col gap-3">
         <div className="bg-black/90 backdrop-blur-2xl p-5 rounded-3xl flex flex-col gap-5 text-white shadow-2xl border border-white/10">
           <button onClick={() => setFontSize(s => Math.min(28, s + 2))} className="text-2xl hover:scale-110 transition">A+</button>
           <button onClick={() => setFontSize(s => Math.max(14, s - 2))} className="text-2xl hover:scale-110 transition">A−</button>
