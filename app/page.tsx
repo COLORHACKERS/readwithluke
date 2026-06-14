@@ -15,16 +15,16 @@ export default function HomePage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#0f172a] text-white">
+    <div className="min-h-screen bg-[#0f172a] text-white overflow-hidden">
       <Header />
 
-      {/* Background Image */}
+      {/* Beautiful Background */}
       <div className="fixed inset-0 z-0">
         <Image
           src="https://picsum.photos/id/1015/1920/1080"
-          alt="Fantasy Landscape"
+          alt="Toy Factory Background"
           fill
-          className="object-cover opacity-60"
+          className="object-cover opacity-70"
           priority
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/70 to-black/90" />
@@ -35,6 +35,7 @@ export default function HomePage() {
           <h1 className="text-6xl font-bold tracking-tight mb-3">Your Library</h1>
           <p className="text-xl text-white/80 mb-10">Choose a story and keep your adventure going.</p>
 
+          {/* Tabs */}
           <div className="flex gap-3 mb-10">
             <button className="px-8 py-3 bg-amber-400 text-black rounded-2xl font-semibold flex items-center gap-2">
               📚 All Books
@@ -47,6 +48,7 @@ export default function HomePage() {
             </button>
           </div>
 
+          {/* Books Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {books.map((book) => (
               <Link 
@@ -73,7 +75,7 @@ export default function HomePage() {
 
                   <div className="w-full bg-white/10 h-2 rounded-full overflow-hidden">
                     <div 
-                      className="h-full bg-gradient-to-r from-amber-400 to-orange-500 rounded-full"
+                      className="h-full bg-gradient-to-r from-amber-400 to-orange-500 rounded-full transition-all"
                       style={{ width: `${book.progress}%` }}
                     />
                   </div>
