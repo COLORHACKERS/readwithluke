@@ -9,20 +9,12 @@ export default function BookDetail() {
   const params = useParams();
   const bookId = params?.id as string;
 
-  const book = {
-    id: bookId,
-    title: "Treehouse Mysteries",
-    subtitle: "NEW STORY",
-    description: "Luke discovers a glowing key near the old bait shop and follows clues across the harbor.",
-    cover: "https://picsum.photos/id/1015/1200/800", // Replace with real image later
-  };
-
   return (
     <div className="min-h-screen bg-[#f8f5f0]">
       <Header />
 
       <div className="flex h-[calc(100vh-85px)]">
-        {/* Left Side - Big Toy Factory Image (6:5 ratio overall) */}
+        {/* LEFT: Big Toy Factory Image */}
         <div className="flex-1 relative hidden lg:block">
           <Image
             src="https://picsum.photos/id/1015/1400/900" 
@@ -31,32 +23,30 @@ export default function BookDetail() {
             className="object-cover"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/30 to-transparent" />
         </div>
 
-        {/* Right Side - Book Information */}
-        <div className="flex-1 bg-white flex flex-col justify-center p-12 lg:p-16 max-w-2xl">
-          <div className="mb-8">
-            <span className="uppercase tracking-widest text-orange-600 font-semibold text-sm">NEW STORY</span>
-            <h1 className="text-6xl font-bold leading-tight mt-3 text-[#1a2a44]">
-              {book.title}
-            </h1>
-          </div>
+        {/* RIGHT: Book Info */}
+        <div className="flex-1 bg-white flex flex-col justify-center p-10 lg:p-16 max-w-2xl">
+          <span className="uppercase tracking-[3px] text-orange-600 font-semibold text-sm">NEW STORY</span>
+          
+          <h1 className="text-6xl font-bold leading-none mt-4 mb-6 text-[#1e2a44]">
+            TREEHOUSE MYSTERIES
+          </h1>
 
-          <p className="text-xl text-gray-600 leading-relaxed mb-12">
-            {book.description}
+          <p className="text-2xl text-gray-700 leading-tight mb-10">
+            Luke discovers a glowing key near the old bait shop and follows clues across the harbor.
           </p>
 
-          <div className="flex items-center gap-4 mb-12">
-            <div className="px-6 py-3 bg-amber-100 text-amber-700 rounded-2xl text-sm font-medium">
+          <div className="mb-10">
+            <span className="inline-block px-6 py-2 bg-amber-100 text-amber-700 rounded-2xl text-sm font-medium">
               Level 1
-            </div>
+            </span>
           </div>
 
-          {/* Read Story Button */}
           <Link
             href={`/book/${bookId}/read`}
-            className="block w-full bg-[#d97757] hover:bg-[#c76a4a] transition text-white text-center py-5 rounded-2xl text-xl font-semibold shadow-lg"
+            className="inline-block w-full max-w-md bg-[#d97757] hover:bg-[#c76a4a] text-white text-center py-5 rounded-2xl text-xl font-semibold shadow-lg transition"
           >
             Read Story
           </Link>
