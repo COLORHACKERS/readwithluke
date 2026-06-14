@@ -1,6 +1,6 @@
 'use client';
 
-import Header from '../../../components/TopHeader';
+import Header from '../components/TopHeader';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -30,13 +30,11 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/70 to-black/90" />
       </div>
 
-      {/* Main Content */}
       <div className="relative z-10 px-8 pt-12 pb-20">
         <div className="max-w-7xl mx-auto">
           <h1 className="text-6xl font-bold tracking-tight mb-3">Your Library</h1>
           <p className="text-xl text-white/80 mb-10">Choose a story and keep your adventure going.</p>
 
-          {/* Tabs */}
           <div className="flex gap-3 mb-10">
             <button className="px-8 py-3 bg-amber-400 text-black rounded-2xl font-semibold flex items-center gap-2">
               📚 All Books
@@ -49,7 +47,6 @@ export default function HomePage() {
             </button>
           </div>
 
-          {/* Books Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {books.map((book) => (
               <Link 
