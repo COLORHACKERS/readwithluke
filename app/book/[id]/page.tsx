@@ -10,11 +10,11 @@ export default function BookDetail() {
   const bookId = params?.id as string;
 
   return (
-    <div className="min-h-screen bg-[#f8f5f0]">
+    <div className="min-h-screen bg-[#f8f5f0] overflow-hidden">
       <Header />
 
       <div className="flex min-h-[calc(100vh-85px)]">
-        {/* LEFT: Large Toy Factory Image */}
+        {/* LEFT: Toy Factory Image */}
         <div className="flex-1 relative hidden lg:block">
           <Image
             src="https://picsum.photos/id/1015/1400/900"
@@ -26,11 +26,11 @@ export default function BookDetail() {
           <div className="absolute inset-0 bg-gradient-to-r from-black/40 to-transparent" />
         </div>
 
-        {/* RIGHT: Book Details */}
-        <div className="flex-1 bg-white flex flex-col justify-center px-8 lg:px-16 py-12">
+        {/* RIGHT: Book Info */}
+        <div className="flex-1 bg-white flex flex-col justify-center p-8 lg:p-16">
           <span className="uppercase tracking-widest text-orange-600 font-semibold text-sm">NEW STORY</span>
           
-          <h1 className="text-6xl font-bold leading-tight mt-4 mb-6 text-[#1a2a44]">
+          <h1 className="text-6xl font-bold leading-none mt-4 mb-6 text-[#1a2a44]">
             TREEHOUSE MYSTERIES
           </h1>
 
@@ -46,7 +46,7 @@ export default function BookDetail() {
 
           <Link
             href={`/book/${bookId}/read`}
-            className="inline-block bg-[#d97757] hover:bg-[#c76a4a] text-white text-center py-5 px-12 rounded-2xl text-xl font-semibold shadow-lg transition w-full max-w-sm"
+            className="inline-block bg-[#d97757] hover:bg-[#c76a4a] text-white text-center py-5 px-16 rounded-2xl text-xl font-semibold shadow-lg transition w-full max-w-sm"
           >
             Read Story
           </Link>
