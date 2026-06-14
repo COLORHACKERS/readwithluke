@@ -1,42 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Comic+Neue:wght@400;700&family=Poppins:wght@400;500;600&display=swap');
-
-:root {
-  --font-heading: 'Fredoka', system-ui, sans-serif;
-  --font-body: 'Comic Neue', cursive, sans-serif;
-  --font-sans: 'Poppins', system-ui, sans-serif;
-}
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Comic+Neue:wght@400;700&display=swap');
 
 body {
-  font-family: var(--font-body);
-  line-height: 1.7;
-  color: #3f2a1e;
+  font-family: 'Comic Neue', cursive;
 }
 
-h1, h2, h3, h4 {
-  font-family: var(--font-heading);
+h1, h2, h3 {
+  font-family: 'Fredoka', sans-serif;
   font-weight: 700;
-  letter-spacing: -0.02em;
 }
 
 .prose {
-  font-family: var(--font-body);
-}
-
-.prose h1, .prose h2 {
-  font-family: var(--font-heading);
-}
-
-/* Kid-friendly enhancements */
-button {
-  font-family: var(--font-heading);
-  font-weight: 600;
-}
-
-.rounded-3xl {
-  border-radius: 1.75rem;
-}
-
-/* Make text more readable and fun for kids */
-.text-balance {
-  text-wrap: balance;
+  font-family: 'Comic Neue', cursive;
 }
