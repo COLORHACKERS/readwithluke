@@ -1,54 +1,119 @@
 "use client";
 
 import Header from "../../../components/TopHeader";
-import Image from "next/image";
-import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useEffect, useState } from 'react';
+import Image from 'next/image';
+import { ArrowLeft, Settings, Bookmark, Sun, Moon, ChevronLeft, ChevronRight } from 'lucide-react';
+import { motion } from 'framer-motion';
 
-export default function BookDetail() {
-  const params = useParams();
-  const bookId = params?.id as string;
+export default function BookReader({ params }: { params: { id: string } }) {
+  const [book, setBook] = useState<any>(null);
+  const [fontSize, setFontSize] = useState(18);
+  const [theme, setTheme] = useState<'light' | 'sepia' | 'dark'>('sepia');
+  const [progress] = useState(42);
+
+  useEffect(() => {
+    setBook({
+      id: params.id,
+      title: "The Toy Maker's Adventure",
+      author: "Luke & Friends",
+      content: `In the heart of the grand Toy Maker Factory, sunlight streamed through the vast glass ceiling as conveyor belts hummed with life. Little robots and teddy bears worked together creating joy...\n\nThis is where your full book content will go. We'll load real books from Supabase later.`,
+    });
+  }, [params.id]);
+
+  if (!book) return <div className="min-h-screen bg-black text-white flex items-center justify-center">Loading magical story...</div>;
+
+  const readerClass = theme === 'dark' 
+    ? 'bg-zinc-950 text-zinc-100' 
+    : theme === 'sepia' 
+    ? 'bg-[#f4e9d8] text-[#3f2a1e]' 
+    : 'bg-white text-black';
 
   return (
-    <div className="min-h-screen bg-[#f8f1e6] overflow-hidden">
-      <Header />
+    <div className="min-h-screen bg-[#0a0a0a] overflow-hidden relative font-serif">
+      {/* Background Image - Toy Factory */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="https://picsum.photos/id/1015/1920/1080" 
+          alt="Toy Factory"
+          fill
+          className="object-cover opacity-40"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/60 to-black/90" />
+      </div>
 
-      <main className="grid min-h-[calc(100vh-85px)] grid-cols-1 lg:grid-cols-[60.5%_39.5%] border-t border-[#1b1b1b]/25">
-        <section className="relative min-h-[520px] lg:min-h-[calc(100vh-85px)]">
-          <Image
-            src="/images/toy-maker-factory.png"
-            alt="Toy Maker Factory"
-            fill
-            className="object-cover"
-            priority
-          />
-        </section>
+      {/* Top Navigation */}
+      <header className="relative z-10 flex items-center justify-between px-6 py-4 border-b border-white/10 bg-black/80 backdrop-blur-md">
+        <button className="flex items-center gap-2 text-white hover:text-amber-400 transition-colors">
+          <ArrowLeft size={24} />
+          <span>Library</span>
+        </button>
+        
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-white tracking-wide">{book.title}</h1>
+          <p className="text-white/70 text-sm">by {book.author}</p>
+        </div>
 
-        <section className="bg-[#f8f1e6] flex items-start justify-center px-10 py-12 lg:px-14 lg:py-14">
-          <div className="w-full max-w-[520px] pt-4">
-            <p className="mb-6 text-[24px] font-black uppercase tracking-[0.08em] text-[#c6542d]">
-              New Story
-            </p>
+        <button className="text-white hover:text-amber-400"><Settings size={24} /></button>
+      </header>
 
-            <h1 className="mb-8 text-[52px] font-black uppercase leading-[0.95] tracking-[-0.04em] text-[#13294b] lg:text-[64px]">
-              Treehouse <br />
-              Mysteries
-            </h1>
-
-            <p className="mb-10 max-w-[430px] text-[24px] font-extrabold leading-[1.35] text-[#13294b]">
-              Luke discovers a glowing key near the old bait shop and follows
-              clues across the harbor.
-            </p>
-
-            <Link
-              href={`/book/${bookId}/read`}
-              className="block w-full rounded-[18px] bg-[#c6542d] px-10 py-6 text-center text-[22px] font-black text-white transition hover:bg-[#ad4525]"
-            >
-              Read Story
-            </Link>
+      {/* Main Reader - 6:5 Ratio */}
+      <div className="relative z-10 flex items-center justify-center min-h-[calc(100vh-85px)] p-6">
+        <div className="w-full max-w-[1200px] aspect-[6/5] bg-[#f8f1e3] rounded-3xl overflow-hidden border-[14px] border-amber-950 shadow-2xl relative">
+          
+          {/* Book Content */}
+          <div className={`h-full overflow-auto p-12 md:p-20 ${readerClass} transition-colors`}>
+            <div className="max-w-3xl mx-auto">
+              <h2 className="text-center text-4xl font-bold mb-12 tracking-wide">Chapter 1</h2>
+              
+              <div 
+                className="prose prose-lg leading-relaxed"
+                style={{ fontSize: `${fontSize}px`, lineHeight: 1.85 }}
+              >
+                {book.content.split('\n\n').map((para: string, i: number) => (
+                  <p key={i} className="mb-8">{para}</p>
+                ))}
+              </div>
+            </div>
           </div>
-        </section>
-      </main>
+
+          {/* Progress Bar */}
+          <div className="absolute bottom-0 left-0 right-0 h-2 bg-amber-900/30">
+            <motion.div 
+              className="h-full bg-gradient-to-r from-amber-400 to-orange-500"
+              initial={{ width: 0 }}
+              animate={{ width: `${progress}%` }}
+            />
+          </div>
+
+          {/* Page Navigation */}
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-8 bg-black/80 backdrop-blur-md px-10 py-4 rounded-2xl text-white text-sm border border-white/10">
+            <button className="flex items-center gap-2 hover:text-amber-400 transition">← Prev</button>
+            <div className="px-8 border-x border-white/20">Page 12 of 87</div>
+            <button className="flex items-center gap-2 hover:text-amber-400 transition">Next →</button>
+          </div>
+        </div>
+      </div>
+
+      {/* Floating Reader Controls */}
+      <div className="fixed bottom-8 right-8 z-20 flex flex-col gap-3">
+        <div className="bg-black/90 backdrop-blur-2xl p-5 rounded-3xl flex flex-col gap-5 text-white shadow-2xl border border-white/10">
+          <button onClick={() => setFontSize(s => Math.min(28, s + 2))} className="text-2xl hover:scale-110 transition">A+</button>
+          <button onClick={() => setFontSize(s => Math.max(14, s - 2))} className="text-2xl hover:scale-110 transition">A−</button>
+          
+          <div className="h-px bg-white/20 my-1" />
+          
+          <button 
+            onClick={() => setTheme(theme === 'light' ? 'sepia' : theme === 'sepia' ? 'dark' : 'light')} 
+            className="hover:scale-110 transition"
+          >
+            {theme === 'dark' ? <Sun size={26} /> : <Moon size={26} />}
+          </button>
+          
+          <button className="hover:scale-110 transition"><Bookmark size={26} /></button>
+        </div>
+      </div>
     </div>
   );
 }
