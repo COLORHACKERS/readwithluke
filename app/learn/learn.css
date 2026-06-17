@@ -1,0 +1,65 @@
+.learnPage {
+  padding: 40px;
+  background: #f8f1e6;
+  min-height: calc(100vh - 86px);
+}
+
+.learnPage h1 {
+  color: #13294b;
+  font-size: 48px;
+  margin-bottom: 30px;
+}
+
+.learnGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill,minmax(320px,1fr));
+  gap: 24px;
+}
+
+.learnCard {
+  text-decoration: none;
+  color: #13294b;
+}
+
+.learnCard img {
+  width: 100%;
+  height: 420px;
+  object-fit: cover;
+  border-radius: 24px;
+}
+
+.learnCard h2 {
+  margin-top: 12px;
+}
+
+.learnViewer {
+  height: calc(100vh - 86px);
+  background: #f8f1e6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.learnFullImage {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.learnClose {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 60px;
+  height: 60px;
+  border-radius: 999px;
+  background: white;
+  color: #13294b;
+  text-decoration: none;
+  font-size: 40px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
