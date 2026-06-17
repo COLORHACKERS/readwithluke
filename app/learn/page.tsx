@@ -24,7 +24,7 @@ export default async function LearnPage() {
               href={`/learn/${item.slug}`}
               className="learnCard"
             >
-              <img src={item.image_url} alt={item.title} />
+              <img src={item.cover_url || item.image_url} alt={item.title} />
               <h2>{item.title}</h2>
             </Link>
           ))}
