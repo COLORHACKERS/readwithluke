@@ -9,6 +9,7 @@ type LearnItem = {
   title: string;
   slug: string;
   description: string | null;
+  cover_url: string | null;
   image_url: string | null;
   category: string | null;
   is_published: boolean;
@@ -21,6 +22,7 @@ export default function LearnAdminPage() {
   const [title, setTitle] = useState("");
   const [slug, setSlug] = useState("");
   const [description, setDescription] = useState("");
+  const [coverUrl, setCoverUrl] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [category, setCategory] = useState("Learning");
   const [isPublished, setIsPublished] = useState(false);
@@ -41,10 +43,15 @@ export default function LearnAdminPage() {
   }
 
   async function loadItems() {
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from("learn_items")
       .select("*")
       .order("created_at", { ascending: false });
+
+    if (error) {
+      alert(error.message);
+      return;
+    }
 
     setItems(data || []);
   }
@@ -54,15 +61,16 @@ export default function LearnAdminPage() {
     setTitle("");
     setSlug("");
     setDescription("");
+    setCoverUrl("");
     setImageUrl("");
     setCategory("Learning");
     setIsPublished(false);
     setMessage("");
   }
 
-  async function uploadImage(file: File) {
+  async function uploadImage(file: File, folder: string) {
     const ext = file.name.split(".").pop();
-    const filePath = `learn/${Date.now()}-${Math.random()
+    const filePath = `${folder}/${Date.now()}-${Math.random()
       .toString(36)
       .slice(2)}.${ext}`;
 
@@ -79,8 +87,13 @@ export default function LearnAdminPage() {
     return data.publicUrl;
   }
 
-  async function handleImageUpload(file: File) {
-    const url = await uploadImage(file);
+  async function handleCoverUpload(file: File) {
+    const url = await uploadImage(file, "learn-covers");
+    if (url) setCoverUrl(url);
+  }
+
+  async function handleLearnImageUpload(file: File) {
+    const url = await uploadImage(file, "learn-images");
     if (url) setImageUrl(url);
   }
 
@@ -89,6 +102,7 @@ export default function LearnAdminPage() {
     setTitle(item.title);
     setSlug(item.slug);
     setDescription(item.description || "");
+    setCoverUrl(item.cover_url || "");
     setImageUrl(item.image_url || "");
     setCategory(item.category || "Learning");
     setIsPublished(item.is_published);
@@ -108,6 +122,7 @@ export default function LearnAdminPage() {
       title,
       slug,
       description,
+      cover_url: coverUrl,
       image_url: imageUrl,
       category,
       is_published: publishNow ? true : isPublished,
@@ -184,7 +199,10 @@ export default function LearnAdminPage() {
         />
 
         <label>Slug</label>
-        <input value={slug} onChange={(e) => setSlug(createSlug(e.target.value))} />
+        <input
+          value={slug}
+          onChange={(e) => setSlug(createSlug(e.target.value))}
+        />
 
         <label>Description</label>
         <textarea
@@ -203,17 +221,33 @@ export default function LearnAdminPage() {
           <option>Animals</option>
         </select>
 
+        <label>Cover Image</label>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e) => {
+            const file = e.target.files?.[0];
+            if (file) handleCoverUpload(file);
+          }}
+        />
+
+        {coverUrl && (
+          <img src={coverUrl} alt="Cover preview" className="coverPreview" />
+        )}
+
         <label>Learn Image</label>
         <input
           type="file"
           accept="image/*"
           onChange={(e) => {
             const file = e.target.files?.[0];
-            if (file) handleImageUpload(file);
+            if (file) handleLearnImageUpload(file);
           }}
         />
 
-        {imageUrl && <img src={imageUrl} alt="Preview" className="coverPreview" />}
+        {imageUrl && (
+          <img src={imageUrl} alt="Learn preview" className="coverPreview" />
+        )}
       </section>
 
       <div className="adminActions">
