@@ -1,0 +1,170 @@
+.readerPage {
+  width: 100%;
+  height: calc(100vh - 86px);
+  overflow: hidden;
+  background: #f8f1e6;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.readerShell {
+  width: min(100vw, 1920px);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 60% 40%;
+  align-items: stretch;
+}
+
+.readerImage {
+  width: 100%;
+  aspect-ratio: 6 / 5;
+  overflow: hidden;
+}
+
+.readerImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: top center;
+  display: block;
+}
+.readerPanel {
+  width: 100%;
+  height: 100%;
+
+  padding: 48px;
+
+  background: #fcfaf5;
+
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+
+  box-sizing: border-box;
+  overflow: hidden;
+}
+.readerContent {
+  min-height: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.readerEyebrow {
+  margin: 0 0 18px;
+  font-size: 18px;
+  font-weight: 1000;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: #c6542d;
+}
+
+.readerPanel h1 {
+  margin: 0;
+  font-size: clamp(40px, 4vw, 72px);
+  line-height: 0.92;
+  font-weight: 1000;
+  text-transform: uppercase;
+  font-style: italic;
+  letter-spacing: -0.04em;
+}
+
+.readerTextBox {
+  min-height: 0;
+  max-height: 100%;
+  overflow-y: auto;
+}
+
+.readerText {
+  margin: 0;
+  font-size: 14px;
+  line-height: 2;
+  font-weight: 800;
+  white-space: pre-line;
+}
+
+.textCounter {
+  margin: 12px 0 0;
+  color: #13294b;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.readerControls {
+  margin-top: auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.readerControls button,
+.readerControls a {
+  width: 58px;
+  height: 58px;
+  border: 0;
+  border-radius: 999px;
+  background: #f5b51b;
+  color: #13294b;
+  font-size: 30px;
+  font-weight: 1000;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.readerControls .sound {
+  background: #0b82a5;
+  color: white;
+  font-size: 24px;
+}
+
+.disabledCircle {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.readerEmpty {
+  padding: 60px;
+  color: #13294b;
+}
+
+.readerEmpty h1 {
+  font-size: 48px;
+}
+
+.readerEmpty a {
+  color: #c6542d;
+  font-weight: 1000;
+}
+
+@media (max-width: 900px) {
+  .readerPage {
+    height: auto;
+    overflow: auto;
+  }
+
+  .readerShell {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+  }
+
+  .readerImage {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 6 / 5;
+  }
+
+  .readerPanel {
+    width: 100%;
+    min-height: 520px;
+    padding: 40px 36px 34px;
+    border-top: 1px solid #d9d1c3;
+  }
+
+  .readerControls {
+    margin-top: 32px;
+  }
+}

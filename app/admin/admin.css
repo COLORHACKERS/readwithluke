@@ -1,0 +1,280 @@
+.adminPage {
+  min-height: 100vh;
+  background: #f8f1e6;
+  color: #13294b;
+  padding: 40px;
+}
+
+.adminHeader {
+  margin-bottom: 32px;
+}
+
+.adminHeader p {
+  margin: 0;
+  color: #c6542d;
+  font-size: 14px;
+  font-weight: 1000;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.adminHeader h1 {
+  margin: 10px 0 0;
+  font-size: 64px;
+  line-height: 0.95;
+  font-weight: 1000;
+}
+
+.adminCard {
+  max-width: 900px;
+  background: white;
+  border: 1px solid #d9d1c3;
+  border-radius: 28px;
+  padding: 32px;
+  margin-bottom: 36px;
+  box-shadow: 0 12px 40px rgba(19, 41, 75, 0.08);
+}
+
+.adminCard label,
+.pageCard label {
+  display: block;
+  margin: 18px 0 8px;
+  font-size: 14px;
+  font-weight: 1000;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.adminCard input,
+.adminCard textarea,
+.pageCard textarea {
+  width: 100%;
+  border: 2px solid #d9d1c3;
+  border-radius: 16px;
+  padding: 14px 16px;
+  background: #fffaf2;
+  color: #13294b;
+  font-size: 16px;
+  font-weight: 700;
+  box-sizing: border-box;
+}
+
+.adminCard textarea,
+.pageCard textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.adminCard input[type="file"],
+.pageCard input[type="file"] {
+  border: 2px dashed #c6542d;
+  background: #fff;
+  padding: 14px;
+  cursor: pointer;
+}
+
+.adminCard input[type="file"]:hover,
+.pageCard input[type="file"]:hover {
+  background: #fff4ec;
+}
+
+.coverPreview {
+  width: 280px;
+  aspect-ratio: 6 / 5;
+  object-fit: cover;
+  border-radius: 20px;
+  margin-top: 16px;
+  border: 1px solid #d9d1c3;
+}
+
+.publishRow {
+  display: flex !important;
+  align-items: center;
+  gap: 12px;
+  margin-top: 22px !important;
+}
+
+.publishRow input {
+  width: auto !important;
+  margin: 0;
+}
+
+.pagesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+  gap: 24px;
+}
+
+.pageCard {
+  background: white;
+  border: 1px solid #d9d1c3;
+  border-radius: 28px;
+  padding: 24px;
+  box-shadow: 0 12px 40px rgba(19, 41, 75, 0.08);
+}
+
+.pageCard h2 {
+  margin: 0 0 18px;
+  color: #13294b;
+  font-size: 28px;
+  font-weight: 1000;
+}
+
+.pagePreview {
+  width: 100%;
+  aspect-ratio: 6 / 5;
+  object-fit: cover;
+  border-radius: 18px;
+  margin-top: 16px;
+  border: 1px solid #d9d1c3;
+  background: #eee5d7;
+}
+
+.saveButton {
+  margin-top: 36px;
+  width: 100%;
+  max-width: 500px;
+  height: 78px;
+  border: none;
+  border-radius: 22px;
+  background: #c6542d;
+  color: white;
+  font-size: 24px;
+  font-weight: 1000;
+  cursor: pointer;
+  box-shadow: 0 8px 0 #8f351d;
+  transition: transform 0.15s ease;
+}
+
+.saveButton:hover {
+  transform: translateY(-2px);
+}
+
+.saveButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 900px) {
+  .adminPage {
+    padding: 20px;
+  }
+
+  .adminHeader h1 {
+    font-size: 42px;
+  }
+
+  .pagesGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .adminCard,
+  .pageCard {
+    padding: 20px;
+  }
+
+  .coverPreview {
+    width: 100%;
+  }
+
+  .saveButton {
+    max-width: 100%;
+  }
+}
+.successMessage {
+  margin-top: 18px;
+  display: inline-block;
+  background: #e7f8e8;
+  color: #176b2c;
+  border: 2px solid #176b2c;
+  border-radius: 999px;
+  padding: 12px 18px;
+  font-weight: 1000;
+}
+
+.bookList {
+  max-width: 900px;
+  background: white;
+  border: 1px solid #d9d1c3;
+  border-radius: 28px;
+  padding: 24px;
+  margin-bottom: 32px;
+}
+
+.bookListTop,
+.bookRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bookListTop h2 {
+  margin: 0;
+  font-size: 28px;
+}
+
+.bookListTop button,
+.bookRow button {
+  border: none;
+  border-radius: 999px;
+  background: #13294b;
+  color: white;
+  padding: 10px 16px;
+  font-weight: 1000;
+  cursor: pointer;
+}
+
+.bookRow {
+  border-top: 1px solid #d9d1c3;
+  padding: 16px 0;
+}
+
+.bookRow strong {
+  display: block;
+  font-size: 18px;
+}
+
+.bookRow span {
+  display: inline-block;
+  margin-top: 6px;
+  color: #c6542d;
+  font-weight: 1000;
+}
+
+.adminCard select {
+  width: 100%;
+  border: 2px solid #d9d1c3;
+  border-radius: 16px;
+  padding: 14px 16px;
+  background: #fffaf2;
+  color: #13294b;
+  font-size: 16px;
+  font-weight: 900;
+  box-sizing: border-box;
+}
+
+.adminActions {
+  position: sticky;
+  bottom: 0;
+  background: #f8f1e6;
+  padding: 24px 0;
+  display: flex;
+  gap: 18px;
+}
+
+.adminActions button {
+  width: 260px;
+  height: 70px;
+  border: none;
+  border-radius: 22px;
+  background: #13294b;
+  color: white;
+  font-size: 22px;
+  font-weight: 1000;
+  cursor: pointer;
+}
+
+.adminActions .publishButton {
+  background: #c6542d;
+  box-shadow: 0 8px 0 #8f351d;
+}
