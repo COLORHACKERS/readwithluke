@@ -29,7 +29,7 @@ export default function Header() {
         </Link>
 
         <Link href="/library">Library</Link>
-        <Link href="/progress">Learn with Luke</Link>
+        <Link href="/learn">Learn with Luke</Link>
         <Link href="/quests">Quests</Link>
         <Link href="/rewards">Rewards</Link>
       </nav>
