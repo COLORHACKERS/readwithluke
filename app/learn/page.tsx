@@ -2,6 +2,8 @@ import Link from "next/link";
 import Header from "@/app/components/Header";
 import { supabase } from "@/lib/supabase";
 import "./learn.css";
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export default async function LearnPage() {
   const { data: items } = await supabase
