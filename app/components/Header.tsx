@@ -1,16 +1,17 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   Home,
-  BookOpen,
-  Mic,
-  Flag,
-  Gift,
   Flame,
 } from "lucide-react";
 
 import "./header.css";
 
 export default function Header() {
+  const pathname = usePathname();
+
   return (
     <header className="rwlHeader">
       <Link href="/" className="rwlLogo">
@@ -23,15 +24,41 @@ export default function Header() {
       </Link>
 
       <nav className="rwlNav">
-        <Link href="/" className="active">
+        <Link
+          href="/"
+          className={pathname === "/" ? "active" : ""}
+        >
           <Home size={18} />
           Home
         </Link>
 
-        <Link href="/library">Library</Link>
-        <Link href="/learn">Learn with Luke</Link>
-        <Link href="/quests">Stickers</Link>
-        <Link href="/rewards">Progress</Link>
+        <Link
+          href="/library"
+          className={pathname.startsWith("/library") || pathname.startsWith("/books") ? "active" : ""}
+        >
+          Library
+        </Link>
+
+        <Link
+          href="/learn"
+          className={pathname.startsWith("/learn") ? "active" : ""}
+        >
+          Learn with Luke
+        </Link>
+
+        <Link
+          href="/quests"
+          className={pathname.startsWith("/quests") ? "active" : ""}
+        >
+          Stickers
+        </Link>
+
+        <Link
+          href="/rewards"
+          className={pathname.startsWith("/rewards") ? "active" : ""}
+        >
+          Progress
+        </Link>
       </nav>
 
       <div className="rwlActions">

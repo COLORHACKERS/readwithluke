@@ -75,6 +75,29 @@ border-bottom: 1px solid #d9d1c3;
   align-items: center;
   gap: 18px;
 }
+.siteNav a {
+  position: relative;
+  text-decoration: none;
+  color: #13294b;
+  font-weight: 900;
+}
+
+.siteNav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -8px;
+  height: 4px;
+  border-radius: 999px;
+  background: #c6542d;
+  transform: scaleX(0);
+  transition: transform 0.2s ease;
+}
+
+.siteNav a.active::after {
+  transform: scaleX(1);
+}
 
 .streak {
   height: 52px;
