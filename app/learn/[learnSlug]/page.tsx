@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Header from "@/app/components/Header";
 import { supabase } from "@/lib/supabase";
-import "../library/library.css";
+import "../../library/library.css";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
