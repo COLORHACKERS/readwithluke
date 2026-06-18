@@ -1,13 +1,23 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import "@/app/admin/admin.css";
+
+const ADMIN_PASSWORD = "lukeadmin123";
 
 export default function AdminGate({ children }: { children: React.ReactNode }) {
   const [password, setPassword] = useState("");
   const [allowed, setAllowed] = useState(false);
 
+  useEffect(() => {
+    if (localStorage.getItem("rwl-admin") === "yes") {
+      setAllowed(true);
+    }
+  }, []);
+
   function checkPassword() {
-  if (password === process.env.NEXT_PUBLIC_ADMIN_PASSWORD) {
+    if (password.trim() === ADMIN_PASSWORD) {
+      localStorage.setItem("rwl-admin", "yes");
       setAllowed(true);
       return;
     }
@@ -26,11 +36,12 @@ export default function AdminGate({ children }: { children: React.ReactNode }) {
             placeholder="Enter admin password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") checkPassword();
+            }}
           />
 
-          <button onClick={checkPassword}>
-            Enter Admin
-          </button>
+          <button onClick={checkPassword}>Enter Admin</button>
         </section>
       </main>
     );
