@@ -288,3 +288,69 @@
   background: #d84b3f !important;
   color: white !important;
 }
+.adminLoginCard {
+  max-width: 520px;
+  margin: 120px auto;
+  padding: 48px;
+  background: white;
+  border-radius: 32px;
+  box-shadow: 0 20px 60px rgba(19, 41, 75, 0.12);
+  text-align: center;
+}
+
+.adminLoginCard h1 {
+  margin: 0;
+  font-size: 48px;
+  font-weight: 1000;
+  color: #13294b;
+}
+
+.adminLoginCard p {
+  margin: 16px 0 28px;
+  color: #6b7280;
+  font-weight: 700;
+}
+
+.adminLoginCard input {
+  width: 100%;
+  height: 64px;
+  border: 2px solid #d9d1c3;
+  border-radius: 18px;
+  padding: 0 20px;
+  font-size: 18px;
+  box-sizing: border-box;
+}
+
+.adminLoginCard input:focus {
+  outline: none;
+  border-color: #c6542d;
+}
+
+.adminLoginButton {
+  width: 100%;
+  height: 64px;
+  margin-top: 20px;
+  border: 0;
+  border-radius: 18px;
+  background: #c6542d;
+  color: white;
+  font-size: 18px;
+  font-weight: 1000;
+  cursor: pointer;
+  box-shadow: 0 8px 0 #8f351d;
+  transition: transform 0.15s ease;
+}
+
+.adminLoginButton:hover {
+  transform: translateY(-2px);
+}
+
+.adminLoginButton:active {
+  transform: translateY(4px);
+  box-shadow: 0 4px 0 #8f351d;
+}
+
+.adminLock {
+  font-size: 72px;
+  margin-bottom: 12px;
+}

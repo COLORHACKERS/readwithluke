@@ -32,27 +32,38 @@ export default function AdminGate({ children }: { children: React.ReactNode }) {
     alert("Wrong password");
   }
 
-  if (!allowed) {
-    return (
-      <main className="adminPage">
-        <section className="adminCard">
-          <h1>Admin Login</h1>
+if (!allowed) {
+  return (
+    <main className="adminPage">
+      <section className="adminLoginCard">
+        <div className="adminLock">🔒</div>
 
-          <input
-            type="password"
-            placeholder="Enter admin password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") checkPassword();
-            }}
-          />
+        <h1>Admin Access</h1>
 
-          <button onClick={checkPassword}>Enter Admin</button>
-        </section>
-      </main>
-    );
-  }
+        <p>
+          Enter your password to manage books and learning activities.
+        </p>
+
+        <input
+          type="password"
+          placeholder="Enter admin password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") checkPassword();
+          }}
+        />
+
+        <button
+          className="adminLoginButton"
+          onClick={checkPassword}
+        >
+          Enter Admin →
+        </button>
+      </section>
+    </main>
+  );
+}
 
   return <>{children}</>;
 }
