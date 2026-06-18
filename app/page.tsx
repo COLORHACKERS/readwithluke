@@ -5,16 +5,15 @@ import Link from "next/link";
 import Header from "./components/Header";
 
 function getTimeLeft() {
-  const trialStart = new Date(2026, 5, 20, 0, 0, 0);
+  const trialStart = new Date("2026-06-18T00:00:00");
   const trialEnd = new Date(trialStart);
   trialEnd.setDate(trialEnd.getDate() + 90);
 
   const now = new Date();
-  const target = now < trialStart ? trialStart : trialEnd;
-  const diff = Math.max(target.getTime() - now.getTime(), 0);
+  const diff = Math.max(trialEnd.getTime() - now.getTime(), 0);
 
   return {
-    label: now < trialStart ? "FREE TRIAL STARTS IN" : "YOUR FREE TRIAL ENDS IN",
+    label: "YOUR FREE TRIAL ENDS IN",
     days: Math.floor(diff / (1000 * 60 * 60 * 24)),
     hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
     minutes: Math.floor((diff / (1000 * 60)) % 60),
@@ -134,7 +133,7 @@ export default function Home() {
 
               <div className="rounded-full bg-[#FFE2A3] p-8 text-center text-[#13294B]">
                 <p className="text-sm font-black uppercase">Trial Starts</p>
-                <p className="mt-2 text-2xl font-black">June 20, 2026</p>
+                <p className="mt-2 text-2xl font-black">June 18, 2026</p>
                 <p className="font-black">12:00 AM</p>
               </div>
             </div>
