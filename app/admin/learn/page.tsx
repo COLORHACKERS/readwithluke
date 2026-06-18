@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import "../admin.css";
+import AdminGate from "@/app/components/AdminGate";
 
 type LearnItem = {
   id: string;
@@ -190,7 +191,8 @@ export default function LearnAdminPage() {
     loadItems();
   }
 
-  return (
+ return (
+  <AdminGate>
     <main className="adminPage">
       <section className="adminHeader">
         <p>READ WITH LUKE ADMIN</p>
@@ -301,6 +303,7 @@ export default function LearnAdminPage() {
           Publish Learn Item
         </button>
       </div>
-    </main>
+     </main>
+  </AdminGate>
   );
 }

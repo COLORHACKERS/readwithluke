@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import "./admin.css";
+import AdminGate from "@/app/components/AdminGate";
 
 type Book = {
   id: string;
@@ -254,7 +255,8 @@ const { error: pagesError } = await supabase
     loadBooks();
   }
 
-  return (
+ return (
+  <AdminGate>
     <main className="adminPage">
       <section className="adminHeader">
         <p>READ WITH LUKE ADMIN</p>
@@ -383,5 +385,6 @@ const { error: pagesError } = await supabase
         </button>
       </div>
     </main>
+  </AdminGate>
   );
 }
