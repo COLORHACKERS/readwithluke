@@ -278,3 +278,13 @@
   background: #c6542d;
   box-shadow: 0 8px 0 #8f351d;
 }
+.rowActions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.deleteButton {
+  background: #d84b3f !important;
+  color: white !important;
+}

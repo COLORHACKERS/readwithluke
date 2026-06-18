@@ -124,7 +124,46 @@ export default function AdminPage() {
     setPages(loadedPages);
     setMessage(`Editing "${book.title}"`);
   }
+async function deleteBook(book: Book) {
+  const confirmed = window.confirm(
+    `Delete "${book.title}" and all of its pages?`
+  );
 
+  if (!confirmed) return;
+
+  setSaving(true);
+  setMessage("");
+
+  const { error: pagesError } = await supabase
+    .from("book_pages")
+    .delete()
+    .eq("book_id", book.id);
+
+  if (pagesError) {
+    alert(pagesError.message);
+    setSaving(false);
+    return;
+  }
+
+  const { error: bookError } = await supabase
+    .from("books")
+    .delete()
+    .eq("id", book.id);
+
+  if (bookError) {
+    alert(bookError.message);
+    setSaving(false);
+    return;
+  }
+
+  if (editingId === book.id) {
+    resetForm();
+  }
+
+  setMessage(`Deleted "${book.title}"`);
+  setSaving(false);
+  loadBooks();
+}
   async function handleCoverUpload(file: File) {
     const url = await uploadImage(file, "covers");
     if (url) setCoverUrl(url);
@@ -236,7 +275,16 @@ const { error: pagesError } = await supabase
               <span>{book.is_published ? "Published" : "Draft"}</span>
             </div>
 
-            <button onClick={() => editBook(book)}>Edit</button>
+            <div className="rowActions">
+  <button onClick={() => editBook(book)}>Edit</button>
+
+  <button
+    className="deleteButton"
+    onClick={() => deleteBook(book)}
+  >
+    Delete
+  </button>
+</div>
           </div>
         ))}
       </section>

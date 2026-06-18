@@ -108,6 +108,35 @@ export default function LearnAdminPage() {
     setIsPublished(item.is_published);
     setMessage(`Editing "${item.title}"`);
   }
+  async function deleteItem(item: LearnItem) {
+  const confirmed = window.confirm(
+    `Delete "${item.title}" from Learn With Luke?`
+  );
+
+  if (!confirmed) return;
+
+  setSaving(true);
+  setMessage("");
+
+  const { error } = await supabase
+    .from("learn_items")
+    .delete()
+    .eq("id", item.id);
+
+  if (error) {
+    alert(error.message);
+    setSaving(false);
+    return;
+  }
+
+  if (editingId === item.id) {
+    resetForm();
+  }
+
+  setMessage(`Deleted "${item.title}"`);
+  setSaving(false);
+  loadItems();
+}
 
   async function saveItem(publishNow = false) {
     if (!title.trim() || !slug.trim()) {
@@ -182,7 +211,16 @@ export default function LearnAdminPage() {
               <span>{item.is_published ? "Published" : "Draft"}</span>
             </div>
 
-            <button onClick={() => editItem(item)}>Edit</button>
+           <div className="rowActions">
+  <button onClick={() => editItem(item)}>Edit</button>
+
+  <button
+    className="deleteButton"
+    onClick={() => deleteItem(item)}
+  >
+    Delete
+  </button>
+</div>
           </div>
         ))}
       </section>
