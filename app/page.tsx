@@ -99,34 +99,46 @@ export default function Home() {
         </section>
 
         <section className="exploreSection">
-          <h2>Explore. Learn. Grow.</h2>
+          <h2>
+            <span>⭐</span>
+            Explore. Learn. Grow.
+            <span>⭐</span>
+          </h2>
 
           <div className="featureGrid">
-            <Feature icon="📖" title="Read" text="Enjoy exciting stories that spark imagination." />
-            <Feature icon="🪐" title="Learn" text="Discover cool things like why astronauts wear suits in space." />
-            <Feature icon="⭐" title="Stickers" text="Collect rewards as you read and learn." />
-            <Feature icon="📈" title="Progress" text="Track growth and celebrate wins." />
-            <Feature icon="🎁" title="Rewards" text="Unlock surprises for hard work." />
+            <Feature className="featureYellow" icon="📖" title="Read" text="Enjoy exciting stories that spark imagination." />
+            <Feature className="featureBlue" icon="🪐" title="Learn" text="Discover cool things like why astronauts wear suits in space." />
+            <Feature className="featurePurple" icon="⭐" title="Stickers" text="Collect rewards as you read and learn." />
+            <Feature className="featureGreen" icon="📈" title="Progress" text="Track growth and celebrate wins." />
+            <Feature className="featurePink" icon="🎁" title="Rewards" text="Unlock surprises for hard work." />
           </div>
         </section>
 
         <section className="missionGrid">
-          <div className="missionCard">
-            <h3>Hey there! I’m Luke.</h3>
-            <p>
-              I created Read With Luke to make reading exciting, learning fun,
-              and growing up curious something every kid can enjoy.
-            </p>
-            <strong>— Luke</strong>
+          <div className="missionCard lukeCard">
+            <div className="lukeFace">🧒</div>
+            <div>
+              <h3>Hey there! I’m Luke.</h3>
+              <p>
+                I created Read With Luke to make reading exciting, learning fun,
+                and growing up curious something every kid can enjoy.
+              </p>
+              <strong>— Luke</strong>
+            </div>
           </div>
 
-          <div className="missionCard">
-            <h3>Support Our Mission</h3>
-            <p>
-              We’re a small team with a big dream — to help every child build
-              confidence, curiosity, and a love for learning.
-            </p>
-            <strong>Thank you for supporting our grand launch!</strong>
+          <div className="missionCard supportCard">
+            <div className="heartIcon">❤️</div>
+            <div>
+              <h3>Support Our Mission</h3>
+              <p>
+                We’re a small team with a big dream — to help every child build
+                confidence, curiosity, and a love for learning.
+              </p>
+              <strong>
+                Thank you for supporting us as we work towards our grand launch!
+              </strong>
+            </div>
           </div>
         </section>
       </main>
@@ -147,14 +159,16 @@ function Feature({
   icon,
   title,
   text,
+  className,
 }: {
   icon: string;
   title: string;
   text: string;
+  className: string;
 }) {
   return (
-    <div className="featureCard">
-      <div>{icon}</div>
+    <div className={`featureCard ${className}`}>
+      <div className="featureIcon">{icon}</div>
       <h3>{title}</h3>
       <p>{text}</p>
     </div>
