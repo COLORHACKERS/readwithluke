@@ -7,7 +7,7 @@ export default function AdminGate({ children }: { children: React.ReactNode }) {
   const [allowed, setAllowed] = useState(false);
 
   function checkPassword() {
-    if (password === "lukeydukey19!") {
+  if (password === process.env.NEXT_PUBLIC_ADMIN_PASSWORD) {
       setAllowed(true);
       return;
     }
