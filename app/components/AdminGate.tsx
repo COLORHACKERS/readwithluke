@@ -1,9 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import "@/app/admin/admin.css";
-
-const ADMIN_PASSWORD = "lukeadmin123";
 
 export default function AdminGate({ children }: { children: React.ReactNode }) {
   const [password, setPassword] = useState("");
@@ -15,8 +12,18 @@ export default function AdminGate({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  function checkPassword() {
-    if (password.trim() === ADMIN_PASSWORD) {
+  async function checkPassword() {
+    const response = await fetch("/api/admin-login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ password }),
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
       localStorage.setItem("rwl-admin", "yes");
       setAllowed(true);
       return;
