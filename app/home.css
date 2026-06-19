@@ -1,4 +1,16 @@
+@font-face {
+  font-family: "DK Woolwich";
+  src: url("/fonts/DK-Woolwich-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+}
 
+.homeHeroText h1,
+.homeTimer h2,
+.timerGrid strong {
+  font-family: "DK Woolwich", "Arial Black", sans-serif !important;
+}
 
 .homePage {
   width: min(100vw, 1920px);
@@ -6,6 +18,7 @@
   background: white;
   color: #050505;
   overflow: hidden;
+  padding-bottom: 140px;
 }
 
 .homeHero {

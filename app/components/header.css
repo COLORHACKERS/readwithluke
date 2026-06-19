@@ -42,8 +42,9 @@
 .mainNav a {
   color: #050505;
   text-decoration: none;
-  font-family: "Courier New", monospace;
+   font-family: "Courier New", monospace !important;
   font-size: 14pt;
+  white-space: nowrap;
   font-weight: 700;
   line-height: 1;
   position: relative;
