@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import Header from "@/app/components/Header";
 import { supabase } from "@/lib/supabase";
@@ -14,58 +17,163 @@ type Book = {
   is_published: boolean;
 };
 
-export default async function LibraryPage() {
-  const { data: books } = await supabase
-    .from("books")
-    .select("*")
-    .eq("is_published", true)
-    .order("created_at", { ascending: false });
+export default function LibraryPage() {
+  const [books, setBooks] = useState<Book[]>([]);
+  const [search, setSearch] = useState("");
+  const [activeCategory, setActiveCategory] = useState("All");
+  const [liked, setLiked] = useState<string[]>([]);
+  const [saved, setSaved] = useState<string[]>([]);
+
+  useEffect(() => {
+    loadBooks();
+
+    setLiked(JSON.parse(localStorage.getItem("rwl-liked-books") || "[]"));
+    setSaved(JSON.parse(localStorage.getItem("rwl-saved-books") || "[]"));
+  }, []);
+
+  async function loadBooks() {
+    const { data, error } = await supabase
+      .from("books")
+      .select("*")
+      .eq("is_published", true)
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      alert(error.message);
+      return;
+    }
+
+    setBooks(data || []);
+  }
+
+  function toggleLiked(id: string) {
+    const next = liked.includes(id)
+      ? liked.filter((bookId) => bookId !== id)
+      : [...liked, id];
+
+    setLiked(next);
+    localStorage.setItem("rwl-liked-books", JSON.stringify(next));
+  }
+
+  function toggleSaved(id: string) {
+    const next = saved.includes(id)
+      ? saved.filter((bookId) => bookId !== id)
+      : [...saved, id];
+
+    setSaved(next);
+    localStorage.setItem("rwl-saved-books", JSON.stringify(next));
+  }
+
+  const categories = ["All", "Adventure", "Animals", "Places", "Mystery", "Friends", "Magical"];
+
+  const filteredBooks = useMemo(() => {
+    return books.filter((book) => {
+      const matchesSearch =
+        book.title.toLowerCase().includes(search.toLowerCase()) ||
+        (book.description || "").toLowerCase().includes(search.toLowerCase());
+
+      const matchesCategory =
+        activeCategory === "All" ||
+        (book.category || "").toLowerCase() === activeCategory.toLowerCase();
+
+      return matchesSearch && matchesCategory;
+    });
+  }, [books, search, activeCategory]);
 
   return (
     <>
       <Header />
 
       <main className="libraryPage">
+        <img src="/images/home-hero.png" alt="" className="libraryBg" />
+
         <section className="libraryHero">
-          <p>READ WITH LUKE LIBRARY</p>
-          <h1>Pick your next adventure.</h1>
+          <h1>Pick your adventure.</h1>
+          <p>Read with Luke Library &gt;</p>
+
+          <div className="libraryTools">
+            <form
+              className="librarySearch"
+              onSubmit={(e) => e.preventDefault()}
+            >
+              <input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="search for a book type"
+              />
+
+              <button type="submit">
+                <img src="/images/icon-send.png" alt="" />
+              </button>
+            </form>
+
+            <div className="categoryPills">
+              {categories.slice(1).map((category) => (
+                <button
+                  key={category}
+                  onClick={() =>
+                    setActiveCategory(
+                      activeCategory === category ? "All" : category
+                    )
+                  }
+                  className={activeCategory === category ? "active" : ""}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
+          </div>
         </section>
 
-        <section className="bookGrid">
-          {(books || []).map((book: Book) => (
-            <Link
-              href={`/books/${book.slug}/read`}
-              className="bookCard"
-              key={book.id}
-            >
-              <div className="bookImage">
-                <img
-                  src={book.cover_url || "/images/6to5ratio.png"}
-                  alt={book.title}
-                />
-                <span className="newBadge">NEW</span>
-              </div>
+        <section className="libraryGrid">
+          {filteredBooks.map((book) => (
+            <article className="libraryCard" key={book.id}>
+              <img
+                src={book.cover_url || "/images/6to5ratio.png"}
+                alt={book.title}
+                className="libraryCardImage"
+              />
 
-              <div className="bookInfo">
-                <div className="bookMeta">
-                  <span>{book.age_range || "Ages 5–8"}</span>
-                  <span>{book.category || "Adventure"}</span>
-                </div>
-
+              <div className="libraryCardBody">
                 <h2>{book.title}</h2>
 
-                <p>{book.description}</p>
+                <p>
+                  {book.description ||
+                    "A magical story from Read With Luke."}
+                </p>
 
-                <strong>Read Story →</strong>
+                <div className="libraryCardActions">
+                  <button
+                    type="button"
+                    onClick={() => toggleLiked(book.id)}
+                    className={liked.includes(book.id) ? "active" : ""}
+                    aria-label="Like book"
+                  >
+                    ♥
+                  </button>
+
+                  <Link href={`/books/${book.slug}/read`} className="readBtn">
+                    READ
+                  </Link>
+
+                  <button
+                    type="button"
+                    onClick={() => toggleSaved(book.id)}
+                    className={saved.includes(book.id) ? "active" : ""}
+                    aria-label="Save book"
+                  >
+                    🔖
+                  </button>
+                </div>
               </div>
-            </Link>
+            </article>
           ))}
         </section>
 
-        {(!books || books.length === 0) && (
+        {filteredBooks.length === 0 && (
           <div className="emptyLibrary">
-            <h2>No published books yet.</h2>
-            <p>Go to the admin page and publish your first story.</p>
+            <h2>No books found.</h2>
+            <p>Try another search or publish a new story.</p>
             <Link href="/admin">Open Admin</Link>
           </div>
         )}
