@@ -1,3 +1,13 @@
+@font-face {
+  font-family: "DK Woolwich";
+  src: url("/fonts/DK-Woolwich-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* PAGE FRAME */
+
 .homeWrap {
   width: 100%;
   min-height: 100vh;
@@ -68,9 +78,10 @@
 .homeHeader nav a {
   color: #050505;
   text-decoration: none;
-  font-size: 19px;
-  font-weight: 900;
-  letter-spacing: 0.08em;
+  font-family: "DK Woolwich", sans-serif;
+  font-size: 21px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
   position: relative;
 }
 
@@ -98,8 +109,8 @@
   min-width: 86px;
   display: grid;
   place-items: center;
-  font-weight: 900;
-  font-size: 20px;
+  font-family: "DK Woolwich", sans-serif;
+  font-size: 22px;
 }
 
 .avatar {
@@ -109,7 +120,8 @@
   background: #ff5a24;
   display: grid;
   place-items: center;
-  font-weight: 1000;
+  font-family: "DK Woolwich", sans-serif;
+  font-size: 19px;
   border: 7px solid #ffbd18;
 }
 
@@ -125,20 +137,23 @@
 
 .heroText h1 {
   margin: 0;
-  font-size: 88px;
-  line-height: 0.85;
-  font-weight: 1000;
-  letter-spacing: 0.02em;
-  font-family: Impact, Haettenschweiler, "Arial Black", sans-serif;
+  font-family: "DK Woolwich", sans-serif;
+  font-size: 108px;
+  line-height: 0.78;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: #050505;
 }
 
 .heroText p {
   margin: 34px 0 0;
   max-width: 700px;
-  font-size: 23px;
-  line-height: 1.28;
-  font-weight: 900;
-  letter-spacing: 0.06em;
+  font-family: "Courier New", monospace;
+  font-size: 24px;
+  line-height: 1.35;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: #050505;
 }
 
 /* TIMER */
@@ -160,10 +175,11 @@
 
 .countdownBox h2 {
   margin: 0;
-  font-family: Impact, Haettenschweiler, "Arial Black", sans-serif;
-  font-size: 42px;
-  line-height: 1.08;
-  letter-spacing: 0.08em;
+  font-family: "DK Woolwich", sans-serif;
+  font-size: 48px;
+  line-height: 1;
+  font-weight: 400;
+  letter-spacing: 0.04em;
 }
 
 .countdownGrid {
@@ -174,15 +190,17 @@
 
 .countdownGrid strong {
   display: block;
-  font-size: 44px;
+  font-family: "DK Woolwich", sans-serif;
+  font-size: 46px;
   line-height: 1;
-  font-weight: 1000;
+  font-weight: 400;
 }
 
 .countdownGrid span {
   display: block;
   margin-top: 6px;
-  font-size: 14px;
+  font-family: "Courier New", monospace;
+  font-size: 13px;
   letter-spacing: 0.08em;
 }
 
@@ -227,8 +245,8 @@
   border: 0;
   background: #ff5526;
   color: white;
-  font-size: 32px;
-  font-weight: 1000;
+  font-family: "DK Woolwich", sans-serif;
+  font-size: 34px;
   display: grid;
   place-items: center;
   z-index: 4;
@@ -266,10 +284,11 @@
 
 .legal {
   margin: 28px 0 0;
+  font-family: "Courier New", monospace;
   font-size: 14px;
   line-height: 1.15;
-  font-weight: 900;
-  letter-spacing: 0.08em;
+  font-weight: 700;
+  letter-spacing: 0.06em;
 }
 
 .footerLinks {
@@ -281,9 +300,10 @@
 .footerLinks a {
   color: #050505;
   text-decoration: none;
+  font-family: "Courier New", monospace;
   font-size: 16px;
-  font-weight: 900;
-  letter-spacing: 0.08em;
+  font-weight: 700;
+  letter-spacing: 0.06em;
 }
 
 .socials {
@@ -299,8 +319,8 @@
   color: white;
   display: grid;
   place-items: center;
-  font-weight: 1000;
-  font-size: 22px;
+  font-family: "DK Woolwich", sans-serif;
+  font-size: 24px;
 }
 
 .newsletter {
@@ -317,8 +337,9 @@
   justify-content: space-between;
   padding-left: 36px;
   color: #9b9388;
+  font-family: "Courier New", monospace;
   font-size: 18px;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
 }
 
 .emailBar button {
@@ -334,11 +355,12 @@
 
 .newsletter p {
   margin: 18px 0 0 24px;
+  max-width: 560px;
+  font-family: "Courier New", monospace;
   font-size: 16px;
   line-height: 1.25;
-  max-width: 560px;
-  font-weight: 900;
-  letter-spacing: 0.06em;
+  font-weight: 700;
+  letter-spacing: 0.05em;
 }
 
 .lukeOverlay {
@@ -353,8 +375,26 @@
 
 @media (max-width: 1200px) {
   .homeCanvas {
-    min-height: 1200px;
     height: auto;
+    min-height: 1200px;
+    overflow: visible;
+  }
+
+  .homeHeader {
+    width: calc(100% - 40px);
+    grid-template-columns: 180px 1fr 140px;
+  }
+
+  .homeLogo img {
+    width: 150px;
+  }
+
+  .homeHeader nav {
+    gap: 28px;
+  }
+
+  .heroText h1 {
+    font-size: 78px;
   }
 
   .countdownBox {
@@ -370,5 +410,94 @@
     top: auto;
     bottom: auto;
     margin-top: 40px;
+  }
+
+  .homeFooter {
+    height: auto;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .homeCanvas {
+    width: 100%;
+    min-height: auto;
+  }
+
+  .homeBg {
+    height: 560px;
+  }
+
+  .homeHeader {
+    height: auto;
+    padding: 18px;
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .homeHeader nav {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 18px;
+  }
+
+  .headerActions {
+    justify-content: flex-start;
+  }
+
+  .heroText {
+    margin: 80px 24px 0;
+  }
+
+  .heroText h1 {
+    font-size: 52px;
+  }
+
+  .heroText p {
+    font-size: 17px;
+  }
+
+  .countdownBox {
+    width: calc(100% - 36px);
+    height: auto;
+    padding: 24px;
+  }
+
+  .countdownBox h2 {
+    font-size: 32px;
+  }
+
+  .countdownGrid strong {
+    font-size: 30px;
+  }
+
+  .storyCarousel {
+    left: auto;
+    right: auto;
+    width: calc(100% - 36px);
+    height: auto;
+    margin: 40px auto 0;
+    padding: 24px;
+  }
+
+  .storyCards {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .storyCards img {
+    height: 200px;
+  }
+
+  .homeFooter {
+    grid-template-columns: 1fr;
+    padding: 32px 24px;
+  }
+
+  .lukeOverlay {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    width: 150px;
+    margin-top: 20px;
   }
 }
