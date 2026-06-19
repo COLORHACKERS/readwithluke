@@ -75,7 +75,7 @@ export default function Home() {
     <h2>READ WITH LUKE</h2>
     <p>
       cinematic style books with fun stories written by me, LUKE and my dad.
-      ENJOY all the adventures, characters and images!
+      ENJOY the adventures!
     </p>
   </div>
 
