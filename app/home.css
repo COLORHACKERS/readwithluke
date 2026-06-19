@@ -131,8 +131,8 @@
 /* TWO MAIN CARDS */
 
 .homeCards {
-  max-width: 1500px;
-  margin: 26px auto 0;
+  max-width: 1400px;
+  margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 34px;
@@ -149,33 +149,32 @@
 
 .homeCard img {
   width: 100%;
-  height: 520px;
+  height: 360px;
   object-fit: cover;
   display: block;
 }
 
 .homeCard > div {
-  min-height: 165px;
-  padding: 34px 36px;
+  min-height: 120px;
+  padding: 24px 28px;
   display: grid;
-  grid-template-columns: 1fr 270px;
-  gap: 28px;
+  grid-template-columns: 1fr 220px;
+  gap: 24px;
   align-items: center;
 }
 
 .homeCard h2 {
-  margin: 0 0 14px;
-  font-size: 36px;
+  margin: 0 0 10px;
+  font-size: 30px;
   line-height: 1;
   font-weight: 1000;
-  color: #13294b;
+  color: #111;
 }
 
 .homeCard p {
   margin: 0;
-  max-width: 560px;
-  font-size: 21px;
-  line-height: 1.25;
+  font-size: 17px;
+  line-height: 1.22;
   font-weight: 800;
   color: #111;
 }
@@ -185,38 +184,39 @@
   background: #f26532;
   color: white;
   border-radius: 18px;
-  padding: 24px 42px;
-  min-width: 220px;
+  padding: 20px 34px;
+  min-width: 190px;
   text-align: center;
-  font-size: 20px;
+  font-size: 17px;
   font-weight: 1000;
-  box-shadow: 0 8px 0 #a93b20;
+  box-shadow: 0 7px 0 #a93b20;
 }
 
 /* LUKE INTRO */
 
 .bottomStoryWorld {
   max-width: 1500px;
-  margin: 34px auto 0;
-  padding: 34px;
+  margin: 0 auto;
+  padding: 26px 34px 42px;
   background:
     linear-gradient(
       180deg,
       rgba(248, 241, 230, 0.15) 0%,
-      rgba(248, 241, 230, 0.7) 45%,
-      rgba(248, 241, 230, 0.95) 100%
+      rgba(248, 241, 230, 0.5) 25%,
+      rgba(248, 241, 230, 0.9) 100%
     ),
     url("/images/home-bottom-bg.png");
   background-size: cover;
-  background-position: center;
+  background-position: center top;
 }
 
 .lukeIntro {
-  margin: 0;
+  max-width: 1400px;
+  margin: 34px auto 0;
   min-height: 330px;
   border: 10px solid #082b73;
   border-radius: 28px;
-  background: rgba(255, 255, 255, 0.76);
+  background: rgba(255, 255, 255, 0.78);
   backdrop-filter: blur(2px);
   display: grid;
   grid-template-columns: 1fr 340px;
@@ -225,6 +225,7 @@
   padding: 36px 42px;
   overflow: hidden;
 }
+
 
 .lukeIntro h2 {
   margin: 0;
@@ -257,7 +258,8 @@
 /* FINAL TRIAL */
 
 .finalTrial {
-  margin: 34px 0 0;
+  max-width: 1400px;
+  margin: 34px auto 0;
   border-radius: 22px;
   background: #082b73;
   color: white;

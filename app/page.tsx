@@ -66,7 +66,8 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="homeCards">
+       <section className="bottomStoryWorld">
+  <section className="homeCards">
           <Link href="/library" className="homeCard">
             <img src="/images/home-read-card.png" alt="Read With Luke" />
             <div>
@@ -91,7 +92,7 @@ export default function Home() {
             </div>
           </Link>
         </section>
-        <section className="bottomStoryWorld">
+     
           <section className="lukeIntro">
             <div>
               <h2>Hey there! I’m Luke.</h2>
