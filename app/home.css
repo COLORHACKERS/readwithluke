@@ -7,7 +7,7 @@
 
 .homeHero {
   max-width: 1500px;
-  height: 760px;
+  height: 900px;
   margin: 0 auto;
   position: relative;
   overflow: hidden;
@@ -25,7 +25,7 @@
 
 .heroCopyBlock {
   position: absolute;
-  top: 150px;
+  top: 130px;
   left: 52px;
   width: 560px;
   z-index: 3;
@@ -62,8 +62,8 @@
 /* MINI TRIAL BOX IN HERO */
 
 .heroTimer {
-  margin-top: 24px;
-  width: 520px;
+  margin-top: 20px;
+  width: 500px;
   border-radius: 18px;
   background: #082b73;
   color: white;
@@ -90,14 +90,14 @@
 .timeUnit {
   background: #123d82;
   border-radius: 14px;
-  padding: 14px 8px;
+  padding: 12px 6px;
   text-align: center;
 }
 
 .timeUnit strong {
   display: block;
   color: #f5b51b;
-  font-size: 38px;
+  font-size: 34px;
   line-height: 1;
   font-weight: 1000;
 }
@@ -113,7 +113,7 @@
 
 .heroTimer h3 {
   margin: 18px 0 0;
-  font-size: 34px;
+  font-size: 30px;
   line-height: 1;
   font-weight: 1000;
 }
