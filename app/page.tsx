@@ -100,9 +100,11 @@ export default function Home() {
             <p>
               Privacy * Terms
               <br />
-              ReadwithLuke © 2026
+              ReadwithLuke
+               <br />
+               © 2026
               <br />
-              Luke’s World, LLC. All rights reserved.
+             All rights reserved.
             </p>
           </div>
 
