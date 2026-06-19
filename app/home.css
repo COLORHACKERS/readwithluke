@@ -184,6 +184,10 @@
   gap: 28px;
   align-items: center;
 }
+.homeCard h2,
+.homeCard p {
+  grid-area: auto;
+}
 
 .homeCard h2 {
   margin: 0 0 14px;
