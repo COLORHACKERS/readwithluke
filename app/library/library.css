@@ -1,3 +1,9 @@
+@font-face {
+  font-family: "DK Woolwich";
+  src: url("/fonts/dk-woolwich.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+}
 .libraryPage {
   width: min(100vw, 1920px);
   margin: 0 auto;

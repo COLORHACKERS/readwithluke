@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import Header from "@/app/components/Header";
+import Footer from "@/app/components/Footer";
 import { supabase } from "@/lib/supabase";
 import "./library.css";
 
