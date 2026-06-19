@@ -91,7 +91,7 @@ export default function Home() {
             </div>
           </Link>
         </section>
-
+<section className="bottomStoryWorld">
         <section className="lukeIntro">
           <div>
             <h2>Hey there! I’m Luke.</h2>
@@ -122,10 +122,12 @@ export default function Home() {
 
           <small>$12.99 a month after trial. Cancel anytime.</small>
         </section>
+        </section>
       </main>
     </>
   );
 }
+
 
 function TimeUnit({ label, value }: { label: string; value: number }) {
   return (

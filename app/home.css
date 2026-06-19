@@ -196,16 +196,11 @@
 /* LUKE INTRO */
 
 .lukeIntro {
-  max-width: 1500px;
   min-height: 330px;
-  margin: 34px auto 0;
   border: 10px solid #082b73;
   border-radius: 28px;
-  background:
-    linear-gradient(90deg, rgba(255, 255, 255, 0.92), rgba(255,255,255,0.55)),
-    url("/images/home-bottom-bg.png");
-  background-size: cover;
-  background-position: center;
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(2px);
   display: grid;
   grid-template-columns: 1fr 340px;
   align-items: center;
@@ -245,8 +240,7 @@
 /* FINAL TRIAL */
 
 .finalTrial {
-  max-width: 1500px;
-  margin: 34px auto 0;
+  margin: 34px 0 0;
   border-radius: 22px;
   background: #082b73;
   color: white;
@@ -291,7 +285,6 @@
   font-size: 12px;
   font-weight: 800;
 }
-
 /* RESPONSIVE */
 
 @media (max-width: 1000px) {
