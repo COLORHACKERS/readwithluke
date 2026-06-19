@@ -6,500 +6,315 @@
   font-display: swap;
 }
 
-/* PAGE FRAME */
-
-.homeWrap {
-  width: 100%;
-  min-height: 100vh;
+.homePage {
+  width: min(100vw, 1920px);
+  min-height: 1080px;
+  margin: 0 auto;
   background: white;
-  display: flex;
-  justify-content: center;
+  color: #050505;
+  overflow: hidden;
 }
 
-.homeCanvas {
-  width: min(100vw, 1920px);
-  height: min(100vh, 1080px);
-  min-height: 1080px;
+.homeHero {
+  height: 760px;
   position: relative;
   overflow: hidden;
-  background: #f8f1e6;
-  color: #050505;
 }
 
 .homeBg {
   position: absolute;
-  inset: 0 0 auto 0;
+  inset: 0;
   width: 100%;
-  height: 720px;
+  height: 100%;
   object-fit: cover;
-  object-position: center top;
-  z-index: 0;
 }
 
-/* HEADER */
-
-.homeHeader {
-  position: relative;
-  z-index: 5;
-  width: calc(100% - 96px);
-  height: 90px;
-  margin: 24px auto 0;
-  background: white;
-  border-radius: 0 0 26px 26px;
-  display: grid;
-  grid-template-columns: 230px 1fr 180px;
-  align-items: center;
-  padding: 0 26px;
-  box-sizing: border-box;
-}
-
-.homeLogo {
-  position: relative;
-  height: 104px;
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-}
-
-.homeLogo img {
+.homeHeroText {
   position: absolute;
-  left: -8px;
-  top: -16px;
-  width: 190px;
-  z-index: 8;
-}
-
-.homeHeader nav {
-  display: flex;
-  justify-content: center;
-  gap: 70px;
-}
-
-.homeHeader nav a {
-  color: #050505;
-  text-decoration: none;
-  font-family: "DK Woolwich", sans-serif;
-  font-size: 21px;
-  font-weight: 400;
-  letter-spacing: 0.04em;
-  position: relative;
-}
-
-.homeHeader nav a.active::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -14px;
-  height: 5px;
-  background: #ff4d24;
-}
-
-.headerActions {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 18px;
-}
-
-.streak {
-  background: #f3eee4;
-  border-radius: 999px;
-  height: 58px;
-  min-width: 86px;
-  display: grid;
-  place-items: center;
-  font-family: "DK Woolwich", sans-serif;
-  font-size: 22px;
-}
-
-.avatar {
-  width: 58px;
-  height: 58px;
-  border-radius: 999px;
-  background: #ff5a24;
-  display: grid;
-  place-items: center;
-  font-family: "DK Woolwich", sans-serif;
-  font-size: 19px;
-  border: 7px solid #ffbd18;
-}
-
-/* HERO */
-
-.heroText {
-    font-family: "DK Woolwich", sans-serif;
-  font-weight: 400;
-  position: relative;
+  left: 72px;
+  top: 185px;
   z-index: 2;
-  margin-left: 70px;
-  margin-top: 105px;
-  max-width: 760px;
+  max-width: 720px;
 }
 
-.heroText h1 {
+.homeHeroText h1 {
   margin: 0;
   font-family: "DK Woolwich", sans-serif;
-  font-size: 108px;
-  line-height: 0.78;
+  font-size: 100px;
+  line-height: 0.82;
   font-weight: 400;
   letter-spacing: -0.02em;
-  color: #050505;
 }
 
-.heroText p {
-  margin: 34px 0 0;
-  max-width: 700px;
+.homeHeroText p {
+  margin: 28px 0 0;
+  max-width: 640px;
   font-family: "Courier New", monospace;
-  font-size: 24px;
-  line-height: 1.35;
+  font-size: 22px;
+  line-height: 1.3;
   font-weight: 700;
-  letter-spacing: 0.03em;
-  color: #050505;
 }
 
-/* TIMER */
-
-.countdownBox {
+.homeTimer {
   position: absolute;
-  z-index: 4;
-  top: 118px;
-  right: 62px;
-  width: 560px;
-  height: 250px;
+  right: 66px;
+  top: 112px;
+  z-index: 3;
+  width: 610px;
+  min-height: 255px;
   background: #ff5526;
-  border-radius: 0 0 18px 18px;
   color: white;
-  text-align: center;
-  padding: 32px;
+  border-radius: 0 0 20px 20px;
+  padding: 34px 38px;
   box-sizing: border-box;
+  text-align: center;
 }
 
-.countdownBox h2 {
+.homeTimer h2 {
   margin: 0;
   font-family: "DK Woolwich", sans-serif;
-  font-size: 48px;
-  line-height: 1;
+  font-size: 43px;
+  line-height: 1.05;
   font-weight: 400;
   letter-spacing: 0.04em;
 }
 
-.countdownGrid {
-  margin-top: 26px;
+.timerGrid {
+  margin-top: 28px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
 }
 
-.countdownGrid strong {
+.timerGrid strong {
   display: block;
   font-family: "DK Woolwich", sans-serif;
-  font-size: 46px;
+  font-size: 44px;
   line-height: 1;
-  font-weight: 400;
 }
 
-.countdownGrid span {
+.timerGrid span {
   display: block;
-  margin-top: 6px;
+  margin-top: 5px;
   font-family: "Courier New", monospace;
   font-size: 13px;
-  letter-spacing: 0.08em;
 }
 
-/* CAROUSEL */
-
-.storyCarousel {
+.homeCarousel {
   position: absolute;
-  z-index: 3;
-  left: 48px;
-  right: 48px;
-  top: 560px;
-  height: 345px;
+  left: 54px;
+  right: 54px;
+  bottom: 54px;
+  z-index: 4;
+  height: 310px;
   background: white;
   border-radius: 0 0 30px 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 34px 70px;
+  padding: 34px 88px;
   box-sizing: border-box;
 }
 
-.storyCards {
+.carouselImages {
+  height: 100%;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 22px;
-  width: 100%;
+  gap: 24px;
 }
 
-.storyCards img {
+.carouselImages img {
   width: 100%;
-  height: 270px;
+  height: 100%;
   object-fit: cover;
   border-radius: 22px;
   display: block;
 }
 
-.carouselArrow {
-  position: absolute;
+.carouselBtn {
   width: 58px;
   height: 58px;
-  border-radius: 999px;
   border: 0;
+  border-radius: 999px;
   background: #ff5526;
   color: white;
-  font-family: "DK Woolwich", sans-serif;
   font-size: 34px;
+  font-weight: 900;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
   display: grid;
   place-items: center;
-  z-index: 4;
+  cursor: pointer;
 }
 
-.carouselArrow.left {
-  left: 42px;
+.carouselBtn.left {
+  left: 48px;
 }
 
-.carouselArrow.right {
-  right: 42px;
+.carouselBtn.right {
+  right: 48px;
 }
-
-/* FOOTER */
 
 .homeFooter {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 175px;
+  height: 320px;
   background: white;
   display: grid;
-  grid-template-columns: 160px 120px 180px 1fr;
+  grid-template-columns: 190px 140px 260px 1fr;
   gap: 36px;
-  align-items: start;
-  padding: 36px 72px;
+  padding: 52px 72px;
   box-sizing: border-box;
-  z-index: 2;
+  position: relative;
 }
 
-.footerLogo {
-  width: 112px;
+.footerBrand img {
+  width: 135px;
 }
 
-.legal {
-  margin: 28px 0 0;
+.footerBrand p {
+  margin: 52px 0 0;
   font-family: "Courier New", monospace;
-  font-size: 14px;
-  line-height: 1.15;
+  font-size: 16px;
   font-weight: 700;
-  letter-spacing: 0.06em;
+  line-height: 1.25;
 }
 
 .footerLinks {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 .footerLinks a {
   color: #050505;
   text-decoration: none;
   font-family: "Courier New", monospace;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 700;
-  letter-spacing: 0.06em;
 }
 
-.socials {
+.footerSocials {
   display: flex;
-  gap: 16px;
+  gap: 18px;
 }
 
-.socials span {
-  width: 48px;
-  height: 48px;
+.footerSocials button {
+  width: 54px;
+  height: 54px;
+  border: 0;
   border-radius: 999px;
   background: #ff5526;
-  color: white;
   display: grid;
   place-items: center;
-  font-family: "DK Woolwich", sans-serif;
-  font-size: 24px;
+  cursor: pointer;
+}
+
+.footerSocials img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
 }
 
 .newsletter {
   position: relative;
-  min-height: 160px;
 }
 
 .emailBar {
-  height: 64px;
-  background: #eee6db;
+  height: 70px;
+  background: #eee8df;
   border-radius: 999px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding-left: 36px;
-  color: #9b9388;
+  padding-left: 40px;
+  box-sizing: border-box;
+}
+
+.emailBar input {
+  flex: 1;
+  border: 0;
+  outline: 0;
+  background: transparent;
   font-family: "Courier New", monospace;
   font-size: 18px;
-  letter-spacing: 0.06em;
 }
 
 .emailBar button {
-  width: 54px;
-  height: 54px;
-  border-radius: 999px;
-  border: 0;
-  background: #ff5526;
-  color: white;
-  font-size: 24px;
+  width: 58px;
+  height: 58px;
   margin-right: 6px;
+  border: 0;
+  border-radius: 999px;
+  background: #ff5526;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.emailBar button img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
 }
 
 .newsletter p {
-  margin: 18px 0 0 24px;
-  max-width: 560px;
+  margin: 22px 0 0 34px;
+  max-width: 620px;
   font-family: "Courier New", monospace;
-  font-size: 16px;
-  line-height: 1.25;
+  font-size: 17px;
   font-weight: 700;
-  letter-spacing: 0.05em;
+  line-height: 1.3;
 }
 
-.lukeOverlay {
+.footerLuke {
   position: absolute;
-  right: -40px;
-  bottom: -55px;
+  right: 18px;
+  bottom: -74px;
   width: 190px;
   z-index: 5;
 }
 
-/* RESPONSIVE */
-
-@media (max-width: 1200px) {
-  .homeCanvas {
-    height: auto;
-    min-height: 1200px;
-    overflow: visible;
-  }
-
-  .homeHeader {
-    width: calc(100% - 40px);
-    grid-template-columns: 180px 1fr 140px;
-  }
-
-  .homeLogo img {
-    width: 150px;
-  }
-
-  .homeHeader nav {
-    gap: 28px;
-  }
-
-  .heroText h1 {
-    font-size: 78px;
-  }
-
-  .countdownBox {
-    position: relative;
-    top: auto;
-    right: auto;
-    margin: 40px auto 0;
-  }
-
-  .storyCarousel,
-  .homeFooter {
-    position: relative;
-    top: auto;
-    bottom: auto;
-    margin-top: 40px;
-  }
-
-  .homeFooter {
-    height: auto;
-    grid-template-columns: 1fr 1fr;
+@media (min-width: 1921px) {
+  body {
+    background: white;
   }
 }
 
-@media (max-width: 700px) {
-  .homeCanvas {
-    width: 100%;
+@media (max-width: 1200px) {
+  .homePage {
     min-height: auto;
   }
 
+  .homeHero {
+    height: auto;
+    padding-bottom: 48px;
+  }
+
   .homeBg {
-    height: 560px;
+    position: absolute;
   }
 
-  .homeHeader {
-    height: auto;
-    padding: 18px;
-    grid-template-columns: 1fr;
-    gap: 18px;
-  }
-
-  .homeHeader nav {
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    gap: 18px;
-  }
-
-  .headerActions {
-    justify-content: flex-start;
-  }
-
-  .heroText {
-    margin: 80px 24px 0;
-  }
-
-  .heroText h1 {
-    font-size: 52px;
-  }
-
-  .heroText p {
-    font-size: 17px;
-  }
-
-  .countdownBox {
-    width: calc(100% - 36px);
-    height: auto;
-    padding: 24px;
-  }
-
-  .countdownBox h2 {
-    font-size: 32px;
-  }
-
-  .countdownGrid strong {
-    font-size: 30px;
-  }
-
-  .storyCarousel {
+  .homeHeroText,
+  .homeTimer,
+  .homeCarousel {
+    position: relative;
     left: auto;
     right: auto;
-    width: calc(100% - 36px);
-    height: auto;
-    margin: 40px auto 0;
-    padding: 24px;
+    top: auto;
+    bottom: auto;
   }
 
-  .storyCards {
-    grid-template-columns: 1fr 1fr;
+  .homeHeroText {
+    margin: 80px 40px 0;
   }
 
-  .storyCards img {
-    height: 200px;
+  .homeTimer {
+    width: calc(100% - 80px);
+    margin: 36px auto 0;
+  }
+
+  .homeCarousel {
+    width: calc(100% - 80px);
+    margin: 36px auto 0;
   }
 
   .homeFooter {
-    grid-template-columns: 1fr;
-    padding: 32px 24px;
-  }
-
-  .lukeOverlay {
-    position: relative;
-    right: auto;
-    bottom: auto;
-    width: 150px;
-    margin-top: 20px;
+    height: auto;
+    grid-template-columns: 1fr 1fr;
   }
 }

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Header from "./components/Header";
 import "./home.css";
 
 function getTimeLeft() {
@@ -29,77 +30,63 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="homeWrap">
-      <section className="homeCanvas">
-        <img src="/images/home-hero.png" className="homeBg" alt="" />
+    <>
+      <Header />
 
-        <header className="homeHeader">
-          <Link href="/" className="homeLogo">
-            <img src="/images/luke-logo-badge.png" alt="Read With Luke" />
-          </Link>
+      <main className="homePage">
+        <section className="homeHero">
+          <img src="/images/home-hero.png" alt="" className="homeBg" />
 
-          <nav>
-            <Link className="active" href="/">Home</Link>
-            <Link href="/library">Library</Link>
-            <Link href="/learn">Learn with Luke</Link>
-            <Link href="/leaderboard">Leaderboard</Link>
-          </nav>
+          <div className="homeHeroText">
+            <h1>
+              STORIES.
+              <br />
+              ADVENTURE.
+              <br />
+              KNOWLEDGE.
+            </h1>
 
-          <div className="headerActions">
-            <div className="streak">🔥 12</div>
-            <div className="avatar">LL</div>
-          </div>
-        </header>
-
-        <section className="heroText">
-          <h1>
-            STORIES.
-            <br />
-            ADVENTURE.
-            <br />
-            KNOWLEDGE.
-          </h1>
-
-          <p>
-            Stories for kids that are magical, exciting, and cinematic like
-            movies. Fascinating facts and fun learning that inspire and grow
-            imagination!
-          </p>
-        </section>
-
-        <section className="countdownBox">
-          <h2>
-            READ FOR FREE UNTIL
-            <br />
-            OUR OFFICIAL LAUNCH IN...
-          </h2>
-
-          <div className="countdownGrid">
-            <TimeUnit value={timeLeft.days} label="days" />
-            <TimeUnit value={timeLeft.hours} label="hours" />
-            <TimeUnit value={timeLeft.minutes} label="minutes" />
-            <TimeUnit value={timeLeft.seconds} label="seconds" />
-          </div>
-        </section>
-
-        <section className="storyCarousel">
-          <button className="carouselArrow left">←</button>
-
-          <div className="storyCards">
-            <img src="/images/home-card-1.png" alt="" />
-            <img src="/images/home-card-2.png" alt="" />
-            <img src="/images/home-card-3.png" alt="" />
-            <img src="/images/home-card-4.png" alt="" />
+            <p>
+              Stories for kids that are magical, exciting, and cinematic like
+              movies. Fascinating facts and fun learnings that inspire and grow
+              imagination!
+            </p>
           </div>
 
-          <button className="carouselArrow right">→</button>
+          <div className="homeTimer">
+            <h2>
+              READ FOR FREE UNTIL
+              <br />
+              OUR OFFICIAL LAUNCH IN...
+            </h2>
+
+            <div className="timerGrid">
+              <TimeUnit value={timeLeft.days} label="days" />
+              <TimeUnit value={timeLeft.hours} label="hours" />
+              <TimeUnit value={timeLeft.minutes} label="minutes" />
+              <TimeUnit value={timeLeft.seconds} label="seconds" />
+            </div>
+          </div>
+
+          <section className="homeCarousel">
+            <button className="carouselBtn left">←</button>
+
+            <div className="carouselImages">
+              <img src="/images/home-card-1.png" alt="" />
+              <img src="/images/home-card-2.png" alt="" />
+              <img src="/images/home-card-3.png" alt="" />
+              <img src="/images/home-card-4.png" alt="" />
+            </div>
+
+            <button className="carouselBtn right">→</button>
+          </section>
         </section>
 
         <footer className="homeFooter">
-          <div>
-            <img src="/images/read-with-luke-wordmark.png" alt="" className="footerLogo" />
+          <div className="footerBrand">
+            <img src="/images/read-with-luke-wordmark.png" alt="Read With Luke" />
 
-            <p className="legal">
+            <p>
               Privacy * Terms
               <br />
               ReadwithLuke © 2026
@@ -108,35 +95,47 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="footerLinks">
+          <nav className="footerLinks">
             <Link href="/">Home</Link>
             <Link href="/about">About</Link>
             <Link href="/help">Help</Link>
             <Link href="/contact">Contact</Link>
-          </div>
+          </nav>
 
-          <div className="socials">
-            <span>f</span>
-            <span>◎</span>
-            <span>▶</span>
+          <div className="footerSocials">
+            <button aria-label="Facebook">
+              <img src="/images/icon-facebook.png" alt="" />
+            </button>
+            <button aria-label="Instagram">
+              <img src="/images/icon-instagram.png" alt="" />
+            </button>
+            <button aria-label="YouTube">
+              <img src="/images/icon-youtube.png" alt="" />
+            </button>
           </div>
 
           <div className="newsletter">
-            <div className="emailBar">
-              <span>email for newsletter</span>
-              <button>➤</button>
-            </div>
+            <form className="emailBar">
+              <input type="email" placeholder="email for newsletter" />
+              <button aria-label="Submit">
+                <img src="/images/icon-send.png" alt="" />
+              </button>
+            </form>
 
             <p>
-              Sign up for our newsletter for new books, announcements, games
-              and more!
+              Sign up for our newsletter for new books, announcements, games and
+              more!
             </p>
 
-            <img src="/images/luke-thumbsup.png" alt="" className="lukeOverlay" />
+            <img
+              src="/images/luke-thumbs-up.png"
+              alt="Luke"
+              className="footerLuke"
+            />
           </div>
         </footer>
-      </section>
-    </main>
+      </main>
+    </>
   );
 }
 
