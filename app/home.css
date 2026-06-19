@@ -87,17 +87,17 @@
 }
 
 .timerGrid strong {
-  display: block;
-  font-family: "DK Woolwich", sans-serif;
-  font-size: 34px;
+  font-family: "Bangers", cursive;
+  font-size: 54px;
   line-height: 1;
+  letter-spacing: 0.03em;
 }
 
 .timerGrid span {
   margin-top: 4px;
   display: block;
   font-family: "Courier New", monospace;
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .homeCarousel {
