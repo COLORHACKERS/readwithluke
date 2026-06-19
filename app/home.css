@@ -155,11 +155,12 @@
 }
 
 .homeCard > div {
-  min-height: 120px;
-  padding: 24px 28px;
-  display: grid;
+  min-height: 95px;
+  padding: 22px 26px;
+  display: flex;
+  justify-content: space-between;
   grid-template-columns: 1fr 220px;
-  gap: 24px;
+  gap: 30px;
   align-items: center;
 }
 
