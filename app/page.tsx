@@ -173,6 +173,59 @@ export default function Home() {
             </div>
           </div>
         </section>
+        <section className="trustSection">
+  <div className="trustGrid">
+    <div className="trustItem">
+      <span>🛡️</span>
+      <div>
+        <h4>Safe & Kid-Friendly</h4>
+        <p>A safe space made just for kids.</p>
+      </div>
+    </div>
+
+    <div className="trustItem">
+      <span>🚫</span>
+      <div>
+        <h4>Ad Free</h4>
+        <p>Enjoy reading and learning without distractions.</p>
+      </div>
+    </div>
+
+    <div className="trustItem">
+      <span>❤️</span>
+      <div>
+        <h4>Made with Love</h4>
+        <p>Built with love for families like yours.</p>
+      </div>
+    </div>
+
+    <div className="trustItem">
+      <span>🚀</span>
+      <div>
+        <h4>Always Improving</h4>
+        <p>New stories and lessons added every week.</p>
+      </div>
+    </div>
+  </div>
+
+  <div className="launchBanner">
+    <div className="launchLeft">
+      <h3>Be part of our soft launch!</h3>
+      <p>
+        Your feedback helps us build something amazing for kids.
+      </p>
+    </div>
+
+    <Link href="/library" className="launchCTA">
+      <strong>START YOUR FREE TRIAL</strong>
+      <span>90-DAY FREE ACCESS</span>
+    </Link>
+
+    <div className="launchMoon">
+      🌙
+    </div>
+  </div>
+</section>
       </main>
     </>
   );
