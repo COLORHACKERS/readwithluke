@@ -24,10 +24,10 @@
 
 .headerLogo img {
   position: absolute;
-  left: -10px;
-  bottom: -2px;
-  width: 150px;
-  z-index: 5;
+  left: 0;
+  bottom: -22px;
+  width: 190px;
+  z-index: 20;
 }
 
 .mainNav {

@@ -31,7 +31,7 @@
 .homeHeroText {
   position: absolute;
   left: 74px;
-  top: 235px;
+  top: 275px;
   z-index: 2;
 }
 
@@ -54,9 +54,10 @@
 .homeTimer {
   position: absolute;
   right: 66px;
-  top: 122px;
+  top: 165px;
   z-index: 3;
   width: 620px;
+  min-height: 360px;
   background: #ff5526;
   color: white;
   border-radius: 0 0 18px 18px;
@@ -97,9 +98,9 @@
   position: absolute;
   left: 50px;
   right: 50px;
-  bottom: 58px;
+  bottom: --40px;
   z-index: 4;
-  height: 325px;
+  height: 1020px;
   background: white;
   border-radius: 0 0 28px 28px;
   padding: 36px 92px;
