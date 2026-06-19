@@ -105,28 +105,32 @@
   right: 40px;
   top: 650px;
   z-index: 4;
-  height: 380px;
+  height: 360px;
   background: white;
   border-radius: 28px;
-  padding: 42px 76px;
+  padding: 36px 86px;
   box-sizing: border-box;
+  display: flex;
+  align-items: center;
 }
 
 .carouselImages {
-  height: 100%;
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(4, 230px);
   justify-content: center;
+  align-items: center;
   gap: 28px;
 }
 
 .carouselImages img {
   width: 230px;
-  height: 300px;
+  height: 280px;
   object-fit: cover;
   border-radius: 20px;
   display: block;
 }
+
 @media (max-width: 1500px) {
   .homeCarousel {
     left: 50px;
@@ -166,11 +170,11 @@
 }
 
 .carouselBtn.left {
-  left: 48px;
+  left: 42px;
 }
 
 .carouselBtn.right {
-  right: 48px;
+  right: 42px;
 }
 
 .homeFooter {
