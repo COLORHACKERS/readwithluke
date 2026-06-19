@@ -15,7 +15,7 @@
 }
 
 .homeHero {
-  height: 860px;
+  height: 1030px;
   position: relative;
   overflow: hidden;
 }
@@ -54,14 +54,13 @@
 .homeTimer {
   position: absolute;
   right: 66px;
-  top: 165px;
+  top: 124px;
   z-index: 3;
-  width: 620px;
-  min-height: 360px;
+  width: 540px;
   background: #ff5526;
   color: white;
   border-radius: 0 0 18px 18px;
-  padding: 34px 38px 30px;
+  padding: 24px 30px 22px;
   text-align: center;
   box-sizing: border-box;
 }
@@ -69,13 +68,13 @@
 .homeTimer h2 {
   margin: 0;
   font-family: "DK Woolwich", sans-serif;
-  font-size: 43px;
-  line-height: 1.08;
+  font-size: 34px;
+  line-height: 1.05;
   letter-spacing: 0.04em;
 }
 
 .timerGrid {
-  margin-top: 28px;
+  margin-top: 20px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
 }
@@ -83,24 +82,24 @@
 .timerGrid strong {
   display: block;
   font-family: "DK Woolwich", sans-serif;
-  font-size: 46px;
+  font-size: 34px;
   line-height: 1;
 }
 
 .timerGrid span {
-  margin-top: 5px;
+  margin-top: 4px;
   display: block;
   font-family: "Courier New", monospace;
-  font-size: 13px;
+  font-size: 11px;
 }
 
 .homeCarousel {
   position: absolute;
   left: 50px;
   right: 50px;
-  bottom: 48px;
+  bottom: 58px;
   z-index: 4;
-  height: 320px;
+  height: 325px;
   background: white;
   border-radius: 0 0 28px 28px;
   padding: 36px 92px;
