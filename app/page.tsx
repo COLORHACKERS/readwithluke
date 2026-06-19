@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Header from "./components/Header";
 import "./home.css";
 
 function getTimeLeft() {
@@ -30,112 +29,120 @@ export default function Home() {
   }, []);
 
   return (
-    <>
-      <Header />
+    <main className="homeWrap">
+      <section className="homeCanvas">
+        <img src="/images/home-hero.png" className="homeBg" alt="" />
 
-      <main className="homePage">
-        <section className="homeHero">
-          <img src="/images/home-hero.png" alt="Read With Luke" />
+        <header className="homeHeader">
+          <Link href="/" className="homeLogo">
+            <img src="/images/luke-logo-badge.png" alt="Read With Luke" />
+          </Link>
 
-          <div className="heroCopyBlock">
-            <p>READ WITH LUKE SOFT LAUNCH</p>
-            <h1>
-              Stories Today.
-              <br />
-              <span>Curiosity Forever.</span>
-            </h1>
-            <h2>
-              Magical stories, fascinating facts, and fun adventures that inspire
-              curious kids.
-            </h2>
+          <nav>
+            <Link className="active" href="/">Home</Link>
+            <Link href="/library">Library</Link>
+            <Link href="/learn">Learn with Luke</Link>
+            <Link href="/leaderboard">Leaderboard</Link>
+          </nav>
 
-            <div className="heroTimer">
-              <p>FREE ACCESS TRIAL ENDS IN</p>
-              <div className="timerGrid">
-                <TimeUnit label="Days" value={timeLeft.days} />
-                <TimeUnit label="Hours" value={timeLeft.hours} />
-                <TimeUnit label="Minutes" value={timeLeft.minutes} />
-                <TimeUnit label="Seconds" value={timeLeft.seconds} />
-              </div>
-              <h3>START YOUR FREE TRIAL</h3>
-              <small>
-                We’re in early phase! Enjoy our books and learnings as we work
-                towards our launch!
-              </small>
-            </div>
+          <div className="headerActions">
+            <div className="streak">🔥 12</div>
+            <div className="avatar">LL</div>
+          </div>
+        </header>
+
+        <section className="heroText">
+          <h1>
+            STORIES.
+            <br />
+            ADVENTURE.
+            <br />
+            KNOWLEDGE.
+          </h1>
+
+          <p>
+            Stories for kids that are magical, exciting, and cinematic like
+            movies. Fascinating facts and fun learning that inspire and grow
+            imagination!
+          </p>
+        </section>
+
+        <section className="countdownBox">
+          <h2>
+            READ FOR FREE UNTIL
+            <br />
+            OUR OFFICIAL LAUNCH IN...
+          </h2>
+
+          <div className="countdownGrid">
+            <TimeUnit value={timeLeft.days} label="days" />
+            <TimeUnit value={timeLeft.hours} label="hours" />
+            <TimeUnit value={timeLeft.minutes} label="minutes" />
+            <TimeUnit value={timeLeft.seconds} label="seconds" />
           </div>
         </section>
 
-       <section className="bottomStoryWorld">
-  <section className="homeCards">
-          <Link href="/library" className="homeCard">
-  <img src="/images/home-read-card.png" alt="Read With Luke" />
+        <section className="storyCarousel">
+          <button className="carouselArrow left">←</button>
 
-  <div>
-    <h2>READ WITH LUKE</h2>
-    <p>
-      cinematic style books with fun stories written by me, LUKE and my dad.
-      ENJOY the adventures!
-    </p>
-  </div>
+          <div className="storyCards">
+            <img src="/images/home-card-1.png" alt="" />
+            <img src="/images/home-card-2.png" alt="" />
+            <img src="/images/home-card-3.png" alt="" />
+            <img src="/images/home-card-4.png" alt="" />
+          </div>
 
-  <span>START READING</span>
-</Link>
-<Link href="/learn" className="homeCard">
-  <img src="/images/home-learn-card.png" alt="Learn With Luke" />
-
-  <div>
-    <h2>LEARN WITH LUKE</h2>
-    <p>
-      Learn about cool things, people, animals and interesting “whys”
-                in a fun way!
-    </p>
-  </div>
-
-  <span>START LEARNING</span>
-</Link>
+          <button className="carouselArrow right">→</button>
         </section>
-     
-          <section className="lukeIntro">
-            <div>
-              <h2>Hey there! I’m Luke.</h2>
-              <p>
-                Since I was 4 years old I’ve been creating fun stories before
-                bedtime. I wrote down the stories with my parents and now we are
-                ready to share! I created <strong>Read with Luke</strong> to make
-                reading and learning fun and exciting like movies and fun comics.
-                Growing up should be full of imagination and wonder! I teamed up
-                with my dad to bring our stories to life.
-              </p>
-              <p>
-                Thanks for being here! You’re helping to make my dream come true!
-              </p>
+
+        <footer className="homeFooter">
+          <div>
+            <img src="/images/read-with-luke-wordmark.png" alt="" className="footerLogo" />
+
+            <p className="legal">
+              Privacy * Terms
+              <br />
+              ReadwithLuke © 2026
+              <br />
+              Luke’s World, LLC. All rights reserved.
+            </p>
+          </div>
+
+          <div className="footerLinks">
+            <Link href="/">Home</Link>
+            <Link href="/about">About</Link>
+            <Link href="/help">Help</Link>
+            <Link href="/contact">Contact</Link>
+          </div>
+
+          <div className="socials">
+            <span>f</span>
+            <span>◎</span>
+            <span>▶</span>
+          </div>
+
+          <div className="newsletter">
+            <div className="emailBar">
+              <span>email for newsletter</span>
+              <button>➤</button>
             </div>
 
-            <img src="/images/luke-intro.png" alt="Luke" />
-          </section>
-
-          <section className="finalTrial">
-            <h2>START YOUR FREE TRIAL</h2>
             <p>
-              We’re in <strong>early phase!</strong> Enjoy our books and learnings
-              as we work towards our <strong>LAUNCH!</strong>
+              Sign up for our newsletter for new books, announcements, games
+              and more!
             </p>
 
-            <Link href="/library">START TRIAL</Link>
-
-            <small>$12.99 a month after trial. Cancel anytime.</small>
-          </section>
-        </section>
-      </main>
-    </>
+            <img src="/images/luke-thumbsup.png" alt="" className="lukeOverlay" />
+          </div>
+        </footer>
+      </section>
+    </main>
   );
 }
 
-
-function TimeUnit({ label, value }: { label: string; value: number }) {
+function TimeUnit({ value, label }: { value: number; label: string }) {
   return (
-    <div className="timeUnit">
+    <div>
       <strong>{String(value).padStart(2, "0")}</strong>
       <span>{label}</span>
     </div>
