@@ -267,3 +267,63 @@
   width: 185px;
   z-index: 5;
 }
+@media (max-width: 1500px) {
+  .homeTimer {
+    width: 520px;
+    padding: 26px 30px;
+  }
+
+  .homeTimer h2 {
+    font-size: 34px;
+  }
+
+  .timerGrid strong {
+    font-size: 34px;
+  }
+
+  .homeCarousel {
+    padding: 32px 72px;
+  }
+
+  .carouselImages {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 24px;
+  }
+
+  .carouselImages img {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+  }
+}
+
+@media (max-width: 1200px) {
+  .homeTimer {
+    width: 420px;
+    right: 42px;
+    top: 145px;
+  }
+
+  .homeTimer h2 {
+    font-size: 28px;
+  }
+
+  .timerGrid strong {
+    font-size: 28px;
+  }
+
+  .timerGrid span {
+    font-size: 11px;
+  }
+
+  .homeCarousel {
+    left: 44px;
+    right: 44px;
+    height: 300px;
+    padding: 30px 70px;
+  }
+
+  .carouselImages img {
+    height: 220px;
+  }
+}
