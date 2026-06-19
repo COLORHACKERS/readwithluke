@@ -177,21 +177,13 @@
 }
 
 .homeCard > div {
-  min-height: 118px;
-  padding: 26px 30px 30px;
-  display: grid;
-  grid-template-columns: 1fr 260px;
-  gap: 28px;
-  align-items: center;
-}
-.homeCard h2,
-.homeCard p {
-  grid-area: auto;
+  padding: 28px 34px 30px;
+  display: block;
 }
 
 .homeCard h2 {
-  margin: 0 0 14px;
-  font-size: 32px;
+  margin: 0 0 18px;
+  font-size: 34px;
   line-height: 1;
   font-weight: 1000;
   color: #111;
@@ -199,27 +191,24 @@
 
 .homeCard p {
   margin: 0;
-  max-width: 560px;
-  font-size: 20px;
-  line-height: 1.12;
+  font-size: 22px;
+  line-height: 1.2;
   font-weight: 800;
   color: #111;
 }
 
 .homeCard span {
-  justify-self: end;
-  width: 225px;
-  height: 78px;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  height: 86px;
   background: #f26532;
   color: white;
-  border-radius: 18px;
-  text-align: center;
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 1000;
-  box-shadow: 0 7px 0 #a93b20;
+  text-align: center;
+  box-shadow: inset 0 -8px 0 rgba(0, 0, 0, 0.18);
 }
 
 /* LUKE INTRO */

@@ -69,28 +69,31 @@ export default function Home() {
        <section className="bottomStoryWorld">
   <section className="homeCards">
           <Link href="/library" className="homeCard">
-            <img src="/images/home-read-card.png" alt="Read With Luke" />
-            <div>
-              <h2>READ WITH LUKE</h2>
-              <p>
-                Cinematic style books with fun stories written by me, Luke and my
-                dad. Enjoy!
-              </p>
-              <span>START READING</span>
-            </div>
-          </Link>
+  <img src="/images/home-read-card.png" alt="Read With Luke" />
 
-          <Link href="/learn" className="homeCard">
-            <img src="/images/home-learn-card.png" alt="Learn With Luke" />
-            <div>
-              <h2>LEARN WITH LUKE</h2>
-              <p>
-                Learn about cool things, people, animals and interesting “whys”
+  <div>
+    <h2>READ WITH LUKE</h2>
+    <p>
+      cinematic style books with fun stories written by me, LUKE and my dad.
+      ENJOY all the adventures, characters and images!
+    </p>
+  </div>
+
+  <span>START READING</span>
+</Link>
+<Link href="/learn" className="homeCard">
+  <img src="/images/home-learn-card.png" alt="Learn With Luke" />
+
+  <div>
+    <h2>LEARN WITH LUKE</h2>
+    <p>
+      Learn about cool things, people, animals and interesting “whys”
                 in a fun way!
-              </p>
-              <span>START LEARNING</span>
-            </div>
-          </Link>
+    </p>
+  </div>
+
+  <span>START LEARNING</span>
+</Link>
         </section>
      
           <section className="lukeIntro">
