@@ -34,66 +34,69 @@ export default function Home() {
       <Header />
 
       <main className="homePage">
-<section className="homeTopHero">
-  <img
-    src="/images/home-hero.png"
-    alt="Read With Luke"
-    className="homeHeroBg"
-  />
+        <section className="homeHero">
+          <div className="heroText">
+            <p className="eyebrow">READ WITH LUKE SOFT LAUNCH</p>
+            <h1>
+              Stories Today.
+              <br />
+              <span>Curiosity Forever.</span>
+            </h1>
+            <p className="heroCopy">
+              Magical stories, fascinating facts, and fun adventures that
+              inspire curious kids.
+            </p>
 
-  <div className="homeHeroOverlay">
-    <p className="eyebrow">READ WITH LUKE SOFT LAUNCH</p>
+            <div className="heroButtons">
+              <Link href="/library" className="primaryBtn">
+                READ STORIES
+              </Link>
+              <Link href="/learn" className="secondaryBtn">
+                LEARN WITH LUKE
+              </Link>
+            </div>
+          </div>
 
-    <h1>
-      Stories Today.
-      <br />
-      <span>Curiosity Forever.</span>
-    </h1>
+          <div className="heroImage">
+            <img src="/images/home-hero.png" alt="Luke reading" />
+          </div>
+        </section>
 
-    <p className="heroCopy">
-      Magical stories, fascinating facts, and fun adventures that inspire
-      curious minds ages 3–10.
-    </p>
-  </div>
+        <section className="trialCard">
+          <div className="rocket">🚀</div>
 
-  <section className="trialCard">
-    <div className="trialRocketPlaceholder">
-      🚀
-    </div>
+          <div className="trialContent">
+            <div className="softBadge">⭐ SOFT LAUNCH</div>
 
-    <div className="trialContent">
-      <div className="softBadge">⭐ SOFT LAUNCH</div>
+            <h2>START YOUR FREE TRIAL</h2>
 
-      <h2>START YOUR FREE TRIAL</h2>
+            <p>
+              We’re in <strong>soft launch!</strong> Support us as we work
+              towards our <strong>grand launch.</strong>
+            </p>
 
-      <p>
-        We’re in <strong>soft launch!</strong> Support us as we work
-        towards our <strong>grand launch.</strong>
-      </p>
+            <div className="timerBox">
+              <p>Your free trial ends in</p>
 
-      <div className="timerBox">
-        <p>Your free trial ends in</p>
+              <div className="timerGrid">
+                <TimeUnit label="Days" value={timeLeft.days} />
+                <TimeUnit label="Hours" value={timeLeft.hours} />
+                <TimeUnit label="Minutes" value={timeLeft.minutes} />
+                <TimeUnit label="Seconds" value={timeLeft.seconds} />
+              </div>
+            </div>
 
-        <div className="timerGrid">
-          <TimeUnit label="Days" value={timeLeft.days} />
-          <TimeUnit label="Hours" value={timeLeft.hours} />
-          <TimeUnit label="Minutes" value={timeLeft.minutes} />
-          <TimeUnit label="Seconds" value={timeLeft.seconds} />
-        </div>
-      </div>
+            <Link href="/library" className="trialBtn">
+              START YOUR FREE TRIAL →
+            </Link>
+          </div>
 
-      <Link href="/library" className="trialBtn">
-        START YOUR FREE TRIAL →
-      </Link>
-    </div>
-
-    <div className="trialStampPlaceholder">
-      <span>Trial Started</span>
-      <strong>June 18, 2026</strong>
-      <small>90 Days Free</small>
-    </div>
-  </section>
-</section>
+          <div className="trialSeal">
+            <span>Trial Started</span>
+            <strong>June 18, 2026</strong>
+            <small>90 Days Free</small>
+          </div>
+        </section>
 
         <section className="exploreSection">
           <h2>
