@@ -174,7 +174,7 @@
 .footerBrand p {
   margin: 48px 0 0;
   font-family: "Courier New", monospace;
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 700;
   line-height: 1.25;
 }
@@ -189,7 +189,7 @@
   color: #050505;
   text-decoration: none;
   font-family: "Courier New", monospace;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 700;
 }
 
