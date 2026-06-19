@@ -1,0 +1,126 @@
+.rwlFooter {
+  position: relative;
+  background: white;
+  display: grid;
+  grid-template-columns: 190px 170px 220px 1fr;
+  gap: 40px;
+  padding: 60px 70px 140px;
+  box-sizing: border-box;
+}
+
+.footerWordmark {
+  width: 120px;
+}
+
+.footerLegal {
+  margin-top: 46px;
+}
+
+.footerLegal p {
+  margin: 0 0 8px;
+  font-family: "Courier New", monospace;
+  font-size: 14px;
+  font-weight: 700;
+  color: #050505;
+}
+
+.footerLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footerLinks a {
+  color: #050505;
+  text-decoration: none;
+  font-family: "Courier New", monospace;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.footerSocials {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.footerSocials button {
+  width: 56px;
+  height: 56px;
+  border: 0;
+  border-radius: 999px;
+  background: #ff5526;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.footerSocials img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+
+.footerNewsletter {
+  position: relative;
+}
+
+.footerEmailBar {
+  height: 72px;
+  border-radius: 999px;
+  background: #e8e1d7;
+  display: flex;
+  align-items: center;
+  padding-left: 38px;
+}
+
+.footerEmailBar input {
+  flex: 1;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font-family: "Courier New", monospace;
+  font-size: 18px;
+}
+
+.footerEmailBar button {
+  width: 58px;
+  height: 58px;
+  border: 0;
+  border-radius: 999px;
+  background: #ff5526;
+  margin-right: 6px;
+  display: grid;
+  place-items: center;
+}
+
+.footerEmailBar button img {
+  width: 28px;
+}
+
+.footerNewsletter p {
+  margin: 22px 0 0 26px;
+  max-width: 560px;
+  font-family: "Courier New", monospace;
+  font-size: 18px;
+  line-height: 1.35;
+  font-weight: 700;
+}
+
+.footerLuke {
+  position: absolute;
+  right: 0;
+  bottom: -80px;
+  width: 180px;
+}
+
+@media (max-width: 1200px) {
+  .rwlFooter {
+    grid-template-columns: 1fr;
+    padding-bottom: 200px;
+  }
+
+  .footerLuke {
+    right: 20px;
+  }
+}

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Header from "./components/Header";
+import Footer from "@/app/components/Footer";
 import "./home.css";
 
 function getTimeLeft() {
@@ -90,57 +91,9 @@ export default function Home() {
           </section>
         </section>
 
-        <footer className="homeFooter">
-          <div className="footerBrand">
-            <img
-              src="/images/read-with-luke-wordmark.png"
-              alt="Read With Luke"
-            />
+           </main>
 
-            <p>
-              Privacy * Terms
-              <br />
-              ReadwithLuke
-               <br />
-               © 2026
-              <br />
-             All rights reserved.
-            </p>
-          </div>
-
-          <nav className="footerLinks">
-            <Link href="/">Home</Link>
-            <Link href="/about">About</Link>
-            <Link href="/help">Help</Link>
-            <Link href="/contact">Contact</Link>
-          </nav>
-
-          <div className="footerSocials">
-            <button><img src="/images/icon-facebook.png" alt="" /></button>
-            <button><img src="/images/icon-instagram.png" alt="" /></button>
-            <button><img src="/images/icon-youtube.png" alt="" /></button>
-          </div>
-
-          <div className="newsletter">
-            <form className="emailBar">
-              <input type="email" placeholder="email for newsletter" />
-              <button>
-                <img src="/images/icon-send.png" alt="" />
-              </button>
-            </form>
-
-            <p>
-              Sign up!
-            </p>
-
-            <img
-              src="/images/luke-thumbs-up.png"
-              alt="Luke"
-              className="footerLuke"
-            />
-          </div>
-        </footer>
-      </main>
+      <Footer />
     </>
   );
 }
