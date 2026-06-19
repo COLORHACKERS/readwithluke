@@ -128,9 +128,7 @@ export default function Home() {
             </form>
 
             <p>
-              Sign up for our newsletter for new books,
-              <br />
-              announcements, games and more!
+              Sign up!
             </p>
 
             <img
