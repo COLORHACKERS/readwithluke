@@ -141,7 +141,8 @@ async function deleteBook(book: Book) {
     .eq("book_id", book.id);
 
   if (pagesError) {
-    alert(pagesError.message);
+    console.error("Pages delete error:", pagesError);
+    alert(`Pages delete error: ${pagesError.message}`);
     setSaving(false);
     return;
   }
@@ -152,10 +153,13 @@ async function deleteBook(book: Book) {
     .eq("id", book.id);
 
   if (bookError) {
-    alert(bookError.message);
+    console.error("Book delete error:", bookError);
+    alert(`Book delete error: ${bookError.message}`);
     setSaving(false);
     return;
   }
+
+  setBooks((current) => current.filter((b) => b.id !== book.id));
 
   if (editingId === book.id) {
     resetForm();
@@ -163,7 +167,6 @@ async function deleteBook(book: Book) {
 
   setMessage(`Deleted "${book.title}"`);
   setSaving(false);
-  loadBooks();
 }
   async function handleCoverUpload(file: File) {
     const url = await uploadImage(file, "covers");
