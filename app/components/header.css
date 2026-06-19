@@ -1,13 +1,13 @@
 .mainHeader {
-  width: min(calc(100vw - 72px), 1848px);
-  height: 92px;
-  margin: 24px auto 0;
-  background: white;
+  width: min(calc(100vw - 80px), 1840px);
+  height: 108px;
+  margin: 40px auto 0;
+  background: #ffffff;
   border-radius: 0 0 26px 26px;
   display: grid;
-  grid-template-columns: 260px 1fr 180px;
+  grid-template-columns: 260px 1fr 210px;
   align-items: center;
-  padding: 0 26px;
+  padding: 0 28px;
   box-sizing: border-box;
   position: relative;
   z-index: 50;
@@ -15,15 +15,15 @@
 
 .headerLogo {
   position: relative;
-  height: 120px;
+  height: 108px;
   display: block;
 }
 
 .headerLogo img {
   position: absolute;
-  left: -20px;
-  top: -30px;
-  width: 230px;
+  left: -6px;
+  bottom: -2px;
+  width: 178px;
   z-index: 5;
 }
 
@@ -31,16 +31,20 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 76px;
+  gap: 86px;
+  height: 100%;
 }
 
 .mainNav a {
   color: #050505;
   text-decoration: none;
-  font-family: "Courier New";
-  font-size: 24px;
+  font-family: "DK Woolwich", "Courier New", monospace;
+  font-size: 26px;
   line-height: 1;
   position: relative;
+  display: flex;
+  align-items: center;
+  height: 100%;
 }
 
 .mainNav a.active::after {
@@ -48,7 +52,7 @@
   position: absolute;
   left: 0;
   right: 0;
-  bottom: -18px;
+  bottom: 24px;
   height: 5px;
   background: #ff5526;
 }
@@ -61,23 +65,23 @@
 }
 
 .headerStreak {
-  height: 58px;
-  min-width: 92px;
+  height: 64px;
+  min-width: 104px;
   border-radius: 999px;
   background: #f3eee4;
   display: grid;
   place-items: center;
   font-family: "Courier New", monospace;
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 700;
 }
 
 .headerAvatar {
-  width: 58px;
-  height: 58px;
+  width: 64px;
+  height: 64px;
   border-radius: 999px;
   background: #ff5526;
-  border: 7px solid #ffbd18;
+  border: 8px solid #ffbd18;
   display: grid;
   place-items: center;
   font-family: "Courier New", monospace;
@@ -89,24 +93,35 @@
   .mainHeader {
     width: calc(100vw - 32px);
     height: auto;
+    margin-top: 20px;
     grid-template-columns: 1fr;
     gap: 18px;
     padding: 18px;
   }
 
   .headerLogo {
-    height: 86px;
+    height: 82px;
   }
 
   .headerLogo img {
-    width: 170px;
-    top: -20px;
+    width: 150px;
+    bottom: 0;
   }
 
   .mainNav {
+    height: auto;
     flex-wrap: wrap;
     justify-content: flex-start;
     gap: 22px;
+  }
+
+  .mainNav a {
+    height: auto;
+    font-size: 22px;
+  }
+
+  .mainNav a.active::after {
+    bottom: -10px;
   }
 
   .headerRight {
