@@ -1,10 +1,4 @@
-@font-face {
-  font-family: "DK Woolwich";
-  src: url("/fonts/DK-Woolwich-Regular.otf") format("opentype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
+
 
 .homePage {
   width: min(100vw, 1920px);
