@@ -15,7 +15,7 @@
 }
 
 .homeHero {
-  height: 970px;
+  height: 860px;
   position: relative;
   overflow: hidden;
 }
@@ -98,9 +98,9 @@
   position: absolute;
   left: 50px;
   right: 50px;
-  bottom: --40px;
+  bottom: 48px;
   z-index: 4;
-  height: 620px;
+  height: 320px;
   background: white;
   border-radius: 0 0 28px 28px;
   padding: 36px 92px;
@@ -110,13 +110,13 @@
 .carouselImages {
   height: 100%;
   display: grid;
-  grid-template-columns: repeat(4, 280px);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   justify-content: center;
   gap: 28px;
 }
 
 .carouselImages img {
-  width: 280px;
+  width: 100%;
   height: 250px;
   object-fit: cover;
   border-radius: 20px;
