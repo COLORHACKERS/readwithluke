@@ -178,7 +178,9 @@ export default function LibraryPage() {
             <Link href="/admin">Open Admin</Link>
           </div>
         )}
-      </main>
+       </main>
+
+      <Footer />
     </>
   );
 }

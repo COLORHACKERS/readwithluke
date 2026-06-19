@@ -207,6 +207,41 @@
   color: #ff5526;
   font-weight: 700;
 }
+.bookCard {
+  display: flex;
+  flex-direction: column;
+}
+.bookInfo {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.bookActions {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 20px;
+}
+.libraryCard {
+  display: flex;
+  flex-direction: column;
+}
+
+.libraryCardBody {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.libraryCardBody p {
+  flex: 1;
+}
+
+.libraryCardActions {
+  margin-top: auto;
+}
 
 @media (max-width: 1200px) {
   .libraryPage {
