@@ -1,5 +1,5 @@
 .mainHeader {
-  width: min(calc(100vw - 72px), 1848px);
+  width: min(calc(100vw - 72px), 1368px);
   height: 92px;
   margin: 24px auto 0;
   background: #ffffff;
@@ -94,6 +94,11 @@
   font-family: "Courier New", monospace;
   font-size: 16px;
   font-weight: 700;
+}
+.headerWrap {
+  width: 100%;
+  max-width: 1440px;
+  margin: 20px auto 0;
 }
 
 @media (max-width: 1100px) {
