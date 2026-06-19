@@ -47,9 +47,13 @@ export default function Home() {
             </h1>
 
             <p>
-              Stories for kids that are magical, exciting, and cinematic like
-              movies. Fascinating facts and fun learnings that inspire and grow
-              imagination!
+              Stories for kids that are magical,
+              <br />
+              exciting, and cinematic like movies.
+              <br />
+              Fascinating facts and fun learnings that
+              <br />
+              inspire and grow imagination!
             </p>
           </div>
 
@@ -69,7 +73,9 @@ export default function Home() {
           </div>
 
           <section className="homeCarousel">
-            <button className="carouselBtn left">←</button>
+            <button className="carouselBtn left">
+              <img src="/images/icon-arrow-left.png" alt="" />
+            </button>
 
             <div className="carouselImages">
               <img src="/images/home-card-1.png" alt="" />
@@ -78,13 +84,18 @@ export default function Home() {
               <img src="/images/home-card-4.png" alt="" />
             </div>
 
-            <button className="carouselBtn right">→</button>
+            <button className="carouselBtn right">
+              <img src="/images/icon-arrow-right.png" alt="" />
+            </button>
           </section>
         </section>
 
         <footer className="homeFooter">
           <div className="footerBrand">
-            <img src="/images/read-with-luke-wordmark.png" alt="Read With Luke" />
+            <img
+              src="/images/read-with-luke-wordmark.png"
+              alt="Read With Luke"
+            />
 
             <p>
               Privacy * Terms
@@ -103,28 +114,23 @@ export default function Home() {
           </nav>
 
           <div className="footerSocials">
-            <button aria-label="Facebook">
-              <img src="/images/icon-facebook.png" alt="" />
-            </button>
-            <button aria-label="Instagram">
-              <img src="/images/icon-instagram.png" alt="" />
-            </button>
-            <button aria-label="YouTube">
-              <img src="/images/icon-youtube.png" alt="" />
-            </button>
+            <button><img src="/images/icon-facebook.png" alt="" /></button>
+            <button><img src="/images/icon-instagram.png" alt="" /></button>
+            <button><img src="/images/icon-youtube.png" alt="" /></button>
           </div>
 
           <div className="newsletter">
             <form className="emailBar">
               <input type="email" placeholder="email for newsletter" />
-              <button aria-label="Submit">
+              <button>
                 <img src="/images/icon-send.png" alt="" />
               </button>
             </form>
 
             <p>
-              Sign up for our newsletter for new books, announcements, games and
-              more!
+              Sign up for our newsletter for new books,
+              <br />
+              announcements, games and more!
             </p>
 
             <img

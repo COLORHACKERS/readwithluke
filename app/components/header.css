@@ -1,29 +1,32 @@
 .mainHeader {
-  width: min(calc(100vw - 80px), 1840px);
-  height: 108px;
-  margin: 40px auto 0;
+  width: min(calc(100vw - 72px), 1848px);
+  height: 92px;
+  margin: 24px auto 0;
   background: #ffffff;
-  border-radius: 0 0 26px 26px;
+  border-radius: 0 0 24px 24px;
   display: grid;
-  grid-template-columns: 260px 1fr 210px;
+  grid-template-columns: 240px 1fr 180px;
   align-items: center;
-  padding: 0 28px;
+  padding: 0 26px;
   box-sizing: border-box;
-  position: relative;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0;
   z-index: 50;
 }
 
 .headerLogo {
   position: relative;
-  height: 108px;
+  height: 92px;
   display: block;
 }
 
 .headerLogo img {
   position: absolute;
-  left: -6px;
+  left: -10px;
   bottom: -2px;
-  width: 178px;
+  width: 150px;
   z-index: 5;
 }
 
@@ -31,20 +34,20 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 86px;
+  gap: 74px;
   height: 100%;
 }
 
 .mainNav a {
   color: #050505;
   text-decoration: none;
-  font-family: "DK Woolwich", "Courier New", monospace;
-  font-size: 26px;
-  line-height: 1;
+  font-family: "Courier New", monospace;
+  font-size: 14pt;
+  font-weight: 700;
   position: relative;
+  height: 100%;
   display: flex;
   align-items: center;
-  height: 100%;
 }
 
 .mainNav a.active::after {
@@ -52,8 +55,8 @@
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 24px;
-  height: 5px;
+  bottom: 19px;
+  height: 4px;
   background: #ff5526;
 }
 
@@ -65,23 +68,10 @@
 }
 
 .headerStreak {
-  height: 64px;
-  min-width: 104px;
+  height: 54px;
+  min-width: 92px;
   border-radius: 999px;
   background: #f3eee4;
-  display: grid;
-  place-items: center;
-  font-family: "Courier New", monospace;
-  font-size: 22px;
-  font-weight: 700;
-}
-
-.headerAvatar {
-  width: 64px;
-  height: 64px;
-  border-radius: 999px;
-  background: #ff5526;
-  border: 8px solid #ffbd18;
   display: grid;
   place-items: center;
   font-family: "Courier New", monospace;
@@ -89,42 +79,15 @@
   font-weight: 700;
 }
 
-@media (max-width: 900px) {
-  .mainHeader {
-    width: calc(100vw - 32px);
-    height: auto;
-    margin-top: 20px;
-    grid-template-columns: 1fr;
-    gap: 18px;
-    padding: 18px;
-  }
-
-  .headerLogo {
-    height: 82px;
-  }
-
-  .headerLogo img {
-    width: 150px;
-    bottom: 0;
-  }
-
-  .mainNav {
-    height: auto;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    gap: 22px;
-  }
-
-  .mainNav a {
-    height: auto;
-    font-size: 22px;
-  }
-
-  .mainNav a.active::after {
-    bottom: -10px;
-  }
-
-  .headerRight {
-    justify-content: flex-start;
-  }
+.headerAvatar {
+  width: 54px;
+  height: 54px;
+  border-radius: 999px;
+  background: #ff5526;
+  border: 7px solid #ffbd18;
+  display: grid;
+  place-items: center;
+  font-family: "Courier New", monospace;
+  font-size: 16px;
+  font-weight: 700;
 }
