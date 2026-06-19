@@ -106,25 +106,25 @@
   bottom: 20px;
   z-index: 4;
 
-  height: 620px;
+  height: 470px;
 
   background: white;
   border-radius: 0 0 30px 30px;
 
-  padding: 40px 70px;
+  padding: 36px 90px;
   box-sizing: border-box;
 }
 
 .carouselImages {
   display: grid;
-  grid-template-columns: repeat(4, 370px);
+  grid-template-columns: repeat(4, 280px);
   justify-content: center;
-  gap: 24px;
+  gap: 28px;
 }
 
 .carouselImages img {
-  width: 370px;
-  height: 495px;
+  width: 280px;
+  height: 375px;
   object-fit: cover;
   border-radius: 22px;
   display: block;
