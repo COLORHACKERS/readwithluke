@@ -201,9 +201,9 @@
   background:
     linear-gradient(
       180deg,
-      rgba(248, 241, 230, 0.15) 0%,
+      rgba(248, 241, 230, 0.9) 100%,
       rgba(248, 241, 230, 0.5) 25%,
-      rgba(248, 241, 230, 0.9) 100%
+      rgba(248, 241, 230, 0.15) 0%
     ),
     url("/images/home-bottom-bg.png");
   background-size: cover;
