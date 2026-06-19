@@ -34,14 +34,22 @@ export default function Home() {
       <Header />
 
       <main className="homePage">
-        <section className="homeHero">
-          <div className="heroText">
+        <section className="homeTopHero">
+          <img
+            src="/images/home-hero.png"
+            alt="Read With Luke"
+            className="homeHeroBg"
+          />
+
+          <div className="homeHeroOverlay">
             <p className="eyebrow">READ WITH LUKE SOFT LAUNCH</p>
+
             <h1>
               Stories Today.
               <br />
               <span>Curiosity Forever.</span>
             </h1>
+
             <p className="heroCopy">
               Magical stories, fascinating facts, and fun adventures that
               inspire curious kids.
@@ -51,19 +59,16 @@ export default function Home() {
               <Link href="/library" className="primaryBtn">
                 READ STORIES
               </Link>
+
               <Link href="/learn" className="secondaryBtn">
                 LEARN WITH LUKE
               </Link>
             </div>
           </div>
-
-          <div className="heroImage">
-            <img src="/images/home-hero.png" alt="Luke reading" />
-          </div>
         </section>
 
         <section className="trialCard">
-          <div className="rocket">🚀</div>
+          <div className="trialRocketPlaceholder">🚀</div>
 
           <div className="trialContent">
             <div className="softBadge">⭐ SOFT LAUNCH</div>
@@ -91,7 +96,7 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="trialSeal">
+          <div className="trialStampPlaceholder">
             <span>Trial Started</span>
             <strong>June 18, 2026</strong>
             <small>90 Days Free</small>
@@ -106,17 +111,43 @@ export default function Home() {
           </h2>
 
           <div className="featureGrid">
-            <Feature className="featureYellow" icon="📖" title="Read" text="Enjoy exciting stories that spark imagination." />
-            <Feature className="featureBlue" icon="🪐" title="Learn" text="Discover cool things like why astronauts wear suits in space." />
-            <Feature className="featurePurple" icon="⭐" title="Stickers" text="Collect rewards as you read and learn." />
-            <Feature className="featureGreen" icon="📈" title="Progress" text="Track growth and celebrate wins." />
-            <Feature className="featurePink" icon="🎁" title="Rewards" text="Unlock surprises for hard work." />
+            <Feature
+              className="featureYellow"
+              icon="📖"
+              title="Read"
+              text="Enjoy exciting stories that spark imagination."
+            />
+            <Feature
+              className="featureBlue"
+              icon="🪐"
+              title="Learn"
+              text="Discover cool things like why astronauts wear suits in space."
+            />
+            <Feature
+              className="featurePurple"
+              icon="⭐"
+              title="Stickers"
+              text="Collect rewards as you read and learn."
+            />
+            <Feature
+              className="featureGreen"
+              icon="📈"
+              title="Progress"
+              text="Track growth and celebrate wins."
+            />
+            <Feature
+              className="featurePink"
+              icon="🎁"
+              title="Rewards"
+              text="Unlock surprises for hard work."
+            />
           </div>
         </section>
 
         <section className="missionGrid">
           <div className="missionCard lukeCard">
             <div className="lukeFace">🧒</div>
+
             <div>
               <h3>Hey there! I’m Luke.</h3>
               <p>
@@ -129,6 +160,7 @@ export default function Home() {
 
           <div className="missionCard supportCard">
             <div className="heartIcon">❤️</div>
+
             <div>
               <h3>Support Our Mission</h3>
               <p>
