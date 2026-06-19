@@ -128,6 +128,8 @@
 /* HERO */
 
 .heroText {
+    font-family: "DK Woolwich", sans-serif;
+  font-weight: 400;
   position: relative;
   z-index: 2;
   margin-left: 70px;
