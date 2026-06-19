@@ -34,10 +34,10 @@ export default function Home() {
       <Header />
 
       <main className="homePage">
-    <section className="homeTopHero">
+<section className="homeTopHero">
   <img
     src="/images/home-hero.png"
-    alt="Luke reading"
+    alt="Read With Luke"
     className="homeHeroBg"
   />
 
@@ -52,47 +52,47 @@ export default function Home() {
 
     <p className="heroCopy">
       Magical stories, fascinating facts, and fun adventures that inspire
-      curious minds.
+      curious minds ages 3–10.
     </p>
   </div>
-</section>
 
-<section className="trialCard">
-  <div className="trialRocketPlaceholder">
-    🚀
-  </div>
-
-  <div className="trialContent">
-    <div className="softBadge">⭐ SOFT LAUNCH</div>
-
-    <h2>START YOUR FREE TRIAL</h2>
-
-    <p>
-      We’re in <strong>soft launch!</strong> Support us as we work towards our{" "}
-      <strong>grand launch.</strong>
-    </p>
-
-    <div className="timerBox">
-      <p>Your free trial ends in</p>
-
-      <div className="timerGrid">
-        <TimeUnit label="Days" value={timeLeft.days} />
-        <TimeUnit label="Hours" value={timeLeft.hours} />
-        <TimeUnit label="Minutes" value={timeLeft.minutes} />
-        <TimeUnit label="Seconds" value={timeLeft.seconds} />
-      </div>
+  <section className="trialCard">
+    <div className="trialRocketPlaceholder">
+      🚀
     </div>
 
-    <Link href="/library" className="trialBtn">
-      START YOUR FREE TRIAL →
-    </Link>
-  </div>
+    <div className="trialContent">
+      <div className="softBadge">⭐ SOFT LAUNCH</div>
 
-  <div className="trialStampPlaceholder">
-    <span>Trial Started</span>
-    <strong>June 18, 2026</strong>
-    <small>90 Days Free</small>
-  </div>
+      <h2>START YOUR FREE TRIAL</h2>
+
+      <p>
+        We’re in <strong>soft launch!</strong> Support us as we work
+        towards our <strong>grand launch.</strong>
+      </p>
+
+      <div className="timerBox">
+        <p>Your free trial ends in</p>
+
+        <div className="timerGrid">
+          <TimeUnit label="Days" value={timeLeft.days} />
+          <TimeUnit label="Hours" value={timeLeft.hours} />
+          <TimeUnit label="Minutes" value={timeLeft.minutes} />
+          <TimeUnit label="Seconds" value={timeLeft.seconds} />
+        </div>
+      </div>
+
+      <Link href="/library" className="trialBtn">
+        START YOUR FREE TRIAL →
+      </Link>
+    </div>
+
+    <div className="trialStampPlaceholder">
+      <span>Trial Started</span>
+      <strong>June 18, 2026</strong>
+      <small>90 Days Free</small>
+    </div>
+  </section>
 </section>
 
         <section className="exploreSection">
