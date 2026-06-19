@@ -91,37 +91,37 @@ export default function Home() {
             </div>
           </Link>
         </section>
-<section className="bottomStoryWorld">
-        <section className="lukeIntro">
-          <div>
-            <h2>Hey there! I’m Luke.</h2>
+        <section className="bottomStoryWorld">
+          <section className="lukeIntro">
+            <div>
+              <h2>Hey there! I’m Luke.</h2>
+              <p>
+                Since I was 4 years old I’ve been creating fun stories before
+                bedtime. I wrote down the stories with my parents and now we are
+                ready to share! I created <strong>Read with Luke</strong> to make
+                reading and learning fun and exciting like movies and fun comics.
+                Growing up should be full of imagination and wonder! I teamed up
+                with my dad to bring our stories to life.
+              </p>
+              <p>
+                Thanks for being here! You’re helping to make my dream come true!
+              </p>
+            </div>
+
+            <img src="/images/luke-intro.png" alt="Luke" />
+          </section>
+
+          <section className="finalTrial">
+            <h2>START YOUR FREE TRIAL</h2>
             <p>
-              Since I was 4 years old I’ve been creating fun stories before
-              bedtime. I wrote down the stories with my parents and now we are
-              ready to share! I created <strong>Read with Luke</strong> to make
-              reading and learning fun and exciting like movies and fun comics.
-              Growing up should be full of imagination and wonder! I teamed up
-              with my dad to bring our stories to life.
+              We’re in <strong>early phase!</strong> Enjoy our books and learnings
+              as we work towards our <strong>LAUNCH!</strong>
             </p>
-            <p>
-              Thanks for being here! You’re helping to make my dream come true!
-            </p>
-          </div>
 
-          <img src="/images/luke-intro.png" alt="Luke" />
-        </section>
+            <Link href="/library">START TRIAL</Link>
 
-        <section className="finalTrial">
-          <h2>START YOUR FREE TRIAL</h2>
-          <p>
-            We’re in <strong>early phase!</strong> Enjoy our books and learnings
-            as we work towards our <strong>LAUNCH!</strong>
-          </p>
-
-          <Link href="/library">START TRIAL</Link>
-
-          <small>$12.99 a month after trial. Cancel anytime.</small>
-        </section>
+            <small>$12.99 a month after trial. Cancel anytime.</small>
+          </section>
         </section>
       </main>
     </>
