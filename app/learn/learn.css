@@ -1,65 +1,149 @@
 .learnPage {
-  padding: 40px;
-  background: #f8f1e6;
-  min-height: calc(100vh - 86px);
+  position: relative;
+  max-width: 1440px;
+  margin: 0 auto;
+  min-height: 100vh;
 }
 
-.learnPage h1 {
-  color: #13294b;
-  font-size: 48px;
-  margin-bottom: 30px;
+.learnBg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.learnHero {
+  padding: 34px 48px 0;
+}
+
+.learnHero h1 {
+  margin: 0;
+  font-size: 86px;
+  line-height: .9;
+  font-family: "DW Wool";
+}
+
+.learnHero p {
+  margin-top: 8px;
+  font-size: 20px;
+  font-family: "Courier New", monospace;
 }
 
 .learnGrid {
+  padding: 36px 40px 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill,minmax(320px,1fr));
-  gap: 24px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
 }
 
 .learnCard {
-  text-decoration: none;
-  color: #13294b;
-}
-
-.learnCard img {
-  width: 100%;
-  height: 420px;
-  object-fit: cover;
-  border-radius: 24px;
-}
-
-.learnCard h2 {
-  margin-top: 12px;
-}
-
-.learnViewer {
-  height: calc(100vh - 86px);
-  background: #f8f1e6;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-}
-
-.learnFullImage {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-}
-
-.learnClose {
-  position: absolute;
-  top: 24px;
-  right: 24px;
-  width: 60px;
-  height: 60px;
-  border-radius: 999px;
   background: white;
-  color: #13294b;
-  text-decoration: none;
-  font-size: 40px;
-  font-weight: 900;
+  border-radius: 24px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+.learnCardImage {
+  width: 100%;
+  aspect-ratio: 6 / 8;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+.learnCardBody {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.learnCardBody h2 {
+  text-align: center;
+  margin: 20px 0 12px;
+  font-size: 36px;
+  line-height: .9;
+  font-family: "DW Wool";
+}
+
+.learnCardBody p {
+  text-align: center;
+  font-size: 16px;
+  line-height: 1.3;
+  font-family: "Courier New", monospace;
+  flex: 1;
+}
+
+.learnCardActions {
+  display: grid;
+  grid-template-columns: 58px 1fr 58px;
+  gap: 12px;
+  margin-top: auto;
+}
+
+.learnCardActions button {
+  width: 58px;
+  height: 58px;
+  border: 0;
+  border-radius: 999px;
+  background: #ff5a26;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.learnCardActions img {
+  width: 24px;
+}
+
+.learnBtn {
+  height: 58px;
+  border-radius: 999px;
+  background: #ff5a26;
+  color: white;
+  text-decoration: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-family: "DW Wool";
+  font-size: 28px;
+}
+
+.suggestBox {
+  width: 700px;
+  margin: 56px auto 90px;
+
+  background: white;
+  border-radius: 999px;
+  padding: 14px;
+
+  display: flex;
+  align-items: center;
+}
+
+.suggestBox input {
+  flex: 1;
+  border: 0;
+  outline: 0;
+  background: transparent;
+
+  padding-left: 24px;
+
+  font-size: 20px;
+  font-family: "Courier New", monospace;
+}
+
+.suggestBox button {
+  width: 58px;
+  height: 58px;
+  border: 0;
+  border-radius: 999px;
+  background: #ff5a26;
+}
+
+.suggestBox button img {
+  width: 26px;
 }
