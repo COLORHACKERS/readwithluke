@@ -1,3 +1,9 @@
+@font-face {
+  font-family: "DK Woolwich";
+  src: url("/fonts/dk-woolwich.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+}
 .learnPage {
   position: relative;
   max-width: 1440px;
