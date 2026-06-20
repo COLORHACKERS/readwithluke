@@ -24,7 +24,7 @@ export default function MembershipPage() {
           <p className="membershipDescription">
             Create your account today and unlock unlimited access to every
             story, learning adventure, puzzle, reward, and future feature in
-            Read With Luke.
+            Read With Luke!
           </p>
 
           <p className="membershipDescription">
@@ -48,11 +48,11 @@ export default function MembershipPage() {
           </div>
 
           <Link href="/signup" className="membershipButton">
-            START FREE MEMBERSHIP
+            START FREE TRIAL
           </Link>
 
           <p className="membershipFinePrint">
-            No charge today. Cancel anytime before launch and you will never be charged.
+            No charge today. Cancel anytime.
           </p>
         </section>
       </main>
