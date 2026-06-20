@@ -54,6 +54,14 @@
   font-weight: 700;
   color: white;
 }
+.launchDate {
+  margin: 0 0 22px;
+  font-family: "Courier New", monospace;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: white;
+}
 
 /* TIMER */
 
@@ -62,11 +70,11 @@
   right: 66px;
   top: 124px;
   z-index: 3;
-  width: 540px;
+  width: 650px;
   background: #ff5526;
   color: white;
-  border-radius: 0 0 18px 18px;
-  padding: 24px 30px 22px;
+  border-radius: 0 0 24px 24px;
+  padding: 34px 42px 32px;
   text-align: center;
   box-sizing: border-box;
 }
@@ -74,9 +82,9 @@
 .homeTimer h2 {
   margin: 0;
   font-family: "DK Woolwich", "Arial Black", sans-serif;
-  font-size: 34px;
-  line-height: 1.05;
-  letter-spacing: 0.04em;
+  font-size: 48px;
+  line-height: 0.95;
+  letter-spacing: 0.03em;
 }
 
 .timerGrid {
@@ -88,16 +96,15 @@
 .timerGrid strong {
   display: block;
   font-family: "DK Woolwich", "Arial Black", sans-serif;
-  font-size: 42px;
+  font-size: 58px;
   line-height: 1;
-  letter-spacing: 0.03em;
 }
 
 .timerGrid span {
   margin-top: 4px;
   display: block;
   font-family: "Courier New", monospace;
-  font-size: 12px;
+  font-size: 16px;
 }
 
 /* CAROUSEL */
