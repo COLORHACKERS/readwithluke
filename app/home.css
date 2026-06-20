@@ -89,7 +89,7 @@
 .homeTimer h2 {
   margin: 0;
   font-family: "DK Woolwich", "Arial Black", sans-serif;
-  font-size: 48px;
+  font-size: 30px;
   line-height: 0.95;
   letter-spacing: 0.03em;
 }
@@ -103,7 +103,7 @@
 .timerGrid strong {
   display: block;
   font-family: "DK Woolwich", "Arial Black", sans-serif;
-  font-size: 58px;
+  font-size: 40px;
   line-height: 1;
 }
 
@@ -111,7 +111,7 @@
   margin-top: 4px;
   display: block;
   font-family: "Courier New", monospace;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 /* CAROUSEL */
