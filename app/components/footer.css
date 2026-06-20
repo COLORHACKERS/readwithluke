@@ -132,3 +132,12 @@
   height: 26px;
   object-fit: contain;
 }
+.footerCountdown {
+  margin-bottom: 14px;
+  color: #ff5526;
+  font-family: "Courier New", monospace;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}

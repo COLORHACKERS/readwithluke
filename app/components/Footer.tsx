@@ -1,7 +1,33 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import "./footer.css";
 
+function getTimeLeft() {
+  const launchDate = new Date("2026-09-16T00:00:00");
+  const now = new Date();
+
+  const diff = Math.max(launchDate.getTime() - now.getTime(), 0);
+
+  return {
+    days: Math.floor(diff / (1000 * 60 * 60 * 24)),
+    hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
+    minutes: Math.floor((diff / (1000 * 60)) % 60),
+  };
+}
+
 export default function Footer() {
+  const [timeLeft, setTimeLeft] = useState(getTimeLeft());
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft(getTimeLeft());
+    }, 60000);
+
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <footer className="rwlFooter">
       <div className="footerTop">
@@ -39,18 +65,35 @@ export default function Footer() {
       </div>
 
       <div className="footerBottom">
-        <div className="footerPrivacy">Privacy * Terms</div>
+        <div className="footerPrivacy">
+          Privacy • Terms
+        </div>
 
         <div className="footerCopyright">
-          ReadwithLuke © 2026
-          <br />
-         All rights reserved.
+          <div className="footerCountdown">
+            FREE UNTIL LAUNCH · {timeLeft.days} DAYS · {timeLeft.hours} HRS ·{" "}
+            {timeLeft.minutes} MIN
+          </div>
+
+          <div>
+            Read With Luke © 2026
+            <br />
+            All rights reserved.
+          </div>
         </div>
 
         <div className="footerSocials">
-          <button><img src="/images/icon-facebook.png" alt="" /></button>
-          <button><img src="/images/icon-instagram.png" alt="" /></button>
-          <button><img src="/images/icon-youtube.png" alt="" /></button>
+          <button>
+            <img src="/images/icon-facebook.png" alt="" />
+          </button>
+
+          <button>
+            <img src="/images/icon-instagram.png" alt="" />
+          </button>
+
+          <button>
+            <img src="/images/icon-youtube.png" alt="" />
+          </button>
         </div>
       </div>
     </footer>
