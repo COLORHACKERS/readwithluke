@@ -1,43 +1,50 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
+import { supabase } from "@/lib/supabase";
 import "./learn.css";
 
-const lessons = [
-  {
-    id: 1,
-    title: "Treehouse Mysteries Ep.1",
-    image: "/images/learn-1.jpg",
-    description:
-      "A story about Jack and his friends who solve mysteries in his treehouse.",
-  },
-  {
-    id: 2,
-    title: "Sammy Finds Her Way Home",
-    image: "/images/learn-2.jpg",
-    description:
-      "Learn how animals find their way home and navigate the world.",
-  },
-  {
-    id: 3,
-    title: "The Toy Maker",
-    image: "/images/learn-3.jpg",
-    description:
-      "Discover how toys are designed, manufactured and brought to life.",
-  },
-];
+type LearnItem = {
+  id: string;
+  title: string;
+  slug: string;
+  description: string | null;
+  cover_url: string | null;
+  image_url: string | null;
+  category: string | null;
+  is_published: boolean;
+};
+
 export default function LearnPage() {
+  const [items, setItems] = useState<LearnItem[]>([]);
+
+  useEffect(() => {
+    loadItems();
+  }, []);
+
+  async function loadItems() {
+    const { data, error } = await supabase
+      .from("learn_items")
+      .select("*")
+      .eq("is_published", true)
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      alert(error.message);
+      return;
+    }
+
+    setItems(data || []);
+  }
+
   return (
     <>
       <Header />
 
       <main className="learnPage">
-        <img
-          src="/images/home-hero.png"
-          alt=""
-          className="learnBg"
-        />
+        <img src="/images/home-hero.png" alt="" className="learnBg" />
 
         <section className="learnHero">
           <h1>PICK SOMETHING FUN TO LEARN.</h1>
@@ -45,29 +52,29 @@ export default function LearnPage() {
         </section>
 
         <section className="learnGrid">
-          {lessons.map((lesson) => (
-            <article className="learnCard" key={lesson.id}>
+          {items.map((item) => (
+            <article className="learnCard" key={item.id}>
               <img
-                src={lesson.image}
-                alt={lesson.title}
+                src={item.cover_url || item.image_url || "/images/6to5ratio.png"}
+                alt={item.title}
                 className="learnCardImage"
               />
 
               <div className="learnCardBody">
-                <h2>{lesson.title}</h2>
+                <h2>{item.title}</h2>
 
-                <p>{lesson.description}</p>
+                <p>{item.description || "Learn something fun with Luke."}</p>
 
                 <div className="learnCardActions">
-                  <button>
+                  <button type="button">
                     <img src="/images/heart.png" alt="" />
                   </button>
 
-                  <a href="#" className="learnBtn">
+                  <a href={`/learn/${item.slug}`} className="learnBtn">
                     LEARN
                   </a>
 
-                  <button>
+                  <button type="button">
                     <img src="/images/bookmark.png" alt="" />
                   </button>
                 </div>
@@ -77,9 +84,7 @@ export default function LearnPage() {
         </section>
 
         <section className="suggestBox">
-          <input
-            placeholder="submit something you want to learn."
-          />
+          <input placeholder="submit something you want to learn." />
 
           <button>
             <img src="/images/icon-send.png" alt="" />
