@@ -11,6 +11,10 @@
   box-sizing: border-box;
 }
 
+.learnContent {
+  width: min(1400px, 96%);
+  margin: 0 auto;
+}
 .learnBg {
   position: absolute;
   inset: 0;
@@ -20,7 +24,19 @@
   z-index: 0;
 }
 
-.learnHero,
+.learnHero {
+  width: min(1400px, 96%);
+  margin: 24px auto 0;
+  border-radius: 28px;
+  overflow: hidden;
+  background: white;
+  box-shadow: 0 8px 30px rgba(0,0,0,.12);
+}
+
+.learnHero img {
+  width: 100%;
+  display: block;
+}
 .learnGrid,
 .suggestBox {
   position: relative;
