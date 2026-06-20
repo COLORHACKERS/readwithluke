@@ -22,11 +22,20 @@ type BookPage = {
   image_url: string;
 };
 
-const emptyPages = Array.from({ length: 20 }, (_, index) => ({
+const emptyPages: BookPage[] = Array.from({ length: 20 }, (_, index) => ({
   page_number: index + 1,
   text: "",
   image_url: "",
 }));
+
+const bookCategories = [
+  "Adventure",
+  "Mystery",
+  "Animals",
+  "Places",
+  "Friends",
+  "Bedtime",
+];
 
 export default function AdminPage() {
   const [books, setBooks] = useState<Book[]>([]);
@@ -37,7 +46,9 @@ export default function AdminPage() {
   const [description, setDescription] = useState("");
   const [coverUrl, setCoverUrl] = useState("");
   const [ageRange, setAgeRange] = useState("Ages 5–8");
-  const [category, setCategory] = useState("Adventure");
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([
+    "Adventure",
+  ]);
   const [isPublished, setIsPublished] = useState(false);
   const [pages, setPages] = useState<BookPage[]>(emptyPages);
 
@@ -56,11 +67,33 @@ export default function AdminPage() {
       .replace(/^-+|-+$/g, "");
   }
 
+  function toggleCategory(category: string) {
+    setSelectedCategories((current) =>
+      current.includes(category)
+        ? current.filter((item) => item !== category)
+        : [...current, category]
+    );
+  }
+
+  function parseCategories(value: string | null) {
+    if (!value) return ["Adventure"];
+
+    return value
+      .split(",")
+      .map((item) => item.trim())
+      .filter(Boolean);
+  }
+
   async function loadBooks() {
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from("books")
       .select("*")
       .order("created_at", { ascending: false });
+
+    if (error) {
+      alert(error.message);
+      return;
+    }
 
     setBooks(data || []);
   }
@@ -72,7 +105,7 @@ export default function AdminPage() {
     setDescription("");
     setCoverUrl("");
     setAgeRange("Ages 5–8");
-    setCategory("Adventure");
+    setSelectedCategories(["Adventure"]);
     setIsPublished(false);
     setPages(emptyPages);
     setMessage("");
@@ -104,17 +137,23 @@ export default function AdminPage() {
     setDescription(book.description || "");
     setCoverUrl(book.cover_url || "");
     setAgeRange(book.age_range || "Ages 5–8");
-    setCategory(book.category || "Adventure");
+    setSelectedCategories(parseCategories(book.category));
     setIsPublished(book.is_published);
 
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from("book_pages")
       .select("*")
       .eq("book_id", book.id)
       .order("page_number", { ascending: true });
 
+    if (error) {
+      alert(error.message);
+      return;
+    }
+
     const loadedPages = emptyPages.map((emptyPage) => {
       const match = data?.find((p) => p.page_number === emptyPage.page_number);
+
       return {
         page_number: emptyPage.page_number,
         text: match?.text || "",
@@ -125,49 +164,49 @@ export default function AdminPage() {
     setPages(loadedPages);
     setMessage(`Editing "${book.title}"`);
   }
-async function deleteBook(book: Book) {
-  const confirmed = window.confirm(
-    `Delete "${book.title}" and all of its pages?`
-  );
 
-  if (!confirmed) return;
+  async function deleteBook(book: Book) {
+    const confirmed = window.confirm(
+      `Delete "${book.title}" and all of its pages?`
+    );
 
-  setSaving(true);
-  setMessage("");
+    if (!confirmed) return;
 
-  const { error: pagesError } = await supabase
-    .from("book_pages")
-    .delete()
-    .eq("book_id", book.id);
+    setSaving(true);
+    setMessage("");
 
-  if (pagesError) {
-    console.error("Pages delete error:", pagesError);
-    alert(`Pages delete error: ${pagesError.message}`);
+    const { error: pagesError } = await supabase
+      .from("book_pages")
+      .delete()
+      .eq("book_id", book.id);
+
+    if (pagesError) {
+      alert(`Pages delete error: ${pagesError.message}`);
+      setSaving(false);
+      return;
+    }
+
+    const { error: bookError } = await supabase
+      .from("books")
+      .delete()
+      .eq("id", book.id);
+
+    if (bookError) {
+      alert(`Book delete error: ${bookError.message}`);
+      setSaving(false);
+      return;
+    }
+
+    setBooks((current) => current.filter((item) => item.id !== book.id));
+
+    if (editingId === book.id) {
+      resetForm();
+    }
+
+    setMessage(`Deleted "${book.title}"`);
     setSaving(false);
-    return;
   }
 
-  const { error: bookError } = await supabase
-    .from("books")
-    .delete()
-    .eq("id", book.id);
-
-  if (bookError) {
-    console.error("Book delete error:", bookError);
-    alert(`Book delete error: ${bookError.message}`);
-    setSaving(false);
-    return;
-  }
-
-  setBooks((current) => current.filter((b) => b.id !== book.id));
-
-  if (editingId === book.id) {
-    resetForm();
-  }
-
-  setMessage(`Deleted "${book.title}"`);
-  setSaving(false);
-}
   async function handleCoverUpload(file: File) {
     const url = await uploadImage(file, "covers");
     if (url) setCoverUrl(url);
@@ -190,16 +229,21 @@ async function deleteBook(book: Book) {
       return;
     }
 
+    if (selectedCategories.length === 0) {
+      alert("Please choose at least one category.");
+      return;
+    }
+
     setSaving(true);
     setMessage("");
 
     const bookPayload = {
-      title,
-      slug,
+      title: title.trim(),
+      slug: slug.trim(),
       description,
       cover_url: coverUrl,
       age_range: ageRange,
-      category,
+      category: selectedCategories.join(", "),
       is_published: publishNow ? true : isPublished,
     };
 
@@ -233,18 +277,18 @@ async function deleteBook(book: Book) {
       setEditingId(data.id);
     }
 
-const pagesToSave = pages.map((page) => ({
-  book_id: bookId,
-  page_number: page.page_number,
-  text: page.text,
-  image_url: page.image_url,
-}));
+    const pagesToSave = pages.map((page) => ({
+      book_id: bookId,
+      page_number: page.page_number,
+      text: page.text,
+      image_url: page.image_url,
+    }));
 
-const { error: pagesError } = await supabase
-  .from("book_pages")
-  .upsert(pagesToSave, {
-    onConflict: "book_id,page_number",
-  });
+    const { error: pagesError } = await supabase
+      .from("book_pages")
+      .upsert(pagesToSave, {
+        onConflict: "book_id,page_number",
+      });
 
     if (pagesError) {
       alert(pagesError.message);
@@ -258,134 +302,158 @@ const { error: pagesError } = await supabase
     loadBooks();
   }
 
- return (
-  <AdminGate>
-    <main className="adminPage">
-      <section className="adminHeader">
-        <p>READ WITH LUKE ADMIN</p>
-        <h1>{editingId ? "Edit Book" : "Add New Book"}</h1>
-        {message && <div className="successMessage">{message}</div>}
-      </section>
+  return (
+    <AdminGate>
+      <main className="adminPage">
+        <section className="adminHeader">
+          <p>READ WITH LUKE ADMIN</p>
+          <h1>{editingId ? "Edit Book" : "Add New Book"}</h1>
+          {message && <div className="successMessage">{message}</div>}
+        </section>
 
-      <section className="bookList">
-        <div className="bookListTop">
-          <h2>Books</h2>
-          <button onClick={resetForm}>+ New Book</button>
-        </div>
+        <section className="bookList">
+          <div className="bookListTop">
+            <h2>Books</h2>
+            <button onClick={resetForm}>+ New Book</button>
+          </div>
 
-        {books.map((book) => (
-          <div className="bookRow" key={book.id}>
-            <div>
-              <strong>{book.title}</strong>
-              <span>{book.is_published ? "Published" : "Draft"}</span>
+          {books.map((book) => (
+            <div className="bookRow" key={book.id}>
+              <div>
+                <strong>{book.title}</strong>
+                <span>{book.is_published ? "Published" : "Draft"}</span>
+                <small>{book.category || "No category"}</small>
+              </div>
+
+              <div className="rowActions">
+                <button onClick={() => editBook(book)}>Edit</button>
+
+                <button
+                  className="deleteButton"
+                  onClick={() => deleteBook(book)}
+                  disabled={saving}
+                >
+                  Delete
+                </button>
+              </div>
             </div>
+          ))}
+        </section>
 
-            <div className="rowActions">
-  <button onClick={() => editBook(book)}>Edit</button>
+        <section className="adminCard">
+          <label>Book Title</label>
+          <input
+            value={title}
+            onChange={(e) => {
+              setTitle(e.target.value);
+              if (!editingId) setSlug(createSlug(e.target.value));
+            }}
+            placeholder="Treehouse Mysteries"
+          />
 
-  <button
-    className="deleteButton"
-    onClick={() => deleteBook(book)}
-  >
-    Delete
-  </button>
-</div>
+          <label>Slug</label>
+          <input
+            value={slug}
+            onChange={(e) => setSlug(createSlug(e.target.value))}
+          />
+
+          <label>Description</label>
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+
+          <label>Age Range</label>
+          <select
+            value={ageRange}
+            onChange={(e) => setAgeRange(e.target.value)}
+          >
+            <option>Ages 3–6</option>
+            <option>Ages 6+</option>
+          </select>
+
+          <label>Categories</label>
+          <div className="checkboxGrid">
+            {bookCategories.map((category) => (
+              <label className="checkboxPill" key={category}>
+                <input
+                  type="checkbox"
+                  checked={selectedCategories.includes(category)}
+                  onChange={() => toggleCategory(category)}
+                />
+                <span>{category}</span>
+              </label>
+            ))}
           </div>
-        ))}
-      </section>
 
-      <section className="adminCard">
-        <label>Book Title</label>
-        <input
-          value={title}
-          onChange={(e) => {
-            setTitle(e.target.value);
-            if (!editingId) setSlug(createSlug(e.target.value));
-          }}
-          placeholder="Treehouse Mysteries"
-        />
+          <label>Cover Image</label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file) handleCoverUpload(file);
+            }}
+          />
 
-        <label>Slug</label>
-        <input value={slug} onChange={(e) => setSlug(createSlug(e.target.value))} />
-
-        <label>Description</label>
-        <textarea value={description} onChange={(e) => setDescription(e.target.value)} />
-
-        <label>Age Range</label>
-        <select value={ageRange} onChange={(e) => setAgeRange(e.target.value)}>
-          <option>Ages 3–6</option>
-          <option>Ages 6+</option>
-        </select>
-
-        <label>Category</label>
-        <select value={category} onChange={(e) => setCategory(e.target.value)}>
-          <option>Adventure</option>
-          <option>Fantasy</option>
-          <option>Animals</option>
-          <option>Mystery</option>
-          <option>Funny</option>
-          <option>Bedtime</option>
-          <option>Learning</option>
-        </select>
-
-        <label>Cover Image</label>
-        <input
-          type="file"
-          accept="image/*"
-          onChange={(e) => {
-            const file = e.target.files?.[0];
-            if (file) handleCoverUpload(file);
-          }}
-        />
-
-        {coverUrl && <img src={coverUrl} alt="Cover preview" className="coverPreview" />}
-      </section>
-
-      <section className="pagesGrid">
-        {pages.map((page, index) => (
-          <div className="pageCard" key={page.page_number}>
-            <h2>Page {page.page_number}</h2>
-
-            <label>Page Image</label>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => {
-                const file = e.target.files?.[0];
-                if (file) handlePageImageUpload(file, index);
-              }}
+          {coverUrl && (
+            <img
+              src={coverUrl}
+              alt="Cover preview"
+              className="coverPreview"
             />
+          )}
+        </section>
 
-            {page.image_url && (
-              <img src={page.image_url} alt="" className="pagePreview" />
-            )}
+        <section className="pagesGrid">
+          {pages.map((page, index) => (
+            <div className="pageCard" key={page.page_number}>
+              <h2>Page {page.page_number}</h2>
 
-            <label>Page Text</label>
-            <textarea
-              value={page.text}
-              onChange={(e) => {
-                const value = e.target.value;
-                setPages((current) =>
-                  current.map((p, i) =>
-                    i === index ? { ...p, text: value } : p
-                  )
-                );
-              }}
-            />
-          </div>
-        ))}
-      </section>
+              <label>Page Image</label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) handlePageImageUpload(file, index);
+                }}
+              />
 
-      <div className="adminActions">
-        <button onClick={() => saveBook(false)} disabled={saving}>
-          {saving ? "Saving..." : "Save Draft"}
-        </button>
+              {page.image_url && (
+                <img src={page.image_url} alt="" className="pagePreview" />
+              )}
 
-        <button className="publishButton" onClick={() => saveBook(true)} disabled={saving}>
-          Publish Book
-        </button>
-      </div>
-    </main>
-  </AdminGate>
+              <label>Page Text</label>
+              <textarea
+                value={page.text}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  setPages((current) =>
+                    current.map((item, i) =>
+                      i === index ? { ...item, text: value } : item
+                    )
+                  );
+                }}
+              />
+            </div>
+          ))}
+        </section>
+
+        <div className="adminActions">
+          <button onClick={() => saveBook(false)} disabled={saving}>
+            {saving ? "Saving..." : "Save Draft"}
+          </button>
+
+          <button
+            className="publishButton"
+            onClick={() => saveBook(true)}
+            disabled={saving}
+          >
+            Publish Book
+          </button>
+        </div>
+      </main>
+    </AdminGate>
   );
 }

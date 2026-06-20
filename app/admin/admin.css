@@ -354,3 +354,33 @@
   font-size: 72px;
   margin-bottom: 12px;
 }
+.checkboxGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 8px 0 22px;
+}
+
+.checkboxPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 999px;
+  background: white;
+  border: 2px solid #13294b;
+  padding: 10px 14px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.checkboxPill input {
+  width: auto;
+  margin: 0;
+}
+
+.bookRow small {
+  display: block;
+  margin-top: 4px;
+  opacity: 0.65;
+  font-weight: 800;
+}
