@@ -164,8 +164,8 @@ font-family: "DK Woolwich", "Arial Black", sans-serif;
 
 .headerLogin {
   background: white;
-  color: #050505;
-  border: 2px solid #050505;
+  color: #ff5526;
+  border: 1px solid #ff5526;
 }
 
 .headerLogin:hover {
