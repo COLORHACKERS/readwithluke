@@ -102,7 +102,7 @@
 
 .timerGrid strong {
   display: block;
-  font-family: "DK Woolwich", "Arial Black", sans-serif;
+  font-family: "Courier New", monospace;
   font-size: 40px;
   line-height: 1;
 }
