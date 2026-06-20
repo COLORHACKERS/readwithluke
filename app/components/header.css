@@ -1,14 +1,18 @@
 .mainHeader {
-  width: min(calc(100vw - 48px), 1368px);
-  height: 92px;
+  width: min(calc(100vw - 72px), 1368px);
+  height: 82px;
   margin: 24px auto 0;
   background: #ffffff;
   border-radius: 0 0 24px 24px;
+
   display: grid;
-  grid-template-columns: 190px 1fr 150px;
-  align-items: center;
+  grid-template-columns: 230px 1fr 140px;
+
+  align-items: end;
+
   padding: 0 24px;
   box-sizing: border-box;
+
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
@@ -17,34 +21,41 @@
 }
 
 .headerLogo {
-  height: 92px;
-  display: flex;
-  align-items: center;
-}
-
-.headerLogo img {
-  width: 132px;
+  position: relative;
+  height: 82px;
   display: block;
 }
 
+.headerLogo img {
+  position: absolute;
+  left: -8px;
+  bottom: -2px;
+
+  width: 165px;
+  height: auto;
+
+  z-index: 20;
+}
+
 .mainNav {
+  height: 82px;
+
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: clamp(28px, 4vw, 72px);
-  white-space: nowrap;
-}
 
+  gap: clamp(34px, 5vw, 82px);
+}
 .mainNav a {
   color: #050505;
   text-decoration: none;
+
   font-family: "Courier New", monospace !important;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 900;
+
   line-height: 1;
   position: relative;
-  display: inline-flex;
-  align-items: center;
 }
 
 .mainNav a.active::after {
@@ -58,21 +69,35 @@
 }
 
 .headerRight {
+  height: 82px;
+
   display: flex;
   justify-content: flex-end;
   align-items: center;
+
   gap: 14px;
 }
 
 .headerStreak,
 .headerAvatar {
-  width: 58px;
-  height: 58px;
+  width: 48px;
+  height: 48px;
+
   border-radius: 999px;
+
+  background: #ff5526;
+  border: 6px solid #ffbd18;
+
   display: grid;
   place-items: center;
+
+  color: #050505;
+
+  font-family: "Courier New", monospace;
+  font-size: 14px;
+  font-weight: 900;
+
   text-decoration: none;
-  box-sizing: border-box;
 }
 
 .headerStreak {
