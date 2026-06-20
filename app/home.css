@@ -77,7 +77,7 @@
   right: 66px;
   top: 124px;
   z-index: 3;
-  width: 450px;
+  width: 500px;
   background: #ff5526;
   color: white;
   border-radius: 0 0 24px 24px;
@@ -103,7 +103,7 @@
 .timerGrid strong {
   display: block;
   font-family: "Courier New", monospace;
-  font-size: 30px;
+  font-size: 20px;
   line-height: 1;
 }
 
