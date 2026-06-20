@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
-import "../admin.css";
 import AdminGate from "@/app/components/AdminGate";
+import "../admin.css";
 
 type LearnItem = {
   id: string;
@@ -15,6 +15,18 @@ type LearnItem = {
   category: string | null;
   is_published: boolean;
 };
+
+const learnCategories = [
+  "Learning",
+  "Space",
+  "Science",
+  "Animals",
+  "Nature",
+  "History",
+  "Ocean",
+  "Dinosaurs",
+  "How Things Work",
+];
 
 export default function LearnAdminPage() {
   const [items, setItems] = useState<LearnItem[]>([]);
@@ -109,35 +121,36 @@ export default function LearnAdminPage() {
     setIsPublished(item.is_published);
     setMessage(`Editing "${item.title}"`);
   }
+
   async function deleteItem(item: LearnItem) {
-  const confirmed = window.confirm(
-    `Delete "${item.title}" from Learn With Luke?`
-  );
+    const confirmed = window.confirm(
+      `Delete "${item.title}" from Learn With Luke?`
+    );
 
-  if (!confirmed) return;
+    if (!confirmed) return;
 
-  setSaving(true);
-  setMessage("");
+    setSaving(true);
+    setMessage("");
 
-  const { error } = await supabase
-    .from("learn_items")
-    .delete()
-    .eq("id", item.id);
+    const { error } = await supabase
+      .from("learn_items")
+      .delete()
+      .eq("id", item.id);
 
-  if (error) {
-    alert(error.message);
+    if (error) {
+      alert(error.message);
+      setSaving(false);
+      return;
+    }
+
+    if (editingId === item.id) {
+      resetForm();
+    }
+
+    setMessage(`Deleted "${item.title}"`);
     setSaving(false);
-    return;
+    loadItems();
   }
-
-  if (editingId === item.id) {
-    resetForm();
-  }
-
-  setMessage(`Deleted "${item.title}"`);
-  setSaving(false);
-  loadItems();
-}
 
   async function saveItem(publishNow = false) {
     if (!title.trim() || !slug.trim()) {
@@ -149,8 +162,8 @@ export default function LearnAdminPage() {
     setMessage("");
 
     const payload = {
-      title,
-      slug,
+      title: title.trim(),
+      slug: slug.trim(),
       description,
       cover_url: coverUrl,
       image_url: imageUrl,
@@ -191,119 +204,117 @@ export default function LearnAdminPage() {
     loadItems();
   }
 
- return (
-  <AdminGate>
-    <main className="adminPage">
-      <section className="adminHeader">
-        <p>READ WITH LUKE ADMIN</p>
-        <h1>{editingId ? "Edit Learn Item" : "Add Learn Item"}</h1>
-        {message && <div className="successMessage">{message}</div>}
-      </section>
+  return (
+    <AdminGate>
+      <main className="adminPage">
+        <section className="adminHeader">
+          <p>READ WITH LUKE ADMIN</p>
+          <h1>{editingId ? "Edit Learn Item" : "Add Learn Item"}</h1>
+          {message && <div className="successMessage">{message}</div>}
+        </section>
 
-      <section className="bookList">
-        <div className="bookListTop">
-          <h2>Learn With Luke</h2>
-          <button onClick={resetForm}>+ New Learn Item</button>
-        </div>
-
-        {items.map((item) => (
-          <div className="bookRow" key={item.id}>
-            <div>
-              <strong>{item.title}</strong>
-              <span>{item.is_published ? "Published" : "Draft"}</span>
-            </div>
-
-           <div className="rowActions">
-  <button onClick={() => editItem(item)}>Edit</button>
-
-  <button
-    className="deleteButton"
-    onClick={() => deleteItem(item)}
-  >
-    Delete
-  </button>
-</div>
+        <section className="bookList">
+          <div className="bookListTop">
+            <h2>Learn With Luke</h2>
+            <button onClick={resetForm}>+ New Learn Item</button>
           </div>
-        ))}
-      </section>
 
-      <section className="adminCard">
-        <label>Title</label>
-        <input
-          value={title}
-          onChange={(e) => {
-            setTitle(e.target.value);
-            if (!editingId) setSlug(createSlug(e.target.value));
-          }}
-          placeholder="Letter Sounds"
-        />
+          {items.map((item) => (
+            <div className="bookRow" key={item.id}>
+              <div>
+                <strong>{item.title}</strong>
+                <span>{item.is_published ? "Published" : "Draft"}</span>
+                <small>{item.category || "No category"}</small>
+              </div>
 
-        <label>Slug</label>
-        <input
-          value={slug}
-          onChange={(e) => setSlug(createSlug(e.target.value))}
-        />
+              <div className="rowActions">
+                <button onClick={() => editItem(item)}>Edit</button>
 
-        <label>Description</label>
-        <textarea
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
+                <button
+                  className="deleteButton"
+                  onClick={() => deleteItem(item)}
+                  disabled={saving}
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          ))}
+        </section>
 
-        <label>Category</label>
-        <select value={category} onChange={(e) => setCategory(e.target.value)}>
-          <option>Learning</option>
-          <option>Letters</option>
-          <option>Numbers</option>
-          <option>Phonics</option>
-          <option>Colors</option>
-          <option>Shapes</option>
-          <option>Animals</option>
-        </select>
+        <section className="adminCard">
+          <label>Title</label>
+          <input
+            value={title}
+            onChange={(e) => {
+              setTitle(e.target.value);
+              if (!editingId) setSlug(createSlug(e.target.value));
+            }}
+            placeholder="Why Do Astronauts Wear Space Suits?"
+          />
 
-        <label>Cover Image</label>
-        <input
-          type="file"
-          accept="image/*"
-          onChange={(e) => {
-            const file = e.target.files?.[0];
-            if (file) handleCoverUpload(file);
-          }}
-        />
+          <label>Slug</label>
+          <input
+            value={slug}
+            onChange={(e) => setSlug(createSlug(e.target.value))}
+          />
 
-        {coverUrl && (
-          <img src={coverUrl} alt="Cover preview" className="coverPreview" />
-        )}
+          <label>Description</label>
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
 
-        <label>Learn Image</label>
-        <input
-          type="file"
-          accept="image/*"
-          onChange={(e) => {
-            const file = e.target.files?.[0];
-            if (file) handleLearnImageUpload(file);
-          }}
-        />
+          <label>Category</label>
+          <select value={category} onChange={(e) => setCategory(e.target.value)}>
+            {learnCategories.map((item) => (
+              <option key={item}>{item}</option>
+            ))}
+          </select>
 
-        {imageUrl && (
-          <img src={imageUrl} alt="Learn preview" className="coverPreview" />
-        )}
-      </section>
+          <label>Cover Image</label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file) handleCoverUpload(file);
+            }}
+          />
 
-      <div className="adminActions">
-        <button onClick={() => saveItem(false)} disabled={saving}>
-          {saving ? "Saving..." : "Save Draft"}
-        </button>
+          {coverUrl && (
+            <img src={coverUrl} alt="Cover preview" className="coverPreview" />
+          )}
 
-        <button
-          className="publishButton"
-          onClick={() => saveItem(true)}
-          disabled={saving}
-        >
-          Publish Learn Item
-        </button>
-      </div>
-     </main>
-  </AdminGate>
+          <label>Learn Image</label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file) handleLearnImageUpload(file);
+            }}
+          />
+
+          {imageUrl && (
+            <img src={imageUrl} alt="Learn preview" className="coverPreview" />
+          )}
+        </section>
+
+        <div className="adminActions">
+          <button onClick={() => saveItem(false)} disabled={saving}>
+            {saving ? "Saving..." : "Save Draft"}
+          </button>
+
+          <button
+            className="publishButton"
+            onClick={() => saveItem(true)}
+            disabled={saving}
+          >
+            Publish Learn Item
+          </button>
+        </div>
+      </main>
+    </AdminGate>
   );
 }
