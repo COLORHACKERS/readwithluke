@@ -1,6 +1,7 @@
 import Link from "next/link";
-import Header from "@/app/components/header";
-import Footer from "@/app/components/footer";
+import Header from "@/app/components/Header";
+import Footer from "@/app/components/Footer";
+import "../home.css";
 import "./dashboard.css";
 
 export default function DashboardPage() {
@@ -14,6 +15,8 @@ export default function DashboardPage() {
 
       <main className="dashboardPage">
         <section className="dashboardHero">
+          <img src="/images/home-hero.png" alt="" className="dashboardBg" />
+
           <div className="dashboardText">
             <h1>
               YOUR READING
@@ -22,8 +25,11 @@ export default function DashboardPage() {
             </h1>
 
             <p>
-              Keep reading stories, finish learnings, collect rewards,
-              and build your streak every day.
+              Keep reading stories, finish learnings,
+              <br />
+              collect rewards, and build your streak
+              <br />
+              every day.
             </p>
           </div>
 
@@ -47,26 +53,32 @@ export default function DashboardPage() {
               </div>
             </div>
           </div>
-        </section>
 
-        <section className="dashboardPanel">
-          <div className="dashboardCard">
-            <h3>Continue Reading</h3>
-            <p>Jump back into your latest story.</p>
-            <Link href="/library">Go to Library</Link>
-          </div>
+          <section className="dashboardPanel">
+            <div className="dashboardCard">
+              <div>
+                <h3>Continue Reading</h3>
+                <p>Jump back into your latest magical story.</p>
+              </div>
+              <Link href="/library">Go to Library</Link>
+            </div>
 
-          <div className="dashboardCard">
-            <h3>Learn with Luke</h3>
-            <p>Finish fun facts and learning adventures.</p>
-            <Link href="/learn">Start Learning</Link>
-          </div>
+            <div className="dashboardCard">
+              <div>
+                <h3>Learn with Luke</h3>
+                <p>Finish fun facts and learning adventures.</p>
+              </div>
+              <Link href="/learn">Start Learning</Link>
+            </div>
 
-          <div className="dashboardCard">
-            <h3>Rewards</h3>
-            <p>Stickers, badges, and prizes you unlock.</p>
-            <Link href="/rewards">View Rewards</Link>
-          </div>
+            <div className="dashboardCard">
+              <div>
+                <h3>Rewards</h3>
+                <p>Collect stickers, badges, and reading prizes.</p>
+              </div>
+              <Link href="/rewards">View Rewards</Link>
+            </div>
+          </section>
         </section>
       </main>
 
