@@ -58,3 +58,21 @@
 
   cursor: pointer;
 }
+.signupCard label {
+  margin: 8px 0 -10px;
+  font-family: "Courier New", monospace;
+  font-size: 18px;
+  font-weight: 900;
+  color: #050505;
+}
+
+.signupCard select {
+  height: 58px;
+  border: 0;
+  border-radius: 999px;
+  background: #e8e2d8;
+  padding: 0 28px;
+  font-family: "Courier New", monospace;
+  font-size: 18px;
+  font-weight: 700;
+}
