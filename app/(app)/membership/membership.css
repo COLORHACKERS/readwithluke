@@ -1,18 +1,45 @@
 .membershipPage {
-  min-height: 900px;
-  background: #f8f1e6;
+  min-height: calc(100vh - 180px);
+  position: relative;
   display: grid;
   place-items: center;
   padding: 80px 24px;
+  overflow: hidden;
+}
+
+.membershipPage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("/images/home-hero.png");
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+
+.membershipPage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(248, 241, 230, 0.75);
+  z-index: 1;
 }
 
 .membershipCard {
+  position: relative;
+  z-index: 2;
+
   width: min(940px, 100%);
-  background: white;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(6px);
+
   border-radius: 42px;
   padding: 70px;
   text-align: center;
   box-sizing: border-box;
+
+  box-shadow:
+    0 20px 60px rgba(0,0,0,.15);
 }
 
 .membershipEyebrow,
