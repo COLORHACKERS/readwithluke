@@ -1,0 +1,44 @@
+.signupPage {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background: #f8f1e6;
+}
+
+.signupCard {
+  width: 420px;
+  background: white;
+  border-radius: 28px;
+  padding: 36px;
+  display: grid;
+  gap: 16px;
+}
+
+.signupCard h1 {
+  margin: 0;
+  font-size: 42px;
+}
+
+.signupCard p {
+  margin: 0 0 12px;
+  font-weight: 700;
+}
+
+.signupCard input {
+  height: 52px;
+  border: 0;
+  border-radius: 999px;
+  background: #eee8df;
+  padding: 0 18px;
+  font-size: 16px;
+}
+
+.signupCard button {
+  height: 54px;
+  border: 0;
+  border-radius: 999px;
+  background: #ff5526;
+  color: white;
+  font-weight: 900;
+  cursor: pointer;
+}
