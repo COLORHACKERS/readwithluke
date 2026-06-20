@@ -5,12 +5,6 @@
   font-style: normal;
 }
 
-.homeHeroText h1,
-.homeTimer h2,
-.timerGrid strong {
-  font-family: "DK Woolwich", "Arial Black", sans-serif !important;
-}
-
 .homePage {
   width: 100%;
   max-width: 1440px;
@@ -25,6 +19,7 @@
   position: relative;
   overflow: hidden;
 }
+
 .homeBg {
   position: absolute;
   inset: 0;
@@ -42,7 +37,7 @@
 
 .homeHeroText h1 {
   margin: 0;
-  font-family: "DK Woolwich", sans-serif;
+  font-family: "DK Woolwich", "Arial Black", sans-serif;
   font-size: 98px;
   line-height: 0.82;
   letter-spacing: -0.02em;
@@ -55,6 +50,8 @@
   line-height: 1.28;
   font-weight: 700;
 }
+
+/* TIMER */
 
 .homeTimer {
   position: absolute;
@@ -72,8 +69,8 @@
 
 .homeTimer h2 {
   margin: 0;
-  font-family: "DK Woolwich", sans-serif;
-  font-size: 28px;
+  font-family: "DK Woolwich", "Arial Black", sans-serif;
+  font-size: 34px;
   line-height: 1.05;
   letter-spacing: 0.04em;
 }
@@ -85,8 +82,9 @@
 }
 
 .timerGrid strong {
-  font-family: "Bangers", cursive;
-  font-size: 54px;
+  display: block;
+  font-family: "DK Woolwich", "Arial Black", sans-serif;
+  font-size: 42px;
   line-height: 1;
   letter-spacing: 0.03em;
 }
@@ -98,16 +96,18 @@
   font-size: 12px;
 }
 
+/* CAROUSEL */
+
 .homeCarousel {
   position: absolute;
   left: 82px;
   right: 82px;
-  top: 615px;
+  top: 625px;
   z-index: 4;
-  height: 445px;
+  height: 365px;
   background: white;
   border-radius: 22px;
-  padding: 28px 72px 24px;
+  padding: 28px 70px 22px;
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -117,9 +117,9 @@
 .homeCarousel::after {
   content: "";
   position: absolute;
-  top: 142px;
-  width: 96px;
-  height: 160px;
+  top: 122px;
+  width: 88px;
+  height: 150px;
   background: white;
   border-radius: 999px;
   z-index: -1;
@@ -138,7 +138,7 @@
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   align-items: start;
-  gap: 22px;
+  gap: 28px;
 }
 
 .homeStoryCard {
@@ -150,24 +150,24 @@
 
 .homeStoryCard img {
   width: 100%;
-  height: 292px;
+  height: 230px;
   object-fit: cover;
-  border-radius: 18px;
+  border-radius: 16px;
   display: block;
 }
 
 .homeStoryCard h3 {
-  margin: 18px 0 0;
+  margin: 16px 0 0;
   font-family: "DK Woolwich", "Arial Black", sans-serif;
-  font-size: 28px;
+  font-size: 24px;
   line-height: 0.9;
   letter-spacing: 0.01em;
   color: #050505;
 }
 
 .carouselBtn {
-  width: 58px;
-  height: 58px;
+  width: 56px;
+  height: 56px;
   border: 0;
   border-radius: 999px;
   background: #ff5526;
@@ -187,175 +187,14 @@
 }
 
 .carouselBtn.left {
-  left: -36px;
+  left: -34px;
 }
 
 .carouselBtn.right {
-  right: -36px;
+  right: -34px;
 }
 
-@media (max-width: 1500px) {
-  .homeCarousel {
-    left: 50px;
-    right: 50px;
-    height: 400px;
-    padding: 50px 92px;
-  }
-
-  .carouselImages {
-    grid-template-columns: repeat(4, 280px);
-    gap: 28px;
-  }
-
-  .carouselImages img {
-    width: 280px;
-    height: 310px;
-  }
-}
-.carouselBtn {
-  width: 58px;
-  height: 58px;
-  border: 0;
-  border-radius: 999px;
-  background: #ff5526;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  display: grid;
-  place-items: center;
-  cursor: pointer;
-}
-
-.carouselBtn img {
-  width: 28px;
-  height: 28px;
-  object-fit: contain;
-}
-
-.carouselBtn.left {
-  left: 42px;
-}
-
-.carouselBtn.right {
-  right: 42px;
-}
-
-.homeFooter {
-  height: 300px;
-  background: white;
-  display: grid;
-  grid-template-columns: 180px 130px 240px 1fr;
-  gap: 36px;
-  padding: 48px 72px;
-  box-sizing: border-box;
-  position: relative;
-}
-
-.footerBrand img {
-  width: 132px;
-}
-
-.footerBrand p {
-  margin: 48px 0 0;
-  font-family: "Courier New", monospace;
-  font-size: 12px;
-  font-weight: 700;
-  line-height: 1.25;
-}
-
-.footerLinks {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.footerLinks a {
-  color: #050505;
-  text-decoration: none;
-  font-family: "Courier New", monospace;
-  font-size: 16px;
-  font-weight: 700;
-}
-
-.footerSocials {
-  display: flex;
-  gap: 18px;
-}
-
-.footerSocials button {
-  width: 54px;
-  height: 54px;
-  border: 0;
-  border-radius: 999px;
-  background: #ff5526;
-  display: grid;
-  place-items: center;
-  cursor: pointer;
-}
-
-.footerSocials img {
-  width: 28px;
-  height: 28px;
-  object-fit: contain;
-}
-
-.newsletter {
-  position: relative;
-}
-
-.emailBar {
-  height: 70px;
-  background: #eee8df;
-  border-radius: 999px;
-  display: flex;
-  align-items: center;
-  padding-left: 40px;
-  box-sizing: border-box;
-}
-
-.emailBar input {
-  flex: 1;
-  border: 0;
-  outline: 0;
-  background: transparent;
-  font-family: "Courier New", monospace;
-  font-size: 18px;
-}
-
-.emailBar button {
-  width: 58px;
-  height: 58px;
-  margin-right: 6px;
-  border: 0;
-  border-radius: 999px;
-  background: #ff5526;
-  display: grid;
-  place-items: center;
-  cursor: pointer;
-}
-
-.emailBar button img {
-  width: 30px;
-  height: 30px;
-  object-fit: contain;
-}
-
-.newsletter p {
-  margin: 22px 0 0 34px;
-  max-width: 620px;
-  font-family: "Courier New", monospace;
-  font-size: 17px;
-  font-weight: 700;
-  line-height: 1.3;
-}
-
-.footerLuke {
-  position: absolute;
-  right: 18px;
-  bottom: -70px;
-  width: 185px;
-  z-index: 5;
-}
+/* RESPONSIVE */
 
 @media (max-width: 1500px) {
   .homeTimer {
@@ -368,26 +207,41 @@
   }
 
   .timerGrid strong {
-    font-size: 34px;
+    font-size: 38px;
   }
 
   .homeCarousel {
-    padding: 32px 72px;
+    left: 82px;
+    right: 82px;
+    top: 625px;
+    height: 365px;
+    padding: 28px 70px 22px;
   }
 
   .carouselImages {
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 24px;
+    gap: 28px;
   }
 
-  .carouselImages img {
+  .homeStoryCard img {
     width: 100%;
-    height: 260px;
-    object-fit: cover;
+    height: 230px;
   }
 }
 
 @media (max-width: 1200px) {
+  .homeHeroText {
+    left: 54px;
+  }
+
+  .homeHeroText h1 {
+    font-size: 82px;
+  }
+
+  .homeHeroText p {
+    font-size: 18px;
+  }
+
   .homeTimer {
     width: 420px;
     right: 42px;
@@ -407,13 +261,32 @@
   }
 
   .homeCarousel {
-    left: 44px;
-    right: 44px;
-    height: 300px;
-    padding: 30px 70px;
+    left: 58px;
+    right: 58px;
+    height: 320px;
+    padding: 28px 58px 22px;
   }
 
-  .carouselImages img {
-    height: 220px;
+  .homeCarousel::before,
+  .homeCarousel::after {
+    top: 108px;
+    width: 76px;
+    height: 132px;
+  }
+
+  .homeCarousel::before {
+    left: -54px;
+  }
+
+  .homeCarousel::after {
+    right: -54px;
+  }
+
+  .homeStoryCard img {
+    height: 200px;
+  }
+
+  .homeStoryCard h3 {
+    font-size: 20px;
   }
 }
