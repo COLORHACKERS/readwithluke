@@ -40,13 +40,13 @@ export default function Header() {
       </nav>
 
       <div className="headerRight">
-        <Link
-          href="/dashboard"
-          className={`headerStreak ${active("/dashboard") ? "active" : ""}`}
-          aria-label="Dashboard"
-        >
-          🔥 <span>12</span>
-        </Link>
+       <Link
+  href="/dashboard"
+  className={`headerStreak ${active("/dashboard") ? "active" : ""}`}
+>
+  <span className="headerFlame">🔥</span>
+  <span className="headerCount">12</span>
+</Link>
 
         <Link
           href="/profile"
