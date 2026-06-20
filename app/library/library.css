@@ -292,21 +292,50 @@
 }
 @media (max-width: 1200px) {
   .libraryPage {
-    padding: 145px 34px 60px;
-  }
-
-  .libraryTools {
-    grid-template-columns: 1fr;
+    padding-left: 36px;
+    padding-right: 36px;
   }
 
   .libraryGrid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+  }
+
+  .libraryCard {
+    width: 100%;
+    min-height: 560px;
   }
 
   .libraryCardImage {
-    height: 340px;
+    height: 280px;
+  }
+
+  .libraryCardBody h2 {
+    font-size: 28px;
+  }
+
+  .libraryCardBody p {
+    font-size: 13px;
+    line-height: 1.2;
+    min-height: 90px;
+  }
+
+  .libraryCardActions {
+    grid-template-columns: 44px 1fr 44px;
+    gap: 8px;
+  }
+
+  .iconBtn,
+  .libraryCardActions button {
+    width: 44px;
+    height: 44px;
+  }
+
+  .readBtn {
+    height: 44px;
   }
 }
+
 
 @media (max-width: 700px) {
   .libraryGrid {
