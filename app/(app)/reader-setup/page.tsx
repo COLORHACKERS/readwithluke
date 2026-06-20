@@ -2,7 +2,10 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Header from "@/app/components/Header";
+import Footer from "@/app/components/Footer";
 import { supabase } from "@/lib/supabase";
+import "../../home.css";
 import "../signup/signup.css";
 
 export default function ReaderSetupPage() {
@@ -42,50 +45,56 @@ export default function ReaderSetupPage() {
   }
 
   return (
-    <main className="signupPage">
-      <form className="signupCard" onSubmit={handleSave}>
-        <h1>CREATE YOUR READER</h1>
+    <>
+      <Header />
 
-        <p>Tell Luke who is joining the adventure.</p>
+      <main className="signupPage">
+        <form className="signupCard" onSubmit={handleSave}>
+          <h1>CREATE YOUR READER</h1>
 
-       <label>Reader name:</label>
-<input
-  placeholder="Reader name"
-  value={name}
-  onChange={(e) => setName(e.target.value)}
-  required
-/>
+          <p>Tell Luke who is joining the adventure.</p>
 
-<label>Age:</label>
-<select value={ageRange} onChange={(e) => setAgeRange(e.target.value)}>
-  <option value="3-4">Age 3-4</option>
-  <option value="5-6">Age 5-6</option>
-  <option value="7-8">Age 7-8</option>
-  <option value="9+">Age 9+</option>
-</select>
+          <label>Reader name:</label>
+          <input
+            placeholder="Reader name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
 
-<label>Pick an avatar:</label>
-<select value={avatar} onChange={(e) => setAvatar(e.target.value)}>
-  <option value="🐸">🐸 Frog</option>
-  <option value="🦊">🦊 Fox</option>
-  <option value="🦖">🦖 Dinosaur</option>
-  <option value="🚀">🚀 Rocket</option>
-</select>
+          <label>Age:</label>
+          <select value={ageRange} onChange={(e) => setAgeRange(e.target.value)}>
+            <option value="3-4">Age 3-4</option>
+            <option value="5-6">Age 5-6</option>
+            <option value="7-8">Age 7-8</option>
+            <option value="9+">Age 9+</option>
+          </select>
 
-<label>Pick your favorite type of book:</label>
-<select
-  value={favoriteTheme}
-  onChange={(e) => setFavoriteTheme(e.target.value)}
->
-  <option value="Adventure">Adventure</option>
-  <option value="Magic">Magic</option>
-  <option value="Animals">Animals</option>
-  <option value="Space">Space</option>
-  <option value="Ocean">Ocean</option>
-</select>
+          <label>Pick an avatar:</label>
+          <select value={avatar} onChange={(e) => setAvatar(e.target.value)}>
+            <option value="🐸">🐸 Frog</option>
+            <option value="🦊">🦊 Fox</option>
+            <option value="🦖">🦖 Dinosaur</option>
+            <option value="🚀">🚀 Rocket</option>
+          </select>
 
-        <button type="submit">START READING</button>
-      </form>
-    </main>
+          <label>Pick your favorite type of book:</label>
+          <select
+            value={favoriteTheme}
+            onChange={(e) => setFavoriteTheme(e.target.value)}
+          >
+            <option value="Adventure">Adventure</option>
+            <option value="Magic">Magic</option>
+            <option value="Animals">Animals</option>
+            <option value="Space">Space</option>
+            <option value="Ocean">Ocean</option>
+          </select>
+
+          <button type="submit">START READING</button>
+        </form>
+      </main>
+
+      <Footer />
+    </>
   );
 }

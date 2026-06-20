@@ -1,13 +1,51 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
+import { supabase } from "@/lib/supabase";
 import "../../home.css";
 import "./dashboard.css";
 
 export default function DashboardPage() {
-  const firstName = "Luke";
-  const initials = "LL";
-  const finishedCount = 12;
+  const router = useRouter();
+
+  const [readerName, setReaderName] = useState("Reader");
+  const [avatar, setAvatar] = useState("🔥");
+  const [favoriteTheme, setFavoriteTheme] = useState("Adventure");
+
+  const finishedCount = 0;
+
+  useEffect(() => {
+    async function loadDashboard() {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (!user) {
+        router.push("/signup");
+        return;
+      }
+
+      const { data: child } = await supabase
+        .from("children")
+        .select("*")
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: true })
+        .limit(1)
+        .single();
+
+      if (child) {
+        setReaderName(child.name || "Reader");
+        setAvatar(child.avatar || "🔥");
+        setFavoriteTheme(child.favorite_theme || "Adventure");
+      }
+    }
+
+    loadDashboard();
+  }, [router]);
 
   return (
     <>
@@ -34,7 +72,7 @@ export default function DashboardPage() {
           </div>
 
           <div className="dashboardWelcome">
-            <h2>WELCOME BACK, {firstName.toUpperCase()}!</h2>
+            <h2>WELCOME BACK, {readerName.toUpperCase()}!</h2>
 
             <div className="dashboardStats">
               <div className="dashboardStat">
@@ -43,13 +81,13 @@ export default function DashboardPage() {
               </div>
 
               <div className="dashboardStat">
-                <strong>🔥</strong>
-                <span>dashboard</span>
+                <strong>{avatar}</strong>
+                <span>reader</span>
               </div>
 
               <div className="dashboardStat">
-                <strong>{initials}</strong>
-                <span>profile</span>
+                <strong>🔥</strong>
+                <span>streak</span>
               </div>
             </div>
           </div>
@@ -65,10 +103,10 @@ export default function DashboardPage() {
 
             <div className="dashboardCard">
               <div>
-                <h3>Learn with Luke</h3>
-                <p>Finish fun facts and learning adventures.</p>
+                <h3>{favoriteTheme} Books</h3>
+                <p>Explore more stories picked for your reader.</p>
               </div>
-              <Link href="/learn">Start Learning</Link>
+              <Link href="/library">Browse Books</Link>
             </div>
 
             <div className="dashboardCard">

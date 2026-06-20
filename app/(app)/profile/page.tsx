@@ -1,9 +1,137 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
+import { supabase } from "@/lib/supabase";
 import "../../home.css";
 import "./profile.css";
 
 export default function ProfilePage() {
+  const router = useRouter();
+
+  const [userId, setUserId] = useState("");
+  const [email, setEmail] = useState("");
+
+  const [parentFirstName, setParentFirstName] = useState("");
+  const [parentLastName, setParentLastName] = useState("");
+
+  const [childId, setChildId] = useState("");
+  const [readerName, setReaderName] = useState("");
+  const [ageRange, setAgeRange] = useState("");
+  const [avatar, setAvatar] = useState("");
+  const [favoriteTheme, setFavoriteTheme] = useState("");
+
+  const [newPassword, setNewPassword] = useState("");
+
+  useEffect(() => {
+    async function loadProfile() {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (!user) {
+        router.push("/signup");
+        return;
+      }
+
+      setUserId(user.id);
+      setEmail(user.email || "");
+
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("id", user.id)
+        .single();
+
+      if (profile) {
+        setParentFirstName(profile.first_name || "");
+        setParentLastName(profile.last_name || "");
+      }
+
+      const { data: child } = await supabase
+        .from("children")
+        .select("*")
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: true })
+        .limit(1)
+        .single();
+
+      if (child) {
+        setChildId(child.id);
+        setReaderName(child.name || "");
+        setAgeRange(child.age_range || "");
+        setAvatar(child.avatar || "");
+        setFavoriteTheme(child.favorite_theme || "");
+      }
+    }
+
+    loadProfile();
+  }, [router]);
+
+  async function saveReaderInfo() {
+    if (!childId) return;
+
+    const { error } = await supabase
+      .from("children")
+      .update({
+        name: readerName,
+        age_range: ageRange,
+        avatar,
+        favorite_theme: favoriteTheme,
+      })
+      .eq("id", childId);
+
+    if (error) {
+      alert(error.message);
+      return;
+    }
+
+    alert("Reader info saved!");
+  }
+
+  async function saveParentInfo() {
+    const { error } = await supabase
+      .from("profiles")
+      .update({
+        first_name: parentFirstName,
+        last_name: parentLastName,
+      })
+      .eq("id", userId);
+
+    if (error) {
+      alert(error.message);
+      return;
+    }
+
+    alert("Parent account saved!");
+  }
+
+  async function updatePassword() {
+    if (!newPassword || newPassword.length < 6) {
+      alert("Password must be at least 6 characters.");
+      return;
+    }
+
+    const { error } = await supabase.auth.updateUser({
+      password: newPassword,
+    });
+
+    if (error) {
+      alert(error.message);
+      return;
+    }
+
+    setNewPassword("");
+    alert("Password updated!");
+  }
+
+  async function logout() {
+    await supabase.auth.signOut();
+    router.push("/");
+  }
+
   return (
     <>
       <Header />
@@ -14,7 +142,8 @@ export default function ProfilePage() {
 
           <div className="profileSettings">
             <div className="profileTop">
-              <div className="profileAvatar">LL</div>
+              <div className="profileAvatar">{avatar || "LL"}</div>
+
               <div>
                 <h1>Profile</h1>
                 <p>Manage reader info, password, membership, and billing.</p>
@@ -24,45 +153,95 @@ export default function ProfilePage() {
             <div className="settingsGrid">
               <section className="settingsCard">
                 <h2>Reader Info</h2>
-                <label>First Name</label>
-                <input defaultValue="Luke" />
 
-                <label>Last Name</label>
-                <input defaultValue="Lewis" />
+                <label>Reader Name</label>
+                <input
+                  value={readerName}
+                  onChange={(e) => setReaderName(e.target.value)}
+                />
 
                 <label>Age</label>
-                <input defaultValue="6" />
+                <select
+                  value={ageRange}
+                  onChange={(e) => setAgeRange(e.target.value)}
+                >
+                  <option value="">Choose age</option>
+                  <option value="3-4">Age 3-4</option>
+                  <option value="5-6">Age 5-6</option>
+                  <option value="7-8">Age 7-8</option>
+                  <option value="9+">Age 9+</option>
+                </select>
 
-                <button>Save Reader Info</button>
+                <label>Avatar</label>
+                <select value={avatar} onChange={(e) => setAvatar(e.target.value)}>
+                  <option value="🐸">🐸 Frog</option>
+                  <option value="🦊">🦊 Fox</option>
+                  <option value="🦖">🦖 Dinosaur</option>
+                  <option value="🚀">🚀 Rocket</option>
+                </select>
+
+                <label>Favorite Book Type</label>
+                <select
+                  value={favoriteTheme}
+                  onChange={(e) => setFavoriteTheme(e.target.value)}
+                >
+                  <option value="Adventure">Adventure</option>
+                  <option value="Magic">Magic</option>
+                  <option value="Animals">Animals</option>
+                  <option value="Space">Space</option>
+                  <option value="Ocean">Ocean</option>
+                </select>
+
+                <button onClick={saveReaderInfo}>Save Reader Info</button>
               </section>
 
               <section className="settingsCard">
                 <h2>Parent Account</h2>
-                <label>Parent Name</label>
-                <input defaultValue="Amanda" />
+
+                <label>Parent First Name</label>
+                <input
+                  value={parentFirstName}
+                  onChange={(e) => setParentFirstName(e.target.value)}
+                />
+
+                <label>Parent Last Name</label>
+                <input
+                  value={parentLastName}
+                  onChange={(e) => setParentLastName(e.target.value)}
+                />
 
                 <label>Email</label>
-                <input defaultValue="parent@email.com" />
+                <input value={email} disabled />
 
-                <button>Save Account</button>
+                <button onClick={saveParentInfo}>Save Account</button>
               </section>
 
               <section className="settingsCard">
                 <h2>Change Password</h2>
-                <label>Current Password</label>
-                <input type="password" />
 
                 <label>New Password</label>
-                <input type="password" />
+                <input
+                  type="password"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                />
 
-                <button>Update Password</button>
+                <button onClick={updatePassword}>Update Password</button>
               </section>
 
               <section className="settingsCard">
                 <h2>Membership & Billing</h2>
+
                 <p className="planText">Current Plan: Free Trial</p>
+
                 <button>Manage Billing</button>
                 <button className="secondaryButton">Upgrade Membership</button>
+
+                <br />
+
+                <button className="logoutButton" onClick={logout}>
+                  Log Out
+                </button>
               </section>
             </div>
           </div>

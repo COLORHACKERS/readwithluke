@@ -1,8 +1,10 @@
 .signupPage {
-  min-height: 100vh;
+  min-height: 900px;
   display: grid;
   place-items: center;
   background: #f8f1e6;
+  padding: 140px 24px 80px;
+  box-sizing: border-box;
 }
 
 .signupCard {

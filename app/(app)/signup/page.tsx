@@ -1,8 +1,13 @@
 "use client";
 
+"use client";
+
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Header from "@/app/components/Header";
+import Footer from "@/app/components/Footer";
 import { supabase } from "@/lib/supabase";
+import "../../home.css";
 import "./signup.css";
 
 export default function SignupPage() {
@@ -27,7 +32,10 @@ export default function SignupPage() {
     router.push("/welcome");
   }
 
-  return (
+ return (
+  <>
+    <Header />
+
     <main className="signupPage">
       <form className="signupCard" onSubmit={handleSignup}>
         <h1>Create Account</h1>
@@ -53,5 +61,8 @@ export default function SignupPage() {
         <button type="submit">Create Account</button>
       </form>
     </main>
-  );
+
+    <Footer />
+  </>
+);
 }
