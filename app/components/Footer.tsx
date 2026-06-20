@@ -44,7 +44,7 @@ export default function Footer() {
         <div className="footerCopyright">
           ReadwithLuke © 2026
           <br />
-          Luke’s World, LLC. All rights reserved.
+         All rights reserved.
         </div>
 
         <div className="footerSocials">

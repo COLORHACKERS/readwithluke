@@ -203,9 +203,9 @@ export default function AdminPage() {
       resetForm();
     }
 
-    setMessage(`Deleted "${book.title}"`);
-    setSaving(false);
-  }
+   setMessage(`Deleted "${book.title}"`);
+setSaving(false);
+loadBooks();
 
   async function handleCoverUpload(file: File) {
     const url = await uploadImage(file, "covers");

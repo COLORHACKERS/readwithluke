@@ -1,0 +1,118 @@
+.learnDetailPage {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  min-height: 100vh;
+  position: relative;
+  background: #f8f1e6;
+  color: #050505;
+  padding: 150px 48px 80px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.learnDetailBg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.learnDetailHero,
+.learnDetailContent {
+  position: relative;
+  z-index: 2;
+}
+
+.learnDetailHero {
+  width: 100%;
+  border-radius: 28px;
+  overflow: hidden;
+  background: white;
+  border: 10px solid white;
+  box-sizing: border-box;
+}
+
+.learnDetailHero img {
+  width: 100%;
+  max-height: 720px;
+  object-fit: contain;
+  display: block;
+  background: white;
+}
+
+.learnDetailContent {
+  margin-top: 34px;
+  background: white;
+  border-radius: 28px;
+  padding: 42px;
+  box-sizing: border-box;
+}
+
+.learnEyebrow {
+  margin: 0 0 10px;
+  font-family: "Courier New", monospace;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.learnDetailContent h1 {
+  margin: 0;
+  font-family: "DK Woolwich", sans-serif;
+  font-size: 72px;
+  line-height: 0.9;
+  text-transform: uppercase;
+}
+
+.learnDescription {
+  max-width: 900px;
+  margin: 22px 0 0;
+  font-family: "Courier New", monospace;
+  font-size: 22px;
+  line-height: 1.35;
+  font-weight: 700;
+}
+
+.learnDetailActions {
+  margin-top: 30px;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.learnDetailActions button,
+.learnDetailActions a {
+  border: 0;
+  border-radius: 999px;
+  background: #ff5526;
+  color: white;
+  padding: 18px 30px;
+  text-decoration: none;
+  font-family: "DK Woolwich", sans-serif;
+  font-size: 26px;
+  cursor: pointer;
+}
+
+.funFacts {
+  margin-top: 34px;
+  border-radius: 22px;
+  background: #f8f1e6;
+  padding: 28px;
+}
+
+.funFacts h2 {
+  margin: 0 0 14px;
+  font-family: "DK Woolwich", sans-serif;
+  font-size: 42px;
+}
+
+.funFacts ul {
+  margin: 0;
+  padding-left: 22px;
+  font-family: "Courier New", monospace;
+  font-size: 18px;
+  line-height: 1.5;
+  font-weight: 700;
+}
