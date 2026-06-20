@@ -1,18 +1,18 @@
 .rwlFooter {
   width: 100%;
   max-width: 1440px;
-  height: 430px;
+  min-height: 430px;
   margin: 0 auto;
   background: white;
-  padding: 54px 64px;
+  padding: 58px 64px 42px;
   box-sizing: border-box;
   color: #050505;
 }
 
 .footerTop {
   display: grid;
-  grid-template-columns: 150px 190px 210px 1fr;
-  gap: 34px;
+  grid-template-columns: 150px 210px 220px 1fr;
+  gap: 36px;
   align-items: start;
 }
 
@@ -22,7 +22,7 @@
 }
 
 .footerBrandBox img {
-  width: 150px;
+  width: 170px;
   display: block;
   margin-top: 8px;
 }
@@ -38,21 +38,21 @@
   color: #050505;
   text-decoration: none;
   font-family: "Courier New", monospace;
-  font-size: 14px;
-  font-weight: 700;
+  font-size: 13px;
+  font-weight: 900;
 }
 
 .footerNewsletter {
-  padding-top: 10px;
+  padding-top: 8px;
 }
 
 .footerEmailBar {
-  height: 70px;
+  height: 64px;
   border-radius: 999px;
   background: #eee8df;
   display: flex;
   align-items: center;
-  padding-left: 42px;
+  padding-left: 38px;
 }
 
 .footerEmailBar input {
@@ -66,9 +66,9 @@
 }
 
 .footerEmailBar button {
-  width: 60px;
-  height: 60px;
-  margin-right: 6px;
+  width: 54px;
+  height: 54px;
+  margin-right: 5px;
   border: 0;
   border-radius: 999px;
   background: #ff5526;
@@ -78,31 +78,31 @@
 }
 
 .footerEmailBar button img {
-  width: 30px;
+  width: 28px;
 }
 
 .footerNewsletter p {
-  margin: 22px auto 0;
-  max-width: 660px;
+  margin: 24px auto 0;
+  max-width: 690px;
   text-align: center;
   font-family: "Courier New", monospace;
-  font-size: 14px;
+  font-size: 13px;
   line-height: 1.35;
-  font-weight: 700;
+  font-weight: 900;
 }
 
 .footerBottom {
-  margin-top: 72px;
+  margin-top: 46px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  align-items: end;
+  align-items: center;
 }
 
 .footerPrivacy,
 .footerCopyright {
   font-family: "Courier New", monospace;
-  font-size: 12px;
-  font-weight: 700;
+  font-size: 11px;
+  font-weight: 900;
 }
 
 .footerCopyright {
@@ -113,12 +113,12 @@
 .footerSocials {
   display: flex;
   justify-content: flex-end;
-  gap: 12px;
+  gap: 14px;
 }
 
 .footerSocials button {
-  width: 64px;
-  height: 64px;
+  width: 54px;
+  height: 54px;
   border: 0;
   border-radius: 999px;
   background: #ff5526;
@@ -128,7 +128,7 @@
 }
 
 .footerSocials img {
-  width: 30px;
-  height: 30px;
+  width: 26px;
+  height: 26px;
   object-fit: contain;
 }
