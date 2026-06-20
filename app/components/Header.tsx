@@ -22,12 +22,15 @@ export default function Header() {
         <Link className={active("/") ? "active" : ""} href="/">
           Home
         </Link>
+
         <Link className={active("/library") ? "active" : ""} href="/library">
           Library
         </Link>
+
         <Link className={active("/learn") ? "active" : ""} href="/learn">
           Learn with Luke
         </Link>
+
         <Link
           className={active("/leaderboard") ? "active" : ""}
           href="/leaderboard"
@@ -37,14 +40,22 @@ export default function Header() {
       </nav>
 
       <div className="headerRight">
-  <Link href="/dashboard" className="headerStreak">
-    🔥 12
-  </Link>
+        <Link
+          href="/dashboard"
+          className={`headerStreak ${active("/dashboard") ? "active" : ""}`}
+          aria-label="Dashboard"
+        >
+          🔥 <span>12</span>
+        </Link>
 
-  <Link href="/profile" className="headerAvatar">
-    LL
-  </Link>
-</div>
+        <Link
+          href="/profile"
+          className={`headerAvatar ${active("/profile") ? "active" : ""}`}
+          aria-label="Profile"
+        >
+          LL
+        </Link>
+      </div>
     </header>
   );
 }
