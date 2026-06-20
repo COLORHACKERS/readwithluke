@@ -7,62 +7,78 @@
 }
 
 .membershipCard {
-  width: min(900px, 100%);
+  width: min(940px, 100%);
   background: white;
   border-radius: 42px;
   padding: 70px;
-  box-sizing: border-box;
   text-align: center;
+  box-sizing: border-box;
 }
 
 .membershipEyebrow,
-.membershipText,
-.membershipPrice span,
-.membershipButton {
+.membershipDescription,
+.membershipFeatures,
+.membershipButton,
+.membershipFinePrint,
+.membershipPrice span {
   font-family: "Courier New", monospace;
 }
 
 .membershipEyebrow {
-  margin: 0 0 20px;
+  margin: 0 0 18px;
+  color: #ff5526;
   font-size: 16px;
   font-weight: 900;
-  color: #ff5526;
 }
 
 .membershipCard h1 {
   margin: 0;
   font-family: "DK Woolwich", "Arial Black", sans-serif;
   font-size: 96px;
-  line-height: 0.88;
+  line-height: 0.86;
+  color: #050505;
 }
 
-.membershipText {
-  max-width: 700px;
-  margin: 28px auto;
+.membershipDescription {
+  max-width: 720px;
+  margin: 24px auto 0;
   font-size: 18px;
-  line-height: 1.45;
+  line-height: 1.42;
   font-weight: 700;
+}
+
+.membershipPrice {
+  margin-top: 32px;
 }
 
 .membershipPrice strong {
   display: block;
   font-family: "DK Woolwich", "Arial Black", sans-serif;
-  font-size: 72px;
+  font-size: 78px;
   line-height: 1;
 }
 
 .membershipPrice span {
-  display: block;
-  margin-top: 4px;
   font-size: 15px;
   font-weight: 900;
 }
 
+.membershipFeatures {
+  margin: 34px auto 0;
+  max-width: 680px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px 22px;
+  font-size: 16px;
+  font-weight: 900;
+  text-align: left;
+}
+
 .membershipButton {
   display: inline-flex;
-  margin-top: 34px;
-  height: 70px;
-  padding: 0 42px;
+  margin-top: 42px;
+  height: 74px;
+  padding: 0 48px;
   align-items: center;
   justify-content: center;
   background: #ff5526;
@@ -71,4 +87,10 @@
   text-decoration: none;
   font-size: 18px;
   font-weight: 900;
+}
+
+.membershipFinePrint {
+  margin: 22px 0 0;
+  font-size: 13px;
+  font-weight: 700;
 }
