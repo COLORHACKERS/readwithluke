@@ -19,7 +19,7 @@ export default function WelcomePage() {
           </p>
 
           <div style={{ marginTop: "40px" }}>
-            <Link href="/profile">
+            <Link href="/reader-setup" className="welcomeButton">
               <button
                 style={{
                   width: "100%",
