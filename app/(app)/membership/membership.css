@@ -121,3 +121,7 @@
   font-size: 13px;
   font-weight: 700;
 }
+.membershipButton {
+  border: 0;
+  cursor: pointer;
+}
