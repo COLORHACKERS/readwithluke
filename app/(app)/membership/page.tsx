@@ -7,15 +7,28 @@ import "./membership.css";
 
 export default function MembershipPage() {
   async function startCheckout() {
-    const res = await fetch("/api/create-checkout-session", {
-      method: "POST",
-    });
+    try {
+      const response = await fetch("/api/create-checkout-session", {
+        method: "POST",
+      });
 
-    const data = await res.json();
+      const data = await response.json();
 
-    if (data.url) {
+      if (!response.ok) {
+        console.error("Checkout Error:", data);
+        alert(data.error || "Could not start checkout.");
+        return;
+      }
+
+      if (!data.url) {
+        console.error("No checkout URL returned:", data);
+        alert("Stripe did not return a checkout URL.");
+        return;
+      }
+
       window.location.href = data.url;
-    } else {
+    } catch (error) {
+      console.error("Checkout Exception:", error);
       alert("Could not start checkout. Please try again.");
     }
   }
@@ -26,7 +39,9 @@ export default function MembershipPage() {
 
       <main className="membershipPage">
         <section className="membershipCard">
-          <p className="membershipEyebrow">READ WITH LUKE MEMBERSHIP</p>
+          <p className="membershipEyebrow">
+            READ WITH LUKE MEMBERSHIP
+          </p>
 
           <h1>
             READ FREE
@@ -40,8 +55,10 @@ export default function MembershipPage() {
           </p>
 
           <p className="membershipDescription">
-            No charge today. Your card will be charged $12.99/month when our
-            official launch countdown ends unless you cancel before then.
+            No charge today. Your card will be charged
+            <strong> $12.99/month </strong>
+            when our official launch countdown ends unless you cancel before
+            then.
           </p>
 
           <div className="membershipPrice">
@@ -49,7 +66,11 @@ export default function MembershipPage() {
             <span>per month after launch</span>
           </div>
 
-          <button onClick={startCheckout} className="membershipButton">
+          <button
+            type="button"
+            onClick={startCheckout}
+            className="membershipButton"
+          >
             START FREE MEMBERSHIP
           </button>
 
