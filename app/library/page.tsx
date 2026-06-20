@@ -65,7 +65,7 @@ export default function LibraryPage() {
     localStorage.setItem("rwl-saved-books", JSON.stringify(next));
   }
 
-  const categories = ["All", "Adventure", "Animals", "Places", "Mystery", "Friends", "Magical"];
+  const categories = ["All", "Adventure", "Animals", "Places", "Mystery", "Friends", "Bedtime"];
 
   const filteredBooks = useMemo(() => {
     return books.filter((book) => {
