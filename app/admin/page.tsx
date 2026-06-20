@@ -203,14 +203,15 @@ export default function AdminPage() {
       resetForm();
     }
 
-   setMessage(`Deleted "${book.title}"`);
-setSaving(false);
-loadBooks();
+  setMessage(`Deleted "${book.title}"`);
+  setSaving(false);
+  loadBooks();
+}
 
-  async function handleCoverUpload(file: File) {
-    const url = await uploadImage(file, "covers");
-    if (url) setCoverUrl(url);
-  }
+async function handleCoverUpload(file: File) {
+  const url = await uploadImage(file, "covers");
+  if (url) setCoverUrl(url);
+}
 
   async function handlePageImageUpload(file: File, index: number) {
     const url = await uploadImage(file, "pages");
