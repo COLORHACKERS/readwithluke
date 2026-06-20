@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import "./header.css";
 
+
 export default function Header() {
   const pathname = usePathname();
   const [initials, setInitials] = useState<string | null>(null);
@@ -26,16 +27,22 @@ export default function Header() {
         return;
       }
 
-      const { data: profile } = await supabase
-        .from("profiles")
-        .select("first_name,last_name")
-        .eq("id", user.id)
-        .single();
+     const { data: profile } = await supabase
+  .from("profiles")
+  .select("first_name,last_name,email")
+  .eq("id", user.id)
+  .single();
 
-      const first = profile?.first_name?.[0] || "";
-      const last = profile?.last_name?.[0] || "";
+const first =
+  profile?.first_name?.trim()?.[0] ||
+  user.email?.trim()?.[0] ||
+  "";
 
-      setInitials(`${first}${last}` || "•");
+const last =
+  profile?.last_name?.trim()?.[0] ||
+  "";
+
+setInitials(`${first}${last}`.toUpperCase() || "A");
     }
 
     loadUser();
