@@ -1,16 +1,45 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { supabase } from "@/lib/supabase";
 import "./header.css";
 
 export default function Header() {
   const pathname = usePathname();
+  const [initials, setInitials] = useState<string | null>(null);
 
   function active(path: string) {
     if (path === "/") return pathname === "/";
     return pathname.startsWith(path);
   }
+
+  useEffect(() => {
+    async function loadUser() {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (!user) {
+        setInitials(null);
+        return;
+      }
+
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("first_name,last_name")
+        .eq("id", user.id)
+        .single();
+
+      const first = profile?.first_name?.[0] || "";
+      const last = profile?.last_name?.[0] || "";
+
+      setInitials(`${first}${last}` || "•");
+    }
+
+    loadUser();
+  }, []);
 
   return (
     <header className="mainHeader">
@@ -40,21 +69,29 @@ export default function Header() {
       </nav>
 
       <div className="headerRight">
-       <Link
-  href="/dashboard"
-  className={`headerStreak ${active("/dashboard") ? "active" : ""}`}
->
-  <span className="headerFlame">🔥</span>
-  <span className="headerCount">12</span>
-</Link>
+        {initials ? (
+          <>
+            <Link
+              href="/dashboard"
+              className={`headerStreak ${active("/dashboard") ? "active" : ""}`}
+              aria-label="Dashboard"
+            >
+              <span className="headerFlame">🔥</span>
+            </Link>
 
-        <Link
-          href="/profile"
-          className={`headerAvatar ${active("/profile") ? "active" : ""}`}
-          aria-label="Profile"
-        >
-          LL
-        </Link>
+            <Link
+              href="/profile"
+              className={`headerAvatar ${active("/profile") ? "active" : ""}`}
+              aria-label="Profile"
+            >
+              {initials}
+            </Link>
+          </>
+        ) : (
+          <Link href="/signup" className="headerSignup">
+            Join
+          </Link>
+        )}
       </div>
     </header>
   );

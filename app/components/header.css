@@ -123,7 +123,20 @@
 .headerCount {
   display: none;
 }
-
+.headerSignup {
+  height: 42px;
+  padding: 0 22px;
+  border-radius: 999px;
+  background: #ff5526;
+  color: white;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Courier New", monospace;
+  font-size: 13px;
+  font-weight: 900;
+  text-decoration: none;
+}
 @media (max-width: 1100px) {
   .mainHeader {
     width: calc(100vw - 32px);
