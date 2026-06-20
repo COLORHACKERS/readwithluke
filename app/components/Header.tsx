@@ -37,9 +37,14 @@ export default function Header() {
       </nav>
 
       <div className="headerRight">
-        <div className="headerStreak">🔥 12</div>
-        <div className="headerAvatar">LL</div>
-      </div>
+  <Link href="/dashboard" className="headerStreak">
+    🔥 12
+  </Link>
+
+  <Link href="/profile" className="headerAvatar">
+    LL
+  </Link>
+</div>
     </header>
   );
 }
