@@ -137,6 +137,51 @@ font-family: "DK Woolwich", "Arial Black", sans-serif;
   font-weight: 600;
   text-decoration: none;
 }
+.headerAuth {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.headerLogin,
+.headerSignup {
+  height: 42px;
+  min-width: 88px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  text-decoration: none;
+
+  font-family: "Courier New", monospace;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+
+  transition: 0.2s;
+}
+
+.headerLogin {
+  background: white;
+  color: #050505;
+  border: 2px solid #050505;
+}
+
+.headerLogin:hover {
+  background: #f5f5f5;
+}
+
+.headerSignup {
+  background: #ff5526;
+  color: white;
+  border: 2px solid #ff5526;
+}
+
+.headerSignup:hover {
+  background: #e94b21;
+}
+
 @media (max-width: 1100px) {
   .mainHeader {
     width: calc(100vw - 32px);

@@ -69,29 +69,33 @@ export default function Header() {
       </nav>
 
       <div className="headerRight">
-        {initials ? (
-          <>
-            <Link
-              href="/dashboard"
-              className={`headerStreak ${active("/dashboard") ? "active" : ""}`}
-              aria-label="Dashboard"
-            >
-              <span className="headerFlame">🔥</span>
-            </Link>
+       {initials ? (
+  <>
+    <Link
+      href="/dashboard"
+      className={`headerStreak ${active("/dashboard") ? "active" : ""}`}
+    >
+      <span className="headerFlame">🔥</span>
+    </Link>
 
-            <Link
-              href="/profile"
-              className={`headerAvatar ${active("/profile") ? "active" : ""}`}
-              aria-label="Profile"
-            >
-              {initials}
-            </Link>
-          </>
-        ) : (
-          <Link href="/signup" className="headerSignup">
-            Join
-          </Link>
-        )}
+    <Link
+      href="/profile"
+      className={`headerAvatar ${active("/profile") ? "active" : ""}`}
+    >
+      {initials}
+    </Link>
+  </>
+) : (
+  <div className="headerAuth">
+    <Link href="/login" className="headerLogin">
+      LOGIN
+    </Link>
+
+    <Link href="/signup" className="headerSignup">
+      JOIN
+    </Link>
+  </div>
+)}
       </div>
     </header>
   );
