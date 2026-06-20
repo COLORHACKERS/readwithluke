@@ -184,26 +184,44 @@
 }
 
 .libraryCardActions {
+  margin-top: auto;
   display: grid;
-  grid-template-columns: 46px 1fr 46px;
-  gap: 10px;
+  grid-template-columns: 72px 1fr 72px;
+  gap: 18px;
   align-items: center;
 }
 
-.libraryCardActions button,
-.readBtn {
-  flex: 1;
-  height: 54px;
+.libraryCardActions button {
+  width: 72px;
+  height: 72px;
   border-radius: 999px;
-  background: #ff5a24;
-  color: white;
-  text-decoration: none;
-  font-family: "DK Wow", sans-serif;
-  font-size: 20px;
-  font-weight: 700;
+  border: 0;
+  background: #ff5a26;
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+}
+
+.libraryCardActions button img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+.readBtn {
+  height: 72px;
+  border-radius: 999px;
+  background: #ff5a26;
+  color: white;
+  text-decoration: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-family: "DW Wool", sans-serif;
+  font-size: 28px;
+  letter-spacing: 0.02em;
 }
 
 .libraryCardActions button {
