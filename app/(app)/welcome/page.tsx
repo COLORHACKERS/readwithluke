@@ -1,81 +1,59 @@
-"use client";
-
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { supabase } from "@/lib/supabase";
-import "../../home.css";
-import "./welcome.css";
+import Link from "next/link";
+import Header from "@/app/components/Header";
+import Footer from "@/app/components/Footer";
+import "../signup/signup.css";
 
 export default function WelcomePage() {
-  const router = useRouter();
-
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [childFirstName, setChildFirstName] = useState("");
-  const [childAge, setChildAge] = useState("");
-
-  async function handleSave(e: React.FormEvent) {
-    e.preventDefault();
-
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    if (!user) {
-      router.push("/signup");
-      return;
-    }
-
-    const { error } = await supabase
-      .from("profiles")
-      .update({
-        first_name: firstName,
-        last_name: lastName,
-        child_first_name: childFirstName,
-        child_age: childAge,
-      })
-      .eq("id", user.id);
-
-    if (error) {
-      alert(error.message);
-      return;
-    }
-
-    router.push("/membership");
-  }
-
   return (
-    <main className="welcomePage">
-      <form className="welcomeCard" onSubmit={handleSave}>
-        <h1>Welcome!</h1>
-        <p>Tell us who is reading with Luke.</p>
+    <>
+      <Header />
 
-        <input
-          placeholder="Parent first name"
-          value={firstName}
-          onChange={(e) => setFirstName(e.target.value)}
-        />
+      <main className="signupPage">
+        <div className="signupCard">
+          <h1>WELCOME!</h1>
 
-        <input
-          placeholder="Parent last name"
-          value={lastName}
-          onChange={(e) => setLastName(e.target.value)}
-        />
+          <p>
+            Your Read With Luke account has been created.
+            <br />
+            Let's set up your reader profile.
+          </p>
 
-        <input
-          placeholder="Child first name"
-          value={childFirstName}
-          onChange={(e) => setChildFirstName(e.target.value)}
-        />
+          <div style={{ marginTop: "40px" }}>
+            <Link href="/profile">
+              <button
+                style={{
+                  width: "100%",
+                  height: "90px",
+                  border: "0",
+                  borderRadius: "999px",
+                  background: "#C6542D",
+                  color: "white",
+                  fontFamily: '"Courier New", monospace',
+                  fontSize: "24px",
+                  fontWeight: 700,
+                  cursor: "pointer",
+                }}
+              >
+                CREATE PROFILE
+              </button>
+            </Link>
+          </div>
 
-        <input
-          placeholder="Child age"
-          value={childAge}
-          onChange={(e) => setChildAge(e.target.value)}
-        />
+          <p
+            style={{
+              marginTop: "28px",
+              fontSize: "15px",
+              lineHeight: "1.4",
+            }}
+          >
+            You'll be able to save reading progress,
+            earn rewards, track streaks, and access
+            unlimited stories and learnings.
+          </p>
+        </div>
+      </main>
 
-        <button type="submit">Continue</button>
-      </form>
-    </main>
+      <Footer />
+    </>
   );
 }

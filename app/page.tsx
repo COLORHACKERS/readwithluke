@@ -81,22 +81,22 @@ export default function Home() {
             <div className="carouselImages">
   <Link href="/library/little-treehouse-mysteries" className="homeStoryCard">
     <img src="/images/home-card-1.png" alt="Tree House Mysteries" />
-    <h3>TREE HOUSE<br />MYSTERIES</h3>
+    <h3>TREEHOUSE<br />MYSTERIES</h3>
   </Link>
 
   <Link href="/library/the-toy-maker" className="homeStoryCard">
     <img src="/images/home-card-3.png" alt="The Toy Maker" />
-    <h3>THE TOY<br />MAKER</h3>
+    <h3>THE TOYMAKER</h3>
   </Link>
 
   <Link href="/library/the-great-crockoff" className="homeStoryCard">
     <img src="/images/home-card-4.png" alt="The Great Crockoff" />
-    <h3>THE GREAT<br />CROCKOFF!</h3>
+    <h3>THE GREAT<br />CROCK-OFF!</h3>
   </Link>
 
   <Link href="/library/sammy-finds-her-way-home" className="homeStoryCard">
     <img src="/images/home-card-2.png" alt="Sammy Finds Her Way Home" />
-    <h3>SAMMY FINDS<br />HER WAY HOME</h3>
+    <h3>SAMMY FINDS<br />HER WAY</h3>
   </Link>
 </div>
 
