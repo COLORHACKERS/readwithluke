@@ -3,6 +3,7 @@ import Header from "@/app/components/Header";
 import { supabase } from "@/lib/supabase";
 import ReaderClient from "./ReaderClient";
 import "./reader.css";
+import ReaderGate from "./ReaderGate";
 
 type Props = {
   params: Promise<{ bookSlug: string }>;
