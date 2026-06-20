@@ -66,10 +66,11 @@ export default async function ReadPage({ params, searchParams }: Props) {
     book.cover_url ||
     "/images/6to5ratio.png";
 
-  return (
-    <>
-      <Header />
+return (
+  <>
+    <Header />
 
+    <ReaderGate>
       <ReaderClient
         bookSlug={book.slug}
         title={book.title}
@@ -78,6 +79,7 @@ export default async function ReadPage({ params, searchParams }: Props) {
         imageUrl={imageUrl}
         text={pageData.text || ""}
       />
-    </>
-  );
+    </ReaderGate>
+  </>
+);
 }
