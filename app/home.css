@@ -22,7 +22,7 @@
 }
 
 .homeHero {
-  height: 980px;
+  height: 1080px;
   position: relative;
   overflow: hidden;
 }
@@ -103,7 +103,7 @@
   position: absolute;
   left: 40px;
   right: 40px;
-  top: 650px;
+  top: 660px;
   z-index: 4;
   height: 360px;
   background: white;
