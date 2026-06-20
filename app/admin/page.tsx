@@ -313,10 +313,8 @@ const { error: pagesError } = await supabase
 
         <label>Age Range</label>
         <select value={ageRange} onChange={(e) => setAgeRange(e.target.value)}>
-          <option>Ages 3–5</option>
-          <option>Ages 5–8</option>
-          <option>Ages 8–10</option>
-          <option>Ages 10+</option>
+          <option>Ages 3–6</option>
+          <option>Ages 6+</option>
         </select>
 
         <label>Category</label>
