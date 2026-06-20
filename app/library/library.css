@@ -219,8 +219,10 @@
   align-items: center;
   justify-content: center;
 
-  font-family: "DW Wool", sans-serif;
-  font-size: 28px;
+
+  font-family: "DK Woolwich", sans-serif !important;
+
+  font-size: 24px;
   letter-spacing: 0.02em;
 }
 

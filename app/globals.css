@@ -1,9 +1,9 @@
 @font-face {
   font-family: "DK Woolwich";
-  src: url("/fonts/dk-woolwich.woff2") format("woff2");
-  font-weight: 400;
+  src: url("/fonts/dk-woolwich.woff2") format("woff2"),
+       url("/fonts/dk-woolwich.otf") format("opentype");
+  font-weight: normal;
   font-style: normal;
-  font-display: swap;
 }
 @import "tailwindcss";
 
