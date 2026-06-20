@@ -6,39 +6,55 @@
 }
 
 .signupCard {
-  width: 420px;
+  width: 760px;
   background: white;
-  border-radius: 28px;
-  padding: 36px;
+  border-radius: 40px;
+  padding: 72px;
   display: grid;
-  gap: 16px;
+  gap: 24px;
 }
 
 .signupCard h1 {
   margin: 0;
-  font-size: 42px;
+  font-family: "DK Woolwich", sans-serif;
+  font-size: 82px;
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  color: #050505;
 }
 
 .signupCard p {
-  margin: 0 0 12px;
+  margin: 10px 0 20px;
+  font-family: "Courier New", monospace;
+  font-size: 18px;
+  line-height: 1.3;
   font-weight: 700;
+  color: #050505;
 }
 
 .signupCard input {
-  height: 52px;
+  height: 68px;
   border: 0;
   border-radius: 999px;
-  background: #eee8df;
-  padding: 0 18px;
-  font-size: 16px;
+  background: #e8e2d8;
+  padding: 0 36px;
+
+  font-family: "Courier New", monospace;
+  font-size: 18px;
+  font-weight: 700;
+  color: #050505;
 }
 
 .signupCard button {
-  height: 54px;
+  height: 78px;
   border: 0;
   border-radius: 999px;
   background: #ff5526;
   color: white;
+
+  font-family: "Courier New", monospace;
+  font-size: 22px;
   font-weight: 900;
+
   cursor: pointer;
 }
