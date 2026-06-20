@@ -18,11 +18,10 @@
   background: white;
   color: #050505;
   overflow: hidden;
-  padding-bottom: 140px;
 }
 
 .homeHero {
-  height: 1080px;
+  height: 980px;
   position: relative;
   overflow: hidden;
 }
