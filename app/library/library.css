@@ -192,17 +192,18 @@
 
 .libraryCardActions button,
 .readBtn {
-  height: 40px;
-  border: 0;
+  flex: 1;
+  height: 54px;
   border-radius: 999px;
-  background: #ff5526;
+  background: #ff5a24;
   color: white;
-  display: grid;
-  place-items: center;
-  font-family: "DK Woolwich", sans-serif;
-  font-size: 20px;
   text-decoration: none;
-  cursor: pointer;
+  font-family: "DK Wow", sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .libraryCardActions button {
@@ -262,6 +263,33 @@
   margin-top: auto;
 }
 
+.iconBtn {
+  width: 54px;
+  height: 54px;
+  border: none;
+  border-radius: 50%;
+  background: #ff5a24;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: transform 0.15s ease;
+}
+
+.iconBtn:hover {
+  transform: scale(1.05);
+}
+
+.iconBtn img {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
+.iconBtn.active {
+  background: #c6542d;
+}
 @media (max-width: 1200px) {
   .libraryPage {
     padding: 145px 34px 60px;

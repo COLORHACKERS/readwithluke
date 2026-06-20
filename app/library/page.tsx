@@ -144,27 +144,27 @@ export default function LibraryPage() {
                 </p>
 
                 <div className="libraryCardActions">
-                  <button
-                    type="button"
-                    onClick={() => toggleLiked(book.id)}
-                    className={liked.includes(book.id) ? "active" : ""}
-                    aria-label="Like book"
-                  >
-                    ♥
-                  </button>
+                <button
+  type="button"
+  onClick={() => toggleLiked(book.id)}
+  className={`iconBtn ${liked.includes(book.id) ? "active" : ""}`}
+  aria-label="Like book"
+>
+  <img src="/images/heart.png" alt="" />
+</button>
 
                   <Link href={`/books/${book.slug}/read`} className="readBtn">
                     READ
                   </Link>
 
-                  <button
-                    type="button"
-                    onClick={() => toggleSaved(book.id)}
-                    className={saved.includes(book.id) ? "active" : ""}
-                    aria-label="Save book"
-                  >
-                    🔖
-                  </button>
+               <button
+  type="button"
+  onClick={() => toggleSaved(book.id)}
+  className={`iconBtn ${saved.includes(book.id) ? "active" : ""}`}
+  aria-label="Save book"
+>
+  <img src="/images/bookmark.png" alt="" />
+</button>
                 </div>
               </div>
             </article>
