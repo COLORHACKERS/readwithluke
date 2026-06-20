@@ -28,7 +28,7 @@ export default function SignupPage() {
     <main className="signupPage">
       <form className="signupCard" onSubmit={handleSignup}>
         <h1>Create Account</h1>
-        <p>Start your free membership. Billing begins after launch.</p>
+        <p>Start your free trial. Cancel anytime. Trial ends after launch.</p>
 
         <input
           placeholder="Parent email"
