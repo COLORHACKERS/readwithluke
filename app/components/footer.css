@@ -4,63 +4,55 @@
   height: 430px;
   margin: 0 auto;
   background: white;
-  position: relative;
-  padding: 56px 64px;
+  padding: 54px 64px;
   box-sizing: border-box;
   color: #050505;
-  overflow: hidden;
 }
 
-.footerLeft {
-  position: absolute;
-  left: 70px;
-  top: 52px;
-  display: flex;
-  align-items: flex-start;
-  gap: 26px;
+.footerTop {
+  display: grid;
+  grid-template-columns: 150px 190px 210px 1fr;
+  gap: 34px;
+  align-items: start;
 }
 
-.footerLuke {
-  width: 155px;
+.footerLukeBox img {
+  width: 145px;
+  display: block;
 }
 
-.footerWordmark {
+.footerBrandBox img {
   width: 150px;
-  margin-top: 10px;
+  display: block;
+  margin-top: 8px;
 }
 
 .footerLinks {
-  position: absolute;
-  left: 410px;
-  top: 74px;
   display: flex;
   flex-direction: column;
   gap: 14px;
+  padding-top: 12px;
 }
 
 .footerLinks a {
   color: #050505;
   text-decoration: none;
   font-family: "Courier New", monospace;
-  font-size: 14px;
+  font-size: 19px;
   font-weight: 700;
 }
 
 .footerNewsletter {
-  position: absolute;
-  left: 690px;
-  right: 70px;
-  top: 64px;
+  padding-top: 10px;
 }
 
 .footerEmailBar {
-  height: 72px;
+  height: 70px;
   border-radius: 999px;
   background: #eee8df;
   display: flex;
   align-items: center;
-  padding-left: 44px;
-  box-sizing: border-box;
+  padding-left: 42px;
 }
 
 .footerEmailBar input {
@@ -69,13 +61,13 @@
   outline: 0;
   background: transparent;
   font-family: "Courier New", monospace;
-  font-size: 12px;
+  font-size: 19px;
   letter-spacing: 0.08em;
 }
 
 .footerEmailBar button {
-  width: 62px;
-  height: 62px;
+  width: 60px;
+  height: 60px;
   margin-right: 6px;
   border: 0;
   border-radius: 999px;
@@ -86,45 +78,41 @@
 }
 
 .footerEmailBar button img {
-  width: 32px;
+  width: 30px;
 }
 
 .footerNewsletter p {
   margin: 22px auto 0;
-  max-width: 680px;
+  max-width: 660px;
   text-align: center;
   font-family: "Courier New", monospace;
-  font-size: 12px;
+  font-size: 18px;
   line-height: 1.35;
   font-weight: 700;
 }
 
-.footerLegalLeft {
-  position: absolute;
-  left: 70px;
-  bottom: 58px;
+.footerBottom {
+  margin-top: 72px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: end;
+}
+
+.footerPrivacy,
+.footerCopyright {
   font-family: "Courier New", monospace;
-  font-size: 12px;
+  font-size: 17px;
   font-weight: 700;
 }
 
-.footerLegalCenter {
-  position: absolute;
-  left: 50%;
-  bottom: 52px;
-  transform: translateX(-50%);
+.footerCopyright {
   text-align: center;
-  font-family: "Courier New", monospace;
-  font-size: 12px;
   line-height: 1.35;
-  font-weight: 700;
 }
 
 .footerSocials {
-  position: absolute;
-  right: 70px;
-  bottom: 56px;
   display: flex;
+  justify-content: flex-end;
   gap: 18px;
 }
 
