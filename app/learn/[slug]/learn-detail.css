@@ -195,3 +195,28 @@
 .learnCloseButton:hover {
   background: #fff6f2;
 }
+
+.learnBoardPage {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+
+  overflow: hidden;
+  background: #000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.learnBoardImage {
+  width: 100vw;
+  height: 100vh;
+
+  object-fit: contain;
+  object-position: center center;
+
+  display: block;
+
+  user-select: none;
+  -webkit-user-drag: none;
+}
