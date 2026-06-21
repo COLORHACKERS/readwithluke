@@ -35,25 +35,26 @@ export default async function LearnDetailPage({ params }: Props) {
     <main className="learnBoardPage">
       <img src={boardImage} alt={item.title} className="learnBoardImage" />
 
-      <div className="learnBoardControls">
-        <Link href="/learn" className="learnBackButton">
-          ← BACK
-        </Link>
+<div className="learnBoardControls">
+  <Link href="/learn" className="learnBackButton">
+    <img src="/images/icon-arrow-left.png" alt="" />
+    BACK
+  </Link>
 
-        <button>
-          <img src="/images/icon-heart.png" alt="Favorite" />
-        </button>
+  <button>
+    <img src="/images/icon-heart.png" alt="Favorite" />
+  </button>
 
-        <button>
-          <img src="/images/icon-bookmark.png" alt="Save" />
-        </button>
+  <button>
+    <img src="/images/icon-bookmark.png" alt="Save" />
+  </button>
 
-        <button>
-          <img src="/images/icon-share.png" alt="Share" />
-        </button>
+  <button>
+    <img src="/images/icon-share.png" alt="Share" />
+  </button>
 
-        <button className="learnRewardButton">Σ</button>
-      </div>
+  <button className="learnRewardButton">Σ</button>
+</div>
     </main>
   );
 }
