@@ -11,10 +11,20 @@ export default function Header() {
   const pathname = usePathname();
   const [initials, setInitials] = useState<string | null>(null);
 
-  function active(path: string) {
-    if (path === "/") return pathname === "/";
-    return pathname.startsWith(path);
+ function active(path: string) {
+  if (path === "/library") {
+    return (
+      pathname === "/library" ||
+      pathname.startsWith("/books/")
+    );
   }
+
+  if (path === "/") {
+    return pathname === "/";
+  }
+
+  return pathname.startsWith(path);
+}
 
   useEffect(() => {
     async function loadUser() {
@@ -50,9 +60,9 @@ setInitials(`${first}${last}`.toUpperCase() || "A");
 
   return (
     <header className="mainHeader">
-      <Link href="/" className="headerLogo">
-        <img src="/images/luke-intro.png" alt="Read With Luke" />
-      </Link>
+     <Link href="/library" className="headerLogo">
+  <img src="/images/luke-intro.png" alt="Read With Luke" />
+</Link>
 
       <nav className="mainNav">
       <Link className={active("/library") ? "active" : ""} href="/library">
