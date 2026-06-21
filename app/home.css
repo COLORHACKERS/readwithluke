@@ -43,16 +43,24 @@
   z-index: 5;
   width: 430px;
 }
+.homeHeroText {
+  position: absolute;
+  left: max(52px, calc((100vw - 1368px) / 2 + 30px));
+  top: 185px;
+  z-index: 5;
+  max-width: 560px;
+}
 .homeHeroText h1 {
   margin: 0;
   font-family: "DK Woolwich", "Arial Black", sans-serif;
-  font-size: 98px;
-  line-height: 0.82;
+  font-size: 86px;
+  line-height: 0.86;
   letter-spacing: -0.02em;
 }
 
 .homeHeroText p {
-  margin: 28px 0 0;
+  margin-top: 28px;
+  max-width: 520px;
   font-family: "Courier New", monospace;
   font-size: 20px;
   line-height: 1.28;
@@ -215,7 +223,7 @@
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 80px;
+  bottom: 86px;
   width: 100vw;
   overflow: hidden;
   z-index: 6;
@@ -225,10 +233,8 @@
 .marqueeTrack {
   display: flex;
   gap: 22px;
-
   width: max-content;
-
-  animation: marquee 45s linear infinite;
+  animation: marqueeScroll 80s linear infinite;
 }
 .homeMarquee:hover .marqueeTrack {
   animation-play-state: paused;
