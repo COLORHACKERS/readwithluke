@@ -24,45 +24,40 @@
 .readerPanel {
   height: 100vh;
   background: #eee8df;
-  padding: 24px 56px 34px;
+  padding: 22px 42px 28px;
   box-sizing: border-box;
   display: grid;
   grid-template-rows: auto auto 1fr auto;
   overflow: hidden;
 }
 
-.readerMiniHeader {
-  height: 92px;
-  background: white;
-  border-radius: 0 0 22px 22px;
-  display: flex;
+.readerTopBar {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 12px;
   align-items: center;
-  gap: 18px;
-  padding: 0 18px;
-  box-sizing: border-box;
 }
 
-.readerLogo img {
-  width: 150px;
-  display: block;
-}
-
-.readerBackLibrary {
-  height: 46px;
-  padding: 0 22px;
+.readerMiniBtn {
+  height: 42px;
   border-radius: 999px;
-  background: #ff5526;
-  color: white;
-  font-family: "DK Woolwich", "Arial Black", sans-serif;
-  font-size: 20px;
+  background: white;
+  color: #ff5526;
   text-decoration: none;
-  display: flex;
-  align-items: center;
+  font-family: "DK Woolwich", "Arial Black", sans-serif;
+  font-size: 18px;
+  display: grid;
+  place-items: center;
 }
 
-.readerIconButton {
-  width: 48px;
-  height: 48px;
+.readerTopIcons {
+  display: flex;
+  gap: 12px;
+}
+
+.readerTopIcons button {
+  width: 46px;
+  height: 46px;
   border: 0;
   border-radius: 999px;
   background: #ff5526;
@@ -71,23 +66,23 @@
   cursor: pointer;
 }
 
-.readerIconButton img {
+.readerTopIcons img {
   width: 23px;
   height: 23px;
   object-fit: contain;
 }
 
 .readerProgressRow {
-  margin-top: 44px;
+  margin-top: 28px;
   display: grid;
-  grid-template-columns: 160px 1fr;
-  gap: 24px;
+  grid-template-columns: 150px 1fr;
+  gap: 18px;
   align-items: center;
 }
 
 .readerProgressRow span {
   font-family: "Courier New", monospace;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 900;
   color: #050505;
 }
@@ -109,35 +104,37 @@
 .readerStoryText {
   min-height: 0;
   overflow: hidden;
-  padding-top: 32px;
+  padding-top: 24px;
 }
 
 .readerStoryText h1 {
   margin: 0 0 20px;
   font-family: "DK Woolwich", "Arial Black", sans-serif;
-  font-size: 58px;
+  font-size: 46px;
   line-height: 0.9;
   color: #050505;
 }
 
 .readerStoryText p {
   margin: 0;
-  max-height: 100%;
+  max-height: calc(100vh - 345px);
   overflow-y: auto;
   white-space: pre-line;
   font-family: "Courier New", monospace;
-  font-size: 26px;
-  line-height: 1.28;
+  font-size: 23px;
+  line-height: 1.27;
   font-weight: 900;
   color: #050505;
-  padding-right: 10px;
+  padding-right: 8px;
 }
 
 .readerControls {
   display: grid;
-  grid-template-columns: 72px 1fr 72px;
-  gap: 36px;
+  grid-template-columns: 64px 1fr 64px;
+  gap: 28px;
   align-items: center;
+  padding-top: 18px;
+  padding-bottom: 6px;
 }
 
 .readerControls button {
@@ -146,8 +143,8 @@
 }
 
 .readerControls > button:not(.readerReadAloud) {
-  width: 66px;
-  height: 66px;
+  width: 60px;
+  height: 60px;
   border-radius: 999px;
   background: #ff5526;
   display: grid;
@@ -155,18 +152,18 @@
 }
 
 .readerControls > button:not(.readerReadAloud) img {
-  width: 34px;
-  height: 34px;
+  width: 31px;
+  height: 31px;
   object-fit: contain;
 }
 
 .readerReadAloud {
-  height: 66px;
+  height: 60px;
   border-radius: 999px;
   background: #ff5526;
   color: white;
   font-family: "DK Woolwich", "Arial Black", sans-serif;
-  font-size: 32px;
+  font-size: 28px;
 }
 
 .disabledCircle {
@@ -174,53 +171,45 @@
   pointer-events: none;
 }
 
-.readerEmpty {
-  min-height: 100vh;
-  padding: 180px 60px 60px;
-  color: #13294b;
-  background: #f8f1e6;
-}
-
-.readerEmpty h1 {
-  font-size: 48px;
-}
-
-.readerEmpty a {
-  color: #c6542d;
-  font-weight: 1000;
-}
-
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
   .readerPage {
-    height: auto;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    overflow: auto;
-  }
-
-  .readerImageSide {
-    height: auto;
-    aspect-ratio: 6 / 5;
+    grid-template-columns: 56% 44%;
   }
 
   .readerPanel {
-    height: auto;
-    min-height: 650px;
-    padding: 22px;
-  }
-
-  .readerMiniHeader {
-    height: auto;
-    flex-wrap: wrap;
-    padding: 16px;
+    padding: 18px 28px 24px;
   }
 
   .readerStoryText h1 {
-    font-size: 42px;
+    font-size: 38px;
   }
 
   .readerStoryText p {
     font-size: 20px;
+    max-height: calc(100vh - 285px);
+  }
+
+  .readerMiniBtn {
+    height: 38px;
+    font-size: 16px;
+  }
+
+  .readerTopIcons button {
+    width: 40px;
+    height: 40px;
+  }
+
+  .readerControls {
+    grid-template-columns: 56px 1fr 56px;
+    gap: 18px;
+  }
+
+  .readerControls > button:not(.readerReadAloud),
+  .readerReadAloud {
+    height: 54px;
+  }
+
+  .readerControls > button:not(.readerReadAloud) {
+    width: 54px;
   }
 }
