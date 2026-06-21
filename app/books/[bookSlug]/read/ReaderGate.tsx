@@ -13,34 +13,36 @@ export default function ReaderGate({
   const [allowed, setAllowed] = useState(false);
 
   useEffect(() => {
-    async function checkUser() {
+    async function checkAccess() {
+      const isAdmin = localStorage.getItem("rwl-admin") === "yes";
+
+      if (isAdmin) {
+        setAllowed(true);
+        return;
+      }
+
       const {
         data: { user },
       } = await supabase.auth.getUser();
 
-if (!user) {
-  if (localStorage.getItem("rwl-admin") === "yes") {
-    setAllowed(true);
-    return;
-  }
+      if (!user) {
+        router.replace("/signup");
+        return;
+      }
 
-  router.replace("/signup");
-  return;
-}
-
-setAllowed(true);
+      setAllowed(true);
     }
 
-    checkUser();
+    checkAccess();
   }, [router]);
 
   if (!allowed) {
-  return (
-    <div className="readerLoading">
-      <p>Loading...</p>
-    </div>
-  );
-}
+    return (
+      <div className="readerLoading">
+        <p>Loading...</p>
+      </div>
+    );
+  }
 
   return <>{children}</>;
 }

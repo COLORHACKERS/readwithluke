@@ -76,39 +76,66 @@ export default function Home() {
             </div>
           </div>
 
-          <section className="homeCarousel">
-            <button className="carouselBtn left">
-              <img src="/images/icon-arrow-left.png" alt="" />
-            </button>
+          <section className="homeMarquee">
+  <div className="marqueeTrack">
+    <BookMarqueeCard
+      large
+      href="/books/little-treehouse-mysteries"
+      image="/images/home-card-1.png"
+      title="DETECT."
+      description="A mystery adventure inside a strange treehouse."
+    />
 
-            <div className="carouselImages">
-  <Link href="/library/little-treehouse-mysteries" className="homeStoryCard">
-    <img src="/images/home-card-1.png" alt="Tree House Mysteries" />
-    <h3>TREEHOUSE<br />MYSTERIES</h3>
-  </Link>
+    <BookMarqueeCard
+      href="/books/sammy-finds-her-way-home"
+      image="/images/home-card-4.png"
+      title="SAMMY FINDS HER WAY HOME"
+      description="A brave journey through a wild sunset storm."
+    />
 
-  <Link href="/library/the-toy-maker" className="homeStoryCard">
-    <img src="/images/home-card-3.png" alt="The Toy Maker" />
-    <h3>THE TOYMAKER</h3>
-  </Link>
+    <BookMarqueeCard
+      href="/books/the-toy-maker"
+      image="/images/home-card-2.png"
+      title="THE TOY MAKER"
+      description="A magical world of inventions and wonder."
+    />
 
-  <Link href="/library/the-great-crockoff" className="homeStoryCard">
-    <img src="/images/home-card-4.png" alt="The Great Crockoff" />
-    <h3>THE GREAT<br />CROCK-OFF!</h3>
-  </Link>
+    <BookMarqueeCard
+      href="/books/the-great-crockoff"
+      image="/images/home-card-3.png"
+      title="THE GREAT CROCKOFF!"
+      description="A hilarious creature adventure."
+    />
 
-  <Link href="/library/sammy-finds-her-way-home" className="homeStoryCard">
-    <img src="/images/home-card-2.png" alt="Sammy Finds Her Way Home" />
-    <h3>SAMMY FINDS<br />HER WAY</h3>
-  </Link>
-</div>
+    <BookMarqueeCard
+      href="/books/little-treehouse-mysteries"
+      image="/images/home-card-1.png"
+      title="TREE HOUSE MYSTERIES"
+      description="Friends, clues, and spooky surprises."
+    />
 
-            <button className="carouselBtn right">
-              <img src="/images/icon-arrow-right.png" alt="" />
-            </button>
-          </section>
-        </section>
+    <BookMarqueeCard
+      href="/books/sammy-finds-her-way-home"
+      image="/images/home-card-4.png"
+      title="SAMMY FINDS HER WAY HOME"
+      description="A warm story about courage and home."
+    />
 
+    <BookMarqueeCard
+      href="/books/the-toy-maker"
+      image="/images/home-card-2.png"
+      title="THE TOY MAKER"
+      description="A cinematic adventure full of magic."
+    />
+
+    <BookMarqueeCard
+      href="/books/the-great-crockoff"
+      image="/images/home-card-3.png"
+      title="THE GREAT CROCKOFF!"
+      description="A funny, wild story kids will love."
+    />
+  </div>
+</section>
            </main>
 
       <Footer />
@@ -122,5 +149,29 @@ function TimeUnit({ value, label }: { value: number; label: string }) {
       <strong>{String(value).padStart(2, "0")}</strong>
       <span>{label}</span>
     </div>
+  );
+}
+function BookMarqueeCard({
+  href,
+  image,
+  title,
+  description,
+  large = false,
+}: {
+  href: string;
+  image: string;
+  title: string;
+  description: string;
+  large?: boolean;
+}) {
+  return (
+    <Link href={href} className={`marqueeCard ${large ? "large" : ""}`}>
+      <img src={image} alt={title} />
+
+      <div className="marqueeOverlay">
+        <h3>{title}</h3>
+        <p>{description}</p>
+      </div>
+    </Link>
   );
 }
