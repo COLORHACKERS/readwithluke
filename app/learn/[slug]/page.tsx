@@ -42,18 +42,20 @@ export default async function LearnDetailPage({ params }: Props) {
   </Link>
 
   <button>
-    <img src="/images/icon-heart.png" alt="Favorite" />
+    <img src="/images/heart.png" alt="Favorite" />
   </button>
 
   <button>
-    <img src="/images/icon-bookmark.png" alt="Save" />
+    <img src="/images/bookmark.png" alt="Save" />
   </button>
 
   <button>
-    <img src="/images/icon-share.png" alt="Share" />
+    <img src="/images/share.png" alt="Share" />
   </button>
 
-  <button className="learnRewardButton">Σ</button>
+  <Link href="/learn" className="learnCloseButton">
+  ✕
+</Link>
 </div>
     </main>
   );
