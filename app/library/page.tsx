@@ -22,14 +22,9 @@ export default function LibraryPage() {
   const [books, setBooks] = useState<Book[]>([]);
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
-  const [liked, setLiked] = useState<string[]>([]);
-  const [saved, setSaved] = useState<string[]>([]);
 
   useEffect(() => {
     loadBooks();
-
-    setLiked(JSON.parse(localStorage.getItem("rwl-liked-books") || "[]"));
-    setSaved(JSON.parse(localStorage.getItem("rwl-saved-books") || "[]"));
   }, []);
 
   async function loadBooks() {
@@ -47,25 +42,15 @@ export default function LibraryPage() {
     setBooks(data || []);
   }
 
-  function toggleLiked(id: string) {
-    const next = liked.includes(id)
-      ? liked.filter((bookId) => bookId !== id)
-      : [...liked, id];
-
-    setLiked(next);
-    localStorage.setItem("rwl-liked-books", JSON.stringify(next));
-  }
-
-  function toggleSaved(id: string) {
-    const next = saved.includes(id)
-      ? saved.filter((bookId) => bookId !== id)
-      : [...saved, id];
-
-    setSaved(next);
-    localStorage.setItem("rwl-saved-books", JSON.stringify(next));
-  }
-
-  const categories = ["All", "Adventure", "Animals", "Places", "Mystery", "Friends", "Bedtime"];
+  const categories = [
+    "All",
+    "Adventure",
+    "Animals",
+    "Places",
+    "Mystery",
+    "Friends",
+    "Bedtime",
+  ];
 
   const filteredBooks = useMemo(() => {
     return books.filter((book) => {
@@ -75,11 +60,15 @@ export default function LibraryPage() {
 
       const matchesCategory =
         activeCategory === "All" ||
-        (book.category || "").toLowerCase() === activeCategory.toLowerCase();
+        (book.category || "")
+          .toLowerCase()
+          .includes(activeCategory.toLowerCase());
 
       return matchesSearch && matchesCategory;
     });
   }, [books, search, activeCategory]);
+
+  const featured = filteredBooks[0];
 
   return (
     <>
@@ -89,86 +78,101 @@ export default function LibraryPage() {
         <img src="/images/home-hero.png" alt="" className="libraryBg" />
 
         <section className="libraryHero">
-          <h1>Pick your adventure.</h1>
-          <p>Read with Luke Library &gt;</p>
+          <div className="libraryHeroText">
+            <h1>
+              READ
+              <br />
+              WITH
+              <br />
+              LUKE.
+            </h1>
 
-          <div className="libraryTools">
-            <form
-              className="librarySearch"
-              onSubmit={(e) => e.preventDefault()}
-            >
-              <input
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="search for a book type"
-              />
+            <p>
+              Magical stories, adventures, mysteries,
+              <br />
+              animals, bedtime books, and cinematic
+              <br />
+              reading moments for kids.
+            </p>
+          </div>
 
-              <button type="submit">
-                <img src="/images/icon-send.png" alt="" />
+          {featured && (
+            <Link href={`/books/${featured.slug}`} className="featuredBook">
+              <div className="featuredImageWrap">
+                <img
+                  src={featured.cover_url || "/images/6to5ratio.png"}
+                  alt={featured.title}
+                />
+
+                <div className="featuredBadge">NEW!</div>
+              </div>
+
+              <div className="featuredBookInfo">
+                <h2>{featured.title}</h2>
+                <p>
+                  {featured.description ||
+                    "Open this magical story and start reading with Luke."}
+                </p>
+              </div>
+            </Link>
+          )}
+        </section>
+
+        <section className="libraryTools">
+          <form className="librarySearch" onSubmit={(e) => e.preventDefault()}>
+            <input
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="search for a book type"
+            />
+
+            <button type="submit">
+              <img src="/images/icon-send.png" alt="" />
+            </button>
+          </form>
+
+          <div className="categoryPills">
+            {categories.slice(1).map((category) => (
+              <button
+                key={category}
+                onClick={() =>
+                  setActiveCategory(
+                    activeCategory === category ? "All" : category
+                  )
+                }
+                className={activeCategory === category ? "active" : ""}
+              >
+                {category}
               </button>
-            </form>
-
-            <div className="categoryPills">
-              {categories.slice(1).map((category) => (
-                <button
-                  key={category}
-                  onClick={() =>
-                    setActiveCategory(
-                      activeCategory === category ? "All" : category
-                    )
-                  }
-                  className={activeCategory === category ? "active" : ""}
-                >
-                  {category}
-                </button>
-              ))}
-            </div>
+            ))}
           </div>
         </section>
 
-        <section className="libraryGrid">
-          {filteredBooks.map((book) => (
-            <article className="libraryCard" key={book.id}>
-              <img
-                src={book.cover_url || "/images/6to5ratio.png"}
-                alt={book.title}
-                className="libraryCardImage"
-              />
+        <section className="bookRail">
+          <h2>New Story Adventures</h2>
 
-              <div className="libraryCardBody">
-                <h2>{book.title}</h2>
+          <div className="bookScroller">
+            {filteredBooks.map((book, index) => (
+              <Link href={`/books/${book.slug}`} className="bookTile" key={book.id}>
+                <div className="bookTileImage">
+                  <img
+                    src={book.cover_url || "/images/6to5ratio.png"}
+                    alt={book.title}
+                  />
 
-                <p>
-                  {book.description ||
-                    "A magical story from Read With Luke."}
-                </p>
-
-                <div className="libraryCardActions">
-                <button
-  type="button"
-  onClick={() => toggleLiked(book.id)}
-  className={`iconBtn ${liked.includes(book.id) ? "active" : ""}`}
-  aria-label="Like book"
->
-  <img src="/images/heart.png" alt="" />
-</button>
-
-                  <Link href={`/books/${book.slug}`} className="readBtn">
-  READ
-</Link>
-
-               <button
-  type="button"
-  onClick={() => toggleSaved(book.id)}
-  className={`iconBtn ${saved.includes(book.id) ? "active" : ""}`}
-  aria-label="Save book"
->
-  <img src="/images/bookmark.png" alt="" />
-</button>
+                  {index === 0 && <span>NEW!</span>}
                 </div>
-              </div>
-            </article>
-          ))}
+
+                <div className="bookTileInfo">
+                  <h3>{book.title}</h3>
+                  <p>
+                    {book.description ||
+                      "A magical story from Read With Luke."}
+                  </p>
+                </div>
+              </Link>
+            ))}
+          </div>
         </section>
 
         {filteredBooks.length === 0 && (
@@ -178,7 +182,7 @@ export default function LibraryPage() {
             <Link href="/admin">Open Admin</Link>
           </div>
         )}
-       </main>
+      </main>
 
       <Footer />
     </>
