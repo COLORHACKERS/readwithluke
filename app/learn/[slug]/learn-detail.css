@@ -168,13 +168,30 @@
   height: 24px;
   object-fit: contain;
 }
+.learnCloseButton {
+  width: 58px;
+  height: 58px;
 
-.learnRewardButton {
-  width: 58px !important;
-  height: 58px !important;
-  background: white !important;
-  border: 3px solid #ff5526 !important;
+  border-radius: 999px;
+
+  background: white;
+  border: 3px solid #ff5526;
+
   color: #ff5526;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  text-decoration: none;
+
   font-family: "DK Woolwich", "Arial Black", sans-serif;
-  font-size: 30px;
+  font-size: 34px;
+  line-height: 1;
+
+  transition: 0.2s;
+}
+
+.learnCloseButton:hover {
+  background: #fff6f2;
 }
