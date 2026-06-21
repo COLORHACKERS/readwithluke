@@ -7,12 +7,9 @@ import Footer from "@/app/components/Footer";
 import "./home.css";
 
 function getTimeLeft() {
-  const trialStart = new Date("2026-06-18T00:00:00");
-  const trialEnd = new Date(trialStart);
-  trialEnd.setDate(trialEnd.getDate() + 90);
-
+  const launchDate = new Date("2026-09-16T00:00:00");
   const now = new Date();
-  const diff = Math.max(trialEnd.getTime() - now.getTime(), 0);
+  const diff = Math.max(launchDate.getTime() - now.getTime(), 0);
 
   return {
     days: Math.floor(diff / (1000 * 60 * 60 * 24)),
@@ -59,9 +56,8 @@ export default function Home() {
           </div>
 
           <div className="homeTimer">
-            <span className="launchDate">
-  Launching 09/16/2026
-</span>
+            <span className="launchDate">Launching 09/16/2026</span>
+
             <h2>
               READ FOR FREE UNTIL
               <br />
@@ -77,66 +73,67 @@ export default function Home() {
           </div>
 
           <section className="homeMarquee">
-  <div className="marqueeTrack">
-    <BookMarqueeCard
-      large
-      href="/books/little-treehouse-mysteries"
-      image="/images/home-card-1.png"
-      title="DETECT."
-      description="A mystery adventure inside a strange treehouse."
-    />
+            <div className="marqueeTrack">
+              <BookMarqueeCard
+                large
+                href="/books/little-treehouse-mysteries"
+                image="/images/home-card-1.png"
+                title="DETECT."
+                description="A mystery adventure inside a strange treehouse."
+              />
 
-    <BookMarqueeCard
-      href="/books/sammy-finds-her-way-home"
-      image="/images/home-card-4.png"
-      title="SAMMY FINDS HER WAY HOME"
-      description="A brave journey through a wild sunset storm."
-    />
+              <BookMarqueeCard
+                href="/books/sammy-finds-her-way-home"
+                image="/images/home-card-4.png"
+                title="SAMMY FINDS HER WAY HOME"
+                description="A brave journey through a wild sunset storm."
+              />
 
-    <BookMarqueeCard
-      href="/books/the-toy-maker"
-      image="/images/home-card-2.png"
-      title="THE TOY MAKER"
-      description="A magical world of inventions and wonder."
-    />
+              <BookMarqueeCard
+                href="/books/the-toy-maker"
+                image="/images/home-card-2.png"
+                title="THE TOY MAKER"
+                description="A magical world of inventions and wonder."
+              />
 
-    <BookMarqueeCard
-      href="/books/the-great-crockoff"
-      image="/images/home-card-3.png"
-      title="THE GREAT CROCKOFF!"
-      description="A hilarious creature adventure."
-    />
+              <BookMarqueeCard
+                href="/books/the-great-crockoff"
+                image="/images/home-card-3.png"
+                title="THE GREAT CROCKOFF!"
+                description="A hilarious creature adventure."
+              />
 
-    <BookMarqueeCard
-      href="/books/little-treehouse-mysteries"
-      image="/images/home-card-1.png"
-      title="TREE HOUSE MYSTERIES"
-      description="Friends, clues, and spooky surprises."
-    />
+              <BookMarqueeCard
+                href="/books/little-treehouse-mysteries"
+                image="/images/home-card-1.png"
+                title="TREE HOUSE MYSTERIES"
+                description="Friends, clues, and spooky surprises."
+              />
 
-    <BookMarqueeCard
-      href="/books/sammy-finds-her-way-home"
-      image="/images/home-card-4.png"
-      title="SAMMY FINDS HER WAY HOME"
-      description="A warm story about courage and home."
-    />
+              <BookMarqueeCard
+                href="/books/sammy-finds-her-way-home"
+                image="/images/home-card-4.png"
+                title="SAMMY FINDS HER WAY HOME"
+                description="A warm story about courage and home."
+              />
 
-    <BookMarqueeCard
-      href="/books/the-toy-maker"
-      image="/images/home-card-2.png"
-      title="THE TOY MAKER"
-      description="A cinematic adventure full of magic."
-    />
+              <BookMarqueeCard
+                href="/books/the-toy-maker"
+                image="/images/home-card-2.png"
+                title="THE TOY MAKER"
+                description="A cinematic adventure full of magic."
+              />
 
-    <BookMarqueeCard
-      href="/books/the-great-crockoff"
-      image="/images/home-card-3.png"
-      title="THE GREAT CROCKOFF!"
-      description="A funny, wild story kids will love."
-    />
-  </div>
-</section>
-           </main>
+              <BookMarqueeCard
+                href="/books/the-great-crockoff"
+                image="/images/home-card-3.png"
+                title="THE GREAT CROCKOFF!"
+                description="A funny, wild story kids will love."
+              />
+            </div>
+          </section>
+        </section>
+      </main>
 
       <Footer />
     </>
@@ -151,6 +148,7 @@ function TimeUnit({ value, label }: { value: number; label: string }) {
     </div>
   );
 }
+
 function BookMarqueeCard({
   href,
   image,
