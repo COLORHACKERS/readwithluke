@@ -21,13 +21,11 @@ export default async function BookPreviewPage({ params }: Props) {
     return (
       <>
         <Header />
-        <main className="bookPreviewPage">
-          <div className="bookPreviewCard">
-            <h1>Book not found.</h1>
-            <Link href="/library" className="outlineButton">
-              Back to Library
-            </Link>
-          </div>
+        <main className="bookPreviewPage bookPreviewEmpty">
+          <h1>Book not found.</h1>
+          <Link href="/library" className="previewOutlineButton">
+            BACK TO LIBRARY
+          </Link>
         </main>
         <Footer />
       </>
@@ -39,7 +37,7 @@ export default async function BookPreviewPage({ params }: Props) {
     .select("*", { count: "exact", head: true })
     .eq("book_id", book.id);
 
-  const imageUrl =
+  const heroImage =
     book.cover_url ||
     book.cover_image_url ||
     book.image_url ||
@@ -50,33 +48,50 @@ export default async function BookPreviewPage({ params }: Props) {
       <Header />
 
       <main className="bookPreviewPage">
-        <img src="/images/home-hero.png" alt="" className="bookPreviewBg" />
+        <img src={heroImage} alt="" className="bookPreviewBg" />
+        <div className="bookPreviewShade" />
 
-        <section className="bookPreviewCard">
-          <div className="bookPreviewImage">
-            <img src={imageUrl} alt={book.title} />
+        <section className="previewContent">
+          <div className="previewProgressText">
+            Progress: Page 1 of {count || 20}
           </div>
 
-          <div className="bookPreviewInfo">
-            <p className="bookProgress">Page 1 of {count || 20}</p>
-            <div className="previewBar">
-              <span />
-            </div>
+          <div className="previewProgressBar">
+            <span />
+          </div>
 
-            <h1>{book.title}</h1>
+          <h1>
+            MYSTERY.
+            <br />
+            ADVENTURE.
+            <br />
+            FRIENDSHIP.
+          </h1>
 
-            <p className="bookDescription">
-              {book.description ||
-                "Open this magical story and begin a new reading adventure with Luke."}
-            </p>
+          <p className="previewDescription">
+            {book.description ||
+              "Stories for kids that are magical, exciting, and cinematic like movies. Fascinating facts and fun learnings that inspire and grow imagination!"}
+          </p>
 
-            <Link href={`/books/${book.slug}/read?page=1`} className="startButton">
+          <h2>{book.title}</h2>
+
+          <div className="previewButtons">
+            <Link
+              href={`/books/${book.slug}/read?page=1`}
+              className="previewStartButton"
+            >
               START READING
             </Link>
 
-            <Link href="/library" className="outlineButton">
+            <Link href="/library" className="previewOutlineButton">
               BACK TO LIBRARY
             </Link>
+          </div>
+
+          <div className="previewIconRow">
+            <button>♥</button>
+            <button>▮</button>
+            <button>⇧</button>
           </div>
         </section>
       </main>
