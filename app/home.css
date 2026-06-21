@@ -221,20 +221,31 @@
 
 .homeMarquee {
   position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 86px;
-  width: 100vw;
+
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: min(calc(100vw - 72px), 1368px);
+
+  bottom: 70px;
+
   overflow: hidden;
   z-index: 6;
-  padding: 20px 0 30px;
+
+  padding: 20px 0;
 }
 
 .marqueeTrack {
   display: flex;
-  gap: 22px;
+  align-items: center;
+
+  gap: 24px;
+
   width: max-content;
-  animation: marqueeScroll 80s linear infinite;
+
+  padding: 0 120px;
+
+  animation: marqueeScroll 110s linear infinite;
 }
 .homeMarquee:hover .marqueeTrack {
   animation-play-state: paused;
@@ -242,7 +253,7 @@
 
 .marqueeCard {
   position: relative;
-  flex: 0 0 300px;
+  flex: 0 0 310px;
   height: 200px;
   border-radius: 18px;
   overflow: hidden;
@@ -251,6 +262,45 @@
   box-shadow: 0 14px 30px rgba(0, 0, 0, 0.22);
   text-decoration: none;
   color: white;
+    transition:
+    transform .25s ease,
+    box-shadow .25s ease;
+  
+}
+.homeMarquee::before,
+.homeMarquee::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 110px;
+  z-index: 30;
+  pointer-events: none;
+}
+
+.homeMarquee::before {
+  left: 0;
+
+  background: linear-gradient(
+    to right,
+    rgba(248,241,230,.95),
+    rgba(248,241,230,0)
+  );
+}
+.marqueeCard:hover {
+  transform: translateY(-8px);
+
+  box-shadow:
+    0 24px 60px rgba(0,0,0,.28);
+}
+.homeMarquee::after {
+  right: 0;
+
+  background: linear-gradient(
+    to left,
+    rgba(248,241,230,.95),
+    rgba(248,241,230,0)
+  );
 }
 
 .marqueeCard.large {
