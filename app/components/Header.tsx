@@ -60,7 +60,7 @@ setInitials(`${first}${last}`.toUpperCase() || "A");
 
   return (
     <header className="mainHeader">
-     <Link href="/library" className="headerLogo">
+     <Link href="/" className="headerLogo">
   <img src="/images/luke-intro.png" alt="Read With Luke" />
 </Link>
 

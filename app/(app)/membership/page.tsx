@@ -69,13 +69,13 @@ export default function MembershipPage() {
 
           <p className="membershipDescription">
             No charge today. Your card will be charged
-            <strong> $12.99/month </strong>
+            <strong> $9.99/month </strong>
             when our official launch countdown ends unless you cancel before
             then.
           </p>
 
           <div className="membershipPrice">
-            <strong>$12.99</strong>
+            <strong>$9.99</strong>
             <span>per month after launch</span>
           </div>
 

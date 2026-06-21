@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Header from "@/app/components/Header";
 import { supabase } from "@/lib/supabase";
 import ReaderClient from "./ReaderClient";
 import "./reader.css";
@@ -25,7 +24,7 @@ export default async function ReadPage({ params, searchParams }: Props) {
   if (!book) {
     return (
       <>
-        <Header />
+     
         <main className="readerPage">
           <div className="readerEmpty">
             <h1>Book not found.</h1>
@@ -45,7 +44,7 @@ export default async function ReadPage({ params, searchParams }: Props) {
   if (!pages || pages.length === 0) {
     return (
       <>
-        <Header />
+       
         <main className="readerPage">
           <div className="readerEmpty">
             <h1>No pages uploaded yet.</h1>
@@ -68,7 +67,6 @@ export default async function ReadPage({ params, searchParams }: Props) {
 
 return (
   <>
-    <Header />
 
     <ReaderGate>
       <ReaderClient

@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 type Props = {
   bookSlug: string;
@@ -12,18 +12,6 @@ type Props = {
   text: string;
 };
 
-function chunkTextByLines(text: string, maxLines = 14) {
-  const cleanText = text || "No text added for this page yet.";
-  const lines = cleanText.split("\n");
-  const chunks: string[] = [];
-
-  for (let i = 0; i < lines.length; i += maxLines) {
-    chunks.push(lines.slice(i, i + maxLines).join("\n"));
-  }
-
-  return chunks.length ? chunks : ["No text added for this page yet."];
-}
-
 export default function ReaderClient({
   bookSlug,
   title,
@@ -33,37 +21,16 @@ export default function ReaderClient({
   text,
 }: Props) {
   const router = useRouter();
-  const [textStep, setTextStep] = useState(0);
 
-  const textChunks = useMemo(() => {
-    return chunkTextByLines(text, 10);
-  }, [text]);
-
-  useEffect(() => {
-    setTextStep(0);
-  }, [pageNumber]);
-
-  const safeTextStep = Math.min(textStep, textChunks.length - 1);
-  const isFirstText = safeTextStep === 0;
-  const isLastText = safeTextStep === textChunks.length - 1;
+  const progress = Math.max(4, Math.min((pageNumber / totalPages) * 100, 100));
 
   function goBack() {
-    if (!isFirstText) {
-      setTextStep(safeTextStep - 1);
-      return;
-    }
-
     if (pageNumber > 1) {
       router.push(`/books/${bookSlug}/read?page=${pageNumber - 1}`);
     }
   }
 
   function goNext() {
-    if (!isLastText) {
-      setTextStep(safeTextStep + 1);
-      return;
-    }
-
     if (pageNumber < totalPages) {
       router.push(`/books/${bookSlug}/read?page=${pageNumber + 1}`);
     }
@@ -71,51 +38,71 @@ export default function ReaderClient({
 
   return (
     <main className="readerPage">
-      <section className="readerShell">
-        <div className="readerImage">
-          <img src={imageUrl} alt={`${title} page ${pageNumber}`} />
+      <section className="readerImageSide">
+        <img src={imageUrl} alt={`${title} page ${pageNumber}`} />
+      </section>
+
+      <aside className="readerPanel">
+        <div className="readerMiniHeader">
+          <Link href="/library" className="readerLogo">
+            <img src="/images/luke-intro.png" alt="Read With Luke" />
+          </Link>
+
+          <Link href="/library" className="readerBackLibrary">
+            BACK TO LIBRARY
+          </Link>
+
+          <button className="readerIconButton">
+            <img src="/images/icon-heart.png" alt="Favorite" />
+          </button>
+
+          <button className="readerIconButton">
+            <img src="/images/icon-bookmark.png" alt="Save" />
+          </button>
+
+          <button className="readerIconButton">
+            <img src="/images/icon-share.png" alt="Share" />
+          </button>
         </div>
 
-        <aside className="readerPanel">
-          <div className="readerContent">
-            <p className="readerEyebrow">
-              Page {pageNumber} of {totalPages}
-            </p>
+        <div className="readerProgressRow">
+          <span>
+            Page {pageNumber} of {totalPages}
+          </span>
 
-            <h1>{title}</h1>
-
-            <div className="readerTextBox">
-              <p className="readerText">{textChunks[safeTextStep]}</p>
-            </div>
-
-            {textChunks.length > 1 && (
-              <p className="textCounter">
-                Text {safeTextStep + 1} of {textChunks.length}
-              </p>
-            )}
+          <div className="readerProgress">
+            <i style={{ width: `${progress}%` }} />
           </div>
+        </div>
 
-          <div className="readerControls">
-            <button
-              onClick={goBack}
-              className={pageNumber === 1 && isFirstText ? "disabledCircle" : ""}
-            >
-              ←
-            </button>
+        <div className="readerStoryText">
+          <h1>{pageNumber === 1 ? title : title}</h1>
 
-            <button className="sound">🔊</button>
+          <p>{text || "No text added for this page yet."}</p>
+        </div>
 
-            <button
-              onClick={goNext}
-              className={
-                pageNumber === totalPages && isLastText ? "disabledCircle" : ""
-              }
-            >
-              →
-            </button>
-          </div>
-        </aside>
-      </section>
+        <div className="readerControls">
+          <button
+            onClick={goBack}
+            className={pageNumber === 1 ? "disabledCircle" : ""}
+            aria-label="Previous page"
+          >
+            <img src="/images/icon-arrow-left.png" alt="" />
+          </button>
+
+          <button className="readerReadAloud">
+            READ ALOUD
+          </button>
+
+          <button
+            onClick={goNext}
+            className={pageNumber === totalPages ? "disabledCircle" : ""}
+            aria-label="Next page"
+          >
+            <img src="/images/icon-arrow-right.png" alt="" />
+          </button>
+        </div>
+      </aside>
     </main>
   );
 }
