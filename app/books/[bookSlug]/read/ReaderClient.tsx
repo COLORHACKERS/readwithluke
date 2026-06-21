@@ -43,9 +43,9 @@ export default function ReaderClient({
           <Link href="/library" className="readerMiniBtn">LIBRARY</Link>
 
           <div className="readerTopIcons">
-            <button><img src="/images/icon-heart.png" alt="Favorite" /></button>
-            <button><img src="/images/icon-bookmark.png" alt="Save" /></button>
-            <button><img src="/images/icon-share.png" alt="Share" /></button>
+            <button><img src="/images/heart.png" alt="Favorite" /></button>
+            <button><img src="/images/bookmark.png" alt="Save" /></button>
+            <button><img src="/images/share.png" alt="Share" /></button>
           </div>
         </div>
 
