@@ -153,9 +153,9 @@ export default function LibraryPage() {
   <img src="/images/heart.png" alt="" />
 </button>
 
-                  <Link href={`/books/${book.slug}/read`} className="readBtn">
-                    READ
-                  </Link>
+                  <Link href={`/books/${book.slug}`} className="readBtn">
+  READ
+</Link>
 
                <button
   type="button"
