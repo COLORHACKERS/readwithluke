@@ -78,20 +78,20 @@ export default function Home() {
                 href="/books/little-treehouse-mysteries"
                 image="/images/home-card-1.png"
                 title="DETECT."
-                description="A mystery adventure inside a strange treehouse."
+                description="A mystery adventure inside a cool treehouse."
               />
 
               <BookMarqueeCard
                 href="/books/sammy-finds-her-way-home"
                 image="/images/home-card-4.png"
-                title="SAMMY FINDS HER WAY HOME"
-                description="A brave journey through a wild sunset storm."
+                title="LAUGH."
+                description="A hilarious backyard adventure."
               />
 
               <BookMarqueeCard
                 href="/books/the-toy-maker"
                 image="/images/home-card-2.png"
-                title="THE TOY MAKER"
+                title="FEEL."
                 description="A magical world of inventions and wonder."
               />
 
