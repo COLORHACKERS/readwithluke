@@ -127,6 +127,27 @@ export default function ProfilePage() {
     alert("Password updated!");
   }
 
+  async function openBillingPortal() {
+    if (!userId) return;
+
+    const res = await fetch("/api/create-portal-session", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userId }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      alert(data.error || "Could not open billing.");
+      return;
+    }
+
+    window.location.href = data.url;
+  }
+
   async function logout() {
     await supabase.auth.signOut();
     router.push("/");
@@ -142,7 +163,7 @@ export default function ProfilePage() {
 
           <div className="profileSettings">
             <div className="profileTop">
-              <div className="profileAvatar">{avatar || "LL"}</div>
+              <div className="profileAvatar">{avatar || "•"}</div>
 
               <div>
                 <h1>Profile</h1>
@@ -234,8 +255,13 @@ export default function ProfilePage() {
 
                 <p className="planText">Current Plan: Free Trial</p>
 
-                <button>Manage Billing</button>
-                <button className="secondaryButton">Upgrade Membership</button>
+                <button onClick={openBillingPortal}>Manage Billing</button>
+                <button
+                  className="secondaryButton"
+                  onClick={() => router.push("/membership")}
+                >
+                  Upgrade Membership
+                </button>
 
                 <br />
 
