@@ -55,13 +55,13 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="homeTimer">
+          <Link href="/membership" className="homeTimer">
             <span className="launchDate">Launching 09/16/2026</span>
 
             <h2>
-              READ FOR FREE UNTIL
+              SIGN UP AND READ FOR FREE
               <br />
-              OUR OFFICIAL LAUNCH IN...
+              UNTIL OUR OFFICIAL LAUNCH IN...
             </h2>
 
             <div className="timerGrid">
@@ -70,7 +70,7 @@ export default function Home() {
               <TimeUnit value={timeLeft.minutes} label="minutes" />
               <TimeUnit value={timeLeft.seconds} label="seconds" />
             </div>
-          </div>
+          </Link>
 
           <section className="homeMarquee">
             <div className="marqueeTrack">
