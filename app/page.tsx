@@ -98,35 +98,35 @@ export default function Home() {
               <BookMarqueeCard
                 href="/books/the-great-crockoff"
                 image="/images/home-card-3.png"
-                title="THE GREAT CROCKOFF!"
+                title="EXPLORE."
                 description="A hilarious creature adventure."
               />
 
               <BookMarqueeCard
                 href="/books/little-treehouse-mysteries"
                 image="/images/home-card-1.png"
-                title="TREE HOUSE MYSTERIES"
+                title="THINK."
                 description="Friends, clues, and spooky surprises."
               />
 
               <BookMarqueeCard
                 href="/books/sammy-finds-her-way-home"
                 image="/images/home-card-4.png"
-                title="SAMMY FINDS HER WAY HOME"
+                title="DISCOVER."
                 description="A warm story about courage and home."
               />
 
               <BookMarqueeCard
                 href="/books/the-toy-maker"
                 image="/images/home-card-2.png"
-                title="THE TOY MAKER"
+                title="BELIEVE."
                 description="A cinematic adventure full of magic."
               />
 
               <BookMarqueeCard
                 href="/books/the-great-crockoff"
                 image="/images/home-card-3.png"
-                title="THE GREAT CROCKOFF!"
+                title="GIGGLE."
                 description="A funny, wild story kids will love."
               />
             </div>
