@@ -29,12 +29,9 @@
 .previewContent {
   position: relative;
   z-index: 2;
-
   width: 620px;
-
-  margin-left: 120px;
-  margin-top: 8px;
-
+  max-width: calc(100vw - 240px);
+  margin-left: max(56px, calc((100vw - 1368px) / 2 + 30px));
   color: white;
 }
 .previewProgressText {
@@ -62,12 +59,14 @@
 }
 
 .previewContent h1 {
-  margin: 0 0 24px;
+  margin: 120px 0 24px;
   font-family: "DK Woolwich", "Arial Black", sans-serif;
-  font-size: 76px;
+  font-size: 86px;
   line-height: 0.88;
   color: white;
+  max-width: 680px;
 }
+
 
 .previewDescription {
   max-width: 560px;
@@ -79,12 +78,7 @@
 }
 
 .previewContent h2 {
-  margin: 0 0 22px;
-  max-width: 520px;
-  font-family: "DK Woolwich", "Arial Black", sans-serif;
-  font-size: 42px;
-  line-height: 0.95;
-  color: #ff5526;
+  display: none;
 }
 
 .previewButtons {
@@ -143,6 +137,22 @@
   color: #050505;
   display: grid;
   place-items: center;
+}
+.previewBottomTagline {
+  position: absolute;
+  left: 50%;
+  bottom: 34px;
+  transform: translateX(-50%);
+  z-index: 3;
+
+  width: 100%;
+  text-align: center;
+
+  font-family: "DK Woolwich", "Arial Black", sans-serif;
+  font-size: 42px;
+  line-height: 1;
+  color: #ff5526;
+  letter-spacing: 0.02em;
 }
 
 @media (max-width: 900px) {

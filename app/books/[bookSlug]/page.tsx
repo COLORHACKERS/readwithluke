@@ -60,20 +60,12 @@ export default async function BookPreviewPage({ params }: Props) {
             <span />
           </div>
 
-          <h1>
-            MYSTERY.
-            <br />
-            ADVENTURE.
-            <br />
-            FRIENDSHIP.
-          </h1>
+          <h1>{book.title}</h1>
 
-          <p className="previewDescription">
-            {book.description ||
-              "Stories for kids that are magical, exciting, and cinematic like movies. Fascinating facts and fun learnings that inspire and grow imagination!"}
-          </p>
-
-          <h2>{book.title}</h2>
+<p className="previewDescription">
+  {book.description ||
+    "Stories for kids that are magical, exciting, and cinematic like movies. Fascinating facts and fun learnings that inspire and grow imagination!"}
+</p>
 
           <div className="previewButtons">
             <Link
@@ -94,6 +86,9 @@ export default async function BookPreviewPage({ params }: Props) {
             <button>⇧</button>
           </div>
         </section>
+        <div className="previewBottomTagline">
+  MYSTERY. FRIENDSHIP. ADVENTURE.
+</div>
       </main>
 
       <Footer />
