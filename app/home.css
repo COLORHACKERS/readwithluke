@@ -283,7 +283,7 @@
 
   background: linear-gradient(
     to right,
-    rgba(248,241,230,.95),
+    rgba(248,241,230,.0),
     rgba(248,241,230,0)
   );
 }
@@ -291,14 +291,14 @@
   transform: translateY(-8px);
 
   box-shadow:
-    0 24px 60px rgba(0,0,0,.28);
+    0 24px 60px rgba(0,0,0,.0);
 }
 .homeMarquee::after {
   right: 0;
 
   background: linear-gradient(
     to left,
-    rgba(248,241,230,.95),
+    rgba(248,241,230,.0),
     rgba(248,241,230,0)
   );
 }
