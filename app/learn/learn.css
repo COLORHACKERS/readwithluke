@@ -1,13 +1,10 @@
 .learnPage {
   width: 100%;
-  max-width: 1440px;
-  margin: 0 auto;
   min-height: 100vh;
   position: relative;
   overflow: hidden;
-  background: #f8f1e6;
-  color: #050505;
-  padding: 150px 50px 90px;
+  background: #050505;
+  padding: 150px 46px 90px;
   box-sizing: border-box;
 }
 
@@ -17,161 +14,192 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center top;
   z-index: 0;
 }
 
+.learnPage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 1;
+}
+
 .learnHero,
-.learnGrid,
+.learnRail,
 .suggestBox {
   position: relative;
   z-index: 2;
 }
 
 .learnHero {
-  margin: 0 0 42px;
-  background: transparent;
-  box-shadow: none;
-  border-radius: 0;
-  overflow: visible;
-}
-
-.learnHero h1 {
-  margin: 0;
-  font-family: "DK Woolwich", sans-serif;
-  font-size: 78px;
-  line-height: 0.9;
-  letter-spacing: -0.02em;
-  text-transform: uppercase;
-  color: #050505;
-}
-
-.learnHero p {
-  margin: 12px 0 0;
-  font-family: "Courier New", monospace;
-  font-size: 18px;
-  font-weight: 700;
-  color: #050505;
-}
-
-.learnGrid {
   display: grid;
-  grid-template-columns: repeat(3, 360px);
-  justify-content: center;
-  gap: 26px;
+  grid-template-columns: 42% 1fr;
+  gap: 44px;
+  align-items: center;
+  max-width: 1368px;
+  margin: 0 auto;
 }
 
-.learnCard {
-  width: 360px;
-  min-height: 650px;
-  background: white;
-  border-radius: 18px;
-  padding: 12px 12px 18px;
-  box-sizing: border-box;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
-.learnCardImage {
-  width: 100%;
-  height: 360px;
-  object-fit: cover;
-  border-radius: 12px;
-  display: block;
-}
-
-.learnCardBody {
-  padding: 18px 8px 0;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
-
-.learnCardBody h2 {
+.learnHeroText h1 {
   margin: 0;
-  font-family: "DK Woolwich", sans-serif;
-  font-size: 36px;
-  line-height: 0.9;
-  text-transform: uppercase;
-  color: #050505;
-}
-
-.learnCardBody p {
-  margin: 14px 0 16px;
-  font-family: "Courier New", monospace;
-  font-size: 14px;
-  line-height: 1.2;
-  font-weight: 700;
-  color: #050505;
-  flex: 1;
-}
-
-.learnCardActions {
-  margin-top: auto;
-  display: grid;
-  grid-template-columns: 54px 1fr 54px;
-  gap: 14px;
-  align-items: center;
-}
-
-.learnCardActions button {
-  width: 54px;
-  height: 54px;
-  border: 0;
-  border-radius: 999px;
-  background: #ff5526;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-
-.learnCardActions button img {
-  width: 24px;
-  height: 24px;
-  object-fit: contain;
-}
-
-.learnBtn {
-  height: 54px;
-  border-radius: 999px;
-  background: #ff5526;
+  font-family: "DK Woolwich", "Arial Black", sans-serif;
+  font-size: 90px;
+  line-height: 0.86;
   color: white;
+}
+
+.learnHeroText p {
+  margin: 28px 0 0;
+  font-family: "Courier New", monospace;
+  font-size: 21px;
+  line-height: 1.28;
+  font-weight: 900;
+  color: white;
+}
+
+.featuredLearn {
+  height: 430px;
+  border-radius: 26px;
+  overflow: hidden;
+  position: relative;
+  display: block;
   text-decoration: none;
-  font-family: "DK Woolwich", sans-serif;
-  font-size: 26px;
+  color: white;
+  border: 8px solid white;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.35);
+}
+
+.featuredLearn img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.featuredOverlay {
+  position: absolute;
+  inset: 0;
+  padding: 34px;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: flex-end;
+  background: linear-gradient(to top, rgba(0,0,0,.78), rgba(0,0,0,.1));
+}
+
+.featuredOverlay span {
+  font-family: "Courier New", monospace;
+  font-weight: 900;
+  font-size: 14px;
+  color: #ff5526;
+}
+
+.featuredOverlay h2 {
+  margin: 10px 0;
+  font-family: "DK Woolwich", "Arial Black", sans-serif;
+  font-size: 52px;
+  line-height: 0.9;
+}
+
+.featuredOverlay p {
+  max-width: 520px;
+  margin: 0 0 18px;
+  font-family: "Courier New", monospace;
+  font-size: 17px;
+  font-weight: 900;
+  line-height: 1.25;
+}
+
+.featuredOverlay strong {
+  width: fit-content;
+  padding: 16px 28px;
+  border-radius: 999px;
+  background: #ff5526;
+  font-family: "DK Woolwich", "Arial Black", sans-serif;
+  font-size: 24px;
+}
+
+.learnRail {
+  max-width: 1368px;
+  margin: 54px auto 0;
+}
+
+.learnRail h2 {
+  margin: 0 0 18px;
+  font-family: "DK Woolwich", "Arial Black", sans-serif;
+  font-size: 42px;
+  color: white;
+}
+
+.learnScroller {
+  display: flex;
+  gap: 22px;
+  overflow-x: auto;
+  padding-bottom: 18px;
+}
+
+.learnTile {
+  flex: 0 0 310px;
+  height: 220px;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  border: 6px solid white;
+  text-decoration: none;
+  color: white;
+  background: white;
+}
+
+.learnTile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.learnTileOverlay {
+  position: absolute;
+  inset: 0;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background: linear-gradient(to top, rgba(0,0,0,.72), rgba(0,0,0,.05));
+}
+
+.learnTileOverlay h3 {
+  margin: 0;
+  font-family: "DK Woolwich", "Arial Black", sans-serif;
+  font-size: 30px;
+  line-height: 0.95;
+}
+
+.learnTileOverlay p {
+  margin: 6px 0 0;
+  font-family: "Courier New", monospace;
+  font-size: 13px;
+  font-weight: 900;
 }
 
 .suggestBox {
-  width: 700px;
-  margin: 56px auto 0;
-  background: white;
+  max-width: 720px;
+  margin: 50px auto 0;
+  height: 68px;
   border-radius: 999px;
-  padding: 10px;
+  background: white;
   display: flex;
   align-items: center;
+  padding-left: 30px;
+  box-sizing: border-box;
 }
 
 .suggestBox input {
   flex: 1;
-  height: 58px;
   border: 0;
   outline: 0;
   background: transparent;
-  padding-left: 28px;
   font-family: "Courier New", monospace;
-  font-size: 18px;
-  font-weight: 700;
-  color: #050505;
-}
-
-.suggestBox input::placeholder {
-  color: #9d948a;
-  opacity: 1;
+  font-size: 16px;
+  font-weight: 900;
 }
 
 .suggestBox button {
@@ -180,6 +208,7 @@
   border: 0;
   border-radius: 999px;
   background: #ff5526;
+  margin-right: 5px;
   display: grid;
   place-items: center;
   cursor: pointer;
@@ -187,6 +216,18 @@
 
 .suggestBox button img {
   width: 28px;
-  height: 28px;
-  object-fit: contain;
+}
+
+@media (max-width: 900px) {
+  .learnHero {
+    grid-template-columns: 1fr;
+  }
+
+  .learnHeroText h1 {
+    font-size: 62px;
+  }
+
+  .featuredLearn {
+    height: 320px;
+  }
 }

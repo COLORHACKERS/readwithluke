@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import { supabase } from "@/lib/supabase";
@@ -39,6 +40,8 @@ export default function LearnPage() {
     setItems(data || []);
   }
 
+  const featured = items[0];
+
   return (
     <>
       <Header />
@@ -47,40 +50,68 @@ export default function LearnPage() {
         <img src="/images/home-hero.png" alt="" className="learnBg" />
 
         <section className="learnHero">
-          <h1>PICK SOMETHING FUN TO LEARN.</h1>
-          <p>Learn with Luke Library &gt;</p>
-        </section>
+          <div className="learnHeroText">
+            <h1>
+              LEARN
+              <br />
+              SOMETHING
+              <br />
+              AWESOME.
+            </h1>
 
-        <section className="learnGrid">
-          {items.map((item) => (
-            <article className="learnCard" key={item.id}>
+            <p>
+              Fun facts, science, animals, space, history,
+              <br />
+              and amazing things explained like a comic.
+            </p>
+          </div>
+
+          {featured && (
+            <Link href={`/learn/${featured.slug}`} className="featuredLearn">
               <img
-                src={item.cover_url || item.image_url || "/images/6to5ratio.png"}
-                alt={item.title}
-                className="learnCardImage"
+                src={
+                  featured.cover_url ||
+                  featured.image_url ||
+                  "/images/6to5ratio.png"
+                }
+                alt={featured.title}
               />
 
-              <div className="learnCardBody">
-                <h2>{item.title}</h2>
-
-                <p>{item.description || "Learn something fun with Luke."}</p>
-
-                <div className="learnCardActions">
-                  <button type="button">
-                    <img src="/images/heart.png" alt="" />
-                  </button>
-
-                  <a href={`/learn/${item.slug}`} className="learnBtn">
-                    LEARN
-                  </a>
-
-                  <button type="button">
-                    <img src="/images/bookmark.png" alt="" />
-                  </button>
-                </div>
+              <div className="featuredOverlay">
+                <span>FEATURED LEARNING</span>
+                <h2>{featured.title}</h2>
+                <p>
+                  {featured.description ||
+                    "Open this learning adventure and discover something new."}
+                </p>
+                <strong>LEARN NOW</strong>
               </div>
-            </article>
-          ))}
+            </Link>
+          )}
+        </section>
+
+        <section className="learnRail">
+          <h2>New Learning Adventures</h2>
+
+          <div className="learnScroller">
+            {items.map((item) => (
+              <Link
+                href={`/learn/${item.slug}`}
+                className="learnTile"
+                key={item.id}
+              >
+                <img
+                  src={item.cover_url || item.image_url || "/images/6to5ratio.png"}
+                  alt={item.title}
+                />
+
+                <div className="learnTileOverlay">
+                  <h3>{item.title}</h3>
+                  <p>{item.category || "Learn with Luke"}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
         </section>
 
         <section className="suggestBox">
