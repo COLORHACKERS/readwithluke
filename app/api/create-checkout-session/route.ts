@@ -1,49 +1,42 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
-
 const launchDate = new Date("2026-09-16T00:00:00");
 
-export async function POST() {
+export async function POST(req: Request) {
   try {
-    if (!process.env.STRIPE_SECRET_KEY) {
-      throw new Error("Missing STRIPE_SECRET_KEY");
-    }
+    const { userId, email } = await req.json();
 
-    if (!process.env.NEXT_PUBLIC_STRIPE_PRICE_ID) {
-      throw new Error("Missing NEXT_PUBLIC_STRIPE_PRICE_ID");
-    }
+    const secretKey = process.env.STRIPE_SECRET_KEY;
+    const priceId = process.env.NEXT_PUBLIC_STRIPE_PRICE_ID;
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
 
-    if (!process.env.NEXT_PUBLIC_SITE_URL) {
-      throw new Error("Missing NEXT_PUBLIC_SITE_URL");
-    }
+    if (!secretKey) throw new Error("Missing STRIPE_SECRET_KEY");
+    if (!priceId) throw new Error("Missing NEXT_PUBLIC_STRIPE_PRICE_ID");
+    if (!siteUrl) throw new Error("Missing NEXT_PUBLIC_SITE_URL");
+    if (!userId) throw new Error("Missing userId");
 
+    const stripe = new Stripe(secretKey);
     const trialEnd = Math.floor(launchDate.getTime() / 1000);
 
     const session = await stripe.checkout.sessions.create({
       mode: "subscription",
+      customer_email: email,
       payment_method_collection: "always",
-      line_items: [
-        {
-          price: process.env.NEXT_PUBLIC_STRIPE_PRICE_ID,
-          quantity: 1,
-        },
-      ],
+      client_reference_id: userId,
+      line_items: [{ price: priceId, quantity: 1 }],
       subscription_data: {
         trial_end: trialEnd,
+        metadata: { user_id: userId },
       },
-      success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/dashboard?checkout=success`,
-      cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/membership?checkout=cancelled`,
+      metadata: { user_id: userId },
+      success_url: `${siteUrl}/dashboard?checkout=success`,
+      cancel_url: `${siteUrl}/membership?checkout=cancelled`,
     });
 
     return NextResponse.json({ url: session.url });
   } catch (error) {
-    const message =
-      error instanceof Error ? error.message : "Unknown checkout error";
-
-    console.error("Stripe checkout error:", message);
-
+    const message = error instanceof Error ? error.message : "Checkout error";
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }

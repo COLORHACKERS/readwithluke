@@ -2,26 +2,41 @@
 
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
+import { supabase } from "@/lib/supabase";
 import "../../home.css";
 import "./membership.css";
 
 export default function MembershipPage() {
   async function startCheckout() {
     try {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (!user) {
+        window.location.href = "/signup";
+        return;
+      }
+
       const response = await fetch("/api/create-checkout-session", {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: user.id,
+          email: user.email,
+        }),
       });
 
       const data = await response.json();
 
       if (!response.ok) {
-        console.error("Checkout Error:", data);
         alert(data.error || "Could not start checkout.");
         return;
       }
 
       if (!data.url) {
-        console.error("No checkout URL returned:", data);
         alert("Stripe did not return a checkout URL.");
         return;
       }
@@ -39,9 +54,7 @@ export default function MembershipPage() {
 
       <main className="membershipPage">
         <section className="membershipCard">
-          <p className="membershipEyebrow">
-            READ WITH LUKE MEMBERSHIP
-          </p>
+          <p className="membershipEyebrow">READ WITH LUKE MEMBERSHIP</p>
 
           <h1>
             READ FREE

@@ -60,7 +60,7 @@ export default function Home() {
 
           <div className="homeTimer">
             <span className="launchDate">
-  Launching September 16, 2026
+  Launching 09/16/2026
 </span>
             <h2>
               READ FOR FREE UNTIL
