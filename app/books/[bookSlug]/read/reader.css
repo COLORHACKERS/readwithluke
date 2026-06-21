@@ -1,123 +1,172 @@
 .readerPage {
   width: 100%;
-  height: calc(100vh - 86px);
+  height: 100vh;
   overflow: hidden;
-  background: #f8f1e6;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-}
-
-.readerShell {
-  width: min(100vw, 1920px);
-  margin: 0 auto;
+  background: #eee8df;
   display: grid;
-  grid-template-columns: 60% 40%;
-  align-items: stretch;
+  grid-template-columns: 58% 42%;
 }
 
-.readerImage {
-  width: 100%;
-  aspect-ratio: 6 / 5;
+.readerImageSide {
+  height: 100vh;
   overflow: hidden;
+  background: #050505;
 }
 
-.readerImage img {
+.readerImageSide img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  object-position: top center;
+  object-fit: cover;
+  object-position: center;
   display: block;
 }
+
 .readerPanel {
-  width: 100%;
-  height: 100%;
-
-  padding: 48px;
-
-  background: #fcfaf5;
-
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-
+  height: 100vh;
+  background: #eee8df;
+  padding: 24px 56px 34px;
   box-sizing: border-box;
-  overflow: hidden;
-}
-.readerContent {
-  min-height: 0;
-  padding: 0;
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
   overflow: hidden;
 }
 
-.readerEyebrow {
-  margin: 0 0 18px;
-  font-size: 18px;
-  font-weight: 1000;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: #c6542d;
-}
-
-.readerPanel h1 {
-  margin: 0;
-  font-size: clamp(40px, 4vw, 72px);
-  line-height: 0.92;
-  font-weight: 1000;
-  text-transform: uppercase;
-  font-style: italic;
-  letter-spacing: -0.04em;
-}
-
-.readerTextBox {
-  min-height: 0;
-  max-height: 100%;
-  overflow-y: auto;
-}
-
-.readerText {
-  margin: 0;
-  font-size: 14px;
-  line-height: 2;
-  font-weight: 800;
-  white-space: pre-line;
-}
-
-.textCounter {
-  margin: 12px 0 0;
-  color: #13294b;
-  font-size: 13px;
-  font-weight: 800;
-}
-
-.readerControls {
-  margin-top: auto;
-
+.readerMiniHeader {
+  height: 92px;
+  background: white;
+  border-radius: 0 0 22px 22px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 18px;
+  padding: 0 18px;
+  box-sizing: border-box;
 }
 
-.readerControls button,
-.readerControls a {
-  width: 58px;
-  height: 58px;
-  border: 0;
+.readerLogo img {
+  width: 150px;
+  display: block;
+}
+
+.readerBackLibrary {
+  height: 46px;
+  padding: 0 22px;
   border-radius: 999px;
-  background: #f5b51b;
-  color: #13294b;
-  font-size: 30px;
-  font-weight: 1000;
+  background: #ff5526;
+  color: white;
+  font-family: "DK Woolwich", "Arial Black", sans-serif;
+  font-size: 20px;
   text-decoration: none;
   display: flex;
   align-items: center;
-  justify-content: center;
+}
+
+.readerIconButton {
+  width: 48px;
+  height: 48px;
+  border: 0;
+  border-radius: 999px;
+  background: #ff5526;
+  display: grid;
+  place-items: center;
   cursor: pointer;
 }
 
-.readerControls .sound {
-  background: #0b82a5;
+.readerIconButton img {
+  width: 23px;
+  height: 23px;
+  object-fit: contain;
+}
+
+.readerProgressRow {
+  margin-top: 44px;
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 24px;
+  align-items: center;
+}
+
+.readerProgressRow span {
+  font-family: "Courier New", monospace;
+  font-size: 15px;
+  font-weight: 900;
+  color: #050505;
+}
+
+.readerProgress {
+  height: 10px;
+  background: white;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.readerProgress i {
+  display: block;
+  height: 100%;
+  background: #ff5526;
+  border-radius: 999px;
+}
+
+.readerStoryText {
+  min-height: 0;
+  overflow: hidden;
+  padding-top: 32px;
+}
+
+.readerStoryText h1 {
+  margin: 0 0 20px;
+  font-family: "DK Woolwich", "Arial Black", sans-serif;
+  font-size: 58px;
+  line-height: 0.9;
+  color: #050505;
+}
+
+.readerStoryText p {
+  margin: 0;
+  max-height: 100%;
+  overflow-y: auto;
+  white-space: pre-line;
+  font-family: "Courier New", monospace;
+  font-size: 26px;
+  line-height: 1.28;
+  font-weight: 900;
+  color: #050505;
+  padding-right: 10px;
+}
+
+.readerControls {
+  display: grid;
+  grid-template-columns: 72px 1fr 72px;
+  gap: 36px;
+  align-items: center;
+}
+
+.readerControls button {
+  border: 0;
+  cursor: pointer;
+}
+
+.readerControls > button:not(.readerReadAloud) {
+  width: 66px;
+  height: 66px;
+  border-radius: 999px;
+  background: #ff5526;
+  display: grid;
+  place-items: center;
+}
+
+.readerControls > button:not(.readerReadAloud) img {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+}
+
+.readerReadAloud {
+  height: 66px;
+  border-radius: 999px;
+  background: #ff5526;
   color: white;
-  font-size: 24px;
+  font-family: "DK Woolwich", "Arial Black", sans-serif;
+  font-size: 32px;
 }
 
 .disabledCircle {
@@ -126,8 +175,10 @@
 }
 
 .readerEmpty {
-  padding: 60px;
+  min-height: 100vh;
+  padding: 180px 60px 60px;
   color: #13294b;
+  background: #f8f1e6;
 }
 
 .readerEmpty h1 {
@@ -142,29 +193,34 @@
 @media (max-width: 900px) {
   .readerPage {
     height: auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
     overflow: auto;
   }
 
-  .readerShell {
-    display: flex;
-    flex-direction: column;
-    height: auto;
-  }
-
-  .readerImage {
-    width: 100%;
+  .readerImageSide {
     height: auto;
     aspect-ratio: 6 / 5;
   }
 
   .readerPanel {
-    width: 100%;
-    min-height: 520px;
-    padding: 40px 36px 34px;
-    border-top: 1px solid #d9d1c3;
+    height: auto;
+    min-height: 650px;
+    padding: 22px;
   }
 
-  .readerControls {
-    margin-top: 32px;
+  .readerMiniHeader {
+    height: auto;
+    flex-wrap: wrap;
+    padding: 16px;
+  }
+
+  .readerStoryText h1 {
+    font-size: 42px;
+  }
+
+  .readerStoryText p {
+    font-size: 20px;
   }
 }
