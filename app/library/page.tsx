@@ -73,11 +73,11 @@ export default function LibraryPage() {
         <section className="libraryHero">
           <div className="libraryHeroText">
             <h1>
-              READ
+              MYSTERY.
               <br />
-              WITH
+              ADVENTURE.
               <br />
-              LUKE.
+              FREINDSHIPS.
             </h1>
 
             <p>
