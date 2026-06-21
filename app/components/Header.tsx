@@ -55,24 +55,17 @@ setInitials(`${first}${last}`.toUpperCase() || "A");
       </Link>
 
       <nav className="mainNav">
-        <Link className={active("/") ? "active" : ""} href="/">
-          Home
-        </Link>
+      <Link className={active("/library") ? "active" : ""} href="/library">
+  Read with Luke
+</Link>
 
-        <Link className={active("/library") ? "active" : ""} href="/library">
-          Library
-        </Link>
+<Link className={active("/learn") ? "active" : ""} href="/learn">
+  Learn with Luke
+</Link>
 
-        <Link className={active("/learn") ? "active" : ""} href="/learn">
-          Learn with Luke
-        </Link>
-
-        <Link
-          className={active("/leaderboard") ? "active" : ""}
-          href="/leaderboard"
-        >
-          Leaderboard
-        </Link>
+<Link className={active("/learn-to-read") ? "active" : ""} href="/learn-to-read">
+  Learn to Read
+</Link>
       </nav>
 
       <div className="headerRight">
