@@ -75,7 +75,6 @@ export default function Home() {
           <section className="homeMarquee">
             <div className="marqueeTrack">
               <BookMarqueeCard
-                large
                 href="/books/little-treehouse-mysteries"
                 image="/images/home-card-1.png"
                 title="DETECT."
