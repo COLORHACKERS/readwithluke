@@ -20,7 +20,6 @@ type Book = {
 
 export default function LibraryPage() {
   const [books, setBooks] = useState<Book[]>([]);
-  const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
 
   useEffect(() => {
@@ -53,20 +52,14 @@ export default function LibraryPage() {
   ];
 
   const filteredBooks = useMemo(() => {
-    return books.filter((book) => {
-      const matchesSearch =
-        book.title.toLowerCase().includes(search.toLowerCase()) ||
-        (book.description || "").toLowerCase().includes(search.toLowerCase());
+    if (activeCategory === "All") return books;
 
-      const matchesCategory =
-        activeCategory === "All" ||
-        (book.category || "")
-          .toLowerCase()
-          .includes(activeCategory.toLowerCase());
-
-      return matchesSearch && matchesCategory;
-    });
-  }, [books, search, activeCategory]);
+    return books.filter((book) =>
+      (book.category || "")
+        .toLowerCase()
+        .includes(activeCategory.toLowerCase())
+    );
+  }, [books, activeCategory]);
 
   const featured = filteredBooks[0];
 
@@ -98,70 +91,34 @@ export default function LibraryPage() {
 
           {featured && (
             <Link href={`/books/${featured.slug}`} className="featuredBook">
-              <div className="featuredImageWrap">
-                <img
-                  src={featured.cover_url || "/images/6to5ratio.png"}
-                  alt={featured.title}
-                />
+              <img
+                src={featured.cover_url || "/images/6to5ratio.png"}
+                alt={featured.title}
+              />
 
-                <div className="featuredBadge">NEW!</div>
-              </div>
-
-              <div className="featuredBookInfo">
+              <div className="featuredOverlay">
+                <span>NEW!</span>
                 <h2>{featured.title}</h2>
                 <p>
                   {featured.description ||
                     "Open this magical story and start reading with Luke."}
                 </p>
+                <strong>READ NOW</strong>
               </div>
             </Link>
           )}
-        </section>
-
-        <section className="libraryTools">
-          <form className="librarySearch" onSubmit={(e) => e.preventDefault()}>
-            <input
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="search for a book type"
-            />
-
-            <button type="submit">
-              <img src="/images/icon-send.png" alt="" />
-            </button>
-          </form>
-
-          <div className="categoryPills">
-            {categories.slice(1).map((category) => (
-              <button
-                key={category}
-                onClick={() =>
-                  setActiveCategory(
-                    activeCategory === category ? "All" : category
-                  )
-                }
-                className={activeCategory === category ? "active" : ""}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
         </section>
 
         <section className="bookRail">
           <h2>New Story Adventures</h2>
 
           <div className="bookScroller">
-            {filteredBooks.map((book, index) => (
+            {filteredBooks.map((book) => (
               <Link href={`/books/${book.slug}`} className="bookTile" key={book.id}>
-                <div className="bookTileImage">
-                  <img
-                    src={book.cover_url || "/images/6to5ratio.png"}
-                    alt={book.title}
-                  />
-
-                  {index === 0 && <span>NEW!</span>}
-                </div>
+                <img
+                  src={book.cover_url || "/images/6to5ratio.png"}
+                  alt={book.title}
+                />
 
                 <div className="bookTileInfo">
                   <h3>{book.title}</h3>
@@ -175,10 +132,22 @@ export default function LibraryPage() {
           </div>
         </section>
 
+        <section className="libraryFilterBox">
+          {categories.map((category) => (
+            <button
+              key={category}
+              onClick={() => setActiveCategory(category)}
+              className={activeCategory === category ? "active" : ""}
+            >
+              {category}
+            </button>
+          ))}
+        </section>
+
         {filteredBooks.length === 0 && (
           <div className="emptyLibrary">
             <h2>No books found.</h2>
-            <p>Try another search or publish a new story.</p>
+            <p>Try another category or publish a new story.</p>
             <Link href="/admin">Open Admin</Link>
           </div>
         )}
