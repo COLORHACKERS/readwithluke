@@ -154,7 +154,35 @@
   color: #ff5526;
   letter-spacing: 0.02em;
 }
+.readerTopIcons {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: 42px;
+}
 
+.readerTopIcons button {
+  width: 74px;
+  height: 74px;
+  border: 0;
+  border-radius: 999px;
+  background: #ff5526;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  padding: 0;
+}
+
+.readerTopIcons button img {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  display: block;
+}
+
+.readerTopIcons button:hover {
+  transform: translateY(-3px);
+}
 @media (max-width: 900px) {
   .bookPreviewPage {
     padding: 140px 28px 70px;
