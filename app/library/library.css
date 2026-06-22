@@ -149,15 +149,17 @@
 }
 
 .bookTile {
-  flex: 0 0 330px;
-  width: 100%;
-  height: 300px;
+  flex: 0 0 310px;
+  min-height: 430px;
   border-radius: 20px;
   overflow: hidden;
+  position: relative;
   border: 4px solid white;
-  background: white;
   text-decoration: none;
   color: #050505;
+  background: white;
+  display: flex;
+  flex-direction: column;
 }
 
 .bookTile img {
