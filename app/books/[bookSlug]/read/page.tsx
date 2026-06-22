@@ -69,14 +69,15 @@ return (
   <>
 
     <ReaderGate>
-      <ReaderClient
-        bookSlug={book.slug}
-        title={book.title}
-        pageNumber={pageData.page_number}
-        totalPages={pages.length}
-        imageUrl={imageUrl}
-        text={pageData.text || ""}
-      />
+     <ReaderClient
+  bookId={book.id}
+  bookSlug={book.slug}
+  title={book.title}
+  pageNumber={pageData.page_number}
+  totalPages={pages.length}
+  imageUrl={imageUrl}
+  text={pageData.text || ""}
+/>
     </ReaderGate>
   </>
 );
