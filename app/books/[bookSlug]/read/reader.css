@@ -75,11 +75,11 @@
 .readerProgressRow {
   margin-top: 28px;
   display: grid;
-  grid-template-columns: 150px 1fr;
+  grid-template-columns: 150px minmax(0,1fr);
   gap: 18px;
   align-items: center;
+  width: 100%;
 }
-
 .readerProgressRow span {
   font-family: "Courier New", monospace;
   font-size: 16px;
@@ -88,6 +88,8 @@
 }
 
 .readerProgress {
+  width: 100%;
+  max-width: 100%;
   height: 10px;
   background: white;
   border-radius: 999px;
@@ -168,6 +170,37 @@
 .disabledCircle {
   opacity: 0.35;
   pointer-events: none;
+}
+
+.readerPanel {
+  overflow-x: hidden;
+}
+
+.readerStoryText {
+  width: 100%;
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+.readerStoryText p {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+.readerPage,
+.readerPanel,
+.readerStoryText,
+.readerStoryText p,
+.readerProgressRow {
+  box-sizing: border-box;
+}
+
+body {
+  overflow-x: hidden;
 }
 
 @media (max-width: 1100px) {
