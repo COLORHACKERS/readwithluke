@@ -31,11 +31,11 @@ export default function Home() {
     <>
       <Header />
 
-      <main className="homePage">
-        <section className="homeHero">
-          <img src="/images/home-hero.png" alt="" className="homeBg" />
+      <main className="rwlHomePage">
+        <img src="/images/home-hero.png" alt="" className="rwlHomeBg" />
 
-          <div className="homeHeroText">
+        <section className="rwlHomeHero">
+          <div className="rwlHomeText">
             <h1>
               STORIES.
               <br />
@@ -45,92 +45,70 @@ export default function Home() {
             </h1>
 
             <p>
-              Stories for kids that are magical,
+              Fun facts, science, animals, space, history,
               <br />
-              exciting, and cinematic like movies.
-              <br />
-              Fascinating facts and fun learnings that
-              <br />
-              inspire and grow imagination!
+              and amazing things explained like a comic.
             </p>
           </div>
 
-          <Link href="/membership" className="homeTimer">
-            <span className="launchDate">Launching 09/16/2026</span>
+          <Link href="/membership" className="rwlFeaturedHome">
+            <img src="/images/home-card-1.png" alt="" />
 
-            <h2>
-              SIGN UP AND READ FOR FREE
-              <br />
-              UNTIL OUR OFFICIAL LAUNCH IN...
-            </h2>
+            <div className="rwlHomeTimer">
+              <span className="rwlLaunchDate">Launching 09/16/2026</span>
 
-            <div className="timerGrid">
-              <TimeUnit value={timeLeft.days} label="days" />
-              <TimeUnit value={timeLeft.hours} label="hours" />
-              <TimeUnit value={timeLeft.minutes} label="minutes" />
-              <TimeUnit value={timeLeft.seconds} label="seconds" />
+              <h2>
+                SIGN UP AND READ FOR FREE
+                <br />
+                UNTIL OUR OFFICIAL LAUNCH IN...
+              </h2>
+
+              <div className="rwlTimerGrid">
+                <TimeUnit value={timeLeft.days} label="days" />
+                <TimeUnit value={timeLeft.hours} label="hours" />
+                <TimeUnit value={timeLeft.minutes} label="minutes" />
+                <TimeUnit value={timeLeft.seconds} label="seconds" />
+              </div>
+
+              <strong className="rwlTimerCta">
+                CREATE AN ACCOUNT AND START READING!
+              </strong>
             </div>
           </Link>
+        </section>
 
-          <section className="homeMarquee">
-            <div className="marqueeTrack">
-              <BookMarqueeCard
-                href="/books/little-treehouse-mysteries"
-                image="/images/home-card-1.png"
-                title="DETECT."
-                description="A mystery adventure inside a cool treehouse."
-              />
+        <section className="rwlHomeRail">
+          <h2>New Learning Adventures</h2>
 
-              <BookMarqueeCard
-                href="/books/sammy-finds-her-way-home"
-                image="/images/home-card-4.png"
-                title="LAUGH."
-                description="A hilarious backyard adventure."
-              />
+          <div className="rwlHomeScroller">
+            <HomeTile
+              href="/books/little-treehouse-mysteries"
+              image="/images/home-card-1.png"
+              title="DETECT."
+              category="Story"
+            />
 
-              <BookMarqueeCard
-                href="/books/the-toy-maker"
-                image="/images/home-card-2.png"
-                title="FEEL."
-                description="A magical world of inventions and wonder."
-              />
+            <HomeTile
+              href="/books/sammy-finds-her-way-home"
+              image="/images/home-card-4.png"
+              title="LAUGH."
+              category="Story"
+            />
 
-              <BookMarqueeCard
-                href="/books/the-great-crockoff"
-                image="/images/home-card-3.png"
-                title="EXPLORE."
-                description="A hilarious creature adventure."
-              />
+            <HomeTile
+              href="/books/the-toy-maker"
+              image="/images/home-card-2.png"
+              title="FEEL."
+              category="Story"
+            />
 
-              <BookMarqueeCard
-                href="/books/little-treehouse-mysteries"
-                image="/images/home-card-1.png"
-                title="THINK."
-                description="Friends, clues, and spooky surprises."
-              />
-
-              <BookMarqueeCard
-                href="/books/sammy-finds-her-way-home"
-                image="/images/home-card-4.png"
-                title="DISCOVER."
-                description="A warm story about courage and home."
-              />
-
-              <BookMarqueeCard
-                href="/books/the-toy-maker"
-                image="/images/home-card-2.png"
-                title="BELIEVE."
-                description="A cinematic adventure full of magic."
-              />
-
-              <BookMarqueeCard
-                href="/books/the-great-crockoff"
-                image="/images/home-card-3.png"
-                title="GIGGLE."
-                description="A funny, wild story kids will love."
-              />
-            </div>
-          </section>
+            <HomeTile
+              href="/books/the-great-crockoff"
+              image="/images/home-card-3.png"
+              title="EXPLORE."
+              category="Story"
+            />
+          </div>
         </section>
       </main>
 
@@ -148,26 +126,24 @@ function TimeUnit({ value, label }: { value: number; label: string }) {
   );
 }
 
-function BookMarqueeCard({
+function HomeTile({
   href,
   image,
   title,
-  description,
-  large = false,
+  category,
 }: {
   href: string;
   image: string;
   title: string;
-  description: string;
-  large?: boolean;
+  category: string;
 }) {
   return (
-    <Link href={href} className={`marqueeCard ${large ? "large" : ""}`}>
+    <Link href={href} className="rwlHomeTile">
       <img src={image} alt={title} />
 
-      <div className="marqueeOverlay">
+      <div className="rwlHomeTileOverlay">
         <h3>{title}</h3>
-        <p>{description}</p>
+        <p>{category}</p>
       </div>
     </Link>
   );

@@ -1,4 +1,11 @@
-.homePage {
+@font-face {
+  font-family: "DK Woolwich";
+  src: url("/fonts/dk-woolwich.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+.rwlHomePage {
   width: 100%;
   min-height: 100vh;
   position: relative;
@@ -8,7 +15,7 @@
   box-sizing: border-box;
 }
 
-.homeBg {
+.rwlHomeBg {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -18,7 +25,7 @@
   z-index: 0;
 }
 
-.homePage::after {
+.rwlHomePage::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -26,13 +33,13 @@
   z-index: 1;
 }
 
-.homeHero,
-.homeRail {
+.rwlHomeHero,
+.rwlHomeRail {
   position: relative;
   z-index: 2;
 }
 
-.homeHero {
+.rwlHomeHero {
   display: grid;
   grid-template-columns: 42% 1fr;
   gap: 44px;
@@ -41,7 +48,7 @@
   margin: 0 auto;
 }
 
-.homeHeroText h1 {
+.rwlHomeText h1 {
   margin: 0;
   font-family: "DK Woolwich", "Arial Black", sans-serif;
   font-size: 90px;
@@ -49,7 +56,7 @@
   color: white;
 }
 
-.homeHeroText p {
+.rwlHomeText p {
   margin: 28px 0 0;
   font-family: "Courier New", monospace;
   font-size: 21px;
@@ -58,7 +65,7 @@
   color: white;
 }
 
-.featuredHome {
+.rwlFeaturedHome {
   height: 430px;
   border-radius: 16px;
   overflow: hidden;
@@ -70,22 +77,23 @@
   box-shadow: 0 24px 70px rgba(0, 0, 0, 0.35);
 }
 
-.featuredHome > img {
+.rwlFeaturedHome > img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.featuredHome::after {
+.rwlFeaturedHome::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.25);
+  background: rgba(0, 0, 0, 0.28);
+  z-index: 1;
 }
 
-.homeTimer {
+.rwlHomeTimer {
   position: absolute;
-  z-index: 3;
+  z-index: 2;
   left: 50%;
   top: 50%;
   width: min(82%, 560px);
@@ -98,16 +106,17 @@
   color: white;
 }
 
-.launchDate {
+.rwlLaunchDate {
   display: block;
   font-family: "Courier New", monospace;
   font-weight: 900;
   font-size: 14px;
   letter-spacing: 2px;
   margin-bottom: 12px;
+  color: white;
 }
 
-.homeTimer h2 {
+.rwlHomeTimer h2 {
   margin: 0 0 20px;
   font-family: "DK Woolwich", "Arial Black", sans-serif;
   font-size: 30px;
@@ -115,27 +124,27 @@
   color: white;
 }
 
-.timerGrid {
+.rwlTimerGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 9px;
 }
 
-.timerGrid div {
+.rwlTimerGrid div {
   background: white;
   border-radius: 6px;
   padding: 18px 6px 12px;
   color: #ff4b16;
 }
 
-.timerGrid strong {
+.rwlTimerGrid strong {
   display: block;
   font-family: "DK Woolwich", "Arial Black", sans-serif;
   font-size: 44px;
   line-height: 0.8;
 }
 
-.timerGrid span {
+.rwlTimerGrid span {
   display: block;
   margin-top: 10px;
   font-family: "Courier New", monospace;
@@ -143,7 +152,7 @@
   font-weight: 900;
 }
 
-.homeTimer > strong {
+.rwlTimerCta {
   display: block;
   margin-top: 18px;
   font-family: "Courier New", monospace;
@@ -152,26 +161,26 @@
   color: white;
 }
 
-.homeRail {
+.rwlHomeRail {
   max-width: 1368px;
   margin: 54px auto 0;
 }
 
-.homeRail h2 {
+.rwlHomeRail h2 {
   margin: 0 0 18px;
   font-family: "DK Woolwich", "Arial Black", sans-serif;
   font-size: 42px;
   color: white;
 }
 
-.homeScroller {
+.rwlHomeScroller {
   display: flex;
   gap: 22px;
   overflow-x: auto;
   padding-bottom: 18px;
 }
 
-.homeTile {
+.rwlHomeTile {
   flex: 0 0 310px;
   height: 220px;
   border-radius: 16px;
@@ -183,59 +192,61 @@
   background: white;
 }
 
-.homeTile img {
+.rwlHomeTile img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.homeTileOverlay {
+.rwlHomeTileOverlay {
   position: absolute;
   inset: 0;
   padding: 18px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  background: linear-gradient(to top, rgba(0,0,0,.72), rgba(0,0,0,.05));
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.05));
 }
 
-.homeTileOverlay h3 {
+.rwlHomeTileOverlay h3 {
   margin: 0;
   font-family: "DK Woolwich", "Arial Black", sans-serif;
   font-size: 30px;
   line-height: 0.95;
+  color: white;
 }
 
-.homeTileOverlay p {
+.rwlHomeTileOverlay p {
   margin: 6px 0 0;
   font-family: "Courier New", monospace;
   font-size: 13px;
   font-weight: 900;
+  color: white;
 }
 
 @media (max-width: 900px) {
-  .homeHero {
+  .rwlHomeHero {
     grid-template-columns: 1fr;
   }
 
-  .homeHeroText h1 {
+  .rwlHomeText h1 {
     font-size: 62px;
   }
 
-  .featuredHome {
+  .rwlFeaturedHome {
     height: 360px;
   }
 
-  .homeTimer {
+  .rwlHomeTimer {
     width: 88%;
     padding: 22px;
   }
 
-  .homeTimer h2 {
+  .rwlHomeTimer h2 {
     font-size: 24px;
   }
 
-  .timerGrid strong {
+  .rwlTimerGrid strong {
     font-size: 34px;
   }
 }
