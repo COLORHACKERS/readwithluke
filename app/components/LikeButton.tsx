@@ -69,14 +69,19 @@ export default function LikeButton({ bookId }: Props) {
     }
   }
 
-  return (
-    <button onClick={toggleLike} type="button">
-      <img
-        src={liked ? "/images/heart-filled.png" : "/images/heart.png"}
-        alt="Like"
-      />
+return (
+  <button
+    type="button"
+    onClick={toggleLike}
+    className="likeButton"
+    aria-label="Like story"
+  >
+    <img
+      src="/images/heart-like.png"
+      alt="Like"
+    />
 
-      <span>{likes}</span>
-    </button>
-  );
+    <span>{likes}</span>
+  </button>
+);
 }

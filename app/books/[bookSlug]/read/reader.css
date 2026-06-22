@@ -52,10 +52,13 @@
 
 .readerTopIcons {
   display: flex;
+  align-items: center;
   gap: 12px;
 }
 
-.readerTopIcons button {
+/* Bookmark + Share buttons */
+
+.readerTopIcons > button {
   width: 46px;
   height: 46px;
   border: 0;
@@ -63,153 +66,63 @@
   background: #ff5526;
   display: grid;
   place-items: center;
+  padding: 0;
   cursor: pointer;
+  transition: transform .2s ease;
 }
 
-.readerTopIcons img {
+.readerTopIcons > button:hover {
+  transform: scale(1.06);
+}
+
+.readerTopIcons > button img {
   width: 23px;
   height: 23px;
   object-fit: contain;
-}
-
-.readerProgressRow {
-  margin-top: 28px;
-  display: grid;
-  grid-template-columns: 150px 1fr;
-  gap: 18px;
-  align-items: center;
-}
-
-.readerProgressRow span {
-  font-family: "Courier New", monospace;
-  font-size: 16px;
-  font-weight: 900;
-  color: #050505;
-}
-
-.readerProgress {
-  height: 10px;
-  background: white;
-  border-radius: 999px;
-  overflow: hidden;
-}
-
-.readerProgress i {
   display: block;
-  height: 100%;
-  background: #ff5526;
-  border-radius: 999px;
 }
 
-.readerStoryText {
-  min-height: 0;
-  overflow: hidden;
-  padding-top: 24px;
-}
+/* LIKE BUTTON */
 
-.readerStoryText h1 {
-  margin: 0 0 20px;
-  font-family: "DK Woolwich", "Arial Black", sans-serif;
-  font-size: 46px;
-  line-height: 0.9;
-  color: #050505;
-}
-
-.readerStoryText p {
-  margin: 0;
-  max-height: calc(100vh - 345px);
-  overflow-y: auto;
-  white-space: pre-line;
-  font-family: "Courier New", monospace;
-  font-size: 23px;
-  line-height: 1.27;
-  font-weight: 900;
-  color: #050505;
-  padding-right: 8px;
-}
-
-.readerControls {
-  display: grid;
-  grid-template-columns: 64px 1fr 64px;
-  gap: 28px;
-  align-items: center;
-  padding-top: 18px;
-  padding-bottom: 6px;
-}
-
-.readerControls button {
-  border: 0;
-  cursor: pointer;
-}
-
-.readerControls > button:not(.readerReadAloud) {
-  width: 60px;
-  height: 60px;
-  border-radius: 999px;
-  background: #ff5526;
-  display: grid;
-  place-items: center;
-}
-
-.readerControls > button:not(.readerReadAloud) img {
-  width: 31px;
-  height: 31px;
-  object-fit: contain;
-}
-
-.readerReadAloud {
-  height: 60px;
-  border-radius: 999px;
-  background: #ff5526;
-  color: white;
-  font-family: "DK Woolwich", "Arial Black", sans-serif;
-  font-size: 28px;
-}
-
-.disabledCircle {
-  opacity: 0.35;
-  pointer-events: none;
-}
 .likeButton {
-  width: 74px;
-  height: 74px;
+  position: relative;
+
+  width: 46px;
+  height: 46px;
+
   border: 0;
   padding: 0;
+  margin: 0;
+
   background: transparent;
-  position: relative;
-  display: grid;
-  place-items: center;
+
   cursor: pointer;
+
+  flex-shrink: 0;
 }
 
 .likeButton img {
-  width: 74px;
-  height: 74px;
+  width: 46px;
+  height: 46px;
   display: block;
   object-fit: contain;
 }
 
 .likeButton span {
   position: absolute;
+
   left: 50%;
-  bottom: 7px;
+  bottom: 2px;
+
   transform: translateX(-50%);
+
+  color: #ffffff;
+
   font-family: "DK Woolwich", "Arial Black", sans-serif;
-  font-size: 20px;
+  font-size: 13px;
   line-height: 1;
-  color: white;
-  z-index: 2;
+
   pointer-events: none;
-}
-
-.readerTopIcons .likeButton {
-  background: transparent !important;
-  border-radius: 0 !important;
-}
-
-.readerTopIcons .likeButton img {
-  width: 74px;
-  height: 74px;
 }
 
 @media (max-width: 1100px) {
