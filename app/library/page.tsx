@@ -49,6 +49,8 @@ export default function LibraryPage() {
     "Mystery",
     "Friends",
     "Bedtime",
+    "Magic",
+    "Action"
   ];
 
   const filteredBooks = useMemo(() => {
