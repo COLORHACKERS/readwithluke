@@ -21,6 +21,7 @@ type Book = {
 export default function LibraryPage() {
   const [books, setBooks] = useState<Book[]>([]);
   const [activeCategory, setActiveCategory] = useState("All");
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     loadBooks();
@@ -62,6 +63,12 @@ export default function LibraryPage() {
         .includes(activeCategory.toLowerCase())
     );
   }, [books, activeCategory]);
+  const booksPerPage = 16;
+const totalPages = Math.ceil(filteredBooks.length / booksPerPage);
+const visibleBooks = filteredBooks.slice(
+  (page - 1) * booksPerPage,
+  page * booksPerPage
+);
 
   const featured = filteredBooks[0];
 
@@ -115,7 +122,7 @@ export default function LibraryPage() {
           <h2>New Story Adventures</h2>
 
           <div className="bookScroller">
-            {filteredBooks.map((book) => (
+           {visibleBooks.map((book) => (
               <Link href={`/books/${book.slug}`} className="bookTile" key={book.id}>
                 <img
                   src={book.cover_url || "/images/6to5ratio.png"}
@@ -138,12 +145,28 @@ export default function LibraryPage() {
           {categories.map((category) => (
             <button
               key={category}
-              onClick={() => setActiveCategory(category)}
+              onClick={() => {
+  setActiveCategory(category);
+  setPage(1);
+}}
               className={activeCategory === category ? "active" : ""}
             >
               {category}
             </button>
           ))}
+          {totalPages > 1 && (
+  <div className="libraryPagination">
+    {Array.from({ length: totalPages }, (_, index) => (
+      <button
+        key={index}
+        className={page === index + 1 ? "active" : ""}
+        onClick={() => setPage(index + 1)}
+      >
+        {index + 1}
+      </button>
+    ))}
+  </div>
+)}
         </section>
 
         {filteredBooks.length === 0 && (
