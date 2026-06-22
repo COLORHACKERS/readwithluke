@@ -135,7 +135,7 @@
 
 .homeMarquee {
   max-width: 1368px;
-  margin: 54px auto 0;
+  margin: 120px auto 0; /* moves marquee down */
 }
 
 .homeMarquee h2 {
