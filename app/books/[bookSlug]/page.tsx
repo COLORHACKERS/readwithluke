@@ -80,11 +80,12 @@ export default async function BookPreviewPage({ params }: Props) {
             </Link>
           </div>
 
-          <div className="previewIconRow">
-            <button>♥</button>
-            <button>▮</button>
-            <button>⇧</button>
+           <div className="readerTopIcons">
+            <button><img src="/images/heart.png" alt="Favorite" /></button>
+            <button><img src="/images/bookmark.png" alt="Save" /></button>
+            <button><img src="/images/share.png" alt="Share" /></button>
           </div>
+       
         </section>
         <div className="previewBottomTagline">
   MYSTERY. FRIENDSHIP. ADVENTURE.
