@@ -31,6 +31,18 @@
   overflow: hidden;
 }
 
+.readerStoryText h1 {
+  margin: 0 0 20px;
+  font-family: "DK Woolwich", "Arial Black", sans-serif;
+  font-size: 46px;
+  line-height: 0.9;
+  color: #050505;
+}
+
+.readerStoryText p {
+  color: #050505;
+}
+
 .readerTopBar {
   display: grid;
   grid-template-columns: 1fr 1fr auto;
@@ -125,6 +137,53 @@
   pointer-events: none;
 }
 
+.readerTopIcons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.readerTopIcons > button,
+.readerTopIcons .likeButton {
+  width: 46px;
+  height: 46px;
+  border: 0;
+  border-radius: 999px;
+  background: #ff5526;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  cursor: pointer;
+}
+
+.readerTopIcons > button > img {
+  width: 23px;
+  height: 23px;
+  object-fit: contain;
+}
+
+.readerTopIcons .likeButton {
+  position: relative;
+  background: transparent;
+  overflow: visible;
+}
+
+.readerTopIcons .likeButton img {
+  width: 46px;
+  height: 46px;
+  object-fit: contain;
+}
+
+.readerTopIcons .likeButton span {
+  position: absolute;
+  left: 50%;
+  bottom: 3px;
+  transform: translateX(-50%);
+  color: white;
+  font-family: "DK Woolwich", "Arial Black", sans-serif;
+  font-size: 12px;
+  line-height: 1;
+}
 @media (max-width: 1100px) {
   .readerPage {
     grid-template-columns: 56% 44%;
