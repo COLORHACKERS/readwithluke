@@ -3,6 +3,7 @@ import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import { supabase } from "@/lib/supabase";
 import "./bookPreview.css";
+import ShareButton from "@/app/components/ShareButton";
 
 type Props = {
   params: Promise<{ bookSlug: string }>;
@@ -80,11 +81,24 @@ export default async function BookPreviewPage({ params }: Props) {
             </Link>
           </div>
 
-           <div className="readerTopIcons">
-            <button><img src="/images/heart.png" alt="Favorite" /></button>
-            <button><img src="/images/bookmark.png" alt="Save" /></button>
-            <button><img src="/images/share.png" alt="Share" /></button>
-          </div>
+          <div className="readerTopIcons">
+  <button>
+    <img src="/images/heart.png" alt="Favorite" />
+  </button>
+
+  <button>
+    <img src="/images/bookmark.png" alt="Save" />
+  </button>
+
+  <ShareButton
+    title={book.title}
+    text={
+      book.description ||
+      "Read this amazing story with me on Read With Luke!"
+    }
+    url={`/books/${book.slug}`}
+  />
+</div>
        
         </section>
         <div className="previewBottomTagline">
