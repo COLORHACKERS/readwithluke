@@ -1,21 +1,19 @@
 @font-face {
   font-family: "DK Woolwich";
   src: url("/fonts/dk-woolwich.otf") format("opentype");
-  font-weight: 400;
-  font-style: normal;
 }
 
-.rwlHomePage {
+.homePage {
+  position: relative;
   width: 100%;
   min-height: 100vh;
-  position: relative;
   overflow: hidden;
   background: #050505;
   padding: 150px 46px 90px;
   box-sizing: border-box;
 }
 
-.rwlHomeBg {
+.homeBg {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -25,7 +23,7 @@
   z-index: 0;
 }
 
-.rwlHomePage::after {
+.homePage::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -33,13 +31,13 @@
   z-index: 1;
 }
 
-.rwlHomeHero,
-.rwlHomeRail {
+.homeHero,
+.homeMarquee {
   position: relative;
   z-index: 2;
 }
 
-.rwlHomeHero {
+.homeHero {
   display: grid;
   grid-template-columns: 42% 1fr;
   gap: 44px;
@@ -48,7 +46,7 @@
   margin: 0 auto;
 }
 
-.rwlHomeText h1 {
+.homeHeroText h1 {
   margin: 0;
   font-family: "DK Woolwich", "Arial Black", sans-serif;
   font-size: 90px;
@@ -56,7 +54,7 @@
   color: white;
 }
 
-.rwlHomeText p {
+.homeHeroText p {
   margin: 28px 0 0;
   font-family: "Courier New", monospace;
   font-size: 21px;
@@ -65,48 +63,22 @@
   color: white;
 }
 
-.rwlFeaturedHome {
-  height: 430px;
-  border-radius: 16px;
-  overflow: hidden;
-  position: relative;
+.homeTimer {
   display: block;
-  text-decoration: none;
+  width: min(100%, 560px);
+  margin: 0 auto;
+  background: #ff4b16;
+  border-radius: 16px;
+  padding: 30px 38px 26px;
+  text-align: center;
+  box-sizing: border-box;
   color: white;
+  text-decoration: none;
   border: 4px solid white;
   box-shadow: 0 24px 70px rgba(0, 0, 0, 0.35);
 }
 
-.rwlFeaturedHome > img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.rwlFeaturedHome::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.28);
-  z-index: 1;
-}
-
-.rwlHomeTimer {
-  position: absolute;
-  z-index: 2;
-  left: 50%;
-  top: 50%;
-  width: min(82%, 560px);
-  transform: translate(-50%, -50%);
-  background: #ff4b16;
-  border-radius: 14px;
-  padding: 26px 38px 24px;
-  text-align: center;
-  box-sizing: border-box;
-  color: white;
-}
-
-.rwlLaunchDate {
+.launchDate {
   display: block;
   font-family: "Courier New", monospace;
   font-weight: 900;
@@ -116,7 +88,7 @@
   color: white;
 }
 
-.rwlHomeTimer h2 {
+.homeTimer h2 {
   margin: 0 0 20px;
   font-family: "DK Woolwich", "Arial Black", sans-serif;
   font-size: 30px;
@@ -124,27 +96,27 @@
   color: white;
 }
 
-.rwlTimerGrid {
+.timerGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 9px;
 }
 
-.rwlTimerGrid div {
+.timerGrid div {
   background: white;
   border-radius: 6px;
   padding: 18px 6px 12px;
   color: #ff4b16;
 }
 
-.rwlTimerGrid strong {
+.timerGrid strong {
   display: block;
   font-family: "DK Woolwich", "Arial Black", sans-serif;
   font-size: 44px;
   line-height: 0.8;
 }
 
-.rwlTimerGrid span {
+.timerGrid span {
   display: block;
   margin-top: 10px;
   font-family: "Courier New", monospace;
@@ -152,7 +124,7 @@
   font-weight: 900;
 }
 
-.rwlTimerCta {
+.homeTimer > strong {
   display: block;
   margin-top: 18px;
   font-family: "Courier New", monospace;
@@ -161,26 +133,35 @@
   color: white;
 }
 
-.rwlHomeRail {
+.homeMarquee {
   max-width: 1368px;
   margin: 54px auto 0;
 }
 
-.rwlHomeRail h2 {
+.homeMarquee h2 {
   margin: 0 0 18px;
   font-family: "DK Woolwich", "Arial Black", sans-serif;
   font-size: 42px;
   color: white;
 }
 
-.rwlHomeScroller {
-  display: flex;
-  gap: 22px;
-  overflow-x: auto;
-  padding-bottom: 18px;
+.marqueeWindow {
+  overflow: hidden;
+  width: 100%;
 }
 
-.rwlHomeTile {
+.marqueeTrack {
+  display: flex;
+  gap: 22px;
+  width: max-content;
+  animation: marqueeScroll 45s linear infinite;
+}
+
+.marqueeWindow:hover .marqueeTrack {
+  animation-play-state: paused;
+}
+
+.marqueeCard {
   flex: 0 0 310px;
   height: 220px;
   border-radius: 16px;
@@ -192,23 +173,20 @@
   background: white;
 }
 
-.rwlHomeTile img {
+.marqueeCard img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.rwlHomeTileOverlay {
+.marqueeOverlay {
   position: absolute;
   inset: 0;
   padding: 18px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.05));
+  background: linear-gradient(to bottom, rgba(0,0,0,.55), rgba(0,0,0,.05));
 }
 
-.rwlHomeTileOverlay h3 {
+.marqueeOverlay h3 {
   margin: 0;
   font-family: "DK Woolwich", "Arial Black", sans-serif;
   font-size: 30px;
@@ -216,37 +194,30 @@
   color: white;
 }
 
-.rwlHomeTileOverlay p {
-  margin: 6px 0 0;
-  font-family: "Courier New", monospace;
-  font-size: 13px;
-  font-weight: 900;
-  color: white;
+@keyframes marqueeScroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 @media (max-width: 900px) {
-  .rwlHomeHero {
+  .homeHero {
     grid-template-columns: 1fr;
   }
 
-  .rwlHomeText h1 {
+  .homeHeroText h1 {
     font-size: 62px;
   }
 
-  .rwlFeaturedHome {
-    height: 360px;
-  }
-
-  .rwlHomeTimer {
-    width: 88%;
-    padding: 22px;
-  }
-
-  .rwlHomeTimer h2 {
+  .homeTimer h2 {
     font-size: 24px;
   }
 
-  .rwlTimerGrid strong {
+  .timerGrid strong {
     font-size: 34px;
   }
 }

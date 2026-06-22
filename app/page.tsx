@@ -31,11 +31,11 @@ export default function Home() {
     <>
       <Header />
 
-      <main className="rwlHomePage">
-        <img src="/images/home-hero.png" alt="" className="rwlHomeBg" />
+      <main className="homePage">
+        <img src="/images/home-hero.png" alt="" className="homeBg" />
 
-        <section className="rwlHomeHero">
-          <div className="rwlHomeText">
+        <section className="homeHero">
+          <div className="homeHeroText">
             <h1>
               STORIES.
               <br />
@@ -51,63 +51,41 @@ export default function Home() {
             </p>
           </div>
 
-          <Link href="/membership" className="rwlFeaturedHome">
-            <img src="/images/home-card-1.png" alt="" />
+          <Link href="/membership" className="homeTimer">
+            <span className="launchDate">Launching 09/16/2026</span>
 
-            <div className="rwlHomeTimer">
-              <span className="rwlLaunchDate">Launching 09/16/2026</span>
+            <h2>
+              SIGN UP AND READ FOR FREE
+              <br />
+              UNTIL OUR OFFICIAL LAUNCH IN...
+            </h2>
 
-              <h2>
-                SIGN UP AND READ FOR FREE
-                <br />
-                UNTIL OUR OFFICIAL LAUNCH IN...
-              </h2>
-
-              <div className="rwlTimerGrid">
-                <TimeUnit value={timeLeft.days} label="days" />
-                <TimeUnit value={timeLeft.hours} label="hours" />
-                <TimeUnit value={timeLeft.minutes} label="minutes" />
-                <TimeUnit value={timeLeft.seconds} label="seconds" />
-              </div>
-
-              <strong className="rwlTimerCta">
-                CREATE AN ACCOUNT AND START READING!
-              </strong>
+            <div className="timerGrid">
+              <TimeUnit value={timeLeft.days} label="days" />
+              <TimeUnit value={timeLeft.hours} label="hours" />
+              <TimeUnit value={timeLeft.minutes} label="minutes" />
+              <TimeUnit value={timeLeft.seconds} label="seconds" />
             </div>
+
+            <strong>CREATE AN ACCOUNT AND START READING!</strong>
           </Link>
         </section>
 
-        <section className="rwlHomeRail">
+        <section className="homeMarquee">
           <h2>New Learning Adventures</h2>
 
-          <div className="rwlHomeScroller">
-            <HomeTile
-              href="/books/little-treehouse-mysteries"
-              image="/images/home-card-1.png"
-              title="DETECT."
-              category="Story"
-            />
+          <div className="marqueeWindow">
+            <div className="marqueeTrack">
+              <HomeCard href="/books/little-treehouse-mysteries" image="/images/home-card-1.png" title="DETECT." />
+              <HomeCard href="/books/sammy-finds-her-way-home" image="/images/home-card-4.png" title="LAUGH." />
+              <HomeCard href="/books/the-toy-maker" image="/images/home-card-2.png" title="FEEL." />
+              <HomeCard href="/books/the-great-crockoff" image="/images/home-card-3.png" title="EXPLORE." />
 
-            <HomeTile
-              href="/books/sammy-finds-her-way-home"
-              image="/images/home-card-4.png"
-              title="LAUGH."
-              category="Story"
-            />
-
-            <HomeTile
-              href="/books/the-toy-maker"
-              image="/images/home-card-2.png"
-              title="FEEL."
-              category="Story"
-            />
-
-            <HomeTile
-              href="/books/the-great-crockoff"
-              image="/images/home-card-3.png"
-              title="EXPLORE."
-              category="Story"
-            />
+              <HomeCard href="/books/little-treehouse-mysteries" image="/images/home-card-1.png" title="DETECT." />
+              <HomeCard href="/books/sammy-finds-her-way-home" image="/images/home-card-4.png" title="LAUGH." />
+              <HomeCard href="/books/the-toy-maker" image="/images/home-card-2.png" title="FEEL." />
+              <HomeCard href="/books/the-great-crockoff" image="/images/home-card-3.png" title="EXPLORE." />
+            </div>
           </div>
         </section>
       </main>
@@ -126,24 +104,21 @@ function TimeUnit({ value, label }: { value: number; label: string }) {
   );
 }
 
-function HomeTile({
+function HomeCard({
   href,
   image,
   title,
-  category,
 }: {
   href: string;
   image: string;
   title: string;
-  category: string;
 }) {
   return (
-    <Link href={href} className="rwlHomeTile">
+    <Link href={href} className="marqueeCard">
       <img src={image} alt={title} />
 
-      <div className="rwlHomeTileOverlay">
+      <div className="marqueeOverlay">
         <h3>{title}</h3>
-        <p>{category}</p>
       </div>
     </Link>
   );
