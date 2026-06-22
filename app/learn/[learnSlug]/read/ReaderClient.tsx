@@ -12,7 +12,7 @@ type Props = {
   text: string;
 };
 
-export default function LearnReaderClient({
+export default function ReaderClient({
   learnSlug,
   title,
   pageNumber,
@@ -61,8 +61,13 @@ export default function LearnReaderClient({
 
       <aside className="readerPanel">
         <div className="readerTopBar">
-          <Link href="/" className="readerMiniBtn">HOME</Link>
-          <Link href="/learn" className="readerMiniBtn">LEARN</Link>
+          <Link href="/" className="readerMiniBtn">
+            HOME
+          </Link>
+
+          <Link href="/learn" className="readerMiniBtn">
+            LEARN
+          </Link>
 
           <div className="readerTopIcons">
             <button type="button">
