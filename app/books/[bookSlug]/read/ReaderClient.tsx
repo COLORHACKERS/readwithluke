@@ -22,7 +22,24 @@ export default function ReaderClient({
 }: Props) {
   const router = useRouter();
   const progress = Math.max(4, Math.min((pageNumber / totalPages) * 100, 100));
+async function shareBook() {
+  const shareUrl =
+  `${window.location.origin}/books/${bookSlug}/read?page=${pageNumber}`;
 
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title,
+        text: `Read "${title}" with me on Read With Luke!`,
+        url: shareUrl,
+      });
+      return;
+    } catch {}
+  }
+
+  await navigator.clipboard.writeText(shareUrl);
+  alert("Link copied!");
+}
   function goBack() {
     if (pageNumber > 1) router.push(`/books/${bookSlug}/read?page=${pageNumber - 1}`);
   }
@@ -42,11 +59,19 @@ export default function ReaderClient({
           <Link href="/" className="readerMiniBtn">HOME</Link>
           <Link href="/library" className="readerMiniBtn">LIBRARY</Link>
 
-          <div className="readerTopIcons">
-            <button><img src="/images/heart.png" alt="Favorite" /></button>
-            <button><img src="/images/bookmark.png" alt="Save" /></button>
-            <button><img src="/images/share.png" alt="Share" /></button>
-          </div>
+         <div className="readerTopIcons">
+  <button type="button">
+    <img src="/images/heart.png" alt="Favorite" />
+  </button>
+
+  <button type="button">
+    <img src="/images/bookmark.png" alt="Save" />
+  </button>
+
+  <button type="button" onClick={shareBook}>
+    <img src="/images/share.png" alt="Share" />
+  </button>
+</div>
         </div>
 
         <div className="readerProgressRow">
