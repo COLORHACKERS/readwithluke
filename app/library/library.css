@@ -68,7 +68,7 @@
   display: block;
   text-decoration: none;
   color: white;
-  border: 8px solid white;
+  border: 4px solid white;
   box-shadow: 0 24px 70px rgba(0, 0, 0, 0.35);
 }
 
@@ -153,7 +153,7 @@
   border-radius: 20px;
   overflow: hidden;
   position: relative;
-  border: 6px solid white;
+  border: 4px solid white;
   text-decoration: none;
   color: #050505;
   background: white;
