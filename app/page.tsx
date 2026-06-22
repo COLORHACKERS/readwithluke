@@ -72,7 +72,7 @@ export default function Home() {
         </section>
 
         <section className="homeMarquee">
-          <h2>New Learning Adventures</h2>
+          <h2>New Adventures!</h2>
 
           <div className="marqueeWindow">
             <div className="marqueeTrack">
