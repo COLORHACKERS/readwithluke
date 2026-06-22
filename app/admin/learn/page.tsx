@@ -16,6 +16,18 @@ type LearnItem = {
   is_published: boolean;
 };
 
+type LearnPage = {
+  page_number: number;
+  text: string;
+  image_url: string;
+};
+
+const emptyPages: LearnPage[] = Array.from({ length: 20 }, (_, index) => ({
+  page_number: index + 1,
+  text: "",
+  image_url: "",
+}));
+
 const learnCategories = [
   "Learning",
   "Space",
@@ -39,6 +51,7 @@ export default function LearnAdminPage() {
   const [imageUrl, setImageUrl] = useState("");
   const [category, setCategory] = useState("Learning");
   const [isPublished, setIsPublished] = useState(false);
+  const [pages, setPages] = useState<LearnPage[]>(emptyPages);
 
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
@@ -69,6 +82,33 @@ export default function LearnAdminPage() {
     setItems(data || []);
   }
 
+  async function loadPages(learnItemId: string) {
+    const { data, error } = await supabase
+      .from("learn_pages")
+      .select("*")
+      .eq("learn_item_id", learnItemId)
+      .order("page_number", { ascending: true });
+
+    if (error) {
+      alert(error.message);
+      return;
+    }
+
+    const merged = emptyPages.map((emptyPage) => {
+      const found = data?.find(
+        (page) => page.page_number === emptyPage.page_number
+      );
+
+      return {
+        page_number: emptyPage.page_number,
+        text: found?.text || "",
+        image_url: found?.image_url || "",
+      };
+    });
+
+    setPages(merged);
+  }
+
   function resetForm() {
     setEditingId(null);
     setTitle("");
@@ -78,6 +118,7 @@ export default function LearnAdminPage() {
     setImageUrl("");
     setCategory("Learning");
     setIsPublished(false);
+    setPages(emptyPages);
     setMessage("");
   }
 
@@ -96,7 +137,10 @@ export default function LearnAdminPage() {
       return "";
     }
 
-    const { data } = supabase.storage.from("book-images").getPublicUrl(filePath);
+    const { data } = supabase.storage
+      .from("book-images")
+      .getPublicUrl(filePath);
+
     return data.publicUrl;
   }
 
@@ -110,7 +154,29 @@ export default function LearnAdminPage() {
     if (url) setImageUrl(url);
   }
 
-  function editItem(item: LearnItem) {
+  async function handlePageImageUpload(file: File, pageNumber: number) {
+    const url = await uploadImage(file, "learn-pages");
+
+    if (!url) return;
+
+    setPages((current) =>
+      current.map((page) =>
+        page.page_number === pageNumber
+          ? { ...page, image_url: url }
+          : page
+      )
+    );
+  }
+
+  function updatePageText(pageNumber: number, text: string) {
+    setPages((current) =>
+      current.map((page) =>
+        page.page_number === pageNumber ? { ...page, text } : page
+      )
+    );
+  }
+
+  async function editItem(item: LearnItem) {
     setEditingId(item.id);
     setTitle(item.title);
     setSlug(item.slug);
@@ -120,6 +186,8 @@ export default function LearnAdminPage() {
     setCategory(item.category || "Learning");
     setIsPublished(item.is_published);
     setMessage(`Editing "${item.title}"`);
+
+    await loadPages(item.id);
   }
 
   async function deleteItem(item: LearnItem) {
@@ -143,13 +211,48 @@ export default function LearnAdminPage() {
       return;
     }
 
-    if (editingId === item.id) {
-      resetForm();
-    }
+    if (editingId === item.id) resetForm();
 
     setMessage(`Deleted "${item.title}"`);
     setSaving(false);
     loadItems();
+  }
+
+  async function savePages(learnItemId: string) {
+    const filledPages = pages.filter(
+      (page) => page.text.trim() || page.image_url.trim()
+    );
+
+    const emptyPageNumbers = pages
+      .filter((page) => !page.text.trim() && !page.image_url.trim())
+      .map((page) => page.page_number);
+
+    if (filledPages.length > 0) {
+      const payload = filledPages.map((page) => ({
+        learn_item_id: learnItemId,
+        page_number: page.page_number,
+        text: page.text,
+        image_url: page.image_url,
+      }));
+
+      const { error } = await supabase
+        .from("learn_pages")
+        .upsert(payload, {
+          onConflict: "learn_item_id,page_number",
+        });
+
+      if (error) throw error;
+    }
+
+    if (emptyPageNumbers.length > 0) {
+      const { error } = await supabase
+        .from("learn_pages")
+        .delete()
+        .eq("learn_item_id", learnItemId)
+        .in("page_number", emptyPageNumbers);
+
+      if (error) throw error;
+    }
   }
 
   async function saveItem(publishNow = false) {
@@ -171,37 +274,41 @@ export default function LearnAdminPage() {
       is_published: publishNow ? true : isPublished,
     };
 
-    if (editingId) {
-      const { error } = await supabase
-        .from("learn_items")
-        .update(payload)
-        .eq("id", editingId);
+    try {
+      let learnItemId = editingId;
 
-      if (error) {
-        alert(error.message);
-        setSaving(false);
-        return;
+      if (editingId) {
+        const { error } = await supabase
+          .from("learn_items")
+          .update(payload)
+          .eq("id", editingId);
+
+        if (error) throw error;
+      } else {
+        const { data, error } = await supabase
+          .from("learn_items")
+          .insert(payload)
+          .select()
+          .single();
+
+        if (error) throw error;
+
+        learnItemId = data.id;
+        setEditingId(data.id);
       }
-    } else {
-      const { data, error } = await supabase
-        .from("learn_items")
-        .insert(payload)
-        .select()
-        .single();
 
-      if (error) {
-        alert(error.message);
-        setSaving(false);
-        return;
+      if (learnItemId) {
+        await savePages(learnItemId);
       }
 
-      setEditingId(data.id);
+      setIsPublished(publishNow ? true : isPublished);
+      setMessage(publishNow ? "Published successfully!" : "Saved successfully!");
+      await loadItems();
+    } catch (error: any) {
+      alert(error.message);
     }
 
-    setIsPublished(publishNow ? true : isPublished);
-    setMessage(publishNow ? "Published successfully!" : "Saved successfully!");
     setSaving(false);
-    loadItems();
   }
 
   return (
@@ -286,7 +393,7 @@ export default function LearnAdminPage() {
             <img src={coverUrl} alt="Cover preview" className="coverPreview" />
           )}
 
-          <label>Learn Image</label>
+          <label>Fallback Learn Image</label>
           <input
             type="file"
             accept="image/*"
@@ -299,6 +406,44 @@ export default function LearnAdminPage() {
           {imageUrl && (
             <img src={imageUrl} alt="Learn preview" className="coverPreview" />
           )}
+        </section>
+
+        <section className="adminCard">
+          <h2>Learning Pages</h2>
+          <p>Add 1 to 20 pages. Blank pages will not show in the reader.</p>
+
+          {pages.map((page) => (
+            <div className="pageEditor" key={page.page_number}>
+              <h3>Page {page.page_number}</h3>
+
+              <label>Page Image</label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) handlePageImageUpload(file, page.page_number);
+                }}
+              />
+
+              {page.image_url && (
+                <img
+                  src={page.image_url}
+                  alt={`Page ${page.page_number}`}
+                  className="coverPreview"
+                />
+              )}
+
+              <label>Page Text</label>
+              <textarea
+                value={page.text}
+                onChange={(e) =>
+                  updatePageText(page.page_number, e.target.value)
+                }
+                placeholder={`Text for page ${page.page_number}`}
+              />
+            </div>
+          ))}
         </section>
 
         <div className="adminActions">
