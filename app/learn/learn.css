@@ -28,7 +28,7 @@
 
 .learnHero,
 .learnRail,
-.suggestBox {
+.learnFilterBox {
   position: relative;
   z-index: 2;
 }
@@ -61,7 +61,7 @@
 
 .featuredLearn {
   height: 430px;
-  border-radius: 16px;
+  border-radius: 26px;
   overflow: hidden;
   position: relative;
   display: block;
@@ -88,14 +88,18 @@
 }
 
 .featuredOverlay span {
+  width: fit-content;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: #ff5526;
   font-family: "Courier New", monospace;
   font-weight: 900;
-  font-size: 14px;
-  color: #ff5526;
+  font-size: 13px;
+  color: white;
 }
 
 .featuredOverlay h2 {
-  margin: 10px 0;
+  margin: 12px 0 8px;
   font-family: "DK Woolwich", "Arial Black", sans-serif;
   font-size: 52px;
   line-height: 0.9;
@@ -132,90 +136,122 @@
 }
 
 .learnScroller {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 22px;
-  overflow-x: auto;
+  overflow: visible;
   padding-bottom: 18px;
 }
 
 .learnTile {
-  flex: 0 0 310px;
-  height: 220px;
-  border-radius: 16px;
+  min-height: 430px;
+  border-radius: 20px;
   overflow: hidden;
   position: relative;
   border: 4px solid white;
   text-decoration: none;
-  color: white;
+  color: #050505;
   background: white;
+  display: flex;
+  flex-direction: column;
 }
 
 .learnTile img {
   width: 100%;
-  height: 100%;
+  height: 300px;
   object-fit: cover;
+  display: block;
 }
 
-.learnTileOverlay {
-  position: absolute;
-  inset: 0;
-  padding: 18px;
+.learnTileInfo {
+  flex: 1;
+  background: white;
+  padding: 22px 20px 30px;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  background: linear-gradient(to top, rgba(0,0,0,.72), rgba(0,0,0,.05));
+  align-items: center;
 }
 
-.learnTileOverlay h3 {
+.learnTileInfo h3 {
   margin: 0;
+  width: 100%;
   font-family: "DK Woolwich", "Arial Black", sans-serif;
-  font-size: 30px;
-  line-height: 0.95;
+  font-size: 20px;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
 }
 
-.learnTileOverlay p {
-  margin: 6px 0 0;
+.learnTileInfo p {
+  margin: 8px auto 0;
+  max-width: 260px;
   font-family: "Courier New", monospace;
-  font-size: 13px;
+  font-size: 11px;
+  line-height: 1.3;
   font-weight: 900;
+  text-align: center;
 }
 
-.suggestBox {
-  max-width: 720px;
-  margin: 50px auto 0;
-  height: 68px;
+.learnFilterBox {
+  max-width: 760px;
+  min-height: 68px;
+  margin: 34px auto 0;
   border-radius: 999px;
   background: white;
   display: flex;
   align-items: center;
-  padding-left: 30px;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 10px 18px;
   box-sizing: border-box;
 }
 
-.suggestBox input {
-  flex: 1;
-  border: 0;
-  outline: 0;
-  background: transparent;
-  font-family: "Courier New", monospace;
-  font-size: 16px;
-  font-weight: 900;
-}
-
-.suggestBox button {
-  width: 58px;
-  height: 58px;
+.learnFilterBox button {
+  height: 42px;
+  padding: 0 20px;
   border: 0;
   border-radius: 999px;
-  background: #ff5526;
-  margin-right: 5px;
-  display: grid;
-  place-items: center;
+  background: #f2eee7;
+  color: #050505;
+  font-family: "Courier New", monospace;
+  font-size: 13px;
+  font-weight: 900;
   cursor: pointer;
 }
 
-.suggestBox button img {
-  width: 28px;
+.learnFilterBox button.active {
+  background: #ff5526;
+  color: white;
+}
+
+.learnPagination {
+  width: 100%;
+  margin: 18px auto 0;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.learnPagination button {
+  width: 48px;
+  height: 48px;
+  border: 3px solid white;
+  border-radius: 999px;
+  background: #ff5526;
+  color: white;
+  font-family: "DK Woolwich", "Arial Black", sans-serif;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.learnPagination button.active {
+  background: white;
+  color: #ff5526;
 }
 
 @media (max-width: 900px) {
@@ -229,5 +265,9 @@
 
   .featuredLearn {
     height: 320px;
+  }
+
+  .learnScroller {
+    grid-template-columns: 1fr;
   }
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
@@ -20,6 +20,8 @@ type LearnItem = {
 
 export default function LearnPage() {
   const [items, setItems] = useState<LearnItem[]>([]);
+  const [activeCategory, setActiveCategory] = useState("All");
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     loadItems();
@@ -40,7 +42,37 @@ export default function LearnPage() {
     setItems(data || []);
   }
 
-  const featured = items[0];
+  const categories = [
+    "All",
+    "Learning",
+    "Space",
+    "Science",
+    "Animals",
+    "Nature",
+    "History",
+    "Ocean",
+    "Dinosaurs",
+    "How Things Work",
+  ];
+
+  const filteredItems = useMemo(() => {
+    if (activeCategory === "All") return items;
+
+    return items.filter((item) =>
+      (item.category || "")
+        .toLowerCase()
+        .includes(activeCategory.toLowerCase())
+    );
+  }, [items, activeCategory]);
+
+  const itemsPerPage = 16;
+  const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
+  const visibleItems = filteredItems.slice(
+    (page - 1) * itemsPerPage,
+    page * itemsPerPage
+  );
+
+  const featured = filteredItems[0];
 
   return (
     <>
@@ -52,17 +84,19 @@ export default function LearnPage() {
         <section className="learnHero">
           <div className="learnHeroText">
             <h1>
-              LEARN
+              LEARN.
               <br />
-              SOMETHING
+              DISCOVER.
               <br />
-              AWESOME.
+              EXPLORE.
             </h1>
 
             <p>
-              Fun facts, science, animals, space, history,
+              Fun facts, science, animals, space,
               <br />
-              and amazing things explained like a comic.
+              history, oceans, dinosaurs, and awesome
+              <br />
+              things explained like a comic.
             </p>
           </div>
 
@@ -94,32 +128,52 @@ export default function LearnPage() {
           <h2>New Learning Adventures</h2>
 
           <div className="learnScroller">
-            {items.map((item) => (
-              <Link
-                href={`/learn/${item.slug}`}
-                className="learnTile"
-                key={item.id}
-              >
+            {visibleItems.map((item) => (
+              <Link href={`/learn/${item.slug}`} className="learnTile" key={item.id}>
                 <img
                   src={item.cover_url || item.image_url || "/images/6to5ratio.png"}
                   alt={item.title}
                 />
 
-                <div className="learnTileOverlay">
+                <div className="learnTileInfo">
                   <h3>{item.title}</h3>
-                  <p>{item.category || "Learn with Luke"}</p>
+                  <p>
+                    {item.description ||
+                      "A fun learning adventure from Read With Luke."}
+                  </p>
                 </div>
               </Link>
             ))}
           </div>
         </section>
 
-        <section className="suggestBox">
-          <input placeholder="submit something you want to learn." />
+        <section className="learnFilterBox">
+          {categories.map((category) => (
+            <button
+              key={category}
+              onClick={() => {
+                setActiveCategory(category);
+                setPage(1);
+              }}
+              className={activeCategory === category ? "active" : ""}
+            >
+              {category}
+            </button>
+          ))}
 
-          <button>
-            <img src="/images/icon-send.png" alt="" />
-          </button>
+          {totalPages > 1 && (
+            <div className="learnPagination">
+              {Array.from({ length: totalPages }, (_, index) => (
+                <button
+                  key={index}
+                  className={page === index + 1 ? "active" : ""}
+                  onClick={() => setPage(index + 1)}
+                >
+                  {index + 1}
+                </button>
+              ))}
+            </div>
+          )}
         </section>
       </main>
 
