@@ -66,11 +66,11 @@ setInitials(`${first}${last}`.toUpperCase() || "A");
 
       <nav className="mainNav">
       <Link className={active("/library") ? "active" : ""} href="/library">
-  Read with Luke
+  Read With Luke
 </Link>
 
 <Link className={active("/learn") ? "active" : ""} href="/learn">
-  Learn with Luke
+  Learn With Luke
 </Link>
 
 <Link className={active("/learn-to-read") ? "active" : ""} href="/learn-to-read">

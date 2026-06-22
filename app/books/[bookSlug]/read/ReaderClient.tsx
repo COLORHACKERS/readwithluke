@@ -2,8 +2,10 @@
 
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import LikeButton from "@/app/components/LikeButton";
 
 type Props = {
+  bookID: string;
   bookSlug: string;
   title: string;
   pageNumber: number;
@@ -60,9 +62,7 @@ async function shareBook() {
           <Link href="/library" className="readerMiniBtn">LIBRARY</Link>
 
          <div className="readerTopIcons">
-  <button type="button">
-    <img src="/images/heart.png" alt="Favorite" />
-  </button>
+  <LikeButton bookId={bookId} />
 
   <button type="button">
     <img src="/images/bookmark.png" alt="Save" />
