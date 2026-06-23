@@ -27,7 +27,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.35);
+  background: rgba(0, 0, 0, 0.05);
   z-index: 1;
 }
 
@@ -154,7 +154,7 @@
   display: flex;
   gap: 22px;
   width: max-content;
-  animation: marqueeScroll 45s linear infinite;
+  animation: marqueeScroll 90s linear infinite;
 }
 
 .marqueeWindow:hover .marqueeTrack {
