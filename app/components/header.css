@@ -241,3 +241,112 @@
     padding: 0 10px;
   }
 }
+.mobileMenuButton {
+  display: none;
+}
+
+.mobileMenuOverlay {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mainHeader {
+    width: calc(100vw - 20px);
+    height: 64px;
+    margin-top: 12px;
+    grid-template-columns: 1fr auto;
+    padding: 0 16px;
+    border-radius: 0 0 18px 18px;
+  }
+
+  .headerLogo {
+    height: 64px;
+    align-items: center;
+  }
+
+  .headerLogo img {
+    width: 110px;
+    margin: 0;
+  }
+
+  .mainNav {
+    display: none;
+  }
+
+  .headerRight {
+    height: 64px;
+    gap: 8px;
+  }
+
+  .headerStreak {
+    display: none;
+  }
+
+  .headerAvatar {
+    width: 42px;
+    height: 42px;
+    border-width: 5px;
+    font-size: 22px;
+  }
+
+  .mobileMenuButton {
+    width: 42px;
+    height: 42px;
+    border-radius: 999px;
+    border: 3px solid #ff5526;
+    background: white;
+    color: #050505;
+    font-size: 24px;
+    font-weight: 900;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+  }
+
+  .mobileMenuOverlay {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    display: block;
+    background: rgba(0, 0, 0, 0.45);
+  }
+
+  .mobileMenu {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: min(82vw, 330px);
+    height: 100vh;
+    background: #ffffff;
+    padding: 92px 28px 28px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    border-left: 6px solid #ff5526;
+  }
+
+  .mobileMenu a {
+    color: #050505;
+    text-decoration: none;
+    font-family: "Courier New", monospace;
+    font-size: 20px;
+    font-weight: 900;
+    letter-spacing: 0.03em;
+  }
+
+  .mobileMenuClose {
+    position: absolute;
+    top: 22px;
+    right: 22px;
+    width: 42px;
+    height: 42px;
+    border-radius: 999px;
+    border: 3px solid #ff5526;
+    background: #ff5526;
+    color: white;
+    font-size: 32px;
+    line-height: 1;
+    cursor: pointer;
+  }
+}
