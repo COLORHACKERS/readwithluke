@@ -141,3 +141,54 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
+@media (max-width: 768px) {
+  .rwlFooter {
+    padding: 42px 22px 34px;
+    min-height: auto;
+  }
+
+  .footerTop {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    text-align: center;
+  }
+
+  .footerLukeBox img,
+  .footerBrandBox img {
+    margin: 0 auto;
+  }
+
+  .footerLinks {
+    align-items: center;
+  }
+
+  .footerEmailBar {
+    height: 58px;
+    padding-left: 22px;
+  }
+
+  .footerNewsletter p {
+    font-size: 12px;
+  }
+
+  .footerBottom {
+    margin-top: 34px;
+    grid-template-columns: 1fr;
+    gap: 22px;
+    text-align: center;
+  }
+
+  .footerPrivacy,
+  .footerCopyright {
+    text-align: center;
+  }
+
+  .footerSocials {
+    justify-content: center;
+  }
+
+  .footerSocials button {
+    width: 48px;
+    height: 48px;
+  }
+}
