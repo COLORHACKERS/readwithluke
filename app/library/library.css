@@ -286,3 +286,97 @@
     height: 320px;
   }
 }
+@media (max-width: 768px) {
+  .libraryPage {
+    min-height: 100vh;
+    padding: 115px 18px 60px;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .libraryHero {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    text-align: center;
+  }
+
+  .libraryHeroText h1 {
+    font-size: 48px;
+    line-height: 0.88;
+  }
+
+  .libraryHeroText p {
+    font-size: 15px;
+    line-height: 1.35;
+  }
+
+  .featuredBook {
+    width: 100%;
+    max-width: 380px;
+    margin: 0 auto;
+  }
+
+  .featuredBook img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .bookRail {
+    margin-top: 60px;
+  }
+
+  .bookRail h2 {
+    font-size: 32px;
+    text-align: center;
+  }
+
+  .bookScroller {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 22px;
+    overflow: visible;
+  }
+
+  .bookTile {
+    width: 100%;
+    max-width: 360px;
+    margin: 0 auto;
+  }
+
+  .bookTile img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .bookTileInfo h3 {
+    font-size: 24px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .bookTileInfo p {
+    font-size: 12px;
+  }
+
+  .libraryFilterBox {
+    margin-top: 42px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .libraryFilterBox button {
+    font-size: 11px;
+    padding: 10px 14px;
+  }
+
+  .libraryPagination {
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
