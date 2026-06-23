@@ -271,3 +271,145 @@
     grid-template-columns: 1fr;
   }
 }
+/* ===========================
+   MOBILE
+=========================== */
+
+@media (max-width: 768px) {
+  .learnPage {
+    min-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 115px 18px 60px;
+  }
+
+  .learnBg {
+    object-position: center top;
+  }
+
+  .learnPage::after {
+    background: rgba(0, 0, 0, 0.45);
+  }
+
+  .learnHero {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    text-align: center;
+  }
+
+  .learnHeroText h1 {
+    font-size: 48px;
+    line-height: 0.88;
+  }
+
+  .learnHeroText p {
+    margin-top: 18px;
+    font-size: 15px;
+    line-height: 1.35;
+  }
+
+  .featuredLearn {
+    width: 100%;
+    max-width: 380px;
+    height: 300px;
+    margin: 0 auto;
+    border-width: 3px;
+    border-radius: 22px;
+  }
+
+  .featuredOverlay {
+    padding: 22px;
+  }
+
+  .featuredOverlay span {
+    font-size: 11px;
+    padding: 6px 12px;
+  }
+
+  .featuredOverlay h2 {
+    font-size: 34px;
+    margin: 10px 0 8px;
+  }
+
+  .featuredOverlay p {
+    font-size: 13px;
+    line-height: 1.3;
+    margin-bottom: 14px;
+  }
+
+  .featuredOverlay strong {
+    font-size: 18px;
+    padding: 12px 20px;
+  }
+
+  .learnRail {
+    margin-top: 60px;
+  }
+
+  .learnRail h2 {
+    font-size: 32px;
+    text-align: center;
+  }
+
+  .learnScroller {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .learnTile {
+    width: 100%;
+    max-width: 360px;
+    min-height: auto;
+    margin: 0 auto;
+    border-width: 3px;
+  }
+
+  .learnTile img {
+    height: 240px;
+  }
+
+  .learnTileInfo {
+    padding: 18px 18px 22px;
+  }
+
+  .learnTileInfo h3 {
+    font-size: 24px;
+  }
+
+  .learnTileInfo p {
+    font-size: 12px;
+  }
+
+  .learnFilterBox {
+    width: calc(100% - 20px);
+    max-width: none;
+    min-height: auto;
+    margin: 36px auto 0;
+    padding: 18px 14px;
+    border-radius: 34px;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .learnFilterBox button {
+    height: 46px;
+    padding: 0 18px;
+    font-size: 12px;
+  }
+
+  .learnPagination {
+    margin-top: 14px;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .learnPagination button {
+    width: 42px;
+    height: 42px;
+    font-size: 20px;
+  }
+}
