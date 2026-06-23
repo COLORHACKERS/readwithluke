@@ -149,22 +149,13 @@
   overflow: hidden;
   width: 100%;
 }
+
 .marqueeTrack {
   display: flex;
   gap: 22px;
   width: max-content;
-  animation: marqueeScroll 35s linear infinite;
+  animation: marqueeScroll 55s linear infinite;
   will-change: transform;
-}
-
-@keyframes marqueeScroll {
-  from {
-    transform: translateX(0);
-  }
-
-  to {
-    transform: translateX(calc(-50% - 11px));
-  }
 }
 
 .marqueeWindow:hover .marqueeTrack {
@@ -181,6 +172,16 @@
   text-decoration: none;
   color: white;
   background: white;
+}
+
+@keyframes marqueeScroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-1328px);
+  }
 }
 
 .marqueeCard img {
@@ -299,9 +300,24 @@
 
 .marqueeTrack {
   gap: 14px;
-  animation-duration: 35s;
+  animation-duration: 42s;
 }
 
+.marqueeCard {
+  flex: 0 0 220px;
+  height: 300px;
+  border-width: 3px;
+}
+
+@keyframes marqueeScroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-936px);
+  }
+}
   .marqueeCard {
     flex: 0 0 220px;
     height: 300px;
