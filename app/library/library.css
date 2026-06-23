@@ -360,9 +360,13 @@
   .bookTileInfo p {
     font-size: 12px;
   }
-
+  
   .libraryFilterBox {
-    margin-top: 42px;
+    width: calc(100% - 28px);
+    margin: 38px auto 70px;
+    padding: 22px 16px;
+    border-radius: 34px;
+
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -370,13 +374,24 @@
   }
 
   .libraryFilterBox button {
-    font-size: 11px;
-    padding: 10px 14px;
+    height: 48px;
+    padding: 0 20px;
+    border-radius: 999px;
+
+    font-size: 13px;
+    line-height: 1;
+  }
+
+  .libraryFilterBox button.active {
+    background: #ff5526;
+    color: white;
   }
 
   .libraryPagination {
     width: 100%;
+    margin-top: 8px;
+    display: flex;
     justify-content: center;
-    flex-wrap: wrap;
+    gap: 8px;
   }
 }
