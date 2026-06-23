@@ -180,3 +180,64 @@
     height: 46px;
   }
 }
+/* ===========================
+   PHONE
+=========================== */
+
+@media (max-width: 768px) {
+
+  .mainHeader {
+    width: calc(100vw - 20px);
+    height: 64px;
+    margin-top: 12px;
+
+    grid-template-columns: 1fr auto;
+    padding: 0 16px;
+
+    border-radius: 0 0 18px 18px;
+  }
+
+  .headerLogo {
+    height: 64px;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .headerLogo img {
+    width: 110px;
+    margin: 0;
+  }
+
+  /* Hide desktop navigation */
+  .mainNav {
+    display: none;
+  }
+
+  .headerRight {
+    height: 64px;
+    gap: 8px;
+  }
+
+  .headerStreak {
+    display: none;
+  }
+
+  .headerAvatar {
+    width: 42px;
+    height: 42px;
+    border-width: 5px;
+    font-size: 22px;
+  }
+
+  .headerAuth {
+    gap: 6px;
+  }
+
+  .headerLogin,
+  .headerSignup {
+    min-width: 64px;
+    height: 34px;
+    font-size: 10px;
+    padding: 0 10px;
+  }
+}
