@@ -45,9 +45,8 @@ export default function Home() {
             </h1>
 
             <p>
-              Fun facts, science, animals, space, history,
-              <br />
-              and amazing things explained like a comic.
+              Join Luke on his reading and learning
+              adventures in cinematic style.
             </p>
           </div>
 
