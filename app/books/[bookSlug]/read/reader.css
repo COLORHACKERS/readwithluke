@@ -284,8 +284,6 @@ body {
   padding-bottom: 120px;
 }
 
-  }
-
   .readerTopBar {
     display: grid;
     grid-template-columns: 1fr 1fr 48px 48px 48px;
