@@ -464,19 +464,26 @@
   }
 }
 @media (max-width: 768px) {
+
   .readerPage {
-    height: auto;
-    min-height: 100vh;
-    overflow-x: hidden;
+    display: block;
+    height: 100vh;
     overflow-y: auto;
-    display: flex;
-    flex-direction: column;
+    background: #eee8df;
   }
 
   .readerImageSide {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+
     width: 100%;
-    height: auto;
-    aspect-ratio: 6 / 5;
+    height: 35vh;
+    min-height: 240px;
+    max-height: 340px;
+
+    overflow: hidden;
+    background: #050505;
   }
 
   .readerImageSide img {
@@ -487,38 +494,33 @@
   }
 
   .readerPanel {
-    width: 100%;
-    height: auto;
-    padding: 22px 20px 110px;
-    overflow: visible;
+    position: relative;
+    z-index: 2;
+
+    margin-top: -24px;
+
+    background: #eee8df;
+    border-radius: 28px 28px 0 0;
+
+    min-height: 70vh;
+
+    padding: 22px 22px 110px;
+
     display: flex;
     flex-direction: column;
   }
 
-  .readerTopBar {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-
-  .readerMiniBtn {
-    width: 86px;
-    height: 52px;
-    font-size: 18px;
-  }
-
   .readerStoryText h1 {
     font-size: 34px;
-    line-height: 0.9;
+    line-height: .9;
     text-align: center;
   }
 
   .readerStoryText p {
+    font-size: 17px;
+    line-height: 1.4;
     max-height: none;
     overflow: visible;
-    font-size: 17px;
-    line-height: 1.35;
   }
 
   .readerControls {
@@ -526,8 +528,13 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: #eee8df;
+
     padding: 12px 18px;
+
+    background: #eee8df;
+    border-top: 2px solid rgba(0,0,0,.08);
+
     z-index: 100;
   }
+
 }
