@@ -13,8 +13,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "READ WITH LUKE",
-  description: "Children's Reading Adventures!",
+  title: {
+    default: "READ WITH LUKE",
+  template: "%s | Read with Luke",
+  },
+  description: "Fun stories, adventure and learning for curious kids!",
+  icons: {
+    icon:"/favicon.ico",
+  },
 };
 
 export default function RootLayout({
