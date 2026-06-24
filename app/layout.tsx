@@ -15,11 +15,32 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: {
     default: "READ WITH LUKE",
-  template: "%s | Read with Luke",
+    template: "%s | Read With Luke",
   },
   description: "Fun stories, adventure and learning for curious kids!",
   icons: {
-    icon:"/favicon.ico",
+    icon: "/favicon.ico",
+  },
+  openGraph: {
+    title: "READ WITH LUKE",
+    description: "Fun stories, adventure and learning for curious kids!",
+    url: "https://readwithluke.com",
+    siteName: "Read With Luke",
+    images: [
+      {
+        url: "/images/share-hero.png",
+        width: 1200,
+        height: 630,
+        alt: "Read With Luke",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "READ WITH LUKE",
+    description: "Fun stories, adventure and learning for curious kids!",
+    images: ["/images/share-hero.png"],
   },
 };
 
