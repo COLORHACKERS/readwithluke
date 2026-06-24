@@ -310,112 +310,6 @@
 
   .featuredLearn {
     width: 100%;
-    max-width: 380px;
-    height: 300px;
-    margin: 0 auto;
-    border-width: 3px;
-    border-radius: 22px;
-  }
-
-  .featuredOverlay {
-    padding: 22px;
-  }
-
-  .featuredOverlay span {
-    font-size: 11px;
-    padding: 6px 12px;
-  }
-
-  .featuredOverlay h2 {
-    font-size: 34px;
-    margin: 10px 0 8px;
-  }
-
-  .featuredOverlay p {
-    font-size: 13px;
-    line-height: 1.3;
-    margin-bottom: 14px;
-  }
-
-  .featuredOverlay strong {
-    font-size: 18px;
-    padding: 12px 20px;
-  }
-
-  .learnRail {
-    margin-top: 60px;
-  }
-
-  .learnRail h2 {
-    font-size: 32px;
-    text-align: center;
-  }
-
-  .learnScroller {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 22px;
-  }
-
-  .learnTile {
-    width: 100%;
-    max-width: 360px;
-    min-height: auto;
-    margin: 0 auto;
-    border-width: 3px;
-  }
-
-  .learnTile img {
-    height: 240px;
-  }
-
-  .learnTileInfo {
-    padding: 18px 18px 22px;
-  }
-
-  .learnTileInfo h3 {
-    font-size: 24px;
-  }
-
-  .learnTileInfo p {
-    font-size: 12px;
-  }
-
-  .learnFilterBox {
-    width: calc(100% - 20px);
-    max-width: none;
-    min-height: auto;
-    margin: 36px auto 0;
-    padding: 18px 14px;
-    border-radius: 34px;
-
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-  }
-
-  .learnFilterBox button {
-    height: 46px;
-    padding: 0 18px;
-    font-size: 12px;
-  }
-
-  .learnPagination {
-    margin-top: 14px;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-
-  .learnPagination button {
-    width: 42px;
-    height: 42px;
-    font-size: 20px;
-  }
-}
-@media (max-width: 768px) {
-  .featuredLearn {
-    width: 100%;
     max-width: 390px;
     height: 430px;
     margin: 0 auto;
@@ -450,7 +344,6 @@
     margin: 0 auto 18px;
     font-size: 18px;
     line-height: 1.22;
-
     display: -webkit-box;
     -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
@@ -462,142 +355,86 @@
     padding: 18px 34px;
     font-size: 28px;
   }
-}
-@media (max-width: 768px) {
-  .readerPage {
-    display: block;
-    width: 100%;
-    height: 100vh;
-    overflow-x: hidden;
-    overflow-y: auto;
-    background: #eee8df;
+
+  .learnRail {
+    margin-top: 60px;
   }
 
-  .readerImageSide {
-    position: sticky;
-    top: 0;
-    z-index: 1;
-    width: 100%;
-    height: 35vh;
-    min-height: 230px;
-    max-height: 340px;
-    overflow: hidden;
-    background: #050505;
-  }
-
-  .readerImageSide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center top;
-    display: block;
-  }
-
-  .readerPanel {
-    position: relative;
-    z-index: 2;
-    width: 100%;
-    height: auto;
-    min-height: 70vh;
-    margin-top: -24px;
-    padding: 24px 20px 115px;
-    background: #eee8df;
-    border-radius: 28px 28px 0 0;
-    display: flex;
-    flex-direction: column;
-    overflow: visible;
-  }
-
-  .readerTopBar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
-
-  .readerMiniBtn {
-    width: 82px;
-    height: 46px;
-    font-size: 16px;
-  }
-
-  .readerTopIcons {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-  }
-
-  .readerTopIcons button {
-    width: 46px;
-    height: 46px;
-  }
-
-  .readerProgressRow {
-    margin-top: 20px;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 8px;
+  .learnRail h2 {
+    font-size: 32px;
     text-align: center;
   }
 
-  .readerProgressRow span {
+  .learnScroller {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .learnTile {
+    width: 100%;
+    max-width: 390px;
+    min-height: 540px;
+    margin: 0 auto;
+    border-radius: 24px;
+    border-width: 4px;
+  }
+
+  .learnTile img {
+    width: 100%;
+    height: 330px;
+    object-fit: cover;
+  }
+
+  .learnTileInfo {
+    min-height: 190px;
+    padding: 22px 20px 28px;
+  }
+
+  .learnTileInfo h3 {
+    font-size: 28px;
+    line-height: 0.95;
+  }
+
+  .learnTileInfo p {
+    max-width: 300px;
+    margin-top: 10px;
+    font-size: 13px;
+    line-height: 1.35;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .learnFilterBox {
+    width: calc(100% - 28px);
+    max-width: none;
+    min-height: auto;
+    margin: 38px auto 70px;
+    padding: 22px 16px;
+    border-radius: 34px;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .learnFilterBox button {
+    height: 48px;
+    padding: 0 20px;
     font-size: 13px;
   }
 
-  .readerProgress {
-    height: 9px;
+  .learnPagination {
+    width: 100%;
+    margin-top: 8px;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
   }
 
-  .readerStoryText {
-    padding-top: 22px;
-    overflow: visible;
-  }
-
-  .readerStoryText h1 {
-    font-size: 32px;
-    line-height: 0.9;
-    text-align: center;
-    margin: 0 0 16px;
-  }
-
-  .readerStoryText p {
-    max-height: none;
-    overflow: visible;
-    font-size: 16px;
-    line-height: 1.42;
-    padding-right: 0;
-    text-align: left;
-    white-space: pre-wrap;
-  }
-
-  .readerControls {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 100;
-    background: #eee8df;
-    border-top: 2px solid rgba(0, 0, 0, 0.08);
-    padding: 12px 18px;
-    display: grid;
-    grid-template-columns: 52px 1fr 52px;
-    gap: 12px;
-    align-items: center;
-  }
-
-  .readerControls > button:not(.readerReadAloud) {
-    width: 52px;
-    height: 52px;
-  }
-
-  .readerControls > button:not(.readerReadAloud) img {
-    width: 26px;
-    height: 26px;
-  }
-
-  .readerReadAloud {
-    height: 52px;
-    font-size: 22px;
+  .learnPagination button {
+    width: 42px;
+    height: 42px;
+    font-size: 20px;
   }
 }
