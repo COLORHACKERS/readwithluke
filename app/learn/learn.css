@@ -464,10 +464,11 @@
   }
 }
 @media (max-width: 768px) {
-
   .readerPage {
     display: block;
+    width: 100%;
     height: 100vh;
+    overflow-x: hidden;
     overflow-y: auto;
     background: #eee8df;
   }
@@ -476,12 +477,10 @@
     position: sticky;
     top: 0;
     z-index: 1;
-
     width: 100%;
     height: 35vh;
-    min-height: 240px;
+    min-height: 230px;
     max-height: 340px;
-
     overflow: hidden;
     background: #050505;
   }
@@ -491,109 +490,85 @@
     height: 100%;
     object-fit: cover;
     object-position: center top;
+    display: block;
   }
 
   .readerPanel {
     position: relative;
     z-index: 2;
-
+    width: 100%;
+    height: auto;
+    min-height: 70vh;
     margin-top: -24px;
-
+    padding: 24px 20px 115px;
     background: #eee8df;
     border-radius: 28px 28px 0 0;
-
-    min-height: 70vh;
-
-    padding: 22px 22px 110px;
-
     display: flex;
     flex-direction: column;
-  }
-
-  .readerStoryText h1 {
-    font-size: 34px;
-    line-height: .9;
-    text-align: center;
-  }
-
-  .readerStoryText p {
-    font-size: 17px;
-    line-height: 1.4;
-    max-height: none;
     overflow: visible;
-  }
-
-  .readerControls {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-
-    padding: 12px 18px;
-
-    background: #eee8df;
-    border-top: 2px solid rgba(0,0,0,.08);
-
-    z-index: 100;
-  }
-
-}
-@media (max-width: 768px) {
-  .readerPage {
-    height: auto;
-    min-height: 100vh;
-    overflow-x: hidden;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .readerImageSide {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 6 / 5;
-  }
-
-  .readerImageSide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center top;
-  }
-
-  .readerPanel {
-    width: 100%;
-    height: auto;
-    padding: 22px 20px 110px;
-    overflow: visible;
-    display: flex;
-    flex-direction: column;
   }
 
   .readerTopBar {
     display: flex;
     justify-content: center;
-    gap: 12px;
+    align-items: center;
+    gap: 10px;
     flex-wrap: wrap;
   }
 
   .readerMiniBtn {
-    width: 86px;
-    height: 52px;
-    font-size: 18px;
+    width: 82px;
+    height: 46px;
+    font-size: 16px;
+  }
+
+  .readerTopIcons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .readerTopIcons button {
+    width: 46px;
+    height: 46px;
+  }
+
+  .readerProgressRow {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    text-align: center;
+  }
+
+  .readerProgressRow span {
+    font-size: 13px;
+  }
+
+  .readerProgress {
+    height: 9px;
+  }
+
+  .readerStoryText {
+    padding-top: 22px;
+    overflow: visible;
   }
 
   .readerStoryText h1 {
-    font-size: 34px;
+    font-size: 32px;
     line-height: 0.9;
     text-align: center;
+    margin: 0 0 16px;
   }
 
   .readerStoryText p {
     max-height: none;
     overflow: visible;
-    font-size: 17px;
-    line-height: 1.35;
+    font-size: 16px;
+    line-height: 1.42;
+    padding-right: 0;
+    text-align: left;
+    white-space: pre-wrap;
   }
 
   .readerControls {
@@ -601,8 +576,28 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: #eee8df;
-    padding: 12px 18px;
     z-index: 100;
+    background: #eee8df;
+    border-top: 2px solid rgba(0, 0, 0, 0.08);
+    padding: 12px 18px;
+    display: grid;
+    grid-template-columns: 52px 1fr 52px;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .readerControls > button:not(.readerReadAloud) {
+    width: 52px;
+    height: 52px;
+  }
+
+  .readerControls > button:not(.readerReadAloud) img {
+    width: 26px;
+    height: 26px;
+  }
+
+  .readerReadAloud {
+    height: 52px;
+    font-size: 22px;
   }
 }
