@@ -543,3 +543,11 @@
     background: #050505;
   }
 }
+@media (max-width: 1180px) {
+  .featuredLearn img,
+  .learnTile img {
+    object-fit: contain;
+    object-position: center top;
+    background: #050505;
+  }
+}
