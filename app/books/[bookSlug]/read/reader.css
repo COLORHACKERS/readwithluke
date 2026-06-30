@@ -123,7 +123,7 @@
   overflow-y: auto;
   white-space: pre-line;
   font-family: "Courier New", monospace;
-  font-size: 23px;
+  font-size: 18px;
   line-height: 1.27;
   font-weight: 900;
   color: #050505;
@@ -217,7 +217,7 @@ body {
   }
 
   .readerStoryText p {
-    font-size: 20px;
+    font-size: 16px;
     max-height: calc(100vh - 285px);
   }
 
@@ -331,7 +331,7 @@ body {
   .readerStoryText p {
     max-height: none;
     overflow: visible;
-    font-size: 17px;
+    font-size: 16px;
     line-height: 1.42;
     padding-right: 0;
   }
@@ -556,7 +556,7 @@ body {
     background: #f2eee7;
     color: #13294b;
     font-family: "DK Woolwich", "Arial Black", sans-serif;
-    font-size: 17px;
+    font-size: 16px;
     text-align: center;
     text-decoration: none;
     display: grid;
