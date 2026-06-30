@@ -375,3 +375,71 @@ body {
     font-size: 20px;
   }
 }
+@media (min-width: 769px) and (max-width: 1180px) {
+  .readerPage {
+    height: calc(100vh - 86px);
+    overflow: hidden;
+  }
+
+  .readerShell {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 58% 42%;
+    align-items: stretch;
+  }
+
+  .readerImageSide {
+    height: 100%;
+    background: #050505;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .readerImageSide img {
+    width: 100%;
+    height: auto;
+    max-height: 100%;
+    object-fit: contain;
+    object-position: center top;
+    display: block;
+  }
+
+  .readerPanel {
+    height: 100%;
+    padding: 28px 34px 28px;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-rows: auto auto 1fr auto;
+    overflow: hidden;
+  }
+
+  .readerTopBar {
+    margin-bottom: 12px;
+  }
+
+  .readerProgressRow {
+    margin-top: 6px;
+    margin-bottom: 18px;
+  }
+
+  .readerStoryText {
+    overflow-y: auto;
+    padding-right: 6px;
+  }
+
+  .readerControls {
+    position: static;
+    margin-top: 18px;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 52px 1fr 52px;
+    gap: 18px;
+    align-items: center;
+  }
+
+  .readerReadAloud {
+    height: 58px;
+  }
+}
