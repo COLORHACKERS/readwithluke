@@ -261,7 +261,7 @@ body {
     max-height: 350px;
     flex-shrink: 0;
     overflow: hidden;
-    background: #050505;
+    background: #eee8df;
   }
 
 .readerImageSide img {
