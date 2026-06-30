@@ -63,9 +63,14 @@ export default function ReaderClient({
       </section>
 
       <aside className="readerPanel">
-        <div className="readerTopBar">
-          <Link href="/" className="readerMiniBtn">HOME</Link>
-          <Link href="/library" className="readerMiniBtn">LIBRARY</Link>
+        <div className="readerDesktopTopBar">
+          <Link href="/" className="readerMiniBtn">
+            HOME
+          </Link>
+
+          <Link href="/library" className="readerMiniBtn">
+            LIBRARY
+          </Link>
 
           <div className="readerTopIcons">
             <LikeButton bookId={bookId} />
@@ -80,14 +85,39 @@ export default function ReaderClient({
           </div>
         </div>
 
-        <div className="readerProgressRow">
-          <span>
-            Page {pageNumber} of {totalPages}
-          </span>
+        <div className="readerHeaderRow">
+          <div className="readerProgressRow">
+            <span>
+              Page {pageNumber} of {totalPages}
+            </span>
 
-          <div className="readerProgress">
-            <i style={{ width: `${progress}%` }} />
+            <div className="readerProgress">
+              <i style={{ width: `${progress}%` }} />
+            </div>
           </div>
+
+          <details className="readerMenu">
+            <summary>☰</summary>
+
+            <div className="readerMenuPanel">
+              <Link href="/">Home</Link>
+              <Link href="/library">Library</Link>
+
+              <div className="readerMenuLike">
+                <LikeButton bookId={bookId} />
+              </div>
+
+              <button type="button">
+                <img src="/images/bookmark.png" alt="" />
+                Save
+              </button>
+
+              <button type="button" onClick={shareBook}>
+                <img src="/images/share.png" alt="" />
+                Share
+              </button>
+            </div>
+          </details>
         </div>
 
         <div className="readerStoryText">
