@@ -534,6 +534,7 @@
   object-position: center top;
   background: #050505;
 }
+}
 @media (max-width: 768px) {
   .featuredLearn img,
   .learnTile img {
