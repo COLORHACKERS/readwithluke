@@ -120,10 +120,11 @@ export default function ReaderClient({
           </details>
         </div>
 
-        <div className="readerStoryText">
-          <h1>{title.toUpperCase()}</h1>
-          <p>{text || "This page is waiting for an adventure..."}</p>
-        </div>
+      <div className="readerStoryText">
+  <h1>{title.toUpperCase()}</h1>
+  <p>{text || "This page is waiting for an adventure..."}</p>
+  <div className="readerScrollHint">⌄</div>
+</div>
 
         <div className="readerControls">
           <button
