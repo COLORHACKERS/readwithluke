@@ -105,10 +105,13 @@
 
 .readerStoryText {
   min-height: 0;
-  overflow: hidden;
-  padding-top: 24px;
-}
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 10px;
 
+  scrollbar-width: thin;
+  scrollbar-color: #c6542d #efe7dc;
+}
 .readerStoryText h1 {
   margin: 0 0 20px;
   font-family: "DK Woolwich", "Arial Black", sans-serif;
