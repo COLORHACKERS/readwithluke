@@ -112,6 +112,19 @@
   scrollbar-width: thin;
   scrollbar-color: #c6542d #efe7dc;
 }
+.readerStoryText::-webkit-scrollbar {
+  width: 8px;
+}
+
+.readerStoryText::-webkit-scrollbar-track {
+  background: #efe7dc;
+  border-radius: 999px;
+}
+
+.readerStoryText::-webkit-scrollbar-thumb {
+  background: #c6542d;
+  border-radius: 999px;
+}
 .readerStoryText h1 {
   margin: 0 0 20px;
   font-family: "DK Woolwich", "Arial Black", sans-serif;
