@@ -4,7 +4,7 @@
   overflow: hidden;
   background: #eee8df;
   display: grid;
-  grid-template-columns: 58% 42%;
+  grid-template-columns: 60% 40%;
 }
 
 .readerImageSide {
