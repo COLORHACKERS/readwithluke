@@ -163,8 +163,9 @@
 }
 
 .marqueeCard {
-  flex: 0 0 310px;
-  height: 420px;
+  flex: 0 0 300px;
+  aspect-ratio: 2 / 3;
+  height: auto;
   border-radius: 16px;
   overflow: hidden;
   position: relative;
@@ -305,7 +306,8 @@
 
 .marqueeCard {
   flex: 0 0 220px;
-  height: 300px;
+  aspect-ratio: 2 / 3;
+  height: auto;
   border-width: 3px;
 }
 
@@ -318,11 +320,12 @@
     transform: translateX(-936px);
   }
 }
-  .marqueeCard {
-    flex: 0 0 220px;
-    height: 300px;
-    border-width: 3px;
-  }
+.marqueeCard {
+  flex: 0 0 220px;
+  aspect-ratio: 2 / 3;
+  height: auto;
+  border-width: 3px;
+}
 
   .marqueeOverlay h3 {
     font-size: 23px;
