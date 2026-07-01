@@ -75,15 +75,15 @@ export default function Home() {
 
           <div className="marqueeWindow">
             <div className="marqueeTrack">
-              <HomeCard href="/books/little-treehouse-mysteries" image="/images/home-card-1.png" title="DETECT." />
-              <HomeCard href="/books/sammy-finds-her-way-home" image="/images/home-card-4.png" title="LAUGH." />
-              <HomeCard href="/books/the-toy-maker" image="/images/home-card-2.png" title="FEEL." />
-              <HomeCard href="/books/the-great-crockoff" image="/images/home-card-3.png" title="IMAGINE." />
+              <HomeCard href="/books/little-treehouse-mysteries" image="/images/home-card-1.png" />
+              <HomeCard href="/books/sammy-finds-her-way-home" image="/images/home-card-4.png" />
+              <HomeCard href="/books/the-toy-maker" image="/images/home-card-2.png" />
+              <HomeCard href="/books/the-great-crockoff" image="/images/home-card-3.png" />
 
-              <HomeCard href="/books/little-treehouse-mysteries" image="/images/home-card-1.png" title="DETECT." />
-              <HomeCard href="/books/sammy-finds-her-way-home" image="/images/home-card-4.png" title="LAUGH." />
-              <HomeCard href="/books/the-toy-maker" image="/images/home-card-2.png" title="FEEL." />
-              <HomeCard href="/books/the-great-crockoff" image="/images/home-card-3.png" title="IMAGINE." />
+              <HomeCard href="/books/little-treehouse-mysteries" image="/images/home-card-1.png" />
+              <HomeCard href="/books/sammy-finds-her-way-home" image="/images/home-card-4.png" />
+              <HomeCard href="/books/the-toy-maker" image="/images/home-card-2.png" />
+              <HomeCard href="/books/the-great-crockoff" image="/images/home-card-3.png" />
             </div>
           </div>
         </section>
