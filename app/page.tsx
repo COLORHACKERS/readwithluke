@@ -106,19 +106,13 @@ function TimeUnit({ value, label }: { value: number; label: string }) {
 function HomeCard({
   href,
   image,
-  title,
 }: {
   href: string;
   image: string;
-  title: string;
 }) {
   return (
     <Link href={href} className="marqueeCard">
-      <img src={image} alt={title} />
-
-      <div className="marqueeOverlay">
-        <h3>{title}</h3>
-      </div>
+      <img src={image} alt="" />
     </Link>
   );
 }
