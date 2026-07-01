@@ -131,10 +131,7 @@ const visibleBooks = filteredBooks.slice(
 
                 <div className="bookTileInfo">
                   <h3>{book.title}</h3>
-                  <p>
-                    {book.description ||
-                      "A magical story from Read With Luke."}
-                  </p>
+  
                 </div>
               </Link>
             ))}
