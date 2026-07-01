@@ -101,7 +101,7 @@ const visibleBooks = filteredBooks.slice(
           {featured && (
             <Link href={`/books/${featured.slug}`} className="featuredBook">
               <img
-                src={featured.cover_url || "/images/6to5ratio.png"}
+                src={book.cover_url || "/images/6to5ratio.png"}
                 alt={featured.title}
               />
 
