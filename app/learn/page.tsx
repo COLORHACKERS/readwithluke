@@ -20,7 +20,6 @@ type LearnItem = {
 
 export default function LearnPage() {
   const [items, setItems] = useState<LearnItem[]>([]);
-  const [activeCategory, setActiveCategory] = useState("All");
   const [page, setPage] = useState(1);
 
   useEffect(() => {
@@ -42,28 +41,7 @@ export default function LearnPage() {
     setItems(data || []);
   }
 
-  const categories = [
-    "All",
-    "Learning",
-    "Space",
-    "Science",
-    "Animals",
-    "Nature",
-    "History",
-    "Ocean",
-    "Dinosaurs",
-    "How Things Work",
-  ];
-
-  const filteredItems = useMemo(() => {
-    if (activeCategory === "All") return items;
-
-    return items.filter((item) =>
-      (item.category || "")
-        .toLowerCase()
-        .includes(activeCategory.toLowerCase())
-    );
-  }, [items, activeCategory]);
+  const filteredItems = useMemo(() => items, [items]);
 
   const itemsPerPage = 16;
   const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
@@ -129,7 +107,11 @@ export default function LearnPage() {
 
           <div className="learnScroller">
             {visibleItems.map((item) => (
-              <Link href={`/learn/${item.slug}`} className="learnTile" key={item.id}>
+              <Link
+                href={`/learn/${item.slug}`}
+                className="learnTile"
+                key={item.id}
+              >
                 <img
                   src={item.cover_url || item.image_url || "/images/6to5ratio.png"}
                   alt={item.title}
@@ -139,21 +121,7 @@ export default function LearnPage() {
           </div>
         </section>
 
-        <section className="learnFilterBox">
-          {categories.map((category) => (
-            <button
-              key={category}
-              onClick={() => {
-                setActiveCategory(category);
-                setPage(1);
-              }}
-              className={activeCategory === category ? "active" : ""}
-            >
-              {category}
-            </button>
-          ))}
-
-                   {totalPages > 1 && (
+        {totalPages > 1 && (
           <section className="learnPagination">
             <button
               type="button"
