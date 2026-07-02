@@ -478,11 +478,11 @@
 }
 .cardBookmark {
   position: absolute;
-  top: -2px;
+  top: -3px;
   left: 50%;
   transform: translateX(-50%);
-  width: 84px;
+  width: 72px;
   height: auto;
-  z-index: 5;
+  z-index: 20;
   pointer-events: none;
 }
