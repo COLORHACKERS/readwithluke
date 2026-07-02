@@ -587,3 +587,36 @@
     margin: 0 auto !important;
   }
 }
+/* Cleaner Learn filters */
+.learnFilterBox {
+  max-width: 980px;
+  min-height: 0;
+  margin: 42px auto 0;
+  padding: 18px 22px;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.94);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.learnFilterBox button {
+  height: 44px;
+  padding: 0 22px;
+  border-radius: 999px;
+  font-size: 13px;
+}
+
+.learnPagination {
+  width: 100%;
+  margin: 22px auto 0;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.learnPagination button {
+  width: 46px;
+  height: 46px;
+}
