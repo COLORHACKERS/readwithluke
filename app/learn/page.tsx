@@ -134,14 +134,6 @@ export default function LearnPage() {
                   src={item.cover_url || item.image_url || "/images/6to5ratio.png"}
                   alt={item.title}
                 />
-
-                <div className="learnTileInfo">
-                  <h3>{item.title}</h3>
-                  <p>
-                    {item.description ||
-                      "A fun learning adventure from Read With Luke."}
-                  </p>
-                </div>
               </Link>
             ))}
           </div>
