@@ -107,7 +107,7 @@ export default function LearnPage() {
 
           <div className="learnScroller">
             {visibleItems.map((item) => (
-            <Link
+         <Link
   href={`/learn/${item.slug}`}
   className="learnTile"
   key={item.id}
