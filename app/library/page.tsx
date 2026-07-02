@@ -128,11 +128,6 @@ const visibleBooks = filteredBooks.slice(
                   src={book.cover_url || "/images/6to5ratio.png"}
                   alt={book.title}
                 />
-
-                <div className="bookTileInfo">
-                  <h3>{book.title}</h3>
-  
-                </div>
               </Link>
             ))}
           </div>
