@@ -130,11 +130,6 @@ const visibleBooks = filteredBooks.slice(
   alt={book.title}
 />
 
-<img
-  className="cardBookmark"
-  src="/images/RWLbookmark.png"
-  alt=""
-/>
 </Link>
             ))}
           </div>
