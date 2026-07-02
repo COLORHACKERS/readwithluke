@@ -560,18 +560,18 @@
   min-height: 0 !important;
   height: auto !important;
   display: block !important;
+  position: relative;
   overflow: hidden !important;
   border-radius: 22px;
 }
 
-.learnTile img {
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: cover !important;
-  object-position: center top !important;
-  display: block !important;
+.learnCover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
 }
-
 .learnTileInfo,
 .learnTileInfo h3,
 .learnTileInfo p {
@@ -663,4 +663,32 @@
 
 .learnPageArrow {
   background: #f2eee7 !important;
+}
+.cardBookmark {
+  position: absolute;
+  top: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90px;
+  height: auto;
+  z-index: 50;
+  pointer-events: none;
+}
+.learnTile > img:not(.cardBookmark) {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center top !important;
+  display: block !important;
+}
+
+.cardBookmark {
+  position: absolute !important;
+  top: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90px !important;
+  height: auto !important;
+  z-index: 50;
+  pointer-events: none;
 }
