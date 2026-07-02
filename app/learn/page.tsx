@@ -185,6 +185,7 @@ export default function LearnPage() {
             </button>
           </section>
         )}
+          
       </main>
 
       <Footer />
