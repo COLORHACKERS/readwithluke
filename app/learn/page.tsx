@@ -153,7 +153,7 @@ export default function LearnPage() {
             </button>
           ))}
 
-            {totalPages > 1 && (
+                   {totalPages > 1 && (
           <section className="learnPagination">
             <button
               type="button"
@@ -185,7 +185,6 @@ export default function LearnPage() {
             </button>
           </section>
         )}
-          
       </main>
 
       <Footer />
