@@ -153,20 +153,38 @@ export default function LearnPage() {
             </button>
           ))}
 
-          {totalPages > 1 && (
-            <div className="learnPagination">
-              {Array.from({ length: totalPages }, (_, index) => (
-                <button
-                  key={index}
-                  className={page === index + 1 ? "active" : ""}
-                  onClick={() => setPage(index + 1)}
-                >
-                  {index + 1}
-                </button>
-              ))}
-            </div>
-          )}
-        </section>
+        {totalPages > 1 && (
+  <section className="learnPagination">
+    <button
+      type="button"
+      className="learnPageArrow"
+      onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+      disabled={page === 1}
+    >
+      ←
+    </button>
+
+    {Array.from({ length: totalPages }, (_, index) => (
+      <button
+        type="button"
+        key={index}
+        className={page === index + 1 ? "active" : ""}
+        onClick={() => setPage(index + 1)}
+      >
+        {index + 1}
+      </button>
+    ))}
+
+    <button
+      type="button"
+      className="learnPageArrow"
+      onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+      disabled={page === totalPages}
+    >
+      →
+    </button>
+  </section>
+)}
       </main>
 
       <Footer />
