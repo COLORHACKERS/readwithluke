@@ -682,14 +682,3 @@
   display: block !important;
 }
 
-.cardBookmark {
-  position: absolute !important;
-  top: -2px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 70px !important;
-  height: auto !important;
-  z-index: 50;
-  pointer-events: none;
-  opacity: 0.85;
-}
