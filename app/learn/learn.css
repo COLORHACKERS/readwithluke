@@ -620,3 +620,47 @@
   width: 46px;
   height: 46px;
 }
+.learnFilterBox {
+  display: none !important;
+}
+
+.learnPagination {
+  position: relative;
+  z-index: 2;
+  width: fit-content;
+  margin: 34px auto 0;
+  padding: 12px 18px;
+  border-radius: 999px;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.learnPagination button {
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #ff5526;
+  font-family: "DK Woolwich", "Arial Black", sans-serif;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.learnPagination button.active {
+  background: #ff5526;
+  color: white;
+}
+
+.learnPagination button:disabled {
+  opacity: 0.25;
+  cursor: default;
+}
+
+.learnPageArrow {
+  background: #f2eee7 !important;
+}
