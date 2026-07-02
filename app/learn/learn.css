@@ -551,3 +551,39 @@
     background: #050505;
   }
 }
+/* ==========================================
+   Pinterest-style Learn Cards
+========================================== */
+
+.learnTile {
+  aspect-ratio: 2 / 3 !important;
+  min-height: 0 !important;
+  height: auto !important;
+  display: block !important;
+  overflow: hidden !important;
+  border-radius: 22px;
+}
+
+.learnTile img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center top !important;
+  display: block !important;
+}
+
+.learnTileInfo,
+.learnTileInfo h3,
+.learnTileInfo p {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  .learnTile {
+    width: 100% !important;
+    max-width: 320px !important;
+    aspect-ratio: 2 / 3 !important;
+    min-height: 0 !important;
+    margin: 0 auto !important;
+  }
+}
