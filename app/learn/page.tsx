@@ -107,16 +107,23 @@ export default function LearnPage() {
 
           <div className="learnScroller">
             {visibleItems.map((item) => (
-              <Link
-                href={`/learn/${item.slug}`}
-                className="learnTile"
-                key={item.id}
-              >
-                <img
-                  src={item.cover_url || item.image_url || "/images/6to5ratio.png"}
-                  alt={item.title}
-                />
-              </Link>
+            <Link
+  href={`/learn/${item.slug}`}
+  className="learnTile"
+  key={item.id}
+>
+  <img
+    className="learnCover"
+    src={item.cover_url || item.image_url || "/images/6to5ratio.png"}
+    alt={item.title}
+  />
+
+  <img
+    className="cardBookmark"
+    src="/images/RWLbookmark.png"
+    alt=""
+  />
+</Link>
             ))}
           </div>
         </section>
