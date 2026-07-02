@@ -476,3 +476,13 @@
     margin: 0 auto !important;
   }
 }
+.cardBookmark {
+  position: absolute;
+  top: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 84px;
+  height: auto;
+  z-index: 5;
+  pointer-events: none;
+}
