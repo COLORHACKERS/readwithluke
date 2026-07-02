@@ -123,16 +123,17 @@ const visibleBooks = filteredBooks.slice(
 
           <div className="bookScroller">
            {visibleBooks.map((book) => (
-           <Link href={`/books/${book.slug}`} className="bookTile" key={book.id}>
+       <Link href={`/books/${book.slug}`} className="bookTile" key={book.id}>
   <img
+    className="bookCover"
     src={book.cover_url || "/images/6to5ratio.png"}
     alt={book.title}
   />
 
   <img
+    className="cardBookmark"
     src="/images/RWLbookmark.png"
     alt=""
-    className="cardBookmark"
   />
 </Link>
             ))}
