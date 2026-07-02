@@ -118,11 +118,6 @@ export default function LearnPage() {
     alt={item.title}
   />
 
-  <img
-    className="cardBookmark"
-    src="/images/RWLbookmark.png"
-    alt=""
-  />
 </Link>
             ))}
           </div>
