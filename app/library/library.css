@@ -476,16 +476,7 @@
     margin: 0 auto !important;
   }
 }
-.cardBookmark {
-  position: absolute !important;
-  top: -2px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 90px !important;
-  height: auto !important;
-  z-index: 50;
-  pointer-events: none;
-}
+
 .bookTile {
   position: relative;
   overflow: hidden;
