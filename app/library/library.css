@@ -445,3 +445,34 @@
     gap: 8px;
   }
 }
+/* Pinterest-style library covers */
+.bookTile {
+  aspect-ratio: 2 / 3 !important;
+  min-height: 0 !important;
+  height: auto !important;
+  display: block !important;
+  overflow: hidden !important;
+}
+
+.bookTile img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center top !important;
+  display: block !important;
+}
+
+.bookTileInfo,
+.bookTileInfo h3,
+.bookTileInfo p {
+  display: none !important;
+}
+@media (max-width: 768px) {
+  .bookTile {
+    width: 100% !important;
+    max-width: 320px !important;
+    aspect-ratio: 2 / 3 !important;
+    min-height: 0 !important;
+    margin: 0 auto !important;
+  }
+}
