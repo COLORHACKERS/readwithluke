@@ -37,8 +37,9 @@ export default function SignupPage() {
     <main className="signupPage">
       <form className="signupCard" onSubmit={handleSignup}>
 <h1>Start Your 7-Day Free Trial!</h1>
-<p>Create your account today.
-  </b>Your paid membership begins after the trial.</p>
+<p>
+  Create your account today:) <b>Your paid membership begins after the trial.</b>
+</p>
 
         <input
           placeholder="Parent email"
