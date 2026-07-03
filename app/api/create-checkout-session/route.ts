@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 
-const launchDate = new Date("2026-09-16T00:00:00");
+const trialEnd = Math.floor(launchDate.getTime() / 1000);
 
 export async function POST(req: Request) {
   try {
@@ -15,7 +15,7 @@ export async function POST(req: Request) {
     if (!priceId) throw new Error("Missing NEXT_PUBLIC_STRIPE_PRICE_ID");
     if (!siteUrl) throw new Error("Missing NEXT_PUBLIC_SITE_URL");
     if (!userId) throw new Error("Missing userId");
-
+f
     const stripe = new Stripe(secretKey);
     const trialEnd = Math.floor(launchDate.getTime() / 1000);
 
@@ -25,9 +25,10 @@ export async function POST(req: Request) {
       payment_method_collection: "always",
       client_reference_id: userId,
       line_items: [{ price: priceId, quantity: 1 }],
-      subscription_data: {
-        trial_end: trialEnd,
-        metadata: { user_id: userId },
+    subscription_data: {
+  trial_period_days: 7,
+  metadata: { user_id: userId },
+},
       },
       metadata: { user_id: userId },
       success_url: `${siteUrl}/dashboard?checkout=success`,
