@@ -397,3 +397,17 @@
   font-family: "DK Woolwich", "Arial Black", sans-serif;
   font-size: 30px;
 }
+.coverPreview {
+  width: 220px;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+}
+
+.gatewayPreview {
+  width: 100%;
+  max-width: 640px;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 20px;
+}
