@@ -57,7 +57,7 @@ export default function SignupPage() {
           required
         />
 
-        <button type="submit">Create Account</button>
+        <button type="submit">START FREE TRIAL</button>
       </form>
     </main>
 
