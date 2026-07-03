@@ -109,10 +109,10 @@ export default function LearnPage() {
   key={item.id}
 >
   <img
-    className="learnCover"
-    src={item.cover_url || item.image_url || "/images/6to5ratio.png"}
-    alt={item.title}
-  />
+  className="learnCover"
+  src={item.cover_url || ""}
+  alt={item.title}
+/>
 
 </Link>
             ))}
