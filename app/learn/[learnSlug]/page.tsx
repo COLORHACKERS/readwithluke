@@ -37,8 +37,9 @@ export default async function LearnPreviewPage({ params }: Props) {
     .select("*", { count: "exact", head: true })
     .eq("learn_item_id", item.id);
 
-  const heroImage =
-    item.cover_url || item.image_url || "/images/6to5ratio.png";
+ const heroImage =
+  item.image_url ||
+  item.cover_url;
 
   return (
     <>
