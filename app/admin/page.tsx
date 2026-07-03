@@ -413,6 +413,23 @@ async function handleCoverUpload(file: File) {
               className="coverPreview"
             />
           )}
+          <label>Gateway Image</label>
+<input
+  type="file"
+  accept="image/*"
+  onChange={(e) => {
+    const file = e.target.files?.[0];
+    if (file) handleGatewayUpload(file);
+  }}
+/>
+
+{gatewayUrl && (
+  <img
+    src={gatewayUrl}
+    alt="Gateway preview"
+    className="gatewayPreview"
+  />
+)}
         </section>
 
         <section className="pagesGrid">
