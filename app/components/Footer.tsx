@@ -89,7 +89,6 @@ export default function Footer() {
             <img src="/images/icon-youtube.png" alt="" />
           </button>
         </div>
-      </div>
     </footer>
   );
 }
