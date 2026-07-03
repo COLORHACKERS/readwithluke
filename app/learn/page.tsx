@@ -80,10 +80,10 @@ export default function LearnPage() {
 
           {featured && (
             <Link href={`/learn/${featured.slug}`} className="featuredLearn">
-              <img
-               src={item.cover_url}
-                alt={featured.title}
-              />
+         <img
+  src={featured.cover_url || ""}
+  alt={featured.title}
+/>
 
               <div className="featuredOverlay">
                 <span>FEATURED LEARNING</span>
