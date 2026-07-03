@@ -49,25 +49,6 @@ export default function Home() {
               adventures in cinematic style.
             </p>
           </div>
-
-          <Link href="/membership" className="homeTimer">
-            <span className="launchDate">Launching 09/16/2026</span>
-
-            <h2>
-              SIGN UP AND READ FOR FREE
-              <br />
-              UNTIL OUR OFFICIAL LAUNCH IN...
-            </h2>
-
-            <div className="timerGrid">
-              <TimeUnit value={timeLeft.days} label="days" />
-              <TimeUnit value={timeLeft.hours} label="hours" />
-              <TimeUnit value={timeLeft.minutes} label="minutes" />
-              <TimeUnit value={timeLeft.seconds} label="seconds" />
-            </div>
-
-            <strong>CREATE AN ACCOUNT AND START READING!</strong>
-          </Link>
         </section>
 
         <section className="homeMarquee">
