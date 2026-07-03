@@ -13,10 +13,9 @@ export async function POST(req: Request) {
     if (!priceId) throw new Error("Missing NEXT_PUBLIC_STRIPE_PRICE_ID");
     if (!siteUrl) throw new Error("Missing NEXT_PUBLIC_SITE_URL");
     if (!userId) throw new Error("Missing userId");
-f
-    const stripe = new Stripe(secretKey);
-    const trialEnd = Math.floor(launchDate.getTime() / 1000);
 
+    const stripe = new Stripe(secretKey);
+   
     const session = await stripe.checkout.sessions.create({
       mode: "subscription",
       customer_email: email,
