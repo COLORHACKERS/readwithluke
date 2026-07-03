@@ -46,6 +46,7 @@ export default function AdminPage() {
   const [slug, setSlug] = useState("");
   const [description, setDescription] = useState("");
   const [coverUrl, setCoverUrl] = useState("");
+  const [gatewayUrl, setGatewayUrl] = useState("");
   
   const [ageRange, setAgeRange] = useState("Ages 5–8");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([
