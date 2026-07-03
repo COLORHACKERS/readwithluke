@@ -111,9 +111,10 @@
 
 .timerGrid strong {
   display: block;
-  font-family: "DK Woolwich", "Arial Black", sans-serif;
+  font-family: Impact, "Arial Black", sans-serif;
   font-size: 44px;
   line-height: 0.8;
+  letter-spacing: 1px;
 }
 
 .timerGrid span {
