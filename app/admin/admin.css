@@ -402,12 +402,11 @@
   aspect-ratio: 2 / 3;
   object-fit: cover;
 }
-
 .gatewayPreview {
   width: 100%;
-  max-width: 640px;
+  max-width: 720px;
   aspect-ratio: 16 / 9;
   object-fit: cover;
   object-position: center top;
-  border-radius: 20px;
+  border-radius: 18px;
 }
