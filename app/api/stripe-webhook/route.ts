@@ -44,8 +44,8 @@ export async function POST(req: Request) {
         .update({
           stripe_customer_id: customerId,
           stripe_subscription_id: subscriptionId,
-          membership_status: "trial",
-          trial_end: "2026-09-16T00:00:00Z",
+          membership_status: "trialing",
+trial_end: null,
         })
         .eq("id", userId);
     }
