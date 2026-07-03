@@ -69,12 +69,6 @@ export default function Footer() {
           Privacy • Terms
         </div>
 
-        <div className="footerCopyright">
-          <div className="footerCountdown">
-            FREE UNTIL LAUNCH · {timeLeft.days} DAYS · {timeLeft.hours} HRS ·{" "}
-            {timeLeft.minutes} MIN
-          </div>
-
           <div>
             Read With Luke © 2026
             <br />
