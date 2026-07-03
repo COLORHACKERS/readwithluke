@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 
-const trialEnd = Math.floor(launchDate.getTime() / 1000);
-
 export async function POST(req: Request) {
   try {
     const { userId, email } = await req.json();
