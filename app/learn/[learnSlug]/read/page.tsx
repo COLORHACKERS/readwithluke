@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import ReaderClient from "./ReaderClient";
+import LearnGate from "./LearnGate";
 import "@/app/books/[bookSlug]/read/reader.css";
 
 type Props = {
@@ -57,7 +58,8 @@ export default async function LearnReadPage({ params, searchParams }: Props) {
     item.image_url ||
     "/images/6to5ratio.png";
 
-  return (
+return (
+  <LearnGate>
     <ReaderClient
       learnSlug={item.slug}
       title={item.title}
@@ -66,5 +68,6 @@ export default async function LearnReadPage({ params, searchParams }: Props) {
       imageUrl={imageUrl}
       text={pageData.text || ""}
     />
-  );
+  </LearnGate>
+);
 }
