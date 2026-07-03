@@ -10,7 +10,8 @@ type Book = {
   title: string;
   slug: string;
   description: string | null;
-  cover_url: string | null;
+ cover_url: string | null;
+image_url: string | null;
   age_range: string | null;
   category: string | null;
   is_published: boolean;
@@ -45,6 +46,7 @@ export default function AdminPage() {
   const [slug, setSlug] = useState("");
   const [description, setDescription] = useState("");
   const [coverUrl, setCoverUrl] = useState("");
+  
   const [ageRange, setAgeRange] = useState("Ages 5–8");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([
     "Adventure",
@@ -104,6 +106,7 @@ export default function AdminPage() {
     setSlug("");
     setDescription("");
     setCoverUrl("");
+    setGatewayUrl("");
     setAgeRange("Ages 5–8");
     setSelectedCategories(["Adventure"]);
     setIsPublished(false);
@@ -136,6 +139,7 @@ export default function AdminPage() {
     setSlug(book.slug);
     setDescription(book.description || "");
     setCoverUrl(book.cover_url || "");
+    setGatewayUrl(book.image_url || "");
     setAgeRange(book.age_range || "Ages 5–8");
     setSelectedCategories(parseCategories(book.category));
     setIsPublished(book.is_published);
@@ -212,6 +216,10 @@ async function handleCoverUpload(file: File) {
   const url = await uploadImage(file, "covers");
   if (url) setCoverUrl(url);
 }
+  async function handleGatewayUpload(file: File) {
+  const url = await uploadImage(file, "gateway");
+  if (url) setGatewayUrl(url);
+}
 
   async function handlePageImageUpload(file: File, index: number) {
     const url = await uploadImage(file, "pages");
@@ -243,6 +251,7 @@ async function handleCoverUpload(file: File) {
       slug: slug.trim(),
       description,
       cover_url: coverUrl,
+      image_url: gatewayUrl,
       age_range: ageRange,
       category: selectedCategories.join(", "),
       is_published: publishNow ? true : isPublished,
