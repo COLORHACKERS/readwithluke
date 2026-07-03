@@ -1,7 +1,7 @@
 @font-face {
   font-family: "DK Woolwich";
-  src: url("/fonts/dk-woolwich.woff2") format("woff2"),
-       url("/fonts/dk-woolwich.otf") format("opentype");
+  src: url("/fonts/DK Woolwich.otf") format("woff2"),
+       url("/fonts/DK Woolwich.otf") format("opentype");
   font-weight: normal;
   font-style: normal;
 }
