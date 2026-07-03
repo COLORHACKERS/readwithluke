@@ -29,7 +29,7 @@ f
   trial_period_days: 7,
   metadata: { user_id: userId },
 },
-      },
+    
       metadata: { user_id: userId },
       success_url: `${siteUrl}/dashboard?checkout=success`,
       cancel_url: `${siteUrl}/membership?checkout=cancelled`,
