@@ -1,7 +1,5 @@
 "use client";
 
-"use client";
-
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Header from "@/app/components/Header";
@@ -38,8 +36,8 @@ export default function SignupPage() {
 
     <main className="signupPage">
       <form className="signupCard" onSubmit={handleSignup}>
-        <h1>Create Account</h1>
-        <p>Start your free trial. Billing begins after launch.</p>
+<h1>Start Your 7-Day Free Trial</h1>
+<p>Create your account today. Your paid membership begins after the trial.</p>
 
         <input
           placeholder="Parent email"
