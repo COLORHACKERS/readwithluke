@@ -26,7 +26,7 @@ export default function WelcomePage() {
                   height: "90px",
                   border: "0",
                   borderRadius: "999px",
-                  background: "#C6542D",
+                  background: "#ff5526",
                   color: "white",
                   fontFamily: '"Courier New", monospace',
                   fontSize: "24px",
