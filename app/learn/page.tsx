@@ -81,11 +81,7 @@ export default function LearnPage() {
           {featured && (
             <Link href={`/learn/${featured.slug}`} className="featuredLearn">
               <img
-                src={
-                  featured.cover_url ||
-                  featured.image_url ||
-                  "/images/6to5ratio.png"
-                }
+               src={item.cover_url}
                 alt={featured.title}
               />
 
