@@ -393,19 +393,19 @@ export default function LearnAdminPage() {
             <img src={coverUrl} alt="Cover preview" className="coverPreview" />
           )}
 
-          <label>Fallback Learn Image</label>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) => {
-              const file = e.target.files?.[0];
-              if (file) handleLearnImageUpload(file);
-            }}
-          />
+       <label>Full Screen Gateway Image</label>
+<input
+  type="file"
+  accept="image/*"
+  onChange={(e) => {
+    const file = e.target.files?.[0];
+    if (file) handleLearnImageUpload(file);
+  }}
+/>
 
-          {imageUrl && (
-            <img src={imageUrl} alt="Learn preview" className="coverPreview" />
-          )}
+{imageUrl && (
+  <img src={imageUrl} alt="Gateway preview" className="gatewayPreview" />
+)}
         </section>
 
         <section className="adminCard">
