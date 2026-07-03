@@ -126,7 +126,7 @@ const visibleBooks = filteredBooks.slice(
        <Link href={`/books/${book.slug}`} className="bookTile" key={book.id}>
 <img
   className="bookCover"
-  src={book.cover_url || "/images/6to5ratio.png"}
+  src={book.cover_url}
   alt={book.title}
 />
 
