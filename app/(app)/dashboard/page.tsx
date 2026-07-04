@@ -16,7 +16,9 @@ export default function DashboardPage() {
   const [avatar, setAvatar] = useState("🔥");
   const [favoriteTheme, setFavoriteTheme] = useState("Adventure");
 
-  const finishedCount = 0;
+  const [completedCount, setCompletedCount] = useState(0);
+  const [coins, setCoins] = useState(0);
+  const [streak, setStreak] = useState(0);
 
   useEffect(() => {
     async function loadDashboard() {
@@ -42,6 +44,47 @@ export default function DashboardPage() {
         setAvatar(child.avatar || "🔥");
         setFavoriteTheme(child.favorite_theme || "Adventure");
       }
+
+      const { data: history } = await supabase
+        .from("reading_history")
+        .select("completed_at, coins_earned")
+        .eq("user_id", user.id);
+
+      if (history) {
+        setCompletedCount(history.length);
+
+        const totalCoins = history.reduce(
+          (sum, item) => sum + (item.coins_earned || 1),
+          0
+        );
+
+        setCoins(totalCoins);
+
+        const dates = Array.from(
+          new Set(
+            history.map((item) =>
+              new Date(item.completed_at).toISOString().slice(0, 10)
+            )
+          )
+        ).sort((a, b) => b.localeCompare(a));
+
+        let currentStreak = 0;
+        const today = new Date();
+
+        for (let i = 0; i < dates.length; i++) {
+          const checkDate = new Date(today);
+          checkDate.setDate(today.getDate() - i);
+          const expected = checkDate.toISOString().slice(0, 10);
+
+          if (dates.includes(expected)) {
+            currentStreak++;
+          } else {
+            break;
+          }
+        }
+
+        setStreak(currentStreak);
+      }
     }
 
     loadDashboard();
@@ -63,11 +106,9 @@ export default function DashboardPage() {
             </h1>
 
             <p>
-              Keep reading stories, finish learnings,
+              Keep reading stories, finish learning adventures,
               <br />
-              collect rewards, and build your streak
-              <br />
-              every day.
+              collect coins, and build your streak every day.
             </p>
           </div>
 
@@ -76,18 +117,18 @@ export default function DashboardPage() {
 
             <div className="dashboardStats">
               <div className="dashboardStat">
-                <strong>{finishedCount}</strong>
-                <span>finished</span>
+                <strong>🪙 {coins}</strong>
+                <span>coins</span>
               </div>
 
               <div className="dashboardStat">
-                <strong>{avatar}</strong>
-                <span>reader</span>
+                <strong>{completedCount}</strong>
+                <span>completed</span>
               </div>
 
               <div className="dashboardStat">
-                <strong>🔥</strong>
-                <span>streak</span>
+                <strong>🔥 {streak}</strong>
+                <span>day streak</span>
               </div>
             </div>
           </div>
@@ -112,7 +153,7 @@ export default function DashboardPage() {
             <div className="dashboardCard">
               <div>
                 <h3>Rewards</h3>
-                <p>Collect stickers, badges, and reading prizes.</p>
+                <p>{avatar} Collect badges, coins, and reading prizes.</p>
               </div>
               <Link href="/rewards">View Rewards</Link>
             </div>
