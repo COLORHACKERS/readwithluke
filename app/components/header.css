@@ -92,34 +92,61 @@
   box-sizing: border-box;
 }
 
-.headerStreak {
-  background: #fff7e6;
-  border: 3px solid #e8e2d8;
-  font-size: 28px;
-  line-height: 1;
+.headerStatus {
+  height: 56px;
+  padding: 0 8px 0 18px;
+
+  background: #fff7ec;
+  border: 3px solid #ff5526;
+  border-radius: 999px;
+
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  text-decoration: none;
+  box-sizing: border-box;
+
+  transition: .2s;
 }
 
-.headerFlame {
-  display: block;
-  line-height: 1;
-  font-size: 28px;
-  width: auto;
-  height: auto;
-  background: none;
+.headerStatus:hover {
+  transform: translateY(-1px);
 }
 
-.headerStreak.active {
-  background: #ff5526;
-  border-color: #ff5526;
-}
-.headerAvatar {
-  background: #ffbd18;
-  border: 7px solid #ff5526;
+.statusItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
   color: #050505;
+
+  font-family: "Courier New", monospace;
+  font-size: 17px;
+  font-weight: 900;
+
+  white-space: nowrap;
+}
+
+.statusAvatar {
+  width: 42px;
+  height: 42px;
+
+  border-radius: 999px;
+
+  background: #ffbd18;
+  border: 5px solid #ff5526;
+
+  display: grid;
+  place-items: center;
+
+  color: #050505;
+
   font-family: "DK Woolwich", "Arial Black", sans-serif;
-  font-size: 28px;
+  font-size: 22px;
   line-height: 1;
-  font-weight: 400;
+}
+
 }
 
 .headerCount {
@@ -373,22 +400,4 @@
   text-decoration: none;
   position: relative;
   box-sizing: border-box;
-}
-
-.coinIcon {
-  display: none;
-}
-
-.coinCount {
-  width: 44px;
-  height: 44px;
-  border-radius: 999px;
-  background: #ffbd18;
-  border: 5px solid #ff8a18;
-  color: #050505;
-  display: grid;
-  place-items: center;
-  font-family: "DK Woolwich", "Arial Black", sans-serif;
-  font-size: 24px;
-  line-height: 1;
 }
