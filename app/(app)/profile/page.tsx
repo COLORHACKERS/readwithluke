@@ -20,8 +20,12 @@ export default function ProfilePage() {
   const [childId, setChildId] = useState("");
   const [readerName, setReaderName] = useState("");
   const [ageRange, setAgeRange] = useState("");
-  const [avatar, setAvatar] = useState("");
+  const [avatar, setAvatar] = useState("🐸");
   const [favoriteTheme, setFavoriteTheme] = useState("");
+
+  const [storiesRead, setStoriesRead] = useState(0);
+  const [learningRead, setLearningRead] = useState(0);
+  const [streak, setStreak] = useState(0);
 
   const [newPassword, setNewPassword] = useState("");
 
@@ -62,8 +66,49 @@ export default function ProfilePage() {
         setChildId(child.id);
         setReaderName(child.name || "");
         setAgeRange(child.age_range || "");
-        setAvatar(child.avatar || "");
+        setAvatar(child.avatar || "🐸");
         setFavoriteTheme(child.favorite_theme || "");
+      }
+
+      const { data: history } = await supabase
+        .from("reading_history")
+        .select("completed_at, books(category)")
+        .eq("user_id", user.id);
+
+      if (history) {
+        setStoriesRead(history.length);
+
+        const learningCount = history.filter((item: any) => {
+          const category = item.books?.category || "";
+          return category.toLowerCase().includes("learn");
+        }).length;
+
+        setLearningRead(learningCount);
+
+        const dates = Array.from(
+          new Set(
+            history.map((item: any) =>
+              new Date(item.completed_at).toISOString().slice(0, 10)
+            )
+          )
+        ).sort((a, b) => b.localeCompare(a));
+
+        let currentStreak = 0;
+        const today = new Date();
+
+        for (let i = 0; i < dates.length; i++) {
+          const checkDate = new Date(today);
+          checkDate.setDate(today.getDate() - i);
+          const expected = checkDate.toISOString().slice(0, 10);
+
+          if (dates.includes(expected)) {
+            currentStreak++;
+          } else {
+            break;
+          }
+        }
+
+        setStreak(currentStreak);
       }
     }
 
@@ -163,11 +208,31 @@ export default function ProfilePage() {
 
           <div className="profileSettings">
             <div className="profileTop">
-              <div className="profileAvatar">{avatar || "•"}</div>
+              <div className="profileAvatar">{avatar || "🐸"}</div>
 
               <div>
-                <h1>Profile</h1>
+                <h1>
+                  Welcome Back,{" "}
+                  {parentFirstName || readerName || "Reader"}!
+                </h1>
                 <p>Manage reader info, password, membership, and billing.</p>
+              </div>
+            </div>
+
+            <div className="readerStats">
+              <div>
+                <strong>{storiesRead}</strong>
+                <span>Stories Read</span>
+              </div>
+
+              <div>
+                <strong>{learningRead}</strong>
+                <span>Learning Adventures</span>
+              </div>
+
+              <div>
+                <strong>{streak}</strong>
+                <span>Day Streak</span>
               </div>
             </div>
 
@@ -256,6 +321,7 @@ export default function ProfilePage() {
                 <p className="planText">Current Plan: Free Trial</p>
 
                 <button onClick={openBillingPortal}>Manage Billing</button>
+
                 <button
                   className="secondaryButton"
                   onClick={() => router.push("/membership")}
