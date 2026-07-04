@@ -198,7 +198,7 @@
 @media (max-width: 1100px) {
   .mainHeader {
     width: calc(100vw - 32px);
-    grid-template-columns: 145px 1fr 120px;
+    grid-template-columns: 145px 1fr 210px;
   }
 
   .headerLogo img {
