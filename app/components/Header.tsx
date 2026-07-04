@@ -10,6 +10,7 @@ export default function Header() {
   const pathname = usePathname();
   const [initials, setInitials] = useState<string | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [coins, setCoins] = useState(0);
 
   function active(path: string) {
     if (path === "/library") {
@@ -97,6 +98,18 @@ export default function Header() {
               >
                 {initials}
               </Link>
+              <Link
+  href="/dashboard"
+  className={`headerCoins ${
+    active("/dashboard") ? "active" : ""
+  }`}
+>
+  <span className="coinIcon">🪙</span>
+
+  <span className="coinCount">
+    {coins}
+  </span>
+</Link>
             </>
           ) : (
             <div className="headerAuth">
