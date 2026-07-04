@@ -85,21 +85,25 @@
 }
 
 .headerStreak {
-  background: #ffffff;
+  background: #fff7e6;
   border: 3px solid #e8e2d8;
+  font-size: 28px;
+  line-height: 1;
 }
 
 .headerFlame {
-  width: 28px;
-  height: 28px;
   display: block;
-  background-image: url("/images/icon-fire.png");
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  font-size: 0;
+  line-height: 1;
+  font-size: 28px;
+  width: auto;
+  height: auto;
+  background: none;
 }
 
+.headerStreak.active {
+  background: #ff5526;
+  border-color: #ff5526;
+}
 .headerAvatar {
   background: #ffbd18;
   border: 7px solid #ff5526;
