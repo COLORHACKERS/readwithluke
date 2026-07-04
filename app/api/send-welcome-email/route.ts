@@ -19,9 +19,21 @@ export async function POST(req: Request) {
 
           <p>Your account has been created successfully.</p>
 
-          <p><strong>Your 7-day free trial has begun.</strong></p>
+         <p>
+  <strong>Your 7-day free trial has begun!</strong>
+</p>
 
-          <p>You're ready to discover amazing stories and learning adventures together.</p>
+<p>
+  Your payment method has been securely saved. You won't be charged during your trial.
+</p>
+
+<p>
+  Unless you cancel before your 7-day trial ends, your membership will automatically continue and your subscription payment will be processed.
+</p>
+
+<p>
+  You can manage or cancel your membership anytime from your account settings.
+</p>
 
           <p style="margin-top:32px;">
             <a
