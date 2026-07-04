@@ -81,24 +81,10 @@ export default function Header() {
         <div className="headerRight">
           {initials ? (
             <>
-            <Link href="/dashboard" className="headerStatus">
-  <div className="statusItem">
-    🔥
-    <span>{streak}</span>
-  </div>
-
-  <div className="statusDivider" />
-
-  <div className="statusItem">
-    🪙
-    <span>{coins}</span>
-  </div>
-
-  <div className="statusDivider" />
-
-  <div className="statusAvatar">
-    {initials}
-  </div>
+<Link href="/dashboard" className="headerStatus">
+  <span className="statusItem">🔥 0</span>
+  <span className="statusItem">🪙 0</span>
+  <span className="statusAvatar">{initials}</span>
 </Link>
             </>
           ) : (
