@@ -1,18 +1,17 @@
 .profilePage {
   width: 100%;
-  max-width: 1440px;
-  margin: 0 auto;
-  background: white;
+  min-height: 100vh;
+  background: #050505;
   color: #050505;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 .profileHero {
-  min-height: 1020px;
   position: relative;
-  overflow: hidden;
-  padding: 120px 50px;
+  min-height: 100vh;
+  padding: 120px 46px 80px;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 .profileBg {
@@ -21,14 +20,27 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center top;
+  z-index: 0;
+}
+
+.profileHero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.18);
+  z-index: 1;
 }
 
 .profileSettings {
   position: relative;
-  z-index: 3;
-  background: white;
+  z-index: 2;
+  max-width: 1368px;
+  margin: 0 auto;
+  background: #ffffff;
   border-radius: 34px;
   padding: 42px;
+  box-sizing: border-box;
 }
 
 .profileTop {
@@ -45,9 +57,7 @@
   background: #ff5526;
   display: grid;
   place-items: center;
-  font-family: "Courier New", monospace;
-  font-size: 28px;
-  font-weight: 900;
+  font-size: 38px;
 }
 
 .profileTop h1,
@@ -66,6 +76,38 @@
   font-family: "Courier New", monospace;
   font-size: 18px;
   font-weight: 700;
+}
+
+.readerStats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-bottom: 34px;
+}
+
+.readerStats div {
+  background: #ff5526;
+  color: white;
+  border-radius: 28px;
+  padding: 26px;
+  text-align: center;
+}
+
+.readerStats strong {
+  display: block;
+  font-size: 44px;
+  line-height: 1;
+  font-family: "DK Woolwich", "Arial Black", sans-serif;
+}
+
+.readerStats span {
+  display: block;
+  margin-top: 10px;
+  font-family: "Courier New", monospace;
+  font-size: 15px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .04em;
 }
 
 .settingsGrid {
@@ -93,29 +135,42 @@
   font-weight: 900;
 }
 
-.settingsCard input {
+.settingsCard input,
+.settingsCard select {
   width: 100%;
-  height: 48px;
+  height: 52px;
   border: 0;
   border-radius: 999px;
   padding: 0 18px;
   box-sizing: border-box;
+  background: white;
   font-family: "Courier New", monospace;
   font-size: 16px;
   font-weight: 700;
 }
 
+.settingsCard input:focus,
+.settingsCard select:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(255, 85, 38, 0.18);
+}
+
 .settingsCard button {
-  margin-top: 20px;
+  margin-top: 22px;
   border: 0;
   border-radius: 999px;
   background: #ff5526;
   color: white;
-  padding: 14px 22px;
+  padding: 14px 24px;
   font-family: "Courier New", monospace;
   font-size: 14px;
   font-weight: 900;
   cursor: pointer;
+  transition: .2s;
+}
+
+.settingsCard button:hover {
+  transform: translateY(-2px);
 }
 
 .secondaryButton {
@@ -123,62 +178,66 @@
   margin-left: 10px;
 }
 
+.logoutButton {
+  margin-top: 24px !important;
+  background: #050505 !important;
+}
+
 .planText {
   font-family: "Courier New", monospace;
   font-size: 18px;
   font-weight: 900;
 }
-.settingsCard select {
-  width: 100%;
-  height: 48px;
-  border: 0;
-  border-radius: 999px;
-  padding: 0 18px;
-  box-sizing: border-box;
-  font-family: "Courier New", monospace;
-  font-size: 16px;
-  font-weight: 700;
-  background: white;
-}
 
-.logoutButton {
-  margin-top: 24px !important;
-  background: #050505 !important;
-}
-.profileCard input,
-.profileCard select {
-  width: 100%;
-  height: 62px;
-  padding: 0 24px;
+@media (max-width: 1100px) {
+  .profileTop h1 {
+    font-size: 52px;
+  }
 
-  background: #ffffff;
-  border: 2px solid #ffffff;
-  border-radius: 999px;
-
-  font-size: 24px;
-  font-family: inherit;
-  color: #111;
-
-  outline: none;
-  transition: 0.2s;
-}
-
-.profileCard input:focus,
-.profileCard select:focus {
-  border-color: #ff5a26;
-  box-shadow: 0 0 0 4px rgba(255, 90, 38, 0.15);
-}
-
-@media (max-width: 900px) {
-  .settingsGrid {
+  .readerStats {
     grid-template-columns: 1fr;
   }
 
+  .settingsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .profileHero {
+    padding: 92px 18px 32px;
+  }
+
+  .profileSettings {
+    padding: 24px;
+    border-radius: 22px;
+  }
+
   .profileTop {
-    align-items: flex-start;
+    flex-direction: column;
+    text-align: center;
+    gap: 18px;
   }
 
   .profileTop h1 {
-    font-size: 48px;
+    font-size: 40px;
+  }
+
+  .profileTop p {
+    font-size: 15px;
+  }
+
+  .profileAvatar {
+    width: 72px;
+    height: 72px;
+    font-size: 32px;
+  }
+
+  .readerStats strong {
+    font-size: 36px;
+  }
+
+  .settingsCard h2 {
+    font-size: 28px;
   }
 }
