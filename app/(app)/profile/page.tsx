@@ -219,22 +219,22 @@ export default function ProfilePage() {
               </div>
             </div>
 
-            <div className="readerStats">
-              <div>
-                <strong>{storiesRead}</strong>
-                <span>Stories Read</span>
-              </div>
+          <div className="readerStats">
+  <div>
+    <strong>{storiesRead}</strong>
+    <span>Stories Read</span>
+  </div>
 
-              <div>
-                <strong>{learningRead}</strong>
-                <span>Learning Adventures</span>
-              </div>
+  <div>
+    <strong>{learningRead}</strong>
+    <span>Learning Adventures</span>
+  </div>
 
-              <div>
-                <strong>{streak}</strong>
-                <span>Day Streak</span>
-              </div>
-            </div>
+  <div>
+    <strong>{streak}</strong>
+    <span>Day Streak</span>
+  </div>
+</div>
 
             <div className="settingsGrid">
               <section className="settingsCard">
