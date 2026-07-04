@@ -98,17 +98,9 @@ export default function Header() {
               >
                 {initials}
               </Link>
-              <Link
-  href="/dashboard"
-  className={`headerCoins ${
-    active("/dashboard") ? "active" : ""
-  }`}
->
+             <Link href="/dashboard" className="headerCoins">
   <span className="coinIcon">🪙</span>
-
-  <span className="coinCount">
-    {coins}
-  </span>
+  <span className="coinCount">{coins}</span>
 </Link>
             </>
           ) : (
