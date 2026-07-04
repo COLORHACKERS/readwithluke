@@ -108,4 +108,8 @@ export default function SignupPage() {
       <Footer />
     </>
   );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 2bc7881 (Send signup users to Stripe checkout)
