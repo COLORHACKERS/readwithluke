@@ -1,28 +1,28 @@
 .mainHeader {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-
-  width: 100%;
-  max-width: none;
+  width: min(calc(100vw - 72px), 1368px);
   height: 72px;
 
-  margin: 0;
-  padding: 0 46px;
+  margin: 0 auto;
+
+  background: #ffffff;
+
+  border-radius: 0 0 24px 24px;
 
   display: grid;
   grid-template-columns: 210px 1fr 130px;
   align-items: center;
 
-  background: rgba(255,255,255,.96);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  padding: 0 26px;
+  box-sizing: border-box;
 
-  border-bottom: 1px solid rgba(0,0,0,.08);
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0;
 
   z-index: 1000;
-  box-sizing: border-box;
+
+  box-shadow: 0 8px 30px rgba(0,0,0,.08);
 }
 .headerLogo {
   height: 72px;
