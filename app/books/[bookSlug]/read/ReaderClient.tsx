@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import LikeButton from "@/app/components/LikeButton";
+import { supabase } from "@/lib/supabase";
 
 type Props = {
   bookId: string;
@@ -25,6 +26,36 @@ export default function ReaderClient({
 }: Props) {
   const router = useRouter();
   const progress = Math.max(4, Math.min((pageNumber / totalPages) * 100, 100));
+  const isLastPage = pageNumber === totalPages;
+
+  async function finishBook() {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      router.push("/signup");
+      return;
+    }
+
+    const { error } = await supabase.from("reading_history").upsert(
+      {
+        user_id: user.id,
+        book_id: bookId,
+        coins_earned: 1,
+      },
+      {
+        onConflict: "user_id,book_id",
+      }
+    );
+
+    if (error) {
+      alert(error.message);
+      return;
+    }
+
+    router.push("/profile");
+  }
 
   async function shareBook() {
     const shareUrl = `${window.location.origin}/books/${bookSlug}/read?page=${pageNumber}`;
@@ -120,11 +151,11 @@ export default function ReaderClient({
           </details>
         </div>
 
-      <div className="readerStoryText">
-  <h1>{title.toUpperCase()}</h1>
-  <p>{text || "This page is waiting for an adventure..."}</p>
-  <div className="readerScrollHint">⌄</div>
-</div>
+        <div className="readerStoryText">
+          <h1>{title.toUpperCase()}</h1>
+          <p>{text || "This page is waiting for an adventure..."}</p>
+          <div className="readerScrollHint">⌄</div>
+        </div>
 
         <div className="readerControls">
           <button
@@ -135,14 +166,24 @@ export default function ReaderClient({
             <img src="/images/icon-arrow-left.png" alt="" />
           </button>
 
-          <button type="button" className="readerReadAloud">
-            READ ALOUD
-          </button>
+          {isLastPage ? (
+            <button
+              type="button"
+              className="readerFinishButton"
+              onClick={finishBook}
+            >
+              FINISH +1 🪙
+            </button>
+          ) : (
+            <button type="button" className="readerReadAloud">
+              READ ALOUD
+            </button>
+          )}
 
           <button
             type="button"
             onClick={goNext}
-            className={pageNumber === totalPages ? "disabledCircle" : ""}
+            className={isLastPage ? "disabledCircle" : ""}
           >
             <img src="/images/icon-arrow-right.png" alt="" />
           </button>
