@@ -32,9 +32,21 @@ async function sendWelcomeEmail({
 
         <p>Your account has been created successfully.</p>
 
-        <p><strong>Your 7-day free trial has begun.</strong></p>
+        <p>
+  <strong>Your 7-day free trial has officially begun! 🎉</strong>
+</p>
 
-        <p>You're ready to discover amazing stories and learning adventures together.</p>
+<p>
+  Your family now has unlimited access to the Read With Luke library, filled with beautifully illustrated stories and learning adventures.
+</p>
+
+<p>
+  <strong>Your payment method has been securely saved, but you will not be charged during your free trial.</strong>
+</p>
+
+<p>
+  Unless you cancel before your 7-day trial ends, your membership will automatically continue at <strong>$9.99 per month</strong>. You can cancel anytime from your account settings.
+</p>
 
         <p style="margin-top:32px;">
           <a
@@ -54,9 +66,13 @@ async function sendWelcomeEmail({
 
         <hr style="margin:40px 0;border:none;border-top:1px solid #ddd;">
 
-        <p style="color:#666;font-size:14px;">
-          Thanks for joining the adventure! 📚
-        </p>
+       <p style="color:#666;font-size:14px;line-height:1.6;">
+  We're excited to have your family reading with us.
+  <br /><br />
+  Happy Reading! 📚
+  <br />
+  <strong>The Read With Luke Team</strong>
+</p>
       </div>
     `,
   });
