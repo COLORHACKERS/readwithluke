@@ -10,10 +10,11 @@ type Props = {
 export default function LikeButton({ bookId }: Props) {
   const [liked, setLiked] = useState(false);
   const [likes, setLikes] = useState(0);
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     loadLike();
-  }, []);
+  }, [bookId]);
 
   async function loadLike() {
     const {
@@ -40,48 +41,61 @@ export default function LikeButton({ bookId }: Props) {
   }
 
   async function toggleLike() {
+    if (saving) return;
+
+    setSaving(true);
+
     const {
       data: { user },
     } = await supabase.auth.getUser();
 
     if (!user) {
+      setSaving(false);
       alert("Please sign in.");
       return;
     }
 
     if (liked) {
-      await supabase
+      const { error } = await supabase
         .from("book_likes")
         .delete()
         .eq("book_id", bookId)
         .eq("user_id", user.id);
 
-      setLiked(false);
-      setLikes((v) => Math.max(v - 1, 0));
+      if (!error) {
+        setLiked(false);
+        setLikes((v) => Math.max(v - 1, 0));
+      }
     } else {
-      await supabase.from("book_likes").insert({
-        book_id: bookId,
-        user_id: user.id,
-      });
+      const { error } = await supabase.from("book_likes").upsert(
+        {
+          book_id: bookId,
+          user_id: user.id,
+        },
+        {
+          onConflict: "user_id,book_id",
+        }
+      );
 
-      setLiked(true);
-      setLikes((v) => v + 1);
+      if (!error) {
+        setLiked(true);
+        setLikes((v) => v + 1);
+      }
     }
+
+    setSaving(false);
   }
 
-return (
-  <button
-    type="button"
-    onClick={toggleLike}
-    className="likeButton"
-    aria-label="Like story"
-  >
-    <img
-      src="/images/heart-like.png"
-      alt="Like"
-    />
-
-    <span>{likes}</span>
-  </button>
-);
+  return (
+    <button
+      type="button"
+      onClick={toggleLike}
+      className={`likeButton ${liked ? "liked" : ""}`}
+      aria-label={liked ? "Unlike story" : "Like story"}
+      disabled={saving}
+    >
+      <img src="/images/heart-like.png" alt="" />
+      <span>{likes}</span>
+    </button>
+  );
 }
