@@ -98,8 +98,7 @@ export default function Header() {
               >
                 {initials}
               </Link>
-             <Link href="/dashboard" className="headerCoins">
-  <span className="coinIcon">🪙</span>
+          <Link href="/dashboard" className="headerCoins">
   <span className="coinCount">{coins}</span>
 </Link>
             </>
