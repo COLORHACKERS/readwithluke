@@ -748,3 +748,15 @@ body {
     gap: 14px;
   }
 }
+.readerFinishButton {
+  border: 0;
+  border-radius: 999px;
+  background: #ff5526;
+  color: white;
+  padding: 0 26px;
+  height: 52px;
+  font-family: "Courier New", monospace;
+  font-size: 15px;
+  font-weight: 900;
+  cursor: pointer;
+}
