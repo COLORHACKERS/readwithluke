@@ -37,7 +37,33 @@
   gap: 12px;
   align-items: center;
 }
+.readerTopActions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: white;
+  border-radius: 999px;
+  padding: 6px;
+  width: fit-content;
+}
 
+.readerTopActions button,
+.readerTopActions .likeButton {
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 999px;
+  background: #ff5526;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.readerTopActions img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
 .readerMiniBtn {
   height: 42px;
   border-radius: 999px;
