@@ -103,17 +103,17 @@ export default function ReaderClient({
             LIBRARY
           </Link>
 
-          <div className="readerTopIcons">
-            <LikeButton bookId={bookId} />
+         <div className="readerTopActions">
+  <LikeButton bookId={bookId} />
 
-            <button type="button">
-              <img src="/images/bookmark.png" alt="Save" />
-            </button>
+  <button type="button" aria-label="Bookmark">
+    <img src="/images/bookmark.png" alt="" />
+  </button>
 
-            <button type="button" onClick={shareBook}>
-              <img src="/images/share.png" alt="Share" />
-            </button>
-          </div>
+  <button type="button" onClick={shareBook} aria-label="Share">
+    <img src="/images/share.png" alt="" />
+  </button>
+</div>
         </div>
 
         <div className="readerHeaderRow">
