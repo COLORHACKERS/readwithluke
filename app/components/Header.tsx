@@ -81,25 +81,24 @@ export default function Header() {
         <div className="headerRight">
           {initials ? (
             <>
-              <Link
-                href="/dashboard"
-                className={`headerStreak ${
-                  active("/dashboard") ? "active" : ""
-                }`}
-              >
-                <span className="headerFlame">🔥</span>
-              </Link>
+            <Link href="/dashboard" className="headerStatus">
+  <div className="statusItem">
+    🔥
+    <span>{streak}</span>
+  </div>
 
-              <Link
-                href="/profile"
-                className={`headerAvatar ${
-                  active("/profile") ? "active" : ""
-                }`}
-              >
-                {initials}
-              </Link>
-          <Link href="/dashboard" className="headerCoins">
-  <span className="coinCount">{coins}</span>
+  <div className="statusDivider" />
+
+  <div className="statusItem">
+    🪙
+    <span>{coins}</span>
+  </div>
+
+  <div className="statusDivider" />
+
+  <div className="statusAvatar">
+    {initials}
+  </div>
 </Link>
             </>
           ) : (
