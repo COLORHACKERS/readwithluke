@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
@@ -33,6 +34,9 @@ export default function ReaderClient({
   );
 
   const isLastPage = pageNumber === totalPages;
+  useEffect(() => {
+  saveProgress();
+}, [pageNumber]);
 
   async function finishBook() {
     const {
@@ -62,7 +66,25 @@ export default function ReaderClient({
 
     router.push("/dashboard");
   }
+async function saveProgress() {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
+  if (!user) return;
+
+  await supabase.from("book_bookmarks").upsert(
+    {
+      user_id: user.id,
+      book_id: bookId,
+      page_number: pageNumber,
+      updated_at: new Date().toISOString(),
+    },
+    {
+      onConflict: "user_id,book_id",
+    }
+  );
+}
   async function shareBook() {
     const shareUrl = `${window.location.origin}/books/${bookSlug}/read?page=${pageNumber}`;
 
