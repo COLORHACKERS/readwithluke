@@ -130,7 +130,7 @@ export default function Header() {
   <Link href="/dashboard" className="statusItem">
     🪙 {coins}
   </Link>
-
+ ) : (
   <Link href="/profile" className="statusAvatar">
     {initials}
   </Link>
