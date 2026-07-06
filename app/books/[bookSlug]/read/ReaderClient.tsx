@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import LikeButton from "@/app/components/LikeButton";
+import BookmarkButton from "@/app/components/BookmarkButton";
 
 type Props = {
   bookId: string;
@@ -111,9 +112,7 @@ export default function ReaderClient({
           <div className="readerTopActions">
             <LikeButton bookId={bookId} />
 
-            <button type="button" aria-label="Bookmark">
-              <img src="/images/bookmark.png" alt="" />
-            </button>
+           <BookmarkButton bookId={bookId} pageNumber={pageNumber} />
 
             <button
               type="button"
