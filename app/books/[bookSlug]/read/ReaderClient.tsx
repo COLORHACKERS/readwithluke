@@ -2,12 +2,9 @@
 
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import LikeButton from "@/app/components/LikeButton";
-import { supabase } from "@/lib/supabase";
 
 type Props = {
-  bookId: string;
-  bookSlug: string;
+  learnSlug: string;
   title: string;
   pageNumber: number;
   totalPages: number;
