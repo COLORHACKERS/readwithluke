@@ -40,6 +40,7 @@ export default async function BookPreviewPage({ params }: Props) {
 
 const heroImage =
   book.hero_url ||
+  book.hero_image_url ||
   book.cover_url ||
   "/images/6to5ratio.png";
 
