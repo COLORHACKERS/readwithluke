@@ -229,9 +229,8 @@ async function handleGatewayUpload(file: File) {
   }
 
   setGatewayUrl(url);
-  setMessage("Gateway image uploaded. Click Save Draft or Publish Book.");
+  setMessage("Gateway image uploaded. Now click Save Draft or Publish Book.");
 }
-
   async function handlePageImageUpload(file: File, index: number) {
     const url = await uploadImage(file, "pages");
     if (!url) return;
