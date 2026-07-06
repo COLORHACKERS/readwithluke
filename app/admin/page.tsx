@@ -20,8 +20,7 @@ hero_url: string | null;
 type BookPage = {
   page_number: number;
   text: string;
-  hero_url: string | null;
-hero_image_url: string | null;
+  image_url: string;
 };
 
 const emptyPages: BookPage[] = Array.from({ length: 20 }, (_, index) => ({
