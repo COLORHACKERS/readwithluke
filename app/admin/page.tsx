@@ -261,7 +261,7 @@ async function handleGatewayUpload(file: File) {
       slug: slug.trim(),
       description,
       cover_url: coverUrl,
-      hero_url: gatewayUrl,
+      hero_url: gatewayUrl || null,
       age_range: ageRange,
       category: selectedCategories.join(", "),
       is_published: publishNow ? true : isPublished,
