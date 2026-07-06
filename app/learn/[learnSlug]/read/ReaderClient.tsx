@@ -60,34 +60,29 @@ export default function ReaderClient({
       </section>
 
       <aside className="readerPanel">
-        <div className="readerDesktopTopBar">
-          <details className="readerMenu readerMenuAlways">
-            <summary>MENU</summary>
+       <div className="readerDesktopTopBar">
+  <Link href="/" className="readerMiniBtn">
+    HOME
+  </Link>
 
-            <div className="readerMenuPanel">
-              <Link href="/">Home</Link>
-              <Link href="/learn">Learn</Link>
-              <Link href="/library">Library</Link>
-              <Link href="/dashboard">Dashboard</Link>
-            </div>
-          </details>
+  <Link href="/learn" className="readerMiniBtn">
+    BACK TO LEARN
+  </Link>
 
-          <div />
+  <div className="readerTopActions">
+    <button type="button" aria-label="Favorite">
+      <img src="/images/heart.png" alt="" />
+    </button>
 
-          <div className="readerTopActions">
-            <button type="button" aria-label="Favorite">
-              <img src="/images/heart.png" alt="" />
-            </button>
+    <button type="button" aria-label="Bookmark">
+      <img src="/images/bookmark.png" alt="" />
+    </button>
 
-            <button type="button" aria-label="Bookmark">
-              <img src="/images/bookmark.png" alt="" />
-            </button>
-
-            <button type="button" onClick={shareLearn} aria-label="Share">
-              <img src="/images/share.png" alt="" />
-            </button>
-          </div>
-        </div>
+    <button type="button" onClick={shareLearn} aria-label="Share">
+      <img src="/images/share.png" alt="" />
+    </button>
+  </div>
+</div>
 
         <div className="readerHeaderRow">
           <div className="readerProgressRow">
