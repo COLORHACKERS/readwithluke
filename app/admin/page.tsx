@@ -257,7 +257,7 @@ async function handleCoverUpload(file: File) {
       category: selectedCategories.join(", "),
       is_published: publishNow ? true : isPublished,
     };
-
+console.log("BOOK PAYLOAD:", bookPayload);
     let bookId = editingId;
 
     if (editingId) {
