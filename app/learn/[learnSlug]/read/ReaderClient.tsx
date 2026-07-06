@@ -60,29 +60,29 @@ export default function ReaderClient({
       </section>
 
       <aside className="readerPanel">
-       <div className="readerDesktopTopBar">
-  <Link href="/" className="readerMiniBtn">
-    HOME
-  </Link>
+        <div className="readerDesktopTopBar">
+          <Link href="/" className="readerMiniBtn">
+            HOME
+          </Link>
 
-  <Link href="/learn" className="readerMiniBtn">
-    BACK TO LEARN
-  </Link>
+          <Link href="/learn" className="readerMiniBtn">
+            BACK TO LEARN
+          </Link>
 
-  <div className="readerTopActions">
-    <button type="button" aria-label="Favorite">
-      <img src="/images/heart.png" alt="" />
-    </button>
+          <div className="readerTopActions">
+            <button type="button" aria-label="Favorite">
+              <img src="/images/heart.png" alt="" />
+            </button>
 
-    <button type="button" aria-label="Bookmark">
-      <img src="/images/bookmark.png" alt="" />
-    </button>
+            <button type="button" aria-label="Bookmark">
+              <img src="/images/bookmark.png" alt="" />
+            </button>
 
-    <button type="button" onClick={shareLearn} aria-label="Share">
-      <img src="/images/share.png" alt="" />
-    </button>
-  </div>
-</div>
+            <button type="button" onClick={shareLearn} aria-label="Share">
+              <img src="/images/share.png" alt="" />
+            </button>
+          </div>
+        </div>
 
         <div className="readerHeaderRow">
           <div className="readerProgressRow">
@@ -94,31 +94,6 @@ export default function ReaderClient({
               <i style={{ width: `${progress}%` }} />
             </div>
           </div>
-
-         <Link href="/" className="readerMiniBtn">
-  HOME
-</Link>
-
-<Link href="/learn" className="readerMiniBtn">
-  BACK TO LEARN
-</Link>
-
-              <button type="button">
-                <img src="/images/heart.png" alt="" />
-                Favorite
-              </button>
-
-              <button type="button">
-                <img src="/images/bookmark.png" alt="" />
-                Save
-              </button>
-
-              <button type="button" onClick={shareLearn}>
-                <img src="/images/share.png" alt="" />
-                Share
-              </button>
-            </div>
-          </details>
         </div>
 
         <div className="readerStoryText">
