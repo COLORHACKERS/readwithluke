@@ -11,7 +11,7 @@ type Book = {
   slug: string;
   description: string | null;
  cover_url: string | null;
-image_url: string | null;
+hero_url: string | null;
   age_range: string | null;
   category: string | null;
   is_published: boolean;
@@ -140,7 +140,7 @@ export default function AdminPage() {
     setSlug(book.slug);
     setDescription(book.description || "");
     setCoverUrl(book.cover_url || "");
-    setGatewayUrl(book.image_url || "");
+    setGatewayUrl(book.hero_url || "");
     setAgeRange(book.age_range || "Ages 5–8");
     setSelectedCategories(parseCategories(book.category));
     setIsPublished(book.is_published);
@@ -252,7 +252,7 @@ async function handleCoverUpload(file: File) {
       slug: slug.trim(),
       description,
       cover_url: coverUrl,
-      image_url: gatewayUrl,
+      hero_url: gatewayUrl,
       age_range: ageRange,
       category: selectedCategories.join(", "),
       is_published: publishNow ? true : isPublished,
