@@ -288,12 +288,19 @@ async function handleCoverUpload(file: File) {
       setEditingId(data.id);
     }
 
-    const pagesToSave = pages.map((page) => ({
-      book_id: bookId,
-      page_number: page.page_number,
-      text: page.text,
-      image_url: page.image_url,
-    }));
+  const pagesToSave = pages
+  .filter((page) => page.text.trim() || page.image_url.trim())
+  .map((page) => ({
+    book_id: bookId,
+    page_number: page.page_number,
+    text: page.text || "",
+    image_url: page.image_url || "",
+  }));
+    if (pagesToSave.length === 0) {
+  alert("Please add at least one page image or text.");
+  setSaving(false);
+  return;
+}
 
     const { error: pagesError } = await supabase
       .from("book_pages")
