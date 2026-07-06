@@ -469,3 +469,10 @@
 .readerMenuAlways {
   display: block;
 }
+.bookmarkButton.bookmarked {
+  background: #ffbd18;
+}
+
+.bookmarkButton.bookmarked img {
+  transform: scale(1.12);
+}
