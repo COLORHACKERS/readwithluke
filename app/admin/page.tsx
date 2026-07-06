@@ -20,7 +20,8 @@ hero_url: string | null;
 type BookPage = {
   page_number: number;
   text: string;
-  image_url: string;
+  hero_url: string | null;
+hero_image_url: string | null;
 };
 
 const emptyPages: BookPage[] = Array.from({ length: 20 }, (_, index) => ({
@@ -140,7 +141,7 @@ export default function AdminPage() {
     setSlug(book.slug);
     setDescription(book.description || "");
     setCoverUrl(book.cover_url || "");
-    setGatewayUrl(book.hero_url || "");
+    setGatewayUrl(book.hero_url || book.hero_image_url || "");
     setAgeRange(book.age_range || "Ages 5–8");
     setSelectedCategories(parseCategories(book.category));
     setIsPublished(book.is_published);
@@ -261,7 +262,8 @@ async function handleGatewayUpload(file: File) {
       slug: slug.trim(),
       description,
       cover_url: coverUrl,
-      hero_url: gatewayUrl || null,
+     hero_url: gatewayUrl || null,
+hero_image_url: gatewayUrl || null,
       age_range: ageRange,
       category: selectedCategories.join(", "),
       is_published: publishNow ? true : isPublished,
