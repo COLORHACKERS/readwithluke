@@ -122,21 +122,19 @@ export default function Header() {
 
         <div className="headerRight">
           {initials ? (
-            <Link href="/dashboard" className="headerStatus">
-              <span className="statusItem">🔥 {streak}</span>
-              <span className="statusItem">🪙 {coins}</span>
-              <span className="statusAvatar">{initials}</span>
-            </Link>
-          ) : (
-            <div className="headerAuth">
-              <Link href="/login" className="headerLogin">
-                LOGIN
-              </Link>
+         <div className="headerStatus">
+  <Link href="/dashboard" className="statusItem">
+    🔥 {streak}
+  </Link>
 
-              <Link href="/signup" className="headerSignup">
-                JOIN
-              </Link>
-            </div>
+  <Link href="/dashboard" className="statusItem">
+    🪙 {coins}
+  </Link>
+
+  <Link href="/profile" className="statusAvatar">
+    {initials}
+  </Link>
+</div>
           )}
 
           <button
