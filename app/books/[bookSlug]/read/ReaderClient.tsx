@@ -13,8 +13,7 @@ type Props = {
 };
 
 export default function ReaderClient({
-  bookId,
-  bookSlug,
+  learnSlug,
   title,
   pageNumber,
   totalPages,
@@ -23,45 +22,15 @@ export default function ReaderClient({
 }: Props) {
   const router = useRouter();
   const progress = Math.max(4, Math.min((pageNumber / totalPages) * 100, 100));
-  const isLastPage = pageNumber === totalPages;
 
-  async function finishBook() {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    if (!user) {
-      router.push("/signup");
-      return;
-    }
-
-    const { error } = await supabase.from("reading_history").upsert(
-      {
-        user_id: user.id,
-        book_id: bookId,
-        coins_earned: 1,
-      },
-      {
-        onConflict: "user_id,book_id",
-      }
-    );
-
-    if (error) {
-      alert(error.message);
-      return;
-    }
-
-    router.push("/profile");
-  }
-
-  async function shareBook() {
-    const shareUrl = `${window.location.origin}/books/${bookSlug}/read?page=${pageNumber}`;
+  async function shareLearn() {
+    const shareUrl = `${window.location.origin}/learn/${learnSlug}/read?page=${pageNumber}`;
 
     if (navigator.share) {
       try {
         await navigator.share({
           title,
-          text: `Read "${title}" with me on Read With Luke!`,
+          text: `Learn "${title}" with me on Read With Luke!`,
           url: shareUrl,
         });
         return;
@@ -74,13 +43,13 @@ export default function ReaderClient({
 
   function goBack() {
     if (pageNumber > 1) {
-      router.push(`/books/${bookSlug}/read?page=${pageNumber - 1}`);
+      router.push(`/learn/${learnSlug}/read?page=${pageNumber - 1}`);
     }
   }
 
   function goNext() {
     if (pageNumber < totalPages) {
-      router.push(`/books/${bookSlug}/read?page=${pageNumber + 1}`);
+      router.push(`/learn/${learnSlug}/read?page=${pageNumber + 1}`);
     }
   }
 
@@ -92,25 +61,32 @@ export default function ReaderClient({
 
       <aside className="readerPanel">
         <div className="readerDesktopTopBar">
-          <Link href="/" className="readerMiniBtn">
-            HOME
-          </Link>
+          <details className="readerMenu readerMenuAlways">
+            <summary>MENU</summary>
 
-          <Link href="/library" className="readerMiniBtn">
-            LIBRARY
-          </Link>
+            <div className="readerMenuPanel">
+              <Link href="/">Home</Link>
+              <Link href="/learn">Learn</Link>
+              <Link href="/library">Library</Link>
+              <Link href="/dashboard">Dashboard</Link>
+            </div>
+          </details>
 
-         <div className="readerTopActions">
-  <LikeButton bookId={bookId} />
+          <div />
 
-  <button type="button" aria-label="Bookmark">
-    <img src="/images/bookmark.png" alt="" />
-  </button>
+          <div className="readerTopActions">
+            <button type="button" aria-label="Favorite">
+              <img src="/images/heart.png" alt="" />
+            </button>
 
-  <button type="button" onClick={shareBook} aria-label="Share">
-    <img src="/images/share.png" alt="" />
-  </button>
-</div>
+            <button type="button" aria-label="Bookmark">
+              <img src="/images/bookmark.png" alt="" />
+            </button>
+
+            <button type="button" onClick={shareLearn} aria-label="Share">
+              <img src="/images/share.png" alt="" />
+            </button>
+          </div>
         </div>
 
         <div className="readerHeaderRow">
@@ -125,22 +101,25 @@ export default function ReaderClient({
           </div>
 
           <details className="readerMenu">
-            <summary>☰</summary>
+            <summary>MENU</summary>
 
             <div className="readerMenuPanel">
               <Link href="/">Home</Link>
+              <Link href="/learn">Learn</Link>
               <Link href="/library">Library</Link>
+              <Link href="/dashboard">Dashboard</Link>
 
-              <div className="readerMenuLike">
-                <LikeButton bookId={bookId} />
-              </div>
+              <button type="button">
+                <img src="/images/heart.png" alt="" />
+                Favorite
+              </button>
 
               <button type="button">
                 <img src="/images/bookmark.png" alt="" />
                 Save
               </button>
 
-              <button type="button" onClick={shareBook}>
+              <button type="button" onClick={shareLearn}>
                 <img src="/images/share.png" alt="" />
                 Share
               </button>
@@ -150,8 +129,7 @@ export default function ReaderClient({
 
         <div className="readerStoryText">
           <h1>{title.toUpperCase()}</h1>
-          <p>{text || "This page is waiting for an adventure..."}</p>
-          <div className="readerScrollHint">⌄</div>
+          <p>{text || "This learning page is waiting for something awesome..."}</p>
         </div>
 
         <div className="readerControls">
@@ -163,24 +141,14 @@ export default function ReaderClient({
             <img src="/images/icon-arrow-left.png" alt="" />
           </button>
 
-          {isLastPage ? (
-            <button
-              type="button"
-              className="readerFinishButton"
-              onClick={finishBook}
-            >
-              FINISH +1 🪙
-            </button>
-          ) : (
-            <button type="button" className="readerReadAloud">
-              READ ALOUD
-            </button>
-          )}
+          <button type="button" className="readerReadAloud">
+            READ ALOUD
+          </button>
 
           <button
             type="button"
             onClick={goNext}
-            className={isLastPage ? "disabledCircle" : ""}
+            className={pageNumber === totalPages ? "disabledCircle" : ""}
           >
             <img src="/images/icon-arrow-right.png" alt="" />
           </button>
