@@ -219,18 +219,31 @@ async function handleCoverUpload(file: File) {
   if (url) setCoverUrl(url);
 }
 async function handleGatewayUpload(file: File) {
-  setMessage("Uploading gateway image...");
-
   const url = await uploadImage(file, "gateway");
 
   if (!url) {
     alert("Gateway image upload failed.");
-    setMessage("");
     return;
   }
 
   setGatewayUrl(url);
-  setMessage("Gateway image uploaded. Now click Save Draft or Publish Book.");
+
+  if (editingId) {
+    const { error } = await supabase
+      .from("books")
+      .update({
+        hero_url: url,
+        hero_image_url: url,
+      })
+      .eq("id", editingId);
+
+    if (error) {
+      alert(error.message);
+      return;
+    }
+  }
+
+  setMessage("Gateway image saved.");
 }
   async function handlePageImageUpload(file: File, index: number) {
     const url = await uploadImage(file, "pages");
