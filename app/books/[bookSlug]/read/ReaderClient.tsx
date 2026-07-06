@@ -135,31 +135,25 @@ export default function ReaderClient({
             </div>
           </div>
 
-          <details className="readerMenu">
-            <summary>☰</summary>
+   <details className="readerMenu">
+  <summary>☰</summary>
 
-            <div className="readerMenuPanel">
-              <Link href="/">Home</Link>
-              <Link href="/library">Library</Link>
+  <div className="readerMenuPanel">
+    <Link href="/">Home</Link>
+    <Link href="/library">Library</Link>
 
-              <div className="readerMenuLike">
-                <LikeButton bookId={bookId} />
-              </div>
+    <div className="readerMenuLike">
+      <LikeButton bookId={bookId} />
+    </div>
 
-              <button type="button">
-                <img src="/images/bookmark.png" alt="" />
-                Save
-              </button>
+   <BookmarkButton bookId={bookId} pageNumber={pageNumber} />
 
-              <button
-                type="button"
-                onClick={shareBook}
-              >
-                <img src="/images/share.png" alt="" />
-                Share
-              </button>
-            </div>
-          </details>
+    <button type="button" onClick={shareBook}>
+      <img src="/images/share.png" alt="" />
+      Share
+    </button>
+  </div>
+</details>
         </div>
 
         <div className="readerStoryText">
