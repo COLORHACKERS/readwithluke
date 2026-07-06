@@ -466,3 +466,6 @@
     width: 190px;
   }
 }
+.readerMenuAlways {
+  display: block;
+}
