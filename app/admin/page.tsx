@@ -217,9 +217,19 @@ async function handleCoverUpload(file: File) {
   const url = await uploadImage(file, "covers");
   if (url) setCoverUrl(url);
 }
-  async function handleGatewayUpload(file: File) {
+async function handleGatewayUpload(file: File) {
+  setMessage("Uploading gateway image...");
+
   const url = await uploadImage(file, "gateway");
-  if (url) setGatewayUrl(url);
+
+  if (!url) {
+    alert("Gateway image upload failed.");
+    setMessage("");
+    return;
+  }
+
+  setGatewayUrl(url);
+  setMessage("Gateway image uploaded. Click Save Draft or Publish Book.");
 }
 
   async function handlePageImageUpload(file: File, index: number) {
