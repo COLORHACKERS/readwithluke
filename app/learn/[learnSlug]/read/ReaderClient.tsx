@@ -100,14 +100,13 @@ export default function ReaderClient({
             </div>
           </div>
 
-          <details className="readerMenu">
-            <summary>MENU</summary>
+         <Link href="/" className="readerMiniBtn">
+  HOME
+</Link>
 
-            <div className="readerMenuPanel">
-              <Link href="/">Home</Link>
-              <Link href="/learn">Learn</Link>
-              <Link href="/library">Library</Link>
-              <Link href="/dashboard">Dashboard</Link>
+<Link href="/learn" className="readerMiniBtn">
+  BACK TO LEARN
+</Link>
 
               <button type="button">
                 <img src="/images/heart.png" alt="" />
