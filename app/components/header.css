@@ -95,58 +95,37 @@
 .headerStatus {
   height: 56px;
   padding: 0 8px 0 18px;
-
   background: #fff7ec;
   border: 3px solid #ff5526;
   border-radius: 999px;
-
   display: flex;
   align-items: center;
   gap: 16px;
-
   text-decoration: none;
-  box-sizing: border-box;
-
-  transition: .2s;
-}
-
-.headerStatus:hover {
-  transform: translateY(-1px);
 }
 
 .statusItem {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-
   color: #050505;
-
   font-family: "Courier New", monospace;
   font-size: 17px;
   font-weight: 900;
-
   white-space: nowrap;
+  text-decoration: none;
 }
 
 .statusAvatar {
   width: 42px;
   height: 42px;
-
   border-radius: 999px;
-
   background: #ffbd18;
   border: 5px solid #ff5526;
-
   display: grid;
   place-items: center;
-
   color: #050505;
-
   font-family: "DK Woolwich", "Arial Black", sans-serif;
   font-size: 22px;
-  line-height: 1;
+  text-decoration: none;
 }
-
 .headerCount {
   display: none;
 }
