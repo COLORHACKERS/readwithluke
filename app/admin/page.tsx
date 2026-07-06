@@ -12,6 +12,7 @@ type Book = {
   description: string | null;
  cover_url: string | null;
 hero_url: string | null;
+  hero_image_url: string | null;
   age_range: string | null;
   category: string | null;
   is_published: boolean;
