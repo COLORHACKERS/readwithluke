@@ -8,9 +8,11 @@ import "./header.css";
 
 export default function Header() {
   const pathname = usePathname();
+
   const [initials, setInitials] = useState<string | null>(null);
-  const [menuOpen, setMenuOpen] = useState(false);
   const [coins, setCoins] = useState(0);
+  const [streak, setStreak] = useState(0);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   function active(path: string) {
     if (path === "/library") {
@@ -25,13 +27,15 @@ export default function Header() {
   }
 
   useEffect(() => {
-    async function loadUser() {
+    async function loadUserStats() {
       const {
         data: { user },
       } = await supabase.auth.getUser();
 
       if (!user) {
         setInitials(null);
+        setCoins(0);
+        setStreak(0);
         return;
       }
 
@@ -42,17 +46,55 @@ export default function Header() {
         .single();
 
       const first =
-        profile?.first_name?.trim()?.[0] ||
-        user.email?.trim()?.[0] ||
-        "";
+        profile?.first_name?.trim()?.[0] || user.email?.trim()?.[0] || "";
 
       const last = profile?.last_name?.trim()?.[0] || "";
 
       setInitials(`${first}${last}`.toUpperCase() || "A");
+
+      const { data: history } = await supabase
+        .from("reading_history")
+        .select("completed_at, coins_earned")
+        .eq("user_id", user.id);
+
+      if (!history) return;
+
+      const totalCoins = history.reduce(
+        (sum, item) => sum + (item.coins_earned || 1),
+        0
+      );
+
+      setCoins(totalCoins);
+
+      const dates = Array.from(
+        new Set(
+          history.map((item) =>
+            new Date(item.completed_at).toISOString().slice(0, 10)
+          )
+        )
+      ).sort((a, b) => b.localeCompare(a));
+
+      let currentStreak = 0;
+      const today = new Date();
+
+      for (let i = 0; i < dates.length; i++) {
+        const checkDate = new Date(today);
+        checkDate.setDate(today.getDate() - i);
+
+        const expected = checkDate.toISOString().slice(0, 10);
+
+        if (dates.includes(expected)) {
+          currentStreak++;
+        } else {
+          break;
+        }
+      }
+
+      setStreak(currentStreak);
     }
 
-    loadUser();
-  }, []);
+    loadUserStats();
+  }, [pathname]);
 
   return (
     <>
@@ -80,13 +122,11 @@ export default function Header() {
 
         <div className="headerRight">
           {initials ? (
-            <>
-<Link href="/dashboard" className="headerStatus">
-  <span className="statusItem">🔥 0</span>
-  <span className="statusItem">🪙 0</span>
-  <span className="statusAvatar">{initials}</span>
-</Link>
-            </>
+            <Link href="/dashboard" className="headerStatus">
+              <span className="statusItem">🔥 {streak}</span>
+              <span className="statusItem">🪙 {coins}</span>
+              <span className="statusAvatar">{initials}</span>
+            </Link>
           ) : (
             <div className="headerAuth">
               <Link href="/login" className="headerLogin">
@@ -125,43 +165,25 @@ export default function Header() {
               ×
             </button>
 
-            <Link
-              className={active("/library") ? "active" : ""}
-              href="/library"
-              onClick={() => setMenuOpen(false)}
-            >
+            <Link href="/library" onClick={() => setMenuOpen(false)}>
               Read With Luke
             </Link>
 
-            <Link
-              className={active("/learn") ? "active" : ""}
-              href="/learn"
-              onClick={() => setMenuOpen(false)}
-            >
+            <Link href="/learn" onClick={() => setMenuOpen(false)}>
               Learn With Luke
             </Link>
 
-            <Link
-              className={active("/learn-to-read") ? "active" : ""}
-              href="/learn-to-read"
-              onClick={() => setMenuOpen(false)}
-            >
+            <Link href="/learn-to-read" onClick={() => setMenuOpen(false)}>
               Learn to Read
             </Link>
 
             {initials ? (
               <>
-                <Link
-                  href="/dashboard"
-                  onClick={() => setMenuOpen(false)}
-                >
+                <Link href="/dashboard" onClick={() => setMenuOpen(false)}>
                   My Dashboard
                 </Link>
 
-                <Link
-                  href="/profile"
-                  onClick={() => setMenuOpen(false)}
-                >
+                <Link href="/profile" onClick={() => setMenuOpen(false)}>
                   My Profile
                 </Link>
               </>
