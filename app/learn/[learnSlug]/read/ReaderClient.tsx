@@ -8,16 +8,6 @@ type Props = {
   title: string;
   pageNumber: number;
   totalPages: number;
-  imageUrl: string;"use client";
-
-import { useRouter } from "next/navigation";
-import Link from "next/link";
-
-type Props = {
-  learnSlug: string;
-  title: string;
-  pageNumber: number;
-  totalPages: number;
   imageUrl: string;
   text: string;
 };
