@@ -225,23 +225,26 @@ async function handleCoverUpload(file: File) {
   if (url) setCoverUrl(url);
 }
 async function handleGatewayUpload(file: File) {
-  const url = await uploadImage(file, "gateway");
+  const uploadedUrl = await uploadImage(file, "gateway");
 
-  if (!url) {
+  if (!uploadedUrl) {
     alert("Gateway image upload failed.");
     return;
   }
 
-  setGatewayUrl(url);
+  setGatewayUrl(uploadedUrl);
 
   if (editingId) {
-    const { error } = await supabase
+    const { data, error } = await supabase
       .from("books")
       .update({
-        hero_url: url,
-        hero_image_url: url,
+        hero_url: uploadedUrl,
+        hero_image_url: uploadedUrl,
       })
-      .eq("id", editingId);
+      .eq("id", editingId)
+      .select();
+
+    console.log("Gateway update:", { data, error, uploadedUrl });
 
     if (error) {
       alert(error.message);
