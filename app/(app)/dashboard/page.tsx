@@ -117,7 +117,10 @@ export default function DashboardPage() {
 
     loadDashboard();
   }, [router]);
-
+const continueBookInfo = Array.isArray(continueBook?.books)
+  ? continueBook.books[0]
+  : continueBook?.books;
+  
   return (
     <>
       <Header />
@@ -170,9 +173,9 @@ export default function DashboardPage() {
               <div>
                 <h3>Continue Reading</h3>
 
-              {continueBook?.books?.[0] ? (
+              {continueBookInfo ? (
   <p>
-    {continueBook.books[0].title}
+   {continueBookInfo.title}
     <br />
     Page {continueBook.page_number || 1}
   </p>
@@ -181,9 +184,9 @@ export default function DashboardPage() {
                 )}
 
                 {continueBook?.books ? (
-                 <Link
-  href={`/books/${continueBook.books[0].slug}/read?page=${
-    continueBook.page_number || 1
+                <Link
+  href={`/books/${continueBookInfo.slug}/read?page=${
+    continueBook?.page_number || 1
   }`}
 >
   Continue
