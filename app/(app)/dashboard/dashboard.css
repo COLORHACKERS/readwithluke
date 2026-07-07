@@ -173,6 +173,23 @@
   font-weight: 900;
   text-decoration: none;
 }
+.dashboardAvatarWrap {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.dashboardAvatar {
+  width: 104px;
+  height: 104px;
+  border-radius: 999px;
+  background: #ffbd18;
+  border: 8px solid #ff5526;
+  display: grid;
+  place-items: center;
+  font-size: 54px;
+  box-shadow: 0 12px 30px rgba(0,0,0,.12);
+}
 
 @media (max-width: 1100px) {
   .dashboardWelcome {
@@ -227,5 +244,17 @@
 
   .dashboardCard h3 {
     font-size: 34px;
+  }
+}
+@media (max-width: 768px) {
+  .dashboardAvatarWrap {
+    align-items: flex-start;
+  }
+
+  .dashboardAvatar {
+    width: 76px;
+    height: 76px;
+    font-size: 40px;
+    border-width: 6px;
   }
 }
