@@ -235,33 +235,7 @@ export default function AdminPage() {
   }
 
   setGatewayUrl(uploadedUrl);
-
-  if (!editingId) {
-    setMessage("Gateway image uploaded. Click Save Draft.");
-    return;
-  }
-
-  const { data, error } = await supabase
-    .from("books")
-    .update({
-      hero_url: uploadedUrl,
-      hero_image_url: uploadedUrl,
-    })
-    .eq("id", editingId)
- .select("id,title,hero_url,hero_image_url");
-
-  if (error) {
-    alert(error.message);
-    return;
-  }
-
-  if (!data || data.length === 0 || !data[0].hero_url) {
-    alert("Gateway image did not save to the book row.");
-    return;
-  }
-
-  setMessage("Gateway image saved.");
-  await loadBooks();
+  setMessage("Gateway image uploaded. Now click Save Draft or Publish Book.");
 }
   async function handlePageImageUpload(file: File, index: number) {
     const url = await uploadImage(file, "pages");
