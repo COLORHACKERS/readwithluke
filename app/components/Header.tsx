@@ -83,11 +83,8 @@ export default function Header() {
 
         const expected = checkDate.toISOString().slice(0, 10);
 
-        if (dates.includes(expected)) {
-          currentStreak++;
-        } else {
-          break;
-        }
+        if (dates.includes(expected)) currentStreak++;
+        else break;
       }
 
       setStreak(currentStreak);
@@ -104,48 +101,55 @@ export default function Header() {
         </Link>
 
         <nav className="mainNav">
-          <Link className={active("/library") ? "active" : ""} href="/library">
+          <Link href="/library" className={active("/library") ? "active" : ""}>
             Read With Luke
           </Link>
 
-          <Link className={active("/learn") ? "active" : ""} href="/learn">
+          <Link href="/learn" className={active("/learn") ? "active" : ""}>
             Learn With Luke
           </Link>
 
           <Link
-            className={active("/learn-to-read") ? "active" : ""}
             href="/learn-to-read"
+            className={active("/learn-to-read") ? "active" : ""}
           >
             Learn to Read
+          </Link>
+
+          <Link
+            href="/membership"
+            className={active("/membership") ? "giftNav active" : "giftNav"}
+          >
+            🎁 Gift Reading
           </Link>
         </nav>
 
         <div className="headerRight">
-         {initials ? (
-  <div className="headerStatus">
-    <Link href="/dashboard" className="statusItem">
-      🔥 {streak}
-    </Link>
+          {initials ? (
+            <div className="headerStatus">
+              <Link href="/dashboard" className="statusItem">
+                🔥 {streak}
+              </Link>
 
-    <Link href="/dashboard" className="statusItem">
-      🪙 {coins}
-    </Link>
+              <Link href="/dashboard" className="statusItem">
+                🪙 {coins}
+              </Link>
 
-    <Link href="/profile" className="statusAvatar">
-      {initials}
-    </Link>
-  </div>
-) : (
-  <div className="headerAuth">
-    <Link href="/login" className="headerLogin">
-      LOGIN
-    </Link>
+              <Link href="/profile" className="statusAvatar">
+                {initials}
+              </Link>
+            </div>
+          ) : (
+            <div className="headerAuth">
+              <Link href="/login" className="headerLogin">
+                LOGIN
+              </Link>
 
-    <Link href="/signup" className="headerSignup">
-      JOIN
-    </Link>
-  </div>
-)}
+              <Link href="/signup" className="headerSignup">
+                JOIN
+              </Link>
+            </div>
+          )}
 
           <button
             className="mobileMenuButton"
@@ -183,6 +187,10 @@ export default function Header() {
 
             <Link href="/learn-to-read" onClick={() => setMenuOpen(false)}>
               Learn to Read
+            </Link>
+
+            <Link href="/membership" onClick={() => setMenuOpen(false)}>
+              🎁 Gift Reading
             </Link>
 
             {initials ? (
