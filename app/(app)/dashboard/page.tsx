@@ -16,7 +16,7 @@ type SavedBook = {
     title: string;
     slug: string;
     cover_url: string | null;
-  } | null;
+  }[] | null;
 };
 
 export default function DashboardPage() {
@@ -112,7 +112,7 @@ export default function DashboardPage() {
         .eq("user_id", user.id)
         .limit(4);
 
-      if (likes) setFavorites(likes);
+      if (likes) setFavorites(likes as SavedBook[]);
     }
 
     loadDashboard();
@@ -166,9 +166,9 @@ export default function DashboardPage() {
               <div>
                 <h3>Continue Reading</h3>
 
-                {continueBook?.books ? (
+                {continueBook?.books?.[0] ? (
                   <p>
-                    {continueBook.books.title}
+                    {continueBook.books[0].title}
                     <br />
                     Page {continueBook.page_number || 1}
                   </p>
@@ -177,14 +177,14 @@ export default function DashboardPage() {
                 )}
               </div>
 
-              {continueBook?.books ? (
-                <Link
-                  href={`/books/${continueBook.books.slug}/read?page=${
-                    continueBook.page_number || 1
-                  }`}
-                >
-                  Continue
-                </Link>
+              {continueBook?.books?.[0] ? (
+            <Link
+  href={`/books/${continueBook.books[0].slug}/read?page=${
+    continueBook.page_number || 1
+  }`}
+>
+  Continue
+</Link>
               ) : (
                 <Link href="/library">Go to Library</Link>
               )}
