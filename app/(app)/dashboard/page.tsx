@@ -167,38 +167,35 @@ const continueBookInfo = Array.isArray(continueBook?.books)
           </div>
 
           <section className="dashboardPanel">
-            <div className="dashboardCard">
-              <div className="dashboardCardIcon">📖</div>
+<div className="dashboardCard">
+  <div className="dashboardCardIcon">📖</div>
 
-              <div>
-                <h3>Continue Reading</h3>
+  <div>
+    <h3>Continue Reading</h3>
 
-              {continueBookInfo ? (
-  <p>
-   {continueBookInfo.title}
-    <br />
-    Page {continueBook?.page_number || 1}
-  </p>
-) : (
-                  <p>Jump into your next magical story.</p>
-                )}
+    {continueBookInfo ? (
+      <p>
+        {continueBookInfo.title}
+        <br />
+        Page {continueBook?.page_number || 1}
+      </p>
+    ) : (
+      <p>Jump into your next magical story.</p>
+    )}
 
-            {continueBookInfo ? (
-  <Link
-    href={`/books/${continueBookInfo.slug}/read?page=${
-      continueBook?.page_number || 1
-    }`}
-  >
-    Continue
-  </Link>
-
-  <Link href="/library">Go to Library</Link>
-)}
-                ) : (
-                  <Link href="/library">Go to Library</Link>
-         
-              </div>
-            </div>
+    {continueBookInfo ? (
+      <Link
+        href={`/books/${continueBookInfo.slug}/read?page=${
+          continueBook?.page_number || 1
+        }`}
+      >
+        Continue
+      </Link>
+    ) : (
+      <Link href="/library">Go to Library</Link>
+    )}
+  </div>
+</div>
 
             <div className="dashboardCard">
               <div className="dashboardCardIcon">❤️</div>
