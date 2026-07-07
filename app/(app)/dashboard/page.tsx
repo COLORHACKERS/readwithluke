@@ -143,10 +143,14 @@ const continueBookInfo = Array.isArray(continueBook?.books)
             </p>
           </div>
 
-          <div className="dashboardWelcome">
-            <div>
-              <h2>WELCOME BACK, {readerName.toUpperCase()}!</h2>
-            </div>
+         <div className="dashboardWelcome">
+  <div className="dashboardAvatarWrap">
+    <div className="dashboardAvatar">{avatar}</div>
+
+    <div>
+      <h2>WELCOME BACK, {readerName.toUpperCase()}!</h2>
+    </div>
+  </div>
 
             <div className="dashboardStats">
               <div className="dashboardStat">
