@@ -10,8 +10,8 @@ type Book = {
   title: string;
   slug: string;
   description: string | null;
- cover_url: string | null;
-hero_url: string | null;
+  cover_url: string | null;
+  hero_url: string | null;
   hero_image_url: string | null;
   age_range: string | null;
   category: string | null;
@@ -48,7 +48,7 @@ export default function AdminPage() {
   const [description, setDescription] = useState("");
   const [coverUrl, setCoverUrl] = useState("");
   const [gatewayUrl, setGatewayUrl] = useState("");
-  
+
   const [ageRange, setAgeRange] = useState("Ages 5–8");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([
     "Adventure",
@@ -89,21 +89,15 @@ export default function AdminPage() {
   }
 
   async function loadBooks() {
-const { data, error } = await supabase
-  .from("books")
-  .update({
-    hero_url: url,
-    hero_image_url: url,
-  })
-  .eq("id", editingId)
-  .select();
+    const { data, error } = await supabase
+      .from("books")
+      .select("*")
+      .order("created_at", { ascending: false });
 
-console.log("Gateway update:", { data, error, url });
-
-if (error) {
-  alert(error.message);
-  return;
-}
+    if (error) {
+      alert(error.message);
+      return;
+    }
 
     setBooks(data || []);
   }
@@ -215,48 +209,60 @@ if (error) {
       resetForm();
     }
 
-  setMessage(`Deleted "${book.title}"`);
-  setSaving(false);
-  loadBooks();
-}
-
-async function handleCoverUpload(file: File) {
-  const url = await uploadImage(file, "covers");
-  if (url) setCoverUrl(url);
-}
-async function handleGatewayUpload(file: File) {
-  const uploadedUrl = await uploadImage(file, "gateway");
-
-  if (!uploadedUrl) {
-    alert("Gateway image upload failed.");
-    return;
+    setMessage(`Deleted "${book.title}"`);
+    setSaving(false);
+    loadBooks();
   }
 
-  setGatewayUrl(uploadedUrl);
+  async function handleCoverUpload(file: File) {
+    const url = await uploadImage(file, "covers");
 
-  if (editingId) {
-    const { data, error } = await supabase
-      .from("books")
-      .update({
-        hero_url: uploadedUrl,
-        hero_image_url: uploadedUrl,
-      })
-      .eq("id", editingId)
-      .select();
-
-    console.log("Gateway update:", { data, error, uploadedUrl });
-
-    if (error) {
-      alert(error.message);
+    if (!url) {
+      alert("Cover image upload failed.");
       return;
     }
+
+    setCoverUrl(url);
+    setMessage("Cover image uploaded. Click Save Draft or Publish Book.");
   }
 
-  setMessage("Gateway image saved.");
-}
+  async function handleGatewayUpload(file: File) {
+    const uploadedUrl = await uploadImage(file, "gateway");
+
+    if (!uploadedUrl) {
+      alert("Gateway image upload failed.");
+      return;
+    }
+
+    setGatewayUrl(uploadedUrl);
+
+    if (editingId) {
+      const { error } = await supabase
+        .from("books")
+        .update({
+          hero_url: uploadedUrl,
+          hero_image_url: uploadedUrl,
+        })
+        .eq("id", editingId);
+
+      if (error) {
+        alert(error.message);
+        return;
+      }
+
+      await loadBooks();
+    }
+
+    setMessage("Gateway image saved.");
+  }
+
   async function handlePageImageUpload(file: File, index: number) {
     const url = await uploadImage(file, "pages");
-    if (!url) return;
+
+    if (!url) {
+      alert("Page image upload failed.");
+      return;
+    }
 
     setPages((current) =>
       current.map((page, i) =>
@@ -283,14 +289,14 @@ async function handleGatewayUpload(file: File) {
       title: title.trim(),
       slug: slug.trim(),
       description,
-      cover_url: coverUrl,
-     hero_url: gatewayUrl || null,
-hero_image_url: gatewayUrl || null,
+      cover_url: coverUrl || null,
+      hero_url: gatewayUrl || null,
+      hero_image_url: gatewayUrl || null,
       age_range: ageRange,
       category: selectedCategories.join(", "),
       is_published: publishNow ? true : isPublished,
     };
-console.log("BOOK PAYLOAD:", bookPayload);
+
     let bookId = editingId;
 
     if (editingId) {
@@ -321,30 +327,27 @@ console.log("BOOK PAYLOAD:", bookPayload);
       setEditingId(data.id);
     }
 
-  const pagesToSave = pages
-  .filter((page) => page.text.trim() || page.image_url.trim())
-  .map((page) => ({
-    book_id: bookId,
-    page_number: page.page_number,
-    text: page.text || "",
-    image_url: page.image_url || "",
-  }));
-    if (pagesToSave.length === 0) {
-  alert("Please add at least one page image or text.");
-  setSaving(false);
-  return;
-}
+    const pagesToSave = pages
+      .filter((page) => page.text.trim() || page.image_url.trim())
+      .map((page) => ({
+        book_id: bookId,
+        page_number: page.page_number,
+        text: page.text || "",
+        image_url: page.image_url || "",
+      }));
 
-    const { error: pagesError } = await supabase
-      .from("book_pages")
-      .upsert(pagesToSave, {
-        onConflict: "book_id,page_number",
-      });
+    if (pagesToSave.length > 0) {
+      const { error: pagesError } = await supabase
+        .from("book_pages")
+        .upsert(pagesToSave, {
+          onConflict: "book_id,page_number",
+        });
 
-    if (pagesError) {
-      alert(pagesError.message);
-      setSaving(false);
-      return;
+      if (pagesError) {
+        alert(pagesError.message);
+        setSaving(false);
+        return;
+      }
     }
 
     setIsPublished(publishNow ? true : isPublished);
@@ -420,6 +423,7 @@ console.log("BOOK PAYLOAD:", bookPayload);
             onChange={(e) => setAgeRange(e.target.value)}
           >
             <option>Ages 3–6</option>
+            <option>Ages 5–8</option>
             <option>Ages 6+</option>
           </select>
 
@@ -454,23 +458,24 @@ console.log("BOOK PAYLOAD:", bookPayload);
               className="coverPreview"
             />
           )}
-          <label>Gateway Image</label>
-<input
-  type="file"
-  accept="image/*"
-  onChange={(e) => {
-    const file = e.target.files?.[0];
-    if (file) handleGatewayUpload(file);
-  }}
-/>
 
-{gatewayUrl && (
-  <img
-    src={gatewayUrl}
-    alt="Gateway preview"
-    className="gatewayPreview"
-  />
-)}
+          <label>Gateway Image</label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file) handleGatewayUpload(file);
+            }}
+          />
+
+          {gatewayUrl && (
+            <img
+              src={gatewayUrl}
+              alt="Gateway preview"
+              className="gatewayPreview"
+            />
+          )}
         </section>
 
         <section className="pagesGrid">
@@ -497,6 +502,7 @@ console.log("BOOK PAYLOAD:", bookPayload);
                 value={page.text}
                 onChange={(e) => {
                   const value = e.target.value;
+
                   setPages((current) =>
                     current.map((item, i) =>
                       i === index ? { ...item, text: value } : item
