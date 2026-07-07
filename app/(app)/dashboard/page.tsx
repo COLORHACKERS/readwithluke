@@ -170,24 +170,24 @@ export default function DashboardPage() {
               <div>
                 <h3>Continue Reading</h3>
 
-                {continueBook?.books ? (
-                  <p>
-                    {continueBook.books.title}
-                    <br />
-                    Page {continueBook.page_number || 1}
-                  </p>
-                ) : (
+              {continueBook?.books?.[0] ? (
+  <p>
+    {continueBook.books[0].title}
+    <br />
+    Page {continueBook.page_number || 1}
+  </p>
+) : (
                   <p>Jump into your next magical story.</p>
                 )}
 
                 {continueBook?.books ? (
-                  <Link
-                    href={`/books/${continueBook.books.slug}/read?page=${
-                      continueBook.page_number || 1
-                    }`}
-                  >
-                    Continue
-                  </Link>
+                 <Link
+  href={`/books/${continueBook.books[0].slug}/read?page=${
+    continueBook.page_number || 1
+  }`}
+>
+  Continue
+</Link>
                 ) : (
                   <Link href="/library">Go to Library</Link>
                 )}
