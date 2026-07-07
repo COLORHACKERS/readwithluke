@@ -16,7 +16,7 @@ type SavedBook = {
     title: string;
     slug: string;
     cover_url: string | null;
-  }[] | null;
+  } | null;
 };
 
 export default function DashboardPage() {
@@ -24,7 +24,6 @@ export default function DashboardPage() {
 
   const [readerName, setReaderName] = useState("Reader");
   const [avatar, setAvatar] = useState("🔥");
-  const [favoriteTheme, setFavoriteTheme] = useState("Adventure");
 
   const [completedCount, setCompletedCount] = useState(0);
   const [coins, setCoins] = useState(0);
@@ -56,7 +55,6 @@ export default function DashboardPage() {
       if (child) {
         setReaderName(child.name || "Reader");
         setAvatar(child.avatar || "🔥");
-        setFavoriteTheme(child.favorite_theme || "Adventure");
       }
 
       const { data: history } = await supabase
@@ -102,8 +100,8 @@ export default function DashboardPage() {
         .limit(4);
 
       if (bookmarks) {
-        setContinueBook(bookmarks[0] || null);
-        setSavedBooks(bookmarks);
+        setContinueBook((bookmarks[0] as SavedBook) || null);
+        setSavedBooks(bookmarks as SavedBook[]);
       }
 
       const { data: likes } = await supabase
@@ -112,7 +110,9 @@ export default function DashboardPage() {
         .eq("user_id", user.id)
         .limit(4);
 
-      if (likes) setFavorites(likes as SavedBook[]);
+      if (likes) {
+        setFavorites(likes as SavedBook[]);
+      }
     }
 
     loadDashboard();
@@ -141,7 +141,9 @@ export default function DashboardPage() {
           </div>
 
           <div className="dashboardWelcome">
-            <h2>WELCOME BACK, {readerName.toUpperCase()}!</h2>
+            <div>
+              <h2>WELCOME BACK, {readerName.toUpperCase()}!</h2>
+            </div>
 
             <div className="dashboardStats">
               <div className="dashboardStat">
@@ -163,34 +165,38 @@ export default function DashboardPage() {
 
           <section className="dashboardPanel">
             <div className="dashboardCard">
+              <div className="dashboardCardIcon">📖</div>
+
               <div>
                 <h3>Continue Reading</h3>
 
-                {continueBook?.books?.[0] ? (
+                {continueBook?.books ? (
                   <p>
-                    {continueBook.books[0].title}
+                    {continueBook.books.title}
                     <br />
                     Page {continueBook.page_number || 1}
                   </p>
                 ) : (
                   <p>Jump into your next magical story.</p>
                 )}
-              </div>
 
-              {continueBook?.books?.[0] ? (
-            <Link
-  href={`/books/${continueBook.books[0].slug}/read?page=${
-    continueBook.page_number || 1
-  }`}
->
-  Continue
-</Link>
-              ) : (
-                <Link href="/library">Go to Library</Link>
-              )}
+                {continueBook?.books ? (
+                  <Link
+                    href={`/books/${continueBook.books.slug}/read?page=${
+                      continueBook.page_number || 1
+                    }`}
+                  >
+                    Continue
+                  </Link>
+                ) : (
+                  <Link href="/library">Go to Library</Link>
+                )}
+              </div>
             </div>
 
             <div className="dashboardCard">
+              <div className="dashboardCardIcon">❤️</div>
+
               <div>
                 <h3>Favorites</h3>
                 <p>
@@ -198,11 +204,14 @@ export default function DashboardPage() {
                     ? `${favorites.length} favorite stories saved.`
                     : "Tap the heart on stories you love."}
                 </p>
+
+                <Link href="/library">View Library</Link>
               </div>
-              <Link href="/library">View Library</Link>
             </div>
 
             <div className="dashboardCard">
+              <div className="dashboardCardIcon">🔖</div>
+
               <div>
                 <h3>Saved Stories</h3>
                 <p>
@@ -210,25 +219,32 @@ export default function DashboardPage() {
                     ? `${savedBooks.length} stories saved for later.`
                     : "Use the bookmark to save a story."}
                 </p>
+
+                <Link href="/library">Browse Books</Link>
               </div>
-              <Link href="/library">Browse Books</Link>
             </div>
 
             <div className="dashboardCard">
+              <div className="dashboardCardIcon">🏆</div>
+
               <div>
                 <h3>Rewards</h3>
                 <p>{avatar} Build your avatar with stickers and coins.</p>
-              </div>
-              <Link href="/rewards">View Rewards</Link>
-            </div>
-            <div className="dashboardCard">
-  <div>
-    <h3>Stickers</h3>
-    <p>⭐ Collect fun stickers as you read and learn.</p>
-  </div>
 
-  <Link href="/stickers">View Stickers</Link>
-</div>
+                <Link href="/rewards">Build Avatar</Link>
+              </div>
+            </div>
+
+            <div className="dashboardCard">
+              <div className="dashboardCardIcon">⭐</div>
+
+              <div>
+                <h3>Stickers</h3>
+                <p>Collect fun stickers as you read and learn.</p>
+
+                <Link href="/rewards">View Stickers</Link>
+              </div>
+            </div>
           </section>
         </section>
       </main>
