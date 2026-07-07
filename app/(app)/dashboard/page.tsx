@@ -221,6 +221,14 @@ export default function DashboardPage() {
               </div>
               <Link href="/rewards">View Rewards</Link>
             </div>
+            <div className="dashboardCard">
+  <div>
+    <h3>Stickers</h3>
+    <p>⭐ Collect fun stickers as you read and learn.</p>
+  </div>
+
+  <Link href="/stickers">View Stickers</Link>
+</div>
           </section>
         </section>
       </main>
