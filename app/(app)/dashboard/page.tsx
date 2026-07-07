@@ -177,7 +177,7 @@ const continueBookInfo = Array.isArray(continueBook?.books)
   <p>
    {continueBookInfo.title}
     <br />
-    Page {continueBook.page_number || 1}
+    Page {continueBook?.page_number || 1}
   </p>
 ) : (
                   <p>Jump into your next magical story.</p>
