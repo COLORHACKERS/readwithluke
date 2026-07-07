@@ -9,6 +9,16 @@ import { supabase } from "@/lib/supabase";
 import "../../home.css";
 import "./dashboard.css";
 
+type SavedBook = {
+  id: string;
+  page_number?: number;
+  books?: {
+    title: string;
+    slug: string;
+    cover_url: string | null;
+  } | null;
+};
+
 export default function DashboardPage() {
   const router = useRouter();
 
@@ -19,6 +29,10 @@ export default function DashboardPage() {
   const [completedCount, setCompletedCount] = useState(0);
   const [coins, setCoins] = useState(0);
   const [streak, setStreak] = useState(0);
+
+  const [continueBook, setContinueBook] = useState<SavedBook | null>(null);
+  const [favorites, setFavorites] = useState<SavedBook[]>([]);
+  const [savedBooks, setSavedBooks] = useState<SavedBook[]>([]);
 
   useEffect(() => {
     async function loadDashboard() {
@@ -53,12 +67,9 @@ export default function DashboardPage() {
       if (history) {
         setCompletedCount(history.length);
 
-        const totalCoins = history.reduce(
-          (sum, item) => sum + (item.coins_earned || 1),
-          0
+        setCoins(
+          history.reduce((sum, item) => sum + (item.coins_earned || 1), 0)
         );
-
-        setCoins(totalCoins);
 
         const dates = Array.from(
           new Set(
@@ -76,15 +87,32 @@ export default function DashboardPage() {
           checkDate.setDate(today.getDate() - i);
           const expected = checkDate.toISOString().slice(0, 10);
 
-          if (dates.includes(expected)) {
-            currentStreak++;
-          } else {
-            break;
-          }
+          if (dates.includes(expected)) currentStreak++;
+          else break;
         }
 
         setStreak(currentStreak);
       }
+
+      const { data: bookmarks } = await supabase
+        .from("book_bookmarks")
+        .select("id, page_number, books(title, slug, cover_url)")
+        .eq("user_id", user.id)
+        .order("updated_at", { ascending: false })
+        .limit(4);
+
+      if (bookmarks) {
+        setContinueBook(bookmarks[0] || null);
+        setSavedBooks(bookmarks);
+      }
+
+      const { data: likes } = await supabase
+        .from("book_likes")
+        .select("id, books(title, slug, cover_url)")
+        .eq("user_id", user.id)
+        .limit(4);
+
+      if (likes) setFavorites(likes);
     }
 
     loadDashboard();
@@ -106,9 +134,9 @@ export default function DashboardPage() {
             </h1>
 
             <p>
-              Keep reading stories, finish learning adventures,
+              Keep reading stories, collect coins,
               <br />
-              collect coins, and build your streak every day.
+              build your streak, and unlock rewards.
             </p>
           </div>
 
@@ -137,15 +165,51 @@ export default function DashboardPage() {
             <div className="dashboardCard">
               <div>
                 <h3>Continue Reading</h3>
-                <p>Jump back into your latest magical story.</p>
+
+                {continueBook?.books ? (
+                  <p>
+                    {continueBook.books.title}
+                    <br />
+                    Page {continueBook.page_number || 1}
+                  </p>
+                ) : (
+                  <p>Jump into your next magical story.</p>
+                )}
               </div>
-              <Link href="/library">Go to Library</Link>
+
+              {continueBook?.books ? (
+                <Link
+                  href={`/books/${continueBook.books.slug}/read?page=${
+                    continueBook.page_number || 1
+                  }`}
+                >
+                  Continue
+                </Link>
+              ) : (
+                <Link href="/library">Go to Library</Link>
+              )}
             </div>
 
             <div className="dashboardCard">
               <div>
-                <h3>{favoriteTheme} Books</h3>
-                <p>Explore more stories picked for your reader.</p>
+                <h3>Favorites</h3>
+                <p>
+                  {favorites.length > 0
+                    ? `${favorites.length} favorite stories saved.`
+                    : "Tap the heart on stories you love."}
+                </p>
+              </div>
+              <Link href="/library">View Library</Link>
+            </div>
+
+            <div className="dashboardCard">
+              <div>
+                <h3>Saved Stories</h3>
+                <p>
+                  {savedBooks.length > 0
+                    ? `${savedBooks.length} stories saved for later.`
+                    : "Use the bookmark to save a story."}
+                </p>
               </div>
               <Link href="/library">Browse Books</Link>
             </div>
@@ -153,7 +217,7 @@ export default function DashboardPage() {
             <div className="dashboardCard">
               <div>
                 <h3>Rewards</h3>
-                <p>{avatar} Collect badges, coins, and reading prizes.</p>
+                <p>{avatar} Build your avatar with stickers and coins.</p>
               </div>
               <Link href="/rewards">View Rewards</Link>
             </div>
