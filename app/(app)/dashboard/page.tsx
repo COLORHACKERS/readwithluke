@@ -16,7 +16,7 @@ type SavedBook = {
     title: string;
     slug: string;
     cover_url: string | null;
-  } | null;
+  }[] | null;
 };
 
 export default function DashboardPage() {
@@ -99,10 +99,10 @@ export default function DashboardPage() {
         .order("updated_at", { ascending: false })
         .limit(4);
 
-      if (bookmarks) {
-        setContinueBook((bookmarks[0] as SavedBook) || null);
-        setSavedBooks(bookmarks as SavedBook[]);
-      }
+    if (bookmarks) {
+  setContinueBook(bookmarks[0] || null);
+  setSavedBooks(bookmarks as SavedBook[]);
+}
 
       const { data: likes } = await supabase
         .from("book_likes")
