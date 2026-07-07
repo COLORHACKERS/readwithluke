@@ -248,15 +248,14 @@ export default function AdminPage() {
       hero_image_url: uploadedUrl,
     })
     .eq("id", editingId)
-    .select("id,title,hero_url,hero_image_url")
-    .single();
+ .select("id,title,hero_url,hero_image_url");
 
   if (error) {
     alert(error.message);
     return;
   }
 
-  if (!data?.hero_url) {
+  if (!data || data.length === 0 || !data[0].hero_url) {
     alert("Gateway image did not save to the book row.");
     return;
   }
