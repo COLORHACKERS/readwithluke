@@ -378,3 +378,22 @@
   position: relative;
   box-sizing: border-box;
 }
+.giftNav {
+  background: #c6542d;
+  color: #fff !important;
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-family: "Courier New", monospace;
+  font-weight: 900;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.giftNav:hover {
+  background: #b14926;
+  transform: translateY(-1px);
+}
+
+.giftNav.active {
+  background: #13294b;
+}
