@@ -114,3 +114,20 @@
   border-radius: 999px;
   background: #ff5526;
 }
+body {
+  padding-top: 72px;
+}
+
+.mobileMenuButton {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  body {
+    padding-top: 64px;
+  }
+
+  .mobileMenuButton {
+    display: grid;
+  }
+}
