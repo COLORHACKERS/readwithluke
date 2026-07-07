@@ -191,7 +191,7 @@ const continueBookInfo = Array.isArray(continueBook?.books)
   >
     Continue
   </Link>
-) : (
+
   <Link href="/library">Go to Library</Link>
 )}
                 ) : (
