@@ -226,36 +226,44 @@ export default function AdminPage() {
     setMessage("Cover image uploaded. Click Save Draft or Publish Book.");
   }
 
-  async function handleGatewayUpload(file: File) {
-    const uploadedUrl = await uploadImage(file, "gateway");
+ async function handleGatewayUpload(file: File) {
+  const uploadedUrl = await uploadImage(file, "gateway");
 
-    if (!uploadedUrl) {
-      alert("Gateway image upload failed.");
-      return;
-    }
-
-    setGatewayUrl(uploadedUrl);
-
-    if (editingId) {
-      const { error } = await supabase
-        .from("books")
-        .update({
-          hero_url: uploadedUrl,
-          hero_image_url: uploadedUrl,
-        })
-        .eq("id", editingId);
-
-      if (error) {
-        alert(error.message);
-        return;
-      }
-
-      await loadBooks();
-    }
-
-    setMessage("Gateway image saved.");
+  if (!uploadedUrl) {
+    alert("Gateway image upload failed.");
+    return;
   }
 
+  setGatewayUrl(uploadedUrl);
+
+  if (!editingId) {
+    setMessage("Gateway image uploaded. Click Save Draft.");
+    return;
+  }
+
+  const { data, error } = await supabase
+    .from("books")
+    .update({
+      hero_url: uploadedUrl,
+      hero_image_url: uploadedUrl,
+    })
+    .eq("id", editingId)
+    .select("id,title,hero_url,hero_image_url")
+    .single();
+
+  if (error) {
+    alert(error.message);
+    return;
+  }
+
+  if (!data?.hero_url) {
+    alert("Gateway image did not save to the book row.");
+    return;
+  }
+
+  setMessage("Gateway image saved.");
+  await loadBooks();
+}
   async function handlePageImageUpload(file: File, index: number) {
     const url = await uploadImage(file, "pages");
 
