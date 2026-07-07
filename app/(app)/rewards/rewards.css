@@ -1,0 +1,113 @@
+.rewardsPage {
+  min-height: 100vh;
+  padding: 120px 46px 80px;
+  background: #f8f1e6;
+}
+
+.rewardsCard {
+  max-width: 1180px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 38px;
+  padding: 46px;
+  display: grid;
+  grid-template-columns: 42% 1fr;
+  gap: 44px;
+}
+
+.avatarPreview {
+  background: #fff7ec;
+  border-radius: 34px;
+  display: grid;
+  place-items: center;
+  min-height: 500px;
+  position: relative;
+}
+
+.avatarCircle {
+  width: 190px;
+  height: 190px;
+  border-radius: 999px;
+  background: #ffbd18;
+  border: 10px solid #ff5526;
+  display: grid;
+  place-items: center;
+  font-size: 92px;
+}
+
+.stickerCloud {
+  position: absolute;
+  bottom: 38px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0 30px;
+}
+
+.stickerCloud span {
+  font-size: 34px;
+}
+
+.avatarBuilder h1 {
+  font-family: "DK Woolwich", "Arial Black", sans-serif;
+  font-size: 58px;
+  margin: 0;
+}
+
+.avatarBuilder p,
+.avatarBuilder label {
+  font-family: "Courier New", monospace;
+  font-weight: 900;
+}
+
+.avatarBuilder label {
+  display: block;
+  margin: 28px 0 12px;
+}
+
+.avatarChoices,
+.stickerGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.avatarChoices button,
+.stickerGrid button {
+  width: 70px;
+  height: 70px;
+  border-radius: 22px;
+  border: 4px solid #eee1d2;
+  background: white;
+  font-size: 34px;
+  cursor: pointer;
+}
+
+.avatarChoices button.selected,
+.stickerGrid button.selected {
+  border-color: #ff5526;
+  background: #fff0df;
+}
+
+.saveAvatarButton {
+  margin-top: 34px;
+  border: 0;
+  border-radius: 999px;
+  background: #ff5526;
+  color: white;
+  padding: 18px 34px;
+  font-family: "Courier New", monospace;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.savedMessage {
+  color: #ff5526;
+}
+
+@media (max-width: 900px) {
+  .rewardsCard {
+    grid-template-columns: 1fr;
+  }
+}
