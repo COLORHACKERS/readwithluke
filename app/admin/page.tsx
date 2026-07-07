@@ -89,15 +89,21 @@ export default function AdminPage() {
   }
 
   async function loadBooks() {
-    const { data, error } = await supabase
-      .from("books")
-      .select("*")
-      .order("created_at", { ascending: false });
+const { data, error } = await supabase
+  .from("books")
+  .update({
+    hero_url: url,
+    hero_image_url: url,
+  })
+  .eq("id", editingId)
+  .select();
 
-    if (error) {
-      alert(error.message);
-      return;
-    }
+console.log("Gateway update:", { data, error, url });
+
+if (error) {
+  alert(error.message);
+  return;
+}
 
     setBooks(data || []);
   }
