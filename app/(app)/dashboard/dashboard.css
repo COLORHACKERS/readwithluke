@@ -168,3 +168,14 @@
     font-size: 15px;
   }
 }
+.dashboardPanel {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 34px;
+  align-items: stretch;
+  overflow: visible;
+}
+
+.dashboardCard {
+  min-height: 230px;
+}
