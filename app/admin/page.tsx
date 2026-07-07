@@ -24,7 +24,7 @@ type BookPage = {
   image_url: string;
 };
 
-const emptyPages: BookPage[] = Array.from({ length: 20 }, (_, index) => ({
+const emptyPages: BookPage[] = Array.from({ length: 21 }, (_, index) => ({
   page_number: index + 1,
   text: "",
   image_url: "",
@@ -462,7 +462,11 @@ export default function AdminPage() {
         <section className="pagesGrid">
           {pages.map((page, index) => (
             <div className="pageCard" key={page.page_number}>
-              <h2>Page {page.page_number}</h2>
+             <h2>
+  {page.page_number === 21
+    ? "⭐ Bonus Page (Optional)"
+    : `Page ${page.page_number}`}
+</h2>
 
               <label>Page Image</label>
               <input
