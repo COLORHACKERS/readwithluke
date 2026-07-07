@@ -183,14 +183,17 @@ const continueBookInfo = Array.isArray(continueBook?.books)
                   <p>Jump into your next magical story.</p>
                 )}
 
-                {continueBook?.books ? (
-                <Link
-  href={`/books/${continueBookInfo.slug}/read?page=${
-    continueBook?.page_number || 1
-  }`}
->
-  Continue
-</Link>
+            {continueBookInfo ? (
+  <Link
+    href={`/books/${continueBookInfo.slug}/read?page=${
+      continueBook?.page_number || 1
+    }`}
+  >
+    Continue
+  </Link>
+) : (
+  <Link href="/library">Go to Library</Link>
+)}
                 ) : (
                   <Link href="/library">Go to Library</Link>
                 )}
