@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import { supabase } from "@/lib/supabase";
@@ -7,45 +8,82 @@ import "../../home.css";
 import "./membership.css";
 
 export default function MembershipPage() {
-  async function startCheckout() {
-    try {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
+  const [familyConfirmed, setFamilyConfirmed] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-      if (!user) {
-        window.location.href = "/signup";
-        return;
-      }
+  async function getUserOrSignup() {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
 
-      const response = await fetch("/api/create-checkout-session", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId: user.id,
-          email: user.email,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        alert(data.error || "Could not start checkout.");
-        return;
-      }
-
-      if (!data.url) {
-        alert("Stripe did not return a checkout URL.");
-        return;
-      }
-
-      window.location.href = data.url;
-    } catch (error) {
-      console.error("Checkout Exception:", error);
-      alert("Could not start checkout. Please try again.");
+    if (!user) {
+      window.location.href = "/signup";
+      return null;
     }
+
+    return user;
+  }
+
+  async function startCheckout() {
+    setLoading(true);
+
+    const user = await getUserOrSignup();
+    if (!user) return;
+
+    const response = await fetch("/api/create-checkout-session", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId: user.id,
+        email: user.email,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok || !data.url) {
+      alert(data.error || "Could not start checkout.");
+      setLoading(false);
+      return;
+    }
+
+    window.location.href = data.url;
+  }
+
+  async function startGiftCheckout() {
+    if (!familyConfirmed) {
+      alert("Please pinkie swear you are a family member.");
+      return;
+    }
+
+    setLoading(true);
+
+    const user = await getUserOrSignup();
+    if (!user) return;
+
+    const response = await fetch("/api/create-gift-checkout-session", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId: user.id,
+        email: user.email,
+        familyConfirmed: true,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok || !data.url) {
+      alert(data.error || "Could not start gift checkout.");
+      setLoading(false);
+      return;
+    }
+
+    window.location.href = data.url;
   }
 
   return (
@@ -53,43 +91,91 @@ export default function MembershipPage() {
       <Header />
 
       <main className="membershipPage">
-        <section className="membershipCard">
-          <p className="membershipEyebrow">READ WITH LUKE MEMBERSHIP</p>
+        <section className="membershipGrid">
+          <div className="membershipCard">
+            <p className="membershipEyebrow">READ WITH LUKE MEMBERSHIP</p>
 
-          <h1>
-            READ FREE
-            <br />
-            UNTIL LAUNCH.
-          </h1>
+            <h1>
+              READ FREE
+              <br />
+              FOR 7 DAYS!
+            </h1>
 
-          <p className="membershipDescription">
-            Create your membership today and unlock unlimited access to every
-            story, learning adventure, reward, and future feature.
-          </p>
+            <p className="membershipDescription">
+              Unlock unlimited stories, learning adventures, rewards, stickers,
+              and future features.
+            </p>
 
-          <p className="membershipDescription">
-            No charge today. Your card will be charged
-            <strong> $9.99/month </strong>
-            when our official launch countdown ends unless you cancel before
-            then.
-          </p>
+            <div className="membershipPrice">
+              <strong>$9.99</strong>
+              <span>per month after free 7-day trial</span>
+            </div>
 
-          <div className="membershipPrice">
-            <strong>$9.99</strong>
-            <span>per month after launch</span>
+            <button
+              type="button"
+              onClick={startCheckout}
+              className="membershipButton"
+              disabled={loading}
+            >
+              START FREE TRIAL
+            </button>
+
+            <p className="membershipFinePrint">
+              Free 7-day trial. Cancel anytime before billing starts.
+            </p>
           </div>
 
-          <button
-            type="button"
-            onClick={startCheckout}
-            className="membershipButton"
-          >
-            START FREE MEMBERSHIP
-          </button>
+          <div className="membershipCard giftCard">
+            <p className="membershipEyebrow">FAMILY GIFT MEMBERSHIP</p>
 
-          <p className="membershipFinePrint">
-            Free until launch. Cancel anytime before billing starts.
-          </p>
+            <h1>
+              GIFT
+              <br />
+              READING!
+            </h1>
+
+            <p className="membershipDescription">
+              A special family gift for grandparents, aunts, uncles, and family
+              members who want to support a child’s reading adventure.
+            </p>
+
+            <div className="membershipPrice">
+              <strong>$19.99</strong>
+              <span>for the first 3 months, then $4.99/month</span>
+            </div>
+
+            <div className="pinkieSwearBox">
+              <img
+                src="/images/luke-pinkie-swear.png"
+                alt="Luke pinkie swear"
+              />
+
+              <label>
+                <input
+                  type="checkbox"
+                  checked={familyConfirmed}
+                  onChange={(e) => setFamilyConfirmed(e.target.checked)}
+                />
+                <span>
+                  I pinkie swear I am a grandparent, aunt, uncle, or family
+                  member.
+                </span>
+              </label>
+            </div>
+
+            <button
+              type="button"
+              onClick={startGiftCheckout}
+              className="membershipButton"
+              disabled={!familyConfirmed || loading}
+            >
+              GIFT READ WITH LUKE
+            </button>
+
+            <p className="membershipFinePrint">
+              By continuing, you confirm this gift is from a family member.
+            </p>
+          </div>
         </section>
       </main>
 
