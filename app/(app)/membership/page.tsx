@@ -70,7 +70,7 @@ export default function MembershipPage() {
 
           <div className="membershipPrice">
             <strong>$19.99</strong>
-            <span>for the first 3 months, then $4.99/month</span>
+            <span>for 3 months of access, then $4.99/month</span>
           </div>
 
           <div className="pinkieSwearBox">
