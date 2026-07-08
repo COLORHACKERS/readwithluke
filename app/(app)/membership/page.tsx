@@ -79,8 +79,7 @@ export default function MembershipPage() {
             <h2>Pinkie Promise</h2>
 
             <p>
-              Before gifting Read With Luke, please promise this gift is from a
-              grandparent, aunt, uncle, or family member.
+              Before gifting Read With Luke, please pinkie promise this special gift is from a grandparent, aunt, uncle, or another family member.
             </p>
 
             <label>
