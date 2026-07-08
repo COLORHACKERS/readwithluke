@@ -130,14 +130,14 @@
 .pinkieSwearBox {
   margin: 30px auto;
   max-width: 360px;
-  background: #fff7ec;
+  background: #ffff;
   border: 2px solid #f1ddc5;
   border-radius: 22px;
   padding: 18px;
 }
 
 .pinkieSwearBox img {
-  width: 115px;
+  width: 125px;
   height: auto;
   display: block;
   margin: 0 auto 14px;
