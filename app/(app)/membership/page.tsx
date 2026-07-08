@@ -13,7 +13,7 @@ export default function MembershipPage() {
 
   async function startGiftCheckout() {
     if (!familyConfirmed) {
-      alert("Please pinkie swear you are a family member.");
+      alert("Please check the Pinkie Promise first.");
       return;
     }
 
@@ -54,55 +54,58 @@ export default function MembershipPage() {
       <Header />
 
       <main className="membershipPage">
-        <section className="membershipGrid singleGiftGrid">
-          <div className="membershipCard giftCard">
-            <p className="membershipEyebrow">FAMILY GIFT MEMBERSHIP</p>
+        <section className="membershipCard giftCard">
+          <p className="membershipEyebrow">FAMILY GIFT MEMBERSHIP</p>
 
-            <h1>
-              GIFT
-              <br />
-              READING!
-            </h1>
+          <h1>
+            GIFT
+            <br />
+            READING!
+          </h1>
 
-            <p className="membershipDescription">
-              A special family gift for grandparents, aunts, uncles, and family
-              members who want to support a child’s reading adventure!
-            </p>
+          <p className="membershipDescription">
+            A special family gift for grandparents, aunts, uncles, and family
+            members who want to support a child’s reading adventure!
+          </p>
 
-            <div className="membershipPrice">
-              <strong>$19.99</strong>
-              <span>for the first 3 months, then $4.99/month</span>
-            </div>
-
-            <div className="pinkieSwearBox">
-              <img src="/images/luke-pinkie-swear.png" alt="Luke pinkie swear" />
-
-              <label>
-                <input
-                  type="checkbox"
-                  checked={familyConfirmed}
-                  onChange={(e) => setFamilyConfirmed(e.target.checked)}
-                />
-                <span>
-                  I pinkie swear I am a grandparent, aunt, uncle, or family
-                  member.
-                </span>
-              </label>
-            </div>
-
-            <button
-              type="button"
-              onClick={startGiftCheckout}
-              className="membershipButton"
-              disabled={!familyConfirmed || loading}
-            >
-              {loading ? "STARTING GIFT..." : "GIFT READ WITH LUKE"}
-            </button>
-
-            <p className="membershipFinePrint">
-              By continuing, you confirm this gift is from a family member.
-            </p>
+          <div className="membershipPrice">
+            <strong>$19.99</strong>
+            <span>for the first 3 months, then $4.99/month</span>
           </div>
+
+          <div className="pinkieSwearBox">
+            <img src="/images/luke-pinkie-swear.png" alt="Luke pinkie swear" />
+
+            <h2>Pinkie Promise</h2>
+
+            <p>
+              Before gifting Read With Luke, please promise this gift is from a
+              grandparent, aunt, uncle, or family member.
+            </p>
+
+            <label>
+              <input
+                type="checkbox"
+                checked={familyConfirmed}
+                onChange={(e) => setFamilyConfirmed(e.target.checked)}
+              />
+
+              <span>I pinkie promise I am a family member.</span>
+            </label>
+          </div>
+
+          <button
+            type="button"
+            onClick={startGiftCheckout}
+            className="membershipButton"
+            disabled={!familyConfirmed || loading}
+          >
+            {loading ? "STARTING GIFT..." : "GIFT READ WITH LUKE"}
+          </button>
+
+          <p className="membershipFinePrint">
+            By continuing, you confirm this gift is from a family member.
+          </p>
         </section>
       </main>
 
