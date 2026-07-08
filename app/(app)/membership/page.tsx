@@ -66,7 +66,7 @@ export default function MembershipPage() {
 
             <p className="membershipDescription">
               A special family gift for grandparents, aunts, uncles, and family
-              members who want to support a child’s reading adventure.
+              members who want to support a child’s reading adventure!
             </p>
 
             <div className="membershipPrice">
