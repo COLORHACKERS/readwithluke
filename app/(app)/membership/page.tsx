@@ -11,47 +11,6 @@ export default function MembershipPage() {
   const [familyConfirmed, setFamilyConfirmed] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  async function getUserOrSignup() {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    if (!user) {
-      window.location.href = "/signup";
-      return null;
-    }
-
-    return user;
-  }
-
-  async function startCheckout() {
-    setLoading(true);
-
-    const user = await getUserOrSignup();
-    if (!user) return;
-
-    const response = await fetch("/api/create-checkout-session", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userId: user.id,
-        email: user.email,
-      }),
-    });
-
-    const data = await response.json();
-
-    if (!response.ok || !data.url) {
-      alert(data.error || "Could not start checkout.");
-      setLoading(false);
-      return;
-    }
-
-    window.location.href = data.url;
-  }
-
   async function startGiftCheckout() {
     if (!familyConfirmed) {
       alert("Please pinkie swear you are a family member.");
@@ -60,14 +19,18 @@ export default function MembershipPage() {
 
     setLoading(true);
 
-    const user = await getUserOrSignup();
-    if (!user) return;
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      window.location.href = "/signup";
+      return;
+    }
 
     const response = await fetch("/api/create-gift-checkout-session", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         userId: user.id,
         email: user.email,
@@ -91,40 +54,7 @@ export default function MembershipPage() {
       <Header />
 
       <main className="membershipPage">
-        <section className="membershipGrid">
-          <div className="membershipCard">
-            <p className="membershipEyebrow">READ WITH LUKE MEMBERSHIP</p>
-
-            <h1>
-              READ FREE
-              <br />
-              FOR 7 DAYS!
-            </h1>
-
-            <p className="membershipDescription">
-              Unlock unlimited stories, learning adventures, rewards, stickers,
-              and future features.
-            </p>
-
-            <div className="membershipPrice">
-              <strong>$9.99</strong>
-              <span>per month after free 7-day trial</span>
-            </div>
-
-            <button
-              type="button"
-              onClick={startCheckout}
-              className="membershipButton"
-              disabled={loading}
-            >
-              START FREE TRIAL
-            </button>
-
-            <p className="membershipFinePrint">
-              Free 7-day trial. Cancel anytime before billing starts.
-            </p>
-          </div>
-
+        <section className="membershipGrid singleGiftGrid">
           <div className="membershipCard giftCard">
             <p className="membershipEyebrow">FAMILY GIFT MEMBERSHIP</p>
 
@@ -145,10 +75,7 @@ export default function MembershipPage() {
             </div>
 
             <div className="pinkieSwearBox">
-              <img
-                src="/images/luke-pinkie-swear.png"
-                alt="Luke pinkie swear"
-              />
+              <img src="/images/luke-pinkie-swear.png" alt="Luke pinkie swear" />
 
               <label>
                 <input
@@ -169,7 +96,7 @@ export default function MembershipPage() {
               className="membershipButton"
               disabled={!familyConfirmed || loading}
             >
-              GIFT READ WITH LUKE
+              {loading ? "STARTING GIFT..." : "GIFT READ WITH LUKE"}
             </button>
 
             <p className="membershipFinePrint">
