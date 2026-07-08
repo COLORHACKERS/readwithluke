@@ -332,3 +332,20 @@
     font-size: 23px;
   }
 }
+.forgotPassword {
+  display: flex;
+  justify-content: flex-end;
+  margin: -6px 0 26px;
+}
+
+.forgotPassword a {
+  color: #c6542d;
+  text-decoration: none;
+  font-family: "Courier New", monospace;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.forgotPassword a:hover {
+  text-decoration: underline;
+}
