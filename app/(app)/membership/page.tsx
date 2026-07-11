@@ -97,52 +97,61 @@ export default function MembershipPage() {
             <span>for 3 months of access, then $4.99/month</span>
           </div>
 
-          <div className="giftDetails">
-            <label htmlFor="parentEmail">Parent’s Email</label>
+        <div className="giftDetails">
+  <div className="giftField">
+    <label className="giftFieldLabel" htmlFor="parentEmail">
+      Parent or Guardian’s Email
+    </label>
 
-            <input
-              id="parentEmail"
-              type="email"
-              placeholder="parent@email.com"
-              value={parentEmail}
-              onChange={(event) => setParentEmail(event.target.value)}
-              required
-            />
+    <input
+      id="parentEmail"
+      className="giftTextInput"
+      type="email"
+      placeholder="parent@email.com"
+      value={parentEmail}
+      onChange={(event) => setParentEmail(event.target.value)}
+      autoComplete="email"
+      required
+    />
 
-            <p className="giftFieldNote">
-              This parent account will receive the child’s Read With Luke
-              access.
-            </p>
+    <p className="giftFieldNote">
+      We’ll email the parent or guardian instructions to activate the child’s
+      Read With Luke membership.
+    </p>
+  </div>
 
-            <label htmlFor="relationship">Who are you?</label>
+  <div className="giftField">
+    <label className="giftFieldLabel" htmlFor="relationship">
+      Your relationship to the child
+    </label>
 
-            <select
-              id="relationship"
-              value={relationship}
-              onChange={(event) => setRelationship(event.target.value)}
-              required
-            >
-              <option value="">Choose relationship</option>
-              <option value="grandparent">Grandparent</option>
-              <option value="aunt_uncle">Aunt or Uncle</option>
-              <option value="family_member">Other Family Member</option>
-            </select>
+    <select
+      id="relationship"
+      className="giftSelect"
+      value={relationship}
+      onChange={(event) => setRelationship(event.target.value)}
+      required
+    >
+      <option value="">Choose relationship</option>
+      <option value="grandparent">Grandparent</option>
+      <option value="aunt_uncle">Aunt or Uncle</option>
+      <option value="family_member">Other Family Member</option>
+    </select>
+  </div>
 
-            <label className="progressEmailOption">
-              <input
-                type="checkbox"
-                checked={progressEmails}
-                onChange={(event) =>
-                  setProgressEmails(event.target.checked)
-                }
-              />
+  <label className="progressEmailOption">
+    <input
+      type="checkbox"
+      checked={progressEmails}
+      onChange={(event) => setProgressEmails(event.target.checked)}
+    />
 
-              <span>
-                Email me a monthly progress report with books completed, coins,
-                badges, and reading streak.
-              </span>
-            </label>
-          </div>
+    <span>
+      Email me a monthly reading update with books completed, coins, badges,
+      and reading streak.
+    </span>
+  </label>
+</div>
 
           <div className="pinkieSwearBox">
             <img
