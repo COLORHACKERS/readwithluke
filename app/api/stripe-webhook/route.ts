@@ -388,15 +388,30 @@ async function cancelSubscription(
     .maybeSingle();
 
   if (gift) {
-    await supabaseAdmin
-      .from("gift_memberships")
-      .update({
-        status: "cancelled",
-      })
-      .eq("id", gift.id);
+  const { data: giftDetails } = await supabaseAdmin
+    .from("gift_memberships")
+    .select("id, parent_user_id")
+    .eq("id", gift.id)
+    .single();
 
-    return;
+  await supabaseAdmin
+    .from("gift_memberships")
+    .update({
+      status: "cancelled",
+    })
+    .eq("id", gift.id);
+
+  if (giftDetails?.parent_user_id) {
+    await supabaseAdmin
+      .from("profiles")
+      .update({
+        membership_status: "cancelled",
+      })
+      .eq("id", giftDetails.parent_user_id);
   }
+
+  return;
+}
 
   await supabaseAdmin
     .from("profiles")
