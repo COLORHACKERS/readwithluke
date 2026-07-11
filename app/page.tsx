@@ -105,15 +105,16 @@ export default function Home() {
           </div>
         </section>
 
-     <section className="homeExplore">
-  <div className="homeContentSections">
-    <HomeLearnFeature />
+        <section className="homeExplore">
+          <div className="homeContentSections">
+            <HomeLearnFeature />
 
-    <HomeBookCarousel />
+            <HomeBookCarousel />
 
-    <HomeBenefits />
-  </div>
-</section>
+            <HomeBenefits />
+          </div>
+        </section>
+      </main>
 
       <Footer />
     </>
