@@ -68,4 +68,4 @@ export default function HomeBenefits() {
       </div>
     </section>
   );
-}s
+}
