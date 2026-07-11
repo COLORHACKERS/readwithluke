@@ -349,3 +349,17 @@
 .forgotPassword a:hover {
   text-decoration: underline;
 }
+.homeContentSections {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  padding: 70px 34px 90px;
+  box-sizing: border-box;
+  background: #f8f1e6;
+}
+
+@media (max-width: 768px) {
+  .homeContentSections {
+    padding: 42px 16px 60px;
+  }
+}
