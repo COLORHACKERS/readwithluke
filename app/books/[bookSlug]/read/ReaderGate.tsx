@@ -3,73 +3,101 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
-const [parentEmail, setParentEmail] = useState("");
-const [relationship, setRelationship] = useState("");
-const [progressEmails, setProgressEmails] = useState(true);
 
-export default function ReaderGate({ children }: { children: React.ReactNode }) {
+export default function ReaderGate({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const router = useRouter();
+
   const [allowed, setAllowed] = useState(false);
+  const [checking, setChecking] = useState(true);
 
   useEffect(() => {
+    let isMounted = true;
+
     async function checkAccess() {
-      const isAdmin = localStorage.getItem("rwl-admin") === "yes";
+      try {
+        // Allow admins to preview books.
+        const isAdmin = localStorage.getItem("rwl-admin") === "yes";
 
-      if (isAdmin) {
-        setAllowed(true);
-        return;
-      }
+        if (isAdmin) {
+          if (isMounted) {
+            setAllowed(true);
+            setChecking(false);
+          }
 
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
+          return;
+        }
 
-      if (!user) {
-        router.replace("/signup");
-        return;
-      }
+        // Check whether the visitor is signed in.
+        const {
+          data: { user },
+          error: userError,
+        } = await supabase.auth.getUser();
 
- const { data: profile, error } = await supabase
-  .from("profiles")
-  .select(
-    "membership_status, stripe_customer_id, stripe_subscription_id, complimentary_access"
-  )
-  .eq("id", user.id)
-  .single();
+        if (userError || !user) {
+          router.replace("/signup");
+          return;
+        }
 
-      if (error || !profile) {
+        // Get the reader's membership information.
+        const { data: profile, error: profileError } = await supabase
+          .from("profiles")
+          .select("membership_status, complimentary_access")
+          .eq("id", user.id)
+          .maybeSingle();
+
+        if (profileError) {
+          console.error("ReaderGate profile error:", profileError);
+          router.replace("/membership");
+          return;
+        }
+
+        if (!profile) {
+          console.error("ReaderGate: No profile found for user", user.id);
+          router.replace("/membership");
+          return;
+        }
+
+        const membershipStatus = profile.membership_status
+          ?.trim()
+          .toLowerCase();
+
+        const hasPaidAccess =
+          membershipStatus === "active" ||
+          membershipStatus === "trialing";
+
+        const hasComplimentaryAccess =
+          profile.complimentary_access === true;
+
+        if (!hasPaidAccess && !hasComplimentaryAccess) {
+          router.replace("/membership");
+          return;
+        }
+
+        if (isMounted) {
+          setAllowed(true);
+          setChecking(false);
+        }
+      } catch (error) {
+        console.error("ReaderGate access error:", error);
         router.replace("/membership");
-        return;
       }
-
-     const hasStripe =
-  Boolean(profile.stripe_customer_id) ||
-  Boolean(profile.stripe_subscription_id);
-
-const hasPaidAccess =
-  hasStripe &&
-  (profile.membership_status === "trialing" ||
-    profile.membership_status === "active");
-
-const hasComplimentaryAccess =
-  profile.complimentary_access === true;
-
-if (!hasPaidAccess && !hasComplimentaryAccess) {
-  router.replace("/membership");
-  return;
-}
-      
-
-      setAllowed(true);
     }
 
     checkAccess();
+
+    return () => {
+      isMounted = false;
+    };
   }, [router]);
 
-  if (!allowed) {
+  if (checking || !allowed) {
     return (
       <div className="readerLoading">
-        <p>Loading...</p>
+        <p>Loading your book...</p>
       </div>
     );
   }
