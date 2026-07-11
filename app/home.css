@@ -886,14 +886,18 @@
 /* Narrow the marquee so six smaller covers fit */
 .homeSectionHeading,
 .marqueeWindow {
-  width: min(calc(100% - 116px), 1240px);
+  width: calc(100% - 80px);
+  max-width: none;
+  margin-left: auto;
+  margin-right: auto;
 }
+
 
 /* Exactly six smaller book covers */
 .marqueeSet {
   --card-width: calc(
     (
-      min(calc(100vw - 116px), 1240px) - 80px
+      100vw - 80px - 80px
     ) / 6
   );
 }
