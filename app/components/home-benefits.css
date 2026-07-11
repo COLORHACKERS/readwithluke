@@ -1,0 +1,160 @@
+.homeBenefitsSection {
+  width: min(100%, 1500px);
+  margin: 34px auto;
+  padding: 50px 46px 54px;
+  box-sizing: border-box;
+
+  background: #fffaf2;
+  border: 2px solid #ead6bd;
+  border-radius: 34px;
+}
+
+.homeBenefitsHeading {
+  max-width: 760px;
+  margin: 0 auto 38px;
+  text-align: center;
+}
+
+.homeBenefitsEyebrow {
+  margin: 0 0 8px;
+  color: #ff5526;
+  font-family: "Courier New", monospace;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+.homeBenefitsHeading h2 {
+  margin: 0;
+  color: #13294b;
+  font-family: "DK Woolwich", "Arial Black", sans-serif;
+  font-size: 52px;
+  line-height: 0.95;
+}
+
+.homeBenefitsHeading > p:last-child {
+  margin: 14px 0 0;
+  color: #13294b;
+  font-family: "Courier New", monospace;
+  font-size: 15px;
+  line-height: 1.5;
+  font-weight: 700;
+}
+
+.homeBenefitsGrid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.homeBenefitCard {
+  min-width: 0;
+  padding: 26px 18px;
+  text-align: center;
+
+  background: #ffffff;
+  border: 2px solid #f0dfcb;
+  border-radius: 24px;
+}
+
+.homeBenefitIcon {
+  min-height: 72px;
+  display: grid;
+  place-items: center;
+  font-size: 54px;
+  line-height: 1;
+}
+
+.homeBenefitCard h3 {
+  margin: 18px 0 10px;
+  color: #13294b;
+  font-family: "DK Woolwich", "Arial Black", sans-serif;
+  font-size: 27px;
+  line-height: 0.95;
+}
+
+.homeBenefitCard p {
+  margin: 0;
+  color: #4f4942;
+  font-family: "Courier New", monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  font-weight: 700;
+}
+
+.homeBenefitsActions {
+  margin-top: 34px;
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.homeBenefitsPrimary,
+.homeBenefitsSecondary {
+  min-height: 54px;
+  padding: 0 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 999px;
+  font-family: "Courier New", monospace;
+  font-size: 13px;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.homeBenefitsPrimary {
+  background: #ff5526;
+  color: #ffffff;
+  border: 3px solid #ff5526;
+}
+
+.homeBenefitsSecondary {
+  background: #ffffff;
+  color: #13294b;
+  border: 3px solid #13294b;
+}
+
+@media (max-width: 1100px) {
+  .homeBenefitsGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .homeBenefitsSection {
+    padding: 34px 18px 38px;
+    border-radius: 24px;
+  }
+
+  .homeBenefitsHeading h2 {
+    font-size: 38px;
+  }
+
+  .homeBenefitsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .homeBenefitCard {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    column-gap: 16px;
+    text-align: left;
+  }
+
+  .homeBenefitIcon {
+    grid-row: 1 / 3;
+    min-height: 0;
+    font-size: 46px;
+  }
+
+  .homeBenefitCard h3 {
+    margin: 0 0 8px;
+  }
+
+  .homeBenefitsActions {
+    display: grid;
+  }
+}
