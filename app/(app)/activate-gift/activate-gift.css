@@ -1,0 +1,231 @@
+.activateGiftPage {
+  position: relative;
+  min-height: calc(100vh - 140px);
+  padding: 130px 24px 80px;
+  display: grid;
+  place-items: center;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.activateGiftPage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("/images/home-hero.png");
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+
+.activateGiftPage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(248, 241, 230, 0.78);
+  z-index: 1;
+}
+
+.activateGiftCard {
+  position: relative;
+  z-index: 2;
+  width: min(100%, 680px);
+  padding: 58px;
+  box-sizing: border-box;
+
+  background: rgba(255, 255, 255, 0.97);
+  border-radius: 40px;
+  box-shadow: 0 22px 65px rgba(0, 0, 0, 0.16);
+
+  text-align: center;
+}
+
+.activateGiftIcon {
+  font-size: 66px;
+  line-height: 1;
+  margin-bottom: 16px;
+}
+
+.activateGiftEyebrow {
+  margin: 0 0 16px;
+  color: #ff5526;
+  font-family: "Courier New", monospace;
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.activateGiftCard h1 {
+  margin: 0;
+  color: #050505;
+  font-family: "DK Woolwich", "Arial Black", sans-serif;
+  font-size: 72px;
+  line-height: 0.88;
+}
+
+.activateGiftDescription {
+  max-width: 520px;
+  margin: 24px auto 0;
+  color: #13294b;
+  font-family: "Courier New", monospace;
+  font-size: 15px;
+  line-height: 1.5;
+  font-weight: 700;
+}
+
+.activateGiftTabs {
+  margin: 32px 0 28px;
+  padding: 5px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 5px;
+
+  background: #fff7ec;
+  border: 2px solid #ead6bd;
+  border-radius: 999px;
+}
+
+.activateGiftTabs button {
+  min-height: 46px;
+  padding: 8px 14px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #13294b;
+
+  font-family: "Courier New", monospace;
+  font-size: 12px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.activateGiftTabs button.active {
+  background: #ff5526;
+  color: #ffffff;
+}
+
+.activateGiftForm {
+  text-align: left;
+}
+
+.activateGiftForm label {
+  display: block;
+  margin: 18px 4px 8px;
+
+  color: #13294b;
+  font-family: "Courier New", monospace;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.activateGiftForm input {
+  width: 100%;
+  height: 58px;
+  padding: 0 20px;
+  box-sizing: border-box;
+
+  background: #fff7ec;
+  border: 3px solid #dfcdb7;
+  border-radius: 999px;
+
+  color: #050505;
+  font-family: "Courier New", monospace;
+  font-size: 15px;
+  font-weight: 700;
+  outline: none;
+}
+
+.activateGiftForm input:focus {
+  border-color: #ff5526;
+  box-shadow: 0 0 0 5px rgba(255, 85, 38, 0.12);
+}
+
+.activateGiftButton {
+  width: 100%;
+  min-height: 60px;
+  margin-top: 30px;
+  padding: 15px 28px;
+  box-sizing: border-box;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 0;
+  border-radius: 999px;
+  background: #ff5526;
+  color: #ffffff;
+
+  font-family: "Courier New", monospace;
+  font-size: 14px;
+  font-weight: 900;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.activateGiftButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.activateGiftMessage {
+  margin: 18px 4px 0;
+  color: #c6542d;
+  font-family: "Courier New", monospace;
+  font-size: 12px;
+  line-height: 1.45;
+  font-weight: 900;
+  text-align: center;
+}
+
+.activateGiftForgot {
+  display: inline-block;
+  margin-top: 20px;
+  color: #c6542d;
+  font-family: "Courier New", monospace;
+  font-size: 12px;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.activateGiftLoading {
+  color: #13294b;
+  font-family: "Courier New", monospace;
+  font-size: 18px;
+  font-weight: 900;
+}
+
+@media (max-width: 768px) {
+  .activateGiftPage {
+    padding: 92px 14px 44px;
+  }
+
+  .activateGiftCard {
+    padding: 36px 22px;
+    border-radius: 28px;
+  }
+
+  .activateGiftIcon {
+    font-size: 48px;
+  }
+
+  .activateGiftCard h1 {
+    font-size: 50px;
+  }
+
+  .activateGiftDescription {
+    font-size: 13px;
+  }
+
+  .activateGiftTabs {
+    grid-template-columns: 1fr;
+    border-radius: 22px;
+  }
+
+  .activateGiftTabs button {
+    border-radius: 18px;
+  }
+
+  .activateGiftForm input {
+    height: 54px;
+  }
+}
