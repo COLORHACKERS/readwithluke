@@ -373,9 +373,6 @@
   right: 0;
   top: -90px;
   height: 90px;
-  );
-
-  pointer-events: none;
 }
 
 .homeContentSections {
