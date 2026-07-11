@@ -1,396 +1,873 @@
-@font-face {
-  font-family: "DK Woolwich";
-  src: url("/fonts/dk-woolwich.otf") format("opentype");
-}
-
 .homePage {
   position: relative;
   width: 100%;
   min-height: 100vh;
-  overflow: hidden;
-  background: #050505;
-  padding: 150px 46px 90px;
-  box-sizing: border-box;
+  overflow-x: hidden;
+  background: #7f96aa;
 }
 
 .homeBg {
   position: absolute;
   inset: 0;
+  z-index: 0;
+
   width: 100%;
   height: 100%;
+
   object-fit: cover;
   object-position: center top;
-  z-index: 0;
+
+  pointer-events: none;
 }
 
 .homePage::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.05);
   z-index: 1;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(22, 45, 68, 0.18) 0%,
+      rgba(22, 45, 68, 0.06) 40%,
+      rgba(255, 241, 215, 0.08) 100%
+    );
+  pointer-events: none;
 }
 
 .homeHero,
-.homeMarquee {
+.homeMarquee,
+.learningSection,
+.homeBenefits {
   position: relative;
   z-index: 2;
-  padding-bottom: 28px;
 }
 
+/* --------------------------------------------------
+   HERO
+-------------------------------------------------- */
+
 .homeHero {
-  display: grid;
-  grid-template-columns: 42% 1fr;
-  gap: 44px;
-  align-items: center;
-  max-width: 1368px;
+  padding: 72px 58px 48px;
+}
+
+.homeHeroInner {
+  width: min(100%, 1380px);
+  min-height: 470px;
   margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: minmax(300px, 0.75fr) minmax(560px, 1.45fr);
+  align-items: center;
+  gap: 54px;
+}
+
+.homeHeroText {
+  color: #ffffff;
 }
 
 .homeHeroText h1 {
   margin: 0;
-  font-family: "DK Woolwich", "Arial Black", sans-serif;
-  font-size: 90px;
-  line-height: 0.86;
-  color: white;
+
+  font-family: "Bangers", sans-serif;
+  font-size: clamp(58px, 5.5vw, 88px);
+  font-weight: 400;
+  line-height: 0.92;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+
+  text-shadow: 0 4px 18px rgba(21, 35, 47, 0.14);
 }
 
 .homeHeroText p {
+  max-width: 490px;
   margin: 28px 0 0;
+
   font-family: "Courier New", monospace;
-  font-size: 21px;
-  line-height: 1.28;
-  font-weight: 900;
-  color: white;
+  font-size: clamp(16px, 1.4vw, 21px);
+  font-weight: 700;
+  line-height: 1.45;
 }
 
-.homeTimer {
+/* --------------------------------------------------
+   FEATURED BOOK
+-------------------------------------------------- */
+
+.featuredBookCard {
+  position: relative;
   display: block;
-  width: min(100%, 560px);
-  margin: 0 auto;
-  background: #ff4b16;
-  border-radius: 16px;
-  padding: 30px 38px 26px;
-  text-align: center;
-  box-sizing: border-box;
-  color: white;
+  width: 100%;
+  aspect-ratio: 1.72 / 1;
+
+  overflow: hidden;
+  border: 5px solid #ffffff;
+  border-radius: 32px;
+
+  color: #ffffff;
   text-decoration: none;
-  border: 4px solid white;
-  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.35);
+
+  box-shadow: 0 22px 60px rgba(18, 34, 49, 0.18);
+  transform: translateZ(0);
 }
 
-.launchDate {
+.featuredBookCard > img {
+  width: 100%;
+  height: 100%;
+
   display: block;
+  object-fit: cover;
+  object-position: center;
+
+  transition: transform 500ms ease;
+}
+
+.featuredBookCard:hover > img {
+  transform: scale(1.025);
+}
+
+.featuredBookShade {
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(3, 13, 27, 0.9) 0%,
+      rgba(3, 13, 27, 0.66) 46%,
+      rgba(3, 13, 27, 0.12) 100%
+    );
+}
+
+.featuredBookContent {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+
+  width: 61%;
+  padding: clamp(28px, 4vw, 58px);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+
+  box-sizing: border-box;
+}
+
+.featuredEyebrow {
+  margin-bottom: 14px;
+
   font-family: "Courier New", monospace;
-  font-weight: 900;
-  font-size: 14px;
-  letter-spacing: 2px;
-  margin-bottom: 12px;
-  color: white;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+
+  color: #f8c134;
 }
 
-.homeTimer h2 {
-  margin: 0 0 20px;
-  font-family: "DK Woolwich", "Arial Black", sans-serif;
-  font-size: 30px;
-  line-height: 0.95;
-  color: white;
-}
+.featuredBookContent h2,
+.largeLearningContent h2 {
+  margin: 0;
 
-.timerGrid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 9px;
-}
-
-.timerGrid div {
-  background: white;
-  border-radius: 6px;
-  padding: 18px 6px 12px;
-  color: #ff4b16;
-}
-
-.timerGrid strong {
-  display: block;
-  font-family: Impact, "Arial Black", sans-serif;
-  font-size: 44px;
-  line-height: 0.8;
+  font-family: "Bangers", sans-serif;
+  font-size: clamp(40px, 4.2vw, 67px);
+  font-weight: 400;
+  line-height: 0.94;
   letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
-.timerGrid span {
-  display: block;
-  margin-top: 10px;
-  font-family: "Courier New", monospace;
-  font-size: 12px;
-  font-weight: 900;
-}
+.featuredBookContent p,
+.largeLearningContent p {
+  display: -webkit-box;
+  max-width: 510px;
+  margin: 18px 0 0;
 
-.homeTimer > strong {
-  display: block;
-  margin-top: 18px;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+
   font-family: "Courier New", monospace;
   font-size: 13px;
-  letter-spacing: 1px;
-  color: white;
+  font-weight: 700;
+  line-height: 1.45;
 }
+
+.orangeButton {
+  min-height: 44px;
+  margin-top: 24px;
+  padding: 0 21px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  border-radius: 999px;
+  background: #ff512b;
+  color: #ffffff;
+
+  font-family: "Courier New", monospace;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+/* --------------------------------------------------
+   SECTION TITLES
+-------------------------------------------------- */
+
+.homeSectionHeading {
+  width: min(calc(100% - 116px), 1380px);
+  margin: 0 auto 22px;
+}
+
+.homeSectionHeading h2 {
+  margin: 0;
+
+  color: #ffffff;
+  font-family: "Bangers", sans-serif;
+  font-size: clamp(34px, 3.3vw, 48px);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+
+  text-shadow: 0 3px 12px rgba(21, 35, 47, 0.12);
+}
+
+/* --------------------------------------------------
+   CONTINUOUS MARQUEES
+-------------------------------------------------- */
 
 .homeMarquee {
-  max-width: 1368px;
-  margin: 140px auto 0; /* moves marquee down */
-  padding-bottom: 28px;
-}
-
-.homeMarquee h2 {
-  margin: 0 0 18px;
-  font-family: "DK Woolwich", "Arial Black", sans-serif;
-  font-size: 42px;
-  color: white;
+  padding: 8px 0 62px;
 }
 
 .marqueeWindow {
+  width: min(calc(100% - 116px), 1380px);
+  margin: 0 auto;
   overflow: hidden;
-  width: 100%;
 }
 
 .marqueeTrack {
   display: flex;
-  gap: 22px;
+  align-items: stretch;
+  gap: 16px;
   width: max-content;
-  animation: marqueeScroll 55s linear infinite;
+
+  animation: homeMarqueeMove 32s linear infinite;
   will-change: transform;
 }
 
-.marqueeWindow:hover .marqueeTrack {
-  animation-play-state: paused;
+.marqueeTrackReverse {
+  animation-direction: reverse;
+  animation-duration: 36s;
+}
+
+.marqueeSet {
+  --card-width: calc(
+    (
+      min(calc(100vw - 116px), 1380px) - 80px
+    ) / 6
+  );
+
+  display: grid;
+  grid-template-columns: repeat(6, var(--card-width));
+  gap: 16px;
 }
 
 .marqueeCard {
-  flex: 0 0 300px;
-  aspect-ratio: 2 / 3;
-  height: auto;
-  border-radius: 16px;
-  overflow: hidden;
   position: relative;
-  border: 4px solid white;
+  display: block;
+  width: 100%;
+  aspect-ratio: 0.7 / 1;
+
+  overflow: hidden;
+  border-radius: 21px;
+
+  background: #ffffff;
+  color: #13294b;
   text-decoration: none;
-  color: white;
-  background: white;
-}
 
-@keyframes marqueeScroll {
-  from {
-    transform: translateX(0);
-  }
-
-  to {
-    transform: translateX(-1328px);
-  }
+  box-shadow: 0 13px 30px rgba(25, 43, 57, 0.14);
+  transform: translateZ(0);
 }
 
 .marqueeCard img {
   width: 100%;
   height: 100%;
+
+  display: block;
   object-fit: cover;
+  object-position: center;
+
+  transition: transform 400ms ease;
 }
 
-.marqueeOverlay {
+.marqueeCard:hover img {
+  transform: scale(1.04);
+}
+
+.marqueeCardLabel {
   position: absolute;
-  inset: 0;
-  padding: 18px;
+  inset: auto 0 0;
+
+  padding: 36px 13px 13px;
+
+  background:
+    linear-gradient(
+      180deg,
+      transparent,
+      rgba(2, 12, 23, 0.85)
+    );
+
+  opacity: 0;
+  transition: opacity 220ms ease;
 }
 
-.marqueeOverlay h3 {
-  margin: 0;
-  font-family: "DK Woolwich", "Arial Black", sans-serif;
-  font-size: 30px;
-  line-height: 0.95;
-  color: white;
+.marqueeCardLabel span {
+  display: block;
+
+  color: #ffffff;
+  font-family: "Bangers", sans-serif;
+  font-size: 19px;
+  line-height: 1;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
 
-@media (max-width: 900px) {
-  .homeHero {
-    grid-template-columns: 1fr;
-  }
-
-  .homeHeroText h1 {
-    font-size: 62px;
-  }
-
-  .homeTimer h2 {
-    font-size: 24px;
-  }
-
-  .timerGrid strong {
-    font-size: 34px;
-  }
-}
-@media (max-width: 600px) {
-  .homePage {
-    min-height: 100vh;
-    overflow-x: hidden;
-    overflow-y: auto;
-    padding: 115px 18px 60px;
-  }
-
-  .homeBg {
-    object-position: center top;
-  }
-
-  .homePage::after {
-    background: rgba(0, 0, 0, 0.45);
-  }
-
-  .homeHero {
-    grid-template-columns: 1fr;
-    gap: 28px;
-    text-align: center;
-  }
-
-  .homeHeroText h1 {
-    font-size: 48px;
-    line-height: 0.88;
-  }
-
-  .homeHeroText p {
-    font-size: 15px;
-    line-height: 1.35;
-    margin-top: 18px;
-  }
-
-  .homeTimer {
-    width: 100%;
-    padding: 22px 16px 20px;
-    border-radius: 14px;
-    border-width: 3px;
-  }
-
-  .launchDate {
-    font-size: 11px;
-    letter-spacing: 1.5px;
-  }
-
-  .homeTimer h2 {
-    font-size: 22px;
-    margin-bottom: 16px;
-  }
-
-  .timerGrid {
-    gap: 6px;
-  }
-
-  .timerGrid div {
-    padding: 14px 4px 10px;
-  }
-
-  .timerGrid strong {
-    font-size: 30px;
-  }
-
-  .timerGrid span {
-    font-size: 9px;
-    margin-top: 7px;
-  }
-
-  .homeMarquee {
-    margin: 70px auto 0;
-    padding-bottom: 28px;
-  }
-
-  .homeMarquee h2 {
-    font-size: 32px;
-    text-align: center;
-  }
-
-.marqueeTrack {
-  gap: 14px;
-  animation-duration: 42s;
+.marqueeCard:hover .marqueeCardLabel {
+  opacity: 1;
 }
 
-.marqueeCard {
-  flex: 0 0 220px;
-  aspect-ratio: 2 / 3;
-  height: auto;
-  border-width: 3px;
-}
-
-@keyframes marqueeScroll {
+@keyframes homeMarqueeMove {
   from {
     transform: translateX(0);
   }
 
   to {
-    transform: translateX(-936px);
+    transform: translateX(calc(-50% - 8px));
   }
 }
-.marqueeCard {
-  flex: 0 0 220px;
-  aspect-ratio: 2 / 3;
-  height: auto;
-  border-width: 3px;
+
+/* --------------------------------------------------
+   LEARNING FEATURE SECTION
+-------------------------------------------------- */
+
+.learningSection {
+  padding: 42px 58px 32px;
+  border-top: 3px solid rgba(255, 255, 255, 0.75);
 }
 
-  .marqueeOverlay h3 {
-    font-size: 23px;
-  }
-}
-.forgotPassword {
-  display: flex;
-  justify-content: flex-end;
-  margin: -6px 0 26px;
-}
-
-.forgotPassword a {
-  color: #c6542d;
-  text-decoration: none;
-  font-family: "Courier New", monospace;
-  font-size: 13px;
-  font-weight: 900;
-}
-
-.forgotPassword a:hover {
-  text-decoration: underline;
-}
-/* =====================================
-   TRANSITION BELOW TOP CAROUSEL
-===================================== */
-.homeExplore {
-  width: 100%;
-  background: transparent;
-
-  margin-top: -20px;
-  padding-bottom: 110px;
-
-  position: relative;
-  z-index: 5;
-}
-
-/* Soft transition instead of a hard horizontal cut */
-.homeExplore::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: -90px;
-  height: 90px;
-}
-
-.homeContentSections {
-  width: min(1540px, calc(100% - 70px));
+.learningFeatureGrid {
+  width: min(100%, 1320px);
   margin: 0 auto;
 
-  background: #f8f1e6;
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(300px, 0.92fr);
+  align-items: stretch;
+  gap: 80px;
+}
 
-  border-radius: 38px 38px 0 0;
+.largeLearningFeature {
+  position: relative;
+  display: block;
+  min-height: 470px;
 
-  padding: 55px 40px 90px;
+  overflow: hidden;
+  border: 5px solid #ffffff;
+  border-radius: 32px;
+
+  color: #ffffff;
+  text-decoration: none;
+
+  box-shadow: 0 20px 55px rgba(18, 34, 49, 0.16);
+}
+
+.largeLearningFeature > img {
+  width: 100%;
+  height: 100%;
+
+  position: absolute;
+  inset: 0;
+
+  object-fit: cover;
+  object-position: center;
+
+  transition: transform 500ms ease;
+}
+
+.largeLearningFeature:hover > img {
+  transform: scale(1.025);
+}
+
+.learningFeatureShade {
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(3, 13, 27, 0.92) 0%,
+      rgba(3, 13, 27, 0.65) 48%,
+      rgba(3, 13, 27, 0.08) 100%
+    );
+}
+
+.largeLearningContent {
+  position: relative;
+  z-index: 2;
+
+  width: 62%;
+  height: 100%;
+  min-height: 470px;
+  padding: clamp(30px, 4vw, 56px);
 
   display: flex;
   flex-direction: column;
-  gap: 42px;
+  justify-content: center;
+  align-items: flex-start;
 
   box-sizing: border-box;
+}
 
-  box-shadow:
-    0 -12px 35px rgba(0,0,0,.08);
+.smallLearningFeature {
+  min-width: 0;
+  overflow: hidden;
+
+  display: grid;
+  grid-template-rows: minmax(215px, 1fr) auto;
+
+  border: 5px solid #ffffff;
+  border-radius: 32px;
+  background: #ffffff;
+
+  color: #13294b;
+  text-decoration: none;
+
+  box-shadow: 0 20px 55px rgba(18, 34, 49, 0.16);
+}
+
+.smallLearningImage {
+  min-height: 215px;
+  overflow: hidden;
+}
+
+.smallLearningImage img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+  object-fit: cover;
+  object-position: center;
+
+  transition: transform 500ms ease;
+}
+
+.smallLearningFeature:hover .smallLearningImage img {
+  transform: scale(1.035);
+}
+
+.smallLearningContent {
+  padding: 28px 27px 31px;
+}
+
+.smallLearningEyebrow {
+  display: block;
+  margin-bottom: 11px;
+
+  color: #ff512b;
+  font-family: "Courier New", monospace;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 1.3px;
+  text-transform: uppercase;
+}
+
+.smallLearningContent h3 {
+  margin: 0;
+
+  font-family: "Bangers", sans-serif;
+  font-size: clamp(27px, 2.5vw, 37px);
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.smallLearningContent p {
+  display: -webkit-box;
+  margin: 15px 0 0;
+
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+
+  font-family: "Courier New", monospace;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.exploreLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 22px;
+
+  color: #ff512b;
+  font-family: "Courier New", monospace;
+  font-size: 10px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.learningMarquee {
+  padding-top: 0;
+}
+
+/* --------------------------------------------------
+   BENEFITS
+-------------------------------------------------- */
+
+.homeBenefits {
+  margin-top: 12px;
+  padding: 42px 58px 52px;
+
+  background: #ff512b;
+}
+
+.benefitsInner {
+  width: min(100%, 1380px);
+  margin: 0 auto;
+}
+
+.benefitsGrid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.benefitCard {
+  min-height: 220px;
+  padding: 28px 22px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 22px;
+  background: #ffffff;
+  color: #13294b;
+  text-align: center;
+
+  box-sizing: border-box;
+  box-shadow: 0 11px 26px rgba(117, 38, 20, 0.12);
+}
+
+.benefitIcon {
+  display: block;
+  margin-bottom: 18px;
+
+  font-size: 42px;
+  line-height: 1;
+}
+
+.benefitCard h3 {
+  margin: 0;
+
+  font-family: "Bangers", sans-serif;
+  font-size: 25px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+.benefitCard p {
+  max-width: 210px;
+  margin: 15px auto 0;
+
+  font-family: "Courier New", monospace;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.benefitActions {
+  margin-top: 32px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.benefitOutlineButton,
+.benefitWhiteButton {
+  min-height: 47px;
+  padding: 0 25px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 999px;
+
+  font-family: "Courier New", monospace;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.2px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.benefitOutlineButton {
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: #ffffff;
+}
+
+.benefitWhiteButton {
+  border: 3px solid #13294b;
+  background: #ffffff;
+  color: #13294b;
+}
+
+/* --------------------------------------------------
+   TABLET
+-------------------------------------------------- */
+
+@media (max-width: 1100px) {
+  .homeHero {
+    padding-right: 34px;
+    padding-left: 34px;
+  }
+
+  .homeHeroInner {
+    grid-template-columns: 0.72fr 1.28fr;
+    gap: 30px;
+  }
+
+  .featuredBookContent {
+    width: 72%;
+  }
+
+  .homeSectionHeading,
+  .marqueeWindow {
+    width: calc(100% - 68px);
+  }
+
+  .marqueeSet {
+    --card-width: calc(
+      (
+        100vw - 68px - 80px
+      ) / 6
+    );
+  }
+
+  .learningSection {
+    padding-right: 34px;
+    padding-left: 34px;
+  }
+
+  .learningFeatureGrid {
+    gap: 32px;
+  }
+
+  .benefitsGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .benefitCard:nth-child(4),
+  .benefitCard:nth-child(5) {
+    min-height: 200px;
+  }
+}
+
+/* --------------------------------------------------
+   MOBILE
+-------------------------------------------------- */
+
+@media (max-width: 760px) {
+  .homeHero {
+    padding: 40px 18px 34px;
+  }
+
+  .homeHeroInner {
+    min-height: 0;
+
+    grid-template-columns: 1fr;
+    gap: 34px;
+  }
+
+  .homeHeroText h1 {
+    font-size: clamp(54px, 17vw, 76px);
+  }
+
+  .homeHeroText p {
+    margin-top: 20px;
+    font-size: 15px;
+  }
+
+  .featuredBookCard {
+    min-height: 410px;
+    aspect-ratio: auto;
+    border-width: 4px;
+    border-radius: 24px;
+  }
+
+  .featuredBookShade {
+    background:
+      linear-gradient(
+        0deg,
+        rgba(3, 13, 27, 0.94) 0%,
+        rgba(3, 13, 27, 0.58) 55%,
+        rgba(3, 13, 27, 0.12) 100%
+      );
+  }
+
+  .featuredBookContent {
+    width: 100%;
+    padding: 25px;
+    justify-content: flex-end;
+  }
+
+  .featuredBookContent h2,
+  .largeLearningContent h2 {
+    font-size: clamp(39px, 12vw, 54px);
+  }
+
+  .homeSectionHeading,
+  .marqueeWindow {
+    width: calc(100% - 36px);
+  }
+
+  .homeSectionHeading {
+    margin-bottom: 16px;
+  }
+
+  .homeSectionHeading h2 {
+    font-size: 35px;
+  }
+
+  .homeMarquee {
+    padding-bottom: 46px;
+  }
+
+  .marqueeSet {
+    --card-width: 178px;
+  }
+
+  .marqueeTrack {
+    gap: 12px;
+    animation-duration: 26s;
+  }
+
+  .marqueeSet {
+    gap: 12px;
+  }
+
+  @keyframes homeMarqueeMove {
+    from {
+      transform: translateX(0);
+    }
+
+    to {
+      transform: translateX(calc(-50% - 6px));
+    }
+  }
+
+  .marqueeCard {
+    border-radius: 17px;
+  }
+
+  .learningSection {
+    padding: 32px 18px 28px;
+  }
+
+  .learningFeatureGrid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .largeLearningFeature {
+    min-height: 450px;
+    border-width: 4px;
+    border-radius: 24px;
+  }
+
+  .learningFeatureShade {
+    background:
+      linear-gradient(
+        0deg,
+        rgba(3, 13, 27, 0.94) 0%,
+        rgba(3, 13, 27, 0.55) 58%,
+        rgba(3, 13, 27, 0.08) 100%
+      );
+  }
+
+  .largeLearningContent {
+    width: 100%;
+    min-height: 450px;
+    padding: 25px;
+    justify-content: flex-end;
+  }
+
+  .smallLearningFeature {
+    grid-template-rows: 230px auto;
+    border-width: 4px;
+    border-radius: 24px;
+  }
+
+  .homeBenefits {
+    padding: 30px 18px 38px;
+  }
+
+  .benefitsGrid {
+    grid-template-columns: 1fr;
+    gap: 13px;
+  }
+
+  .benefitCard {
+    min-height: 0;
+    padding: 25px 22px;
+  }
+
+  .benefitIcon {
+    margin-bottom: 13px;
+    font-size: 36px;
+  }
+
+  .benefitActions {
+    flex-direction: column;
+    gap: 11px;
+  }
+
+  .benefitOutlineButton,
+  .benefitWhiteButton {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+/* --------------------------------------------------
+   REDUCED MOTION
+-------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .marqueeTrack {
+    animation-play-state: paused;
+  }
+
+  .featuredBookCard img,
+  .largeLearningFeature img,
+  .smallLearningImage img,
+  .marqueeCard img {
+    transition: none;
+  }
 }
