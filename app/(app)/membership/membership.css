@@ -289,6 +289,33 @@
     margin-top: 28px;
     font-size: 16px;
   }
+  .giftDetails {
+  width: 100%;
+  margin-top: 24px;
+}
+
+.giftDetails > label {
+  font-size: 13px;
+}
+
+.giftDetails input[type="email"],
+.giftDetails select {
+  height: 52px;
+  font-size: 14px;
+}
+
+.giftFieldNote {
+  font-size: 11px;
+  margin-bottom: 18px;
+}
+
+.progressEmailOption {
+  padding: 14px;
+}
+
+.progressEmailOption span {
+  font-size: 12px;
+}
   /* ---------- Gift Details ---------- */
 
 .giftDetails {
