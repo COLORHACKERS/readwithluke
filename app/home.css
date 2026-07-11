@@ -923,10 +923,7 @@
    REDUCED MOTION
 ================================================== */
 
-@media (prefers-reduced-motion: reduce) {
-  .marqueeTrack {
-    animation-play-state: paused;
-  }
+
 
   .featuredBookCard img,
   .largeLearningFeature img,
@@ -934,5 +931,223 @@
   .marqueeCard img,
   .learnMarqueeCard img {
     transition: none;
+  }
+}
+/* ==================================================
+   FINAL HOMEPAGE LAYOUT
+================================================== */
+
+/* Clears the fixed/overlay navigation */
+.homeHero {
+  padding: 118px 58px 46px;
+}
+
+.homeHeroInner {
+  width: min(calc(100% - 40px), 1100px);
+  min-height: 420px;
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: minmax(320px, 0.85fr) minmax(0, 1.35fr);
+  align-items: center;
+  gap: 54px;
+}
+
+.featuredBookCard {
+  width: min(100%, 760px);
+  justify-self: end;
+  align-self: center;
+  aspect-ratio: 1.72 / 1;
+}
+
+/* ==================================================
+   MARQUEE WIDTH
+================================================== */
+
+.homeSectionHeading,
+.marqueeWindow {
+  width: min(calc(100% - 40px), 1100px);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.marqueeWindow {
+  overflow: hidden;
+}
+
+/* ==================================================
+   MOVING MARQUEE
+================================================== */
+
+.marqueeTrack {
+  display: flex;
+  align-items: stretch;
+  gap: 16px;
+
+  width: max-content;
+
+  animation-name: homeMarqueeMove;
+  animation-duration: 24s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+
+  will-change: transform;
+}
+
+.marqueeTrackReverse {
+  animation-name: homeMarqueeMove;
+  animation-duration: 27s;
+  animation-direction: reverse;
+}
+
+.marqueeSet {
+  width: min(calc(100vw - 40px), 1100px);
+
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 16px;
+
+  flex: 0 0 auto;
+}
+
+/* One full duplicated set moves off screen */
+@keyframes homeMarqueeMove {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(calc(-50% - 8px), 0, 0);
+  }
+}
+
+/* ==================================================
+   MARQUEE CARDS
+================================================== */
+
+.marqueeCard,
+.learnMarqueeCard {
+  position: relative;
+
+  display: block;
+  width: 100%;
+  min-width: 0;
+  aspect-ratio: 2 / 3;
+
+  overflow: hidden;
+  box-sizing: border-box;
+
+  border: 5px solid #ffffff;
+  border-radius: 20px;
+
+  background: #ffffff;
+  color: #13294b;
+  text-decoration: none;
+
+  box-shadow: 0 13px 30px rgba(25, 43, 57, 0.18);
+  transform: translateZ(0);
+}
+
+.marqueeCard img,
+.learnMarqueeCard img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+  object-fit: cover;
+  object-position: center top;
+
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+
+  transition: transform 350ms ease;
+}
+
+.marqueeCard:hover img,
+.learnMarqueeCard:hover img {
+  transform: scale(1.015);
+}
+
+/* ==================================================
+   TABLET
+================================================== */
+
+@media (max-width: 1100px) {
+  .homeHero {
+    padding: 112px 34px 44px;
+  }
+
+  .homeHeroInner {
+    width: 100%;
+    grid-template-columns: minmax(280px, 0.75fr) minmax(0, 1.25fr);
+    gap: 30px;
+  }
+
+  .homeSectionHeading,
+  .marqueeWindow {
+    width: calc(100% - 68px);
+  }
+
+  .marqueeSet {
+    width: calc(100vw - 68px);
+  }
+}
+
+/* ==================================================
+   MOBILE
+================================================== */
+
+@media (max-width: 760px) {
+  .homeHero {
+    padding: 104px 18px 34px;
+  }
+
+  .homeHeroInner {
+    width: 100%;
+    min-height: 0;
+
+    grid-template-columns: 1fr;
+    gap: 34px;
+  }
+
+  .featuredBookCard {
+    width: 100%;
+    min-height: 410px;
+
+    justify-self: stretch;
+
+    aspect-ratio: auto;
+  }
+
+  .homeSectionHeading,
+  .marqueeWindow {
+    width: calc(100% - 36px);
+  }
+
+  .marqueeTrack {
+    gap: 12px;
+    animation-duration: 19s;
+  }
+
+  .marqueeTrackReverse {
+    animation-duration: 22s;
+  }
+
+  .marqueeSet {
+    width: max-content;
+
+    grid-template-columns: repeat(6, 165px);
+    gap: 12px;
+  }
+
+  @keyframes homeMarqueeMove {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+
+    to {
+      transform: translate3d(calc(-50% - 6px), 0, 0);
+    }
   }
 }
