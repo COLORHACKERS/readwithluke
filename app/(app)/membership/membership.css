@@ -289,24 +289,30 @@
     margin-top: 28px;
     font-size: 16px;
   }
-  .giftDetails {
+ .giftDetails {
   width: 100%;
   margin-top: 24px;
+  padding: 18px;
+  border-radius: 20px;
 }
 
-.giftDetails > label {
-  font-size: 13px;
+.giftField {
+  margin-bottom: 18px;
 }
 
-.giftDetails input[type="email"],
-.giftDetails select {
-  height: 52px;
-  font-size: 14px;
+.giftFieldLabel {
+  font-size: 12px !important;
+}
+
+.giftTextInput,
+.giftSelect {
+  height: 52px !important;
+  padding-left: 16px !important;
+  font-size: 14px !important;
 }
 
 .giftFieldNote {
-  font-size: 11px;
-  margin-bottom: 18px;
+  font-size: 10px !important;
 }
 
 .progressEmailOption {
@@ -314,96 +320,145 @@
 }
 
 .progressEmailOption span {
-  font-size: 12px;
+  font-size: 11px !important;
 }
   /* ---------- Gift Details ---------- */
 
+/* =====================================
+   GIFT INFORMATION FORM
+===================================== */
+
 .giftDetails {
-  width: min(100%, 560px);
-  margin: 34px auto 0;
+  width: min(100%, 580px);
+  margin: 34px auto 8px;
+  padding: 26px;
+  box-sizing: border-box;
+
+  background: #fff8ef;
+  border: 2px solid #f0dcc4;
+  border-radius: 26px;
+
   text-align: left;
 }
 
-.giftDetails > label {
-  display: block;
-  margin: 18px 0 8px;
-
-  font-family: "Courier New", monospace;
-  font-size: 15px;
-  font-weight: 900;
-  color: #050505;
-}
-
-.giftDetails input[type="email"],
-.giftDetails select {
+.giftField {
   width: 100%;
-  height: 58px;
-  padding: 0 20px;
-  box-sizing: border-box;
-
-  background: #fff7ec;
-  border: 2px solid #ead6bd;
-  border-radius: 999px;
-
-  color: #050505;
-  font-family: "Courier New", monospace;
-  font-size: 15px;
-  font-weight: 700;
-
-  outline: none;
-  transition: 0.2s ease;
+  margin-bottom: 22px;
 }
 
-.giftDetails input[type="email"]::placeholder {
-  color: #8e857b;
+.giftField:last-of-type {
+  margin-bottom: 0;
 }
 
-.giftDetails input[type="email"]:focus,
-.giftDetails select:focus {
-  border-color: #ff5526;
-  box-shadow: 0 0 0 4px rgba(255, 85, 38, 0.12);
+.giftFieldLabel {
+  display: block !important;
+  margin: 0 0 9px !important;
+
+  color: #13294b !important;
+  font-family: "Courier New", monospace !important;
+  font-size: 14px !important;
+  line-height: 1.25 !important;
+  font-weight: 900 !important;
+  text-align: left !important;
+}
+
+.giftTextInput,
+.giftSelect {
+  display: block !important;
+  width: 100% !important;
+  height: 58px !important;
+  margin: 0 !important;
+  padding: 0 20px !important;
+  box-sizing: border-box !important;
+
+  appearance: none;
+  -webkit-appearance: none;
+
+  background: #ffffff !important;
+  border: 3px solid #d9c8b2 !important;
+  border-radius: 999px !important;
+
+  color: #050505 !important;
+  font-family: "Courier New", monospace !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  line-height: normal !important;
+
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.giftTextInput::placeholder {
+  color: #978c80 !important;
+  opacity: 1;
+}
+
+.giftTextInput:focus,
+.giftSelect:focus {
+  border-color: #ff5526 !important;
+  box-shadow: 0 0 0 5px rgba(255, 85, 38, 0.12) !important;
+}
+
+.giftSelect {
+  cursor: pointer;
+  background-image:
+    linear-gradient(45deg, transparent 50%, #13294b 50%),
+    linear-gradient(135deg, #13294b 50%, transparent 50%);
+  background-position:
+    calc(100% - 22px) 25px,
+    calc(100% - 16px) 25px;
+  background-size:
+    6px 6px,
+    6px 6px;
+  background-repeat: no-repeat;
+  padding-right: 48px !important;
 }
 
 .giftFieldNote {
-  margin: 8px 4px 22px;
+  margin: 9px 6px 0 !important;
 
-  font-family: "Courier New", monospace;
-  font-size: 12px;
-  line-height: 1.45;
-  font-weight: 700;
-  color: #665d55;
+  color: #675e54 !important;
+  font-family: "Courier New", monospace !important;
+  font-size: 11px !important;
+  line-height: 1.45 !important;
+  font-weight: 700 !important;
+  text-align: left !important;
 }
 
 .progressEmailOption {
-  margin-top: 22px !important;
   display: flex !important;
-  align-items: flex-start;
-  gap: 12px;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  gap: 12px !important;
 
-  padding: 16px 18px;
-  background: #fff7ec;
-  border: 2px solid #ead6bd;
+  width: 100%;
+  margin: 24px 0 0 !important;
+  padding: 17px 18px;
+  box-sizing: border-box;
+
+  background: #ffffff;
+  border: 2px solid #e7d5bf;
   border-radius: 18px;
+
+  text-align: left !important;
+  cursor: pointer;
 }
 
 .progressEmailOption input[type="checkbox"] {
-  width: 19px;
-  height: 19px;
-  margin-top: 2px;
-  flex: 0 0 auto;
+  width: 20px !important;
+  height: 20px !important;
+  min-width: 20px;
+  margin: 1px 0 0 !important;
+  padding: 0 !important;
+
   accent-color: #ff5526;
+  cursor: pointer;
 }
 
 .progressEmailOption span {
-  font-family: "Courier New", monospace;
-  font-size: 13px;
-  line-height: 1.45;
-  font-weight: 900;
-  color: #050505;
-}
-
-  .membershipFinePrint {
-    font-size: 12px;
-    margin-top: 16px;
-  }
+  color: #13294b !important;
+  font-family: "Courier New", monospace !important;
+  font-size: 12px !important;
+  line-height: 1.5 !important;
+  font-weight: 900 !important;
 }
