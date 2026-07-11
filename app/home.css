@@ -198,7 +198,6 @@
   position: absolute;
   inset: 0;
   padding: 18px;
-  background: linear-gradient(to bottom, rgba(0,0,0,.05), rgba(0,0,0,.05));
 }
 
 .marqueeOverlay h3 {
@@ -378,8 +377,8 @@
   background: linear-gradient(
     to bottom,
     rgba(248, 241, 230, 0),
-    rgba(248, 241, 230, 0.72) 48%,
-    #f8f1e6 100%
+    rgba(248, 241, 230, 0.72) 0%,
+    #f8f1e6 0%
   );
 
   pointer-events: none;
