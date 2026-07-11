@@ -373,12 +373,6 @@
   right: 0;
   top: -90px;
   height: 90px;
-
-  background: linear-gradient(
-    to bottom,
-    rgba(248, 241, 230, 0),
-    rgba(248, 241, 230, 0.72) 0%,
-    #f8f1e6 0%
   );
 
   pointer-events: none;
