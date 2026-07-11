@@ -35,6 +35,7 @@
 .homeMarquee {
   position: relative;
   z-index: 2;
+  padding-bottom: 28px;
 }
 
 .homeHero {
@@ -137,6 +138,7 @@
 .homeMarquee {
   max-width: 1368px;
   margin: 140px auto 0; /* moves marquee down */
+  padding-bottom: 28px;
 }
 
 .homeMarquee h2 {
@@ -293,6 +295,7 @@
 
   .homeMarquee {
     margin: 70px auto 0;
+    padding-bottom: 28px;
   }
 
   .homeMarquee h2 {
@@ -352,18 +355,15 @@
 /* =====================================
    TRANSITION BELOW TOP CAROUSEL
 ===================================== */
-
 .homeExplore {
+  width: 100%;
+  background: transparent;
+
+  margin-top: -20px;
+  padding-bottom: 110px;
+
   position: relative;
-  z-index: 4;
-
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-top: 0;
-
-  background: #f8f1e6;
-  padding: 64px 0 110px;
-  box-sizing: border-box;
+  z-index: 5;
 }
 
 /* Soft transition instead of a hard horizontal cut */
@@ -386,13 +386,21 @@
 }
 
 .homeContentSections {
-  position: relative;
-  z-index: 2;
-
-  width: min(1500px, calc(100% - 80px));
+  width: min(1540px, calc(100% - 70px));
   margin: 0 auto;
+
+  background: #f8f1e6;
+
+  border-radius: 38px 38px 0 0;
+
+  padding: 55px 40px 90px;
 
   display: flex;
   flex-direction: column;
   gap: 42px;
+
+  box-sizing: border-box;
+
+  box-shadow:
+    0 -12px 35px rgba(0,0,0,.08);
 }
