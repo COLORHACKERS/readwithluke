@@ -289,6 +289,91 @@
     margin-top: 28px;
     font-size: 16px;
   }
+  /* ---------- Gift Details ---------- */
+
+.giftDetails {
+  width: min(100%, 560px);
+  margin: 34px auto 0;
+  text-align: left;
+}
+
+.giftDetails > label {
+  display: block;
+  margin: 18px 0 8px;
+
+  font-family: "Courier New", monospace;
+  font-size: 15px;
+  font-weight: 900;
+  color: #050505;
+}
+
+.giftDetails input[type="email"],
+.giftDetails select {
+  width: 100%;
+  height: 58px;
+  padding: 0 20px;
+  box-sizing: border-box;
+
+  background: #fff7ec;
+  border: 2px solid #ead6bd;
+  border-radius: 999px;
+
+  color: #050505;
+  font-family: "Courier New", monospace;
+  font-size: 15px;
+  font-weight: 700;
+
+  outline: none;
+  transition: 0.2s ease;
+}
+
+.giftDetails input[type="email"]::placeholder {
+  color: #8e857b;
+}
+
+.giftDetails input[type="email"]:focus,
+.giftDetails select:focus {
+  border-color: #ff5526;
+  box-shadow: 0 0 0 4px rgba(255, 85, 38, 0.12);
+}
+
+.giftFieldNote {
+  margin: 8px 4px 22px;
+
+  font-family: "Courier New", monospace;
+  font-size: 12px;
+  line-height: 1.45;
+  font-weight: 700;
+  color: #665d55;
+}
+
+.progressEmailOption {
+  margin-top: 22px !important;
+  display: flex !important;
+  align-items: flex-start;
+  gap: 12px;
+
+  padding: 16px 18px;
+  background: #fff7ec;
+  border: 2px solid #ead6bd;
+  border-radius: 18px;
+}
+
+.progressEmailOption input[type="checkbox"] {
+  width: 19px;
+  height: 19px;
+  margin-top: 2px;
+  flex: 0 0 auto;
+  accent-color: #ff5526;
+}
+
+.progressEmailOption span {
+  font-family: "Courier New", monospace;
+  font-size: 13px;
+  line-height: 1.45;
+  font-weight: 900;
+  color: #050505;
+}
 
   .membershipFinePrint {
     font-size: 12px;
