@@ -105,7 +105,8 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="homeContentSections">
+       <section className="homeExplore">
+  <div className="homeContentSections">
           <HomeLearnFeature />
 
 <HomeBookCarousel />
