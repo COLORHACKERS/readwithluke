@@ -920,24 +920,9 @@
 }
 
 /* ==================================================
-   REDUCED MOTION
-================================================== */
-
-
-
-  .featuredBookCard img,
-  .largeLearningFeature img,
-  .smallLearningImage img,
-  .marqueeCard img,
-  .learnMarqueeCard img {
-    transition: none;
-  }
-
-/* ==================================================
    FINAL HOMEPAGE LAYOUT
 ================================================== */
 
-/* Clears the fixed/overlay navigation */
 .homeHero {
   padding: 118px 58px 46px;
 }
@@ -961,7 +946,7 @@
 }
 
 /* ==================================================
-   MARQUEE WIDTH
+   MARQUEE
 ================================================== */
 
 .homeSectionHeading,
@@ -975,27 +960,17 @@
   overflow: hidden;
 }
 
-/* ==================================================
-   MOVING MARQUEE
-================================================== */
-
 .marqueeTrack {
   display: flex;
   align-items: stretch;
   gap: 16px;
-
   width: max-content;
 
-  animation-name: homeMarqueeMove;
-  animation-duration: 24s;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-
+  animation: homeMarqueeMove 24s linear infinite;
   will-change: transform;
 }
 
 .marqueeTrackReverse {
-  animation-name: homeMarqueeMove;
   animation-duration: 27s;
   animation-direction: reverse;
 }
@@ -1010,7 +985,6 @@
   flex: 0 0 auto;
 }
 
-/* One full duplicated set moves off screen */
 @keyframes homeMarqueeMove {
   from {
     transform: translate3d(0, 0, 0);
@@ -1028,8 +1002,8 @@
 .marqueeCard,
 .learnMarqueeCard {
   position: relative;
-
   display: block;
+
   width: 100%;
   min-width: 0;
   aspect-ratio: 2 / 3;
@@ -1116,7 +1090,6 @@
     min-height: 410px;
 
     justify-self: stretch;
-
     aspect-ratio: auto;
   }
 
@@ -1150,3 +1123,18 @@
       transform: translate3d(calc(-50% - 6px), 0, 0);
     }
   }
+}
+
+/* ==================================================
+   REDUCED MOTION
+================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .featuredBookCard img,
+  .largeLearningFeature img,
+  .smallLearningImage img,
+  .marqueeCard img,
+  .learnMarqueeCard img {
+    transition: none;
+  }
+}
