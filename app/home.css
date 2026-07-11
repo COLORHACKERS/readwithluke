@@ -70,7 +70,7 @@
 .homeHeroText h1 {
   margin: 0;
 
-  font-family: "Bangers", sans-serif;
+  font-family: "DK Woolwich", sans-serif;
   font-size: clamp(58px, 5.5vw, 88px);
   font-weight: 400;
   line-height: 0.92;
@@ -171,7 +171,7 @@
 .largeLearningContent h2 {
   margin: 0;
 
-  font-family: "Bangers", sans-serif;
+  font-family: "DK Woolwich", sans-serif;
   font-size: clamp(40px, 4.2vw, 67px);
   font-weight: 400;
   line-height: 0.94;
@@ -229,7 +229,7 @@
   margin: 0;
 
   color: #ffffff;
-  font-family: "Bangers", sans-serif;
+  font-family: "DK Woolwich", sans-serif;
   font-size: clamp(34px, 3.3vw, 48px);
   font-weight: 400;
   line-height: 1;
@@ -333,7 +333,7 @@
   display: block;
 
   color: #ffffff;
-  font-family: "Bangers", sans-serif;
+  font-family: "DK Woolwich", sans-serif;
   font-size: 19px;
   line-height: 1;
   letter-spacing: 0.5px;
@@ -491,7 +491,7 @@
 .smallLearningContent h3 {
   margin: 0;
 
-  font-family: "Bangers", sans-serif;
+  font-family: "DK Woolwich", sans-serif;
   font-size: clamp(27px, 2.5vw, 37px);
   font-weight: 400;
   line-height: 0.98;
@@ -581,7 +581,7 @@
 .benefitCard h3 {
   margin: 0;
 
-  font-family: "Bangers", sans-serif;
+  font-family: "DK Woolwich", sans-serif;
   font-size: 25px;
   font-weight: 400;
   line-height: 1;
