@@ -350,32 +350,49 @@
   text-decoration: underline;
 }
 /* =====================================
-   HOME EXPLORE SECTION
+   TRANSITION BELOW TOP CAROUSEL
 ===================================== */
 
 .homeExplore {
   position: relative;
-  width: 100%;
+  z-index: 4;
+
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-top: 0;
+
   background: #f8f1e6;
-  padding: 90px 0 110px;
+  padding: 64px 0 110px;
+  box-sizing: border-box;
+}
+
+/* Soft transition instead of a hard horizontal cut */
+.homeExplore::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -90px;
+  height: 90px;
+
+  background: linear-gradient(
+    to bottom,
+    rgba(248, 241, 230, 0),
+    rgba(248, 241, 230, 0.72) 48%,
+    #f8f1e6 100%
+  );
+
+  pointer-events: none;
 }
 
 .homeContentSections {
+  position: relative;
+  z-index: 2;
+
   width: min(1500px, calc(100% - 80px));
   margin: 0 auto;
 
   display: flex;
   flex-direction: column;
   gap: 42px;
-}
-
-@media (max-width: 768px) {
-  .homeExplore {
-    padding: 54px 0 70px;
-  }
-
-  .homeContentSections {
-    width: calc(100% - 28px);
-    gap: 28px;
-  }
 }
