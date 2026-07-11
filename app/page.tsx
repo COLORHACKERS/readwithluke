@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Header from "./components/Header";
 import Footer from "@/app/components/Footer";
+import HomeLearnFeature from "@/app/components/HomeLearnFeature";
+import HomeBenefits from "@/app/components/HomeBenefits";
+import HomeBookCarousel from "@/app/components/HomeBookCarousel";
 import "./home.css";
 
 function getTimeLeft() {
@@ -23,7 +26,10 @@ export default function Home() {
   const [timeLeft, setTimeLeft] = useState(getTimeLeft());
 
   useEffect(() => {
-    const timer = setInterval(() => setTimeLeft(getTimeLeft()), 1000);
+    const timer = setInterval(() => {
+      setTimeLeft(getTimeLeft());
+    }, 1000);
+
     return () => clearInterval(timer);
   }, []);
 
@@ -45,8 +51,8 @@ export default function Home() {
             </h1>
 
             <p>
-              Join Luke on his reading and learning
-              adventures in cinematic style.
+              Join Luke on his reading and learning adventures in cinematic
+              style.
             </p>
           </div>
         </section>
@@ -56,31 +62,60 @@ export default function Home() {
 
           <div className="marqueeWindow">
             <div className="marqueeTrack">
-              <HomeCard href="/books/little-treehouse-mysteries" image="/images/home-card-1.png" />
-              <HomeCard href="/books/sammy-finds-her-way-home" image="/images/home-card-4.png" />
-              <HomeCard href="/books/the-toy-maker" image="/images/home-card-2.png" />
-              <HomeCard href="/books/the-great-crockoff" image="/images/home-card-3.png" />
+              <HomeCard
+                href="/books/little-treehouse-mysteries"
+                image="/images/home-card-1.png"
+              />
 
-              <HomeCard href="/books/little-treehouse-mysteries" image="/images/home-card-1.png" />
-              <HomeCard href="/books/sammy-finds-her-way-home" image="/images/home-card-4.png" />
-              <HomeCard href="/books/the-toy-maker" image="/images/home-card-2.png" />
-              <HomeCard href="/books/the-great-crockoff" image="/images/home-card-3.png" />
+              <HomeCard
+                href="/books/sammy-finds-her-way-home"
+                image="/images/home-card-4.png"
+              />
+
+              <HomeCard
+                href="/books/the-toy-maker"
+                image="/images/home-card-2.png"
+              />
+
+              <HomeCard
+                href="/books/the-great-crockoff"
+                image="/images/home-card-3.png"
+              />
+
+              <HomeCard
+                href="/books/little-treehouse-mysteries"
+                image="/images/home-card-1.png"
+              />
+
+              <HomeCard
+                href="/books/sammy-finds-her-way-home"
+                image="/images/home-card-4.png"
+              />
+
+              <HomeCard
+                href="/books/the-toy-maker"
+                image="/images/home-card-2.png"
+              />
+
+              <HomeCard
+                href="/books/the-great-crockoff"
+                image="/images/home-card-3.png"
+              />
             </div>
           </div>
+        </section>
+
+        <section className="homeContentSections">
+          <HomeLearnFeature />
+
+          <HomeBenefits />
+
+          <HomeBookCarousel />
         </section>
       </main>
 
       <Footer />
     </>
-  );
-}
-
-function TimeUnit({ value, label }: { value: number; label: string }) {
-  return (
-    <div>
-      <strong>{String(value).padStart(2, "0")}</strong>
-      <span>{label}</span>
-    </div>
   );
 }
 
