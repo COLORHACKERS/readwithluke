@@ -108,9 +108,9 @@ export default function Home() {
         <section className="homeContentSections">
           <HomeLearnFeature />
 
+<HomeBookCarousel />
+          
           <HomeBenefits />
-
-          <HomeBookCarousel />
         </section>
       </main>
 
