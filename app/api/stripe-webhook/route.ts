@@ -1,3 +1,4 @@
+import { randomUUID } from "crypto";
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { createClient } from "@supabase/supabase-js";
@@ -13,6 +14,16 @@ const supabaseAdmin = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
+type GiftMetadata = {
+  purchaser_user_id: string;
+  purchaser_email: string;
+  parent_email: string;
+  relationship: string;
+  progress_emails: string;
+  family_confirmed: string;
+  membership_type: string;
+};
+
 async function sendWelcomeEmail({
   email,
   readerName,
@@ -20,37 +31,47 @@ async function sendWelcomeEmail({
   email: string;
   readerName?: string | null;
 }) {
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+
   await resend.emails.send({
     from: "Read With Luke <hello@readwithluke.com>",
     to: email,
     subject: "🎉 Welcome to Read With Luke!",
     html: `
-      <div style="font-family:Arial,sans-serif;max-width:600px;margin:auto;padding:40px;background:#F8F1E6;border-radius:24px;">
+      <div style="
+        font-family:Arial,sans-serif;
+        max-width:600px;
+        margin:auto;
+        padding:40px;
+        background:#F8F1E6;
+        border-radius:24px;
+      ">
         <h1 style="color:#13294B;">Welcome to Read With Luke!</h1>
 
         <p>Hi ${readerName || "Friend"},</p>
 
-        <p>Your account has been created successfully.</p>
+        <p>
+          <strong>Your 7-day free trial has officially begun! 🎉</strong>
+        </p>
 
         <p>
-  <strong>Your 7-day free trial has officially begun! 🎉</strong>
-</p>
+          Your family now has unlimited access to the Read With Luke library,
+          filled with beautifully illustrated stories and learning adventures.
+        </p>
 
-<p>
-  Your family now has unlimited access to the Read With Luke library, filled with beautifully illustrated stories and learning adventures.
-</p>
+        <p>
+          Your payment method has been securely saved, but you will not be
+          charged during your free trial.
+        </p>
 
-<p>
-  <strong>Your payment method has been securely saved, but you will not be charged during your free trial.</strong>
-</p>
-
-<p>
-  Unless you cancel before your 7-day trial ends, your membership will automatically continue at <strong>$9.99 per month</strong>. You can cancel anytime from your account settings.
-</p>
+        <p>
+          Unless you cancel before the 7-day trial ends, your membership will
+          automatically continue at <strong>$9.99 per month</strong>.
+        </p>
 
         <p style="margin-top:32px;">
           <a
-            href="${process.env.NEXT_PUBLIC_SITE_URL}/library"
+            href="${siteUrl}/library"
             style="
               background:#FF5526;
               color:white;
@@ -59,23 +80,330 @@ async function sendWelcomeEmail({
               border-radius:999px;
               font-weight:bold;
               display:inline-block;
-            ">
+            "
+          >
             Start Reading →
           </a>
         </p>
 
         <hr style="margin:40px 0;border:none;border-top:1px solid #ddd;">
 
-       <p style="color:#666;font-size:14px;line-height:1.6;">
-  We're excited to have your family reading with us.
-  <br /><br />
-  Happy Reading! 📚
-  <br />
-  <strong>The Read With Luke Team</strong>
-</p>
+        <p style="color:#666;font-size:14px;line-height:1.6;">
+          Happy Reading! 📚
+          <br />
+          <strong>The Read With Luke Team</strong>
+        </p>
       </div>
     `,
   });
+}
+
+async function sendGiftActivationEmail({
+  parentEmail,
+  purchaserEmail,
+  relationship,
+  activationToken,
+}: {
+  parentEmail: string;
+  purchaserEmail: string;
+  relationship: string;
+  activationToken: string;
+}) {
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+
+  const activationUrl =
+    `${siteUrl}/activate-gift?token=${encodeURIComponent(activationToken)}`;
+
+  await resend.emails.send({
+    from: "Read With Luke <hello@readwithluke.com>",
+    to: parentEmail,
+    subject: "🎁 Your family sent you Read With Luke!",
+    html: `
+      <div style="
+        font-family:Arial,sans-serif;
+        max-width:600px;
+        margin:auto;
+        padding:40px;
+        background:#F8F1E6;
+        border-radius:24px;
+      ">
+        <p style="
+          color:#FF5526;
+          font-size:13px;
+          font-weight:bold;
+          letter-spacing:.08em;
+        ">
+          A FAMILY GIFT
+        </p>
+
+        <h1 style="color:#13294B;font-size:38px;line-height:1.05;">
+          Reading adventures are waiting!
+        </h1>
+
+        <p>
+          A ${relationship.replace("_", " ")} has gifted your child access to
+          Read With Luke.
+        </p>
+
+        <p>
+          The gift was purchased by
+          <strong>${purchaserEmail}</strong>.
+        </p>
+
+        <p>
+          Activate the gift using your parent or guardian account. You will not
+          be asked for payment information.
+        </p>
+
+        <p style="margin-top:32px;">
+          <a
+            href="${activationUrl}"
+            style="
+              background:#FF5526;
+              color:white;
+              text-decoration:none;
+              padding:16px 28px;
+              border-radius:999px;
+              font-weight:bold;
+              display:inline-block;
+            "
+          >
+            Activate Gift →
+          </a>
+        </p>
+
+        <hr style="margin:40px 0;border:none;border-top:1px solid #ddd;">
+
+        <p style="color:#666;font-size:13px;line-height:1.6;">
+          This invitation was sent to ${parentEmail}.
+          <br /><br />
+          <strong>The Read With Luke Team</strong>
+        </p>
+      </div>
+    `,
+  });
+}
+
+async function handleRegularCheckout(
+  session: Stripe.Checkout.Session
+) {
+  const userId =
+    session.metadata?.user_id ||
+    session.client_reference_id;
+
+  if (!userId) {
+    throw new Error("Regular checkout is missing user ID.");
+  }
+
+  const customerId =
+    typeof session.customer === "string"
+      ? session.customer
+      : session.customer?.id || null;
+
+  const subscriptionId =
+    typeof session.subscription === "string"
+      ? session.subscription
+      : session.subscription?.id || null;
+
+  const { data: profile, error: profileError } = await supabaseAdmin
+    .from("profiles")
+    .select("id, full_name, email, welcome_email_sent")
+    .eq("id", userId)
+    .maybeSingle();
+
+  if (profileError) {
+    throw new Error(profileError.message);
+  }
+
+  const { error: updateError } = await supabaseAdmin
+    .from("profiles")
+    .update({
+      stripe_customer_id: customerId,
+      stripe_subscription_id: subscriptionId,
+      membership_status: "trialing",
+      trial_end: null,
+    })
+    .eq("id", userId);
+
+  if (updateError) {
+    throw new Error(updateError.message);
+  }
+
+  const email =
+    profile?.email ||
+    session.customer_details?.email ||
+    session.customer_email;
+
+  if (email && !profile?.welcome_email_sent) {
+    await sendWelcomeEmail({
+      email,
+      readerName: profile?.full_name,
+    });
+
+    await supabaseAdmin
+      .from("profiles")
+      .update({
+        welcome_email_sent: true,
+      })
+      .eq("id", userId);
+  }
+}
+
+async function handleGiftCheckout(
+  session: Stripe.Checkout.Session
+) {
+  const metadata = session.metadata as GiftMetadata | null;
+
+  if (!metadata) {
+    throw new Error("Gift checkout is missing metadata.");
+  }
+
+  const purchaserUserId =
+    metadata.purchaser_user_id ||
+    session.client_reference_id;
+
+  const purchaserEmail =
+    metadata.purchaser_email ||
+    session.customer_details?.email ||
+    session.customer_email;
+
+  const parentEmail =
+    metadata.parent_email?.trim().toLowerCase();
+
+  const relationship = metadata.relationship;
+
+  if (!purchaserUserId) {
+    throw new Error("Gift checkout is missing purchaser user ID.");
+  }
+
+  if (!purchaserEmail) {
+    throw new Error("Gift checkout is missing purchaser email.");
+  }
+
+  if (!parentEmail) {
+    throw new Error("Gift checkout is missing parent email.");
+  }
+
+  if (!relationship) {
+    throw new Error("Gift checkout is missing relationship.");
+  }
+
+  const customerId =
+    typeof session.customer === "string"
+      ? session.customer
+      : session.customer?.id || null;
+
+  const subscriptionId =
+    typeof session.subscription === "string"
+      ? session.subscription
+      : session.subscription?.id || null;
+
+  const activationToken = randomUUID();
+
+  const { data: gift, error: giftError } = await supabaseAdmin
+    .from("gift_memberships")
+    .upsert(
+      {
+        purchaser_user_id: purchaserUserId,
+        purchaser_email: purchaserEmail.trim().toLowerCase(),
+        parent_email: parentEmail,
+        relationship,
+        progress_emails_enabled:
+          metadata.progress_emails === "true",
+        family_confirmed:
+          metadata.family_confirmed === "true",
+        stripe_customer_id: customerId,
+        stripe_subscription_id: subscriptionId,
+        activation_token: activationToken,
+        status: "pending",
+      },
+      {
+        onConflict: "stripe_subscription_id",
+      }
+    )
+    .select("id, activation_token")
+    .single();
+
+  if (giftError) {
+    throw new Error(giftError.message);
+  }
+
+  await sendGiftActivationEmail({
+    parentEmail,
+    purchaserEmail,
+    relationship,
+    activationToken: gift.activation_token,
+  });
+}
+
+async function updateSubscriptionStatus(
+  subscription: Stripe.Subscription
+) {
+  const customerId =
+    typeof subscription.customer === "string"
+      ? subscription.customer
+      : subscription.customer.id;
+
+  const { data: gift } = await supabaseAdmin
+    .from("gift_memberships")
+    .select("id")
+    .eq("stripe_subscription_id", subscription.id)
+    .maybeSingle();
+
+  if (gift) {
+    await supabaseAdmin
+      .from("gift_memberships")
+      .update({
+        status: subscription.status,
+      })
+      .eq("id", gift.id);
+
+    return;
+  }
+
+  await supabaseAdmin
+    .from("profiles")
+    .update({
+      membership_status: subscription.status,
+      stripe_subscription_id: subscription.id,
+      trial_end: subscription.trial_end
+        ? new Date(subscription.trial_end * 1000).toISOString()
+        : null,
+    })
+    .eq("stripe_customer_id", customerId);
+}
+
+async function cancelSubscription(
+  subscription: Stripe.Subscription
+) {
+  const customerId =
+    typeof subscription.customer === "string"
+      ? subscription.customer
+      : subscription.customer.id;
+
+  const { data: gift } = await supabaseAdmin
+    .from("gift_memberships")
+    .select("id")
+    .eq("stripe_subscription_id", subscription.id)
+    .maybeSingle();
+
+  if (gift) {
+    await supabaseAdmin
+      .from("gift_memberships")
+      .update({
+        status: "cancelled",
+      })
+      .eq("id", gift.id);
+
+    return;
+  }
+
+  await supabaseAdmin
+    .from("profiles")
+    .update({
+      membership_status: "cancelled",
+    })
+    .eq("stripe_customer_id", customerId);
 }
 
 export async function POST(req: Request) {
@@ -84,7 +412,7 @@ export async function POST(req: Request) {
 
   if (!signature) {
     return NextResponse.json(
-      { error: "Missing Stripe signature" },
+      { error: "Missing Stripe signature." },
       { status: 400 }
     );
   }
@@ -97,83 +425,62 @@ export async function POST(req: Request) {
       signature,
       process.env.STRIPE_WEBHOOK_SECRET!
     );
-  } catch {
+  } catch (error) {
+    console.error("Webhook signature error:", error);
+
     return NextResponse.json(
-      { error: "Invalid webhook signature" },
+      { error: "Invalid webhook signature." },
       { status: 400 }
     );
   }
 
-  if (event.type === "checkout.session.completed") {
-    const session = event.data.object as Stripe.Checkout.Session;
+  try {
+    switch (event.type) {
+      case "checkout.session.completed": {
+        const session =
+          event.data.object as Stripe.Checkout.Session;
 
-    const userId = session.metadata?.user_id || session.client_reference_id;
-    const customerId = session.customer as string;
-    const subscriptionId = session.subscription as string;
+        if (session.metadata?.membership_type === "gift") {
+          await handleGiftCheckout(session);
+        } else {
+          await handleRegularCheckout(session);
+        }
 
-    if (userId) {
-      const { data: profile } = await supabaseAdmin
-        .from("profiles")
-        .select("id, full_name, email, welcome_email_sent")
-        .eq("id", userId)
-        .single();
-
-      await supabaseAdmin
-        .from("profiles")
-        .update({
-          stripe_customer_id: customerId,
-          stripe_subscription_id: subscriptionId,
-          membership_status: "trialing",
-          trial_end: null,
-        })
-        .eq("id", userId);
-
-      const email =
-        profile?.email ||
-        session.customer_details?.email ||
-        session.customer_email;
-
-      if (email && !profile?.welcome_email_sent) {
-        await sendWelcomeEmail({
-          email,
-          readerName: profile?.full_name,
-        });
-
-        await supabaseAdmin
-          .from("profiles")
-          .update({
-            welcome_email_sent: true,
-          })
-          .eq("id", userId);
+        break;
       }
+
+      case "customer.subscription.updated": {
+        const subscription =
+          event.data.object as Stripe.Subscription;
+
+        await updateSubscriptionStatus(subscription);
+        break;
+      }
+
+      case "customer.subscription.deleted": {
+        const subscription =
+          event.data.object as Stripe.Subscription;
+
+        await cancelSubscription(subscription);
+        break;
+      }
+
+      default:
+        break;
     }
+
+    return NextResponse.json({ received: true });
+  } catch (error) {
+    console.error(`Webhook processing failed for ${event.type}:`, error);
+
+    const message =
+      error instanceof Error
+        ? error.message
+        : "Webhook processing failed.";
+
+    return NextResponse.json(
+      { error: message },
+      { status: 500 }
+    );
   }
-
-  if (event.type === "customer.subscription.updated") {
-    const subscription = event.data.object as Stripe.Subscription;
-
-    await supabaseAdmin
-      .from("profiles")
-      .update({
-        membership_status: subscription.status,
-        stripe_subscription_id: subscription.id,
-        trial_end: subscription.trial_end
-          ? new Date(subscription.trial_end * 1000).toISOString()
-          : null,
-      })
-      .eq("stripe_customer_id", subscription.customer as string);
-  }
-
-  if (event.type === "customer.subscription.deleted") {
-    const subscription = event.data.object as Stripe.Subscription;
-
-    await supabaseAdmin
-      .from("profiles")
-      .update({
-        membership_status: "cancelled",
-      })
-      .eq("stripe_customer_id", subscription.customer as string);
-  }
-
-  return NextResponse.json({ received: true });
 }
