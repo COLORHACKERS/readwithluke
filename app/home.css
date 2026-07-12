@@ -1176,3 +1176,40 @@
     transform: none;
   }
 }
+/* ==================================================
+   HOMEPAGE BENEFITS IMAGE
+================================================== */
+
+.homeBenefitsImageSection {
+  position: relative;
+  z-index: 2;
+
+  width: 100%;
+  padding: 34px 20px 46px;
+
+  box-sizing: border-box;
+  background: #ff512b;
+}
+
+.homeBenefitsImage {
+  display: block;
+
+  width: min(100%, 1100px);
+  height: auto;
+  margin: 0 auto;
+
+  border-radius: 22px;
+  object-fit: contain;
+}
+
+/* Mobile */
+@media (max-width: 760px) {
+  .homeBenefitsImageSection {
+    padding: 22px 14px 30px;
+  }
+
+  .homeBenefitsImage {
+    width: 100%;
+    border-radius: 16px;
+  }
+}
