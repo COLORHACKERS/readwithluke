@@ -519,7 +519,7 @@ export default function Home() {
           <div className="homeMembershipIntro">
             <h2>
               Start With One Adventure.
-              <br />
+          
               Join When They Ask
               For the Next One.
             </h2>
