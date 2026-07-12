@@ -408,8 +408,6 @@
 
 .learningSection {
   padding: 42px var(--home-padding) 32px;
-
-  border-top: 2px solid rgba(255, 255, 255, 0.72);
 }
 
 .learningFeatureGrid {
