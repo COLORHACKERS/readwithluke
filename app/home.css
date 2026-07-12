@@ -4,7 +4,22 @@
   font-weight: 400;
   font-style: normal;
 }
+:root {
+  --home-container-width: 1200px;
+  --home-side-gap: 24px;
+}
+.homeHeroInner,
+.homeContentShell,
+.homeTrustSection,
+.homeMembershipSection {
+  width: min(
+    calc(100% - (var(--home-side-padding) * 2)),
+    var(--home-container-width)
+  );
 
+  margin-left: auto;
+  margin-right: auto;
+}
 :root {
   --home-navy: #12365a;
   --home-deep-navy: #052845;
