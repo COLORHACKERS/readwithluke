@@ -78,7 +78,7 @@
 
   display: grid;
   grid-template-columns: 420px minmax(0, 1fr);
-  align-items: center;
+  align-items: start;
   gap: 48px;
 }
 
