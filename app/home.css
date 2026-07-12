@@ -11,7 +11,7 @@
 ================================================== */
 
 .homePage {
-  --home-width: 1100px;
+  --home-width: 1380px;
   --home-padding: 20px;
   --home-orange: #ff512b;
   --home-navy: #13294b;
@@ -927,7 +927,7 @@
   padding: 118px 58px 46px;
 }
 .homeHeroInner {
-  width: min(calc(100% - 40px), 1100px);
+  width: min(calc(100% - 40px), 1380px);
   min-height: 420px;
   margin: 0 auto;
 
@@ -955,7 +955,7 @@
 
 .homeSectionHeading,
 .marqueeWindow {
-  width: min(calc(100% - 40px), 1100px);
+  width: min(calc(100% - 40px), 1380px);
   margin-left: auto;
   margin-right: auto;
 }
@@ -980,7 +980,7 @@
 }
 
 .marqueeSet {
-  width: min(calc(100vw - 40px), 1100px);
+  width: min(calc(100vw - 40px), 1380px);
 
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -1051,7 +1051,7 @@
    TABLET
 ================================================== */
 
-@media (max-width: 1100px) {
+@media (max-width: 1380px) {
   .homeHero {
     padding: 112px 34px 44px;
   }
