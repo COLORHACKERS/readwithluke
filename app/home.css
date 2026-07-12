@@ -926,7 +926,6 @@
 .homeHero {
   padding: 118px 58px 46px;
 }
-
 .homeHeroInner {
   width: min(calc(100% - 40px), 1100px);
   min-height: 420px;
@@ -934,17 +933,22 @@
 
   display: grid;
   grid-template-columns: minmax(320px, 0.85fr) minmax(0, 1.35fr);
-  align-items: center;
+  align-items: start;
   gap: 54px;
+}
+
+.homeHeroText {
+  align-self: start;
+  margin: 0;
+  padding: 0;
 }
 
 .featuredBookCard {
   width: min(100%, 760px);
   justify-self: end;
-  align-self: center;
+  align-self: start;
   aspect-ratio: 1.72 / 1;
 }
-
 /* ==================================================
    MARQUEE
 ================================================== */
