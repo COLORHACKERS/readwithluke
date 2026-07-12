@@ -525,7 +525,6 @@ export default function Home() {
               Start With One Adventure.
               <br />
               Join When They Ask
-              <br />
               For the Next One.
             </h2>
 
