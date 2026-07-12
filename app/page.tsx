@@ -395,9 +395,7 @@ export default function Home() {
                           key={`${setNumber}-${book.id}-${index}`}
                           tabIndex={setNumber === 1 ? -1 : undefined}
                         >
-                          <span className="homeRailCategory">
-                            {book.category || "New Adventure"}
-                          </span>
+                       
 
                           <img
                             src={getBookCover(book)}
@@ -445,9 +443,7 @@ export default function Home() {
                           key={`${setNumber}-${item.id}-${index}`}
                           tabIndex={setNumber === 1 ? -1 : undefined}
                         >
-                          <span className="homeRailCategory learningCategory">
-                            {item.category || "Learn With Luke"}
-                          </span>
+                      
 
                           <img
                             src={getLearnImage(item)}
