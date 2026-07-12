@@ -1785,3 +1785,163 @@ html {
     transition: none;
   }
 }
+/* =========================================================
+   MEMBERSHIP BALANCE FIX
+========================================================= */
+
+.homeMembershipSection {
+  align-items: stretch;
+  padding-top: 48px;
+  padding-bottom: 38px;
+}
+
+/* LEFT INTRO TEXT */
+
+.homeMembershipIntro {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  padding: 20px 18px 20px 12px;
+}
+
+.homeMembershipIntro h2 {
+  max-width: 390px;
+
+  font-size: clamp(38px, 3.1vw, 51px);
+  line-height: 0.99;
+}
+
+.membershipUnderline {
+  margin-top: 26px;
+}
+
+/* BOTH MEMBERSHIP CARDS */
+
+.homePlanCard {
+  display: flex;
+  flex-direction: column;
+
+  min-height: 490px;
+  padding: 58px 28px 34px;
+}
+
+.homePlanCard ul {
+  display: grid;
+  gap: 20px;
+
+  margin: 10px 0 0;
+}
+
+/* Give the paid content room to fill the card */
+
+.paidPlanContent {
+  flex: 1;
+  align-items: start;
+}
+
+/* Move both buttons lower */
+
+.freePlanButton,
+.paidPlanButton {
+  min-height: 58px;
+
+  margin-top: auto;
+  margin-bottom: 42px;
+
+  font-size: 17px;
+}
+
+/* Keep the free-plan text from stretching too wide */
+
+.freePlanCard ul {
+  max-width: 330px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+/* Better vertical alignment inside the paid plan */
+
+.paidPlanCard ul {
+  padding-top: 3px;
+}
+
+.homePlanPrices {
+  align-self: stretch;
+  justify-content: center;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+/* GIFT AREA */
+
+.homeGiftCard {
+  justify-content: center;
+
+  padding: 35px 18px 28px;
+}
+
+.giftEmoji {
+  margin-bottom: 20px;
+}
+
+.homeGiftCard strong {
+  max-width: 190px;
+
+  font-size: 31px;
+  line-height: 1.05;
+}
+
+.homeGiftCard p {
+  max-width: 190px;
+  margin-top: 28px;
+  margin-bottom: 28px;
+
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+/* TABLET */
+
+@media (max-width: 1240px) {
+  .homePlanCard {
+    min-height: 430px;
+  }
+
+  .freePlanButton,
+  .paidPlanButton {
+    margin-bottom: 20px;
+  }
+}
+
+/* MOBILE */
+
+@media (max-width: 680px) {
+  .homeMembershipSection {
+    padding-top: 40px;
+  }
+
+  .homeMembershipIntro {
+    padding: 10px 4px 25px;
+  }
+
+  .homePlanCard {
+    min-height: 410px;
+    padding: 55px 23px 28px;
+  }
+
+  .freePlanButton,
+  .paidPlanButton {
+    margin-top: 38px;
+    margin-bottom: 0;
+  }
+
+  .paidPlanContent {
+    flex: initial;
+  }
+
+  .homeGiftCard {
+    padding-block: 35px;
+  }
+}
