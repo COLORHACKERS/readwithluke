@@ -1211,3 +1211,6 @@
     border-radius: 0;
   }
 }
+.learningSection {
+  border-top: none !important;
+}
