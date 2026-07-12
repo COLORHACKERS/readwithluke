@@ -55,7 +55,6 @@ html {
 
 .homeHero {
   position: relative;
-  width: 100%;
   min-height: 790px;
   overflow: hidden;
 
@@ -709,7 +708,6 @@ html {
 .homeContentShell {
   position: relative;
   z-index: 3;
-  width: min(calc(100% - 72px), 1480px);
   margin: -24px auto 0;
   padding: 27px 26px 34px;
   border-radius: 32px 32px 0 0;
@@ -1172,7 +1170,6 @@ html {
 .homeTrustSection {
   position: relative;
   z-index: 4;
-  width: min(calc(100% - 36px), 1530px);
   margin: 0 auto;
   padding: 30px 38px 34px;
   overflow: hidden;
@@ -1256,7 +1253,6 @@ html {
 .homeMembershipSection {
   position: relative;
   z-index: 3;
-  width: min(calc(100% - 36px), 1480px);
   margin: -5px auto 55px;
   padding: 36px 34px 30px;
   display: grid;
