@@ -31,10 +31,8 @@ type LearnItem = {
   created_at?: string;
 };
 
-
-
 function fillToSix<T>(items: T[]) {
-  if (items.length === 0) {
+  if (!items.length) {
     return [];
   }
 
@@ -62,11 +60,7 @@ function getBookCover(book: Book) {
 }
 
 function getLearnImage(item: LearnItem) {
-  return (
-    item.image_url ||
-    item.cover_url ||
-    "/images/6to5ratio.png"
-  );
+  return item.image_url || item.cover_url || "/images/6to5ratio.png";
 }
 
 export default function Home() {
@@ -112,167 +106,161 @@ export default function Home() {
 
   const featuredBook = books[0];
   const featuredLearn = learnItems[0];
-  const secondaryLearn = learnItems[1] || learnItems[0];
 
   const marqueeBooks = fillToSix(books);
   const marqueeLearnItems = fillToSix(learnItems);
+
+  const featuredBookDescription =
+    featuredBook?.description ||
+    "Something strange is happening, and Luke and his friends are following the clues. Can they uncover the truth before the mysterious bandit strikes again?";
 
   return (
     <>
       <Header />
 
       <main className="homePage">
-        <img
-          src="/images/home-hero.png"
-          alt=""
-          className="homeBg"
-        />
-
+        {/* HERO */}
         <section className="homeHero">
+          <img
+            src="/images/home-hero.png"
+            alt=""
+            className="homeHeroBackground"
+          />
+
+          <div className="homeHeroOverlay" />
+
           <div className="homeHeroInner">
-            <div className="homeHeroText">
+            <div className="homeHeroCopy">
               <h1>
-                STORIES.
+                TURN “DO I
                 <br />
-                ADVENTURE.
+                HAVE TO READ?”
                 <br />
-                KNOWLEDGE.
+                INTO “CAN I READ
+                <br />
+                ONE MORE?”
               </h1>
 
+              <div className="homeHeroUnderline" />
+
               <p>
-                Join Luke on his reading and learning adventures in cinematic
-                style.
+                Original cinematic stories and fascinating learning adventures
+                for curious kids ages 5–10—designed to make reading feel less
+                like an assignment and more like an adventure.
               </p>
+
+              <div className="homeHeroButtons">
+                <Link href="/library" className="homePrimaryButton">
+                  <span className="buttonIcon">▣</span>
+                  Read a Free Adventure
+                </Link>
+
+                <a href="#inside" className="homeSecondaryButton">
+                  <span className="playIcon">▶</span>
+                  See What’s Inside
+                </a>
+              </div>
+
+              <div className="homeHeroNote">
+                <strong>
+                  One complete story and one learning adventure free.
+                </strong>
+                <span>No card required.</span>
+              </div>
             </div>
 
             {featuredBook && (
               <Link
                 href={`/books/${featuredBook.slug}`}
-                className="featuredBookCard"
+                className="heroFeaturedBook"
               >
                 <img
                   src={getBookFeatureImage(featuredBook)}
                   alt={featuredBook.title}
                 />
 
-                <div className="featuredBookShade" />
+                <div className="heroFeaturedShade" />
 
-                <div className="featuredBookContent">
-                  <span className="featuredEyebrow">
-                    {featuredBook.category || "Latest Adventure"}
+                <div className="heroFeaturedContent">
+                  <span className="heroFeatureBadge">
+                    ★ Free Featured Adventure
                   </span>
 
                   <h2>{featuredBook.title}</h2>
 
-                  {featuredBook.description && (
-                    <p>{featuredBook.description}</p>
-                  )}
+                  <p>{featuredBookDescription}</p>
 
-                  <span className="orangeButton">
-                    Read Story
+                  <span className="heroFeatureButton">
+                    Start the Mystery
                     <span aria-hidden="true">→</span>
                   </span>
+
+                  <div className="heroFeatureMeta">
+                    <span>◉ 20 Page Story</span>
+                    <span>◆ {featuredBook.age_range || "Ages 5–10"}</span>
+                  </div>
                 </div>
               </Link>
             )}
           </div>
         </section>
 
-        {marqueeBooks.length > 0 && (
-          <section className="homeMarquee">
-            <div className="homeSectionHeading">
-              <h2>READ WITH LUKE</h2>
+        {/* LARGE CREAM HOMEPAGE PANEL */}
+        <div className="homeContentShell">
+          {/* TWO WORLDS */}
+          <section className="homeWorldsSection">
+            <div className="homeCenteredHeading">
+              <span aria-hidden="true">✦</span>
+              <h2>One Membership. Two Worlds to Explore.</h2>
+              <span aria-hidden="true">✦</span>
             </div>
 
-            <div className="marqueeWindow">
-              <div className="marqueeTrack">
-                {[0, 1].map((setNumber) => (
-                  <div
-                    className="marqueeSet"
-                    key={`book-set-${setNumber}`}
-                    aria-hidden={setNumber === 1}
-                  >
-                    {marqueeBooks.map((book, index) => (
-                      <Link
-                        href={`/books/${book.slug}`}
-                        className="marqueeCard"
-                        key={`${setNumber}-${book.id}-${index}`}
-                        tabIndex={setNumber === 1 ? -1 : undefined}
-                      >
-                        <img
-                          src={getBookCover(book)}
-                          alt={setNumber === 0 ? book.title : ""}
-                        />
+            <div className="homeWorldGrid">
+              {featuredBook && (
+                <Link href="/library" className="homeWorldCard">
+                  <img
+                    src={getBookFeatureImage(featuredBook)}
+                    alt="Read With Luke"
+                  />
 
-                        <div className="marqueeCardLabel">
-                          <span>{book.title}</span>
-                        </div>
-                      </Link>
-                    ))}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-        )}
+                  <div className="homeWorldShade" />
 
-        {featuredLearn && (
-          <section className="learningSection">
-            <div className="learningFeatureGrid">
-              <Link
-                href={`/learn/${featuredLearn.slug}`}
-                className="largeLearningFeature"
-              >
-                <img
-                  src={getLearnImage(featuredLearn)}
-                  alt={featuredLearn.title}
-                />
+                  <div className="homeWorldContent">
+                    <h3>Read With Luke</h3>
 
-                <div className="learningFeatureShade" />
+                    <p>
+                      Mysteries, friendships, funny adventures, magical worlds,
+                      and heartfelt stories children actually want to finish.
+                    </p>
 
-                <div className="largeLearningContent">
-                  <span className="featuredEyebrow">
-                    {featuredLearn.category || "LEARN WITH LUKE"}
-                  </span>
-
-                  <h2>{featuredLearn.title}</h2>
-
-                  {featuredLearn.description && (
-                    <p>{featuredLearn.description}</p>
-                  )}
-
-                  <span className="orangeButton">
-                    Start Learning
-                    <span aria-hidden="true">→</span>
-                  </span>
-                </div>
-              </Link>
-
-              {secondaryLearn && (
-                <Link
-                  href={`/learn/${secondaryLearn.slug}`}
-                  className="smallLearningFeature"
-                >
-                  <div className="smallLearningImage">
-                    <img
-                      src={getLearnImage(secondaryLearn)}
-                      alt={secondaryLearn.title}
-                    />
-                  </div>
-
-                  <div className="smallLearningContent">
-                    <span className="smallLearningEyebrow">
-                      NEWEST LEARNING 
+                    <span className="homeWorldButton">
+                      Explore the Stories
+                      <span aria-hidden="true">→</span>
                     </span>
+                  </div>
+                </Link>
+              )}
 
-                    <h3>{secondaryLearn.title}</h3>
+              {featuredLearn && (
+                <Link href="/learn" className="homeWorldCard">
+                  <img
+                    src={getLearnImage(featuredLearn)}
+                    alt="Learn With Luke"
+                  />
 
-                    {secondaryLearn.description && (
-                      <p>{secondaryLearn.description}</p>
-                    )}
+                  <div className="homeWorldShade" />
 
-                    <span className="exploreLink">
-                      Explore
+                  <div className="homeWorldContent">
+                    <h3>Learn With Luke</h3>
+
+                    <p>
+                      Space, weather, the human body, nature, and everyday
+                      mysteries explained through fascinating visual
+                      adventures.
+                    </p>
+
+                    <span className="homeWorldButton">
+                      Explore What’s Waiting
                       <span aria-hidden="true">→</span>
                     </span>
                   </div>
@@ -280,53 +268,325 @@ export default function Home() {
               )}
             </div>
           </section>
-        )}
 
-        {marqueeLearnItems.length > 0 && (
-          <section className="homeMarquee learningMarquee">
-            <div className="homeSectionHeading">
-              <h2>New Things to Learn About!</h2>
+          {/* BOOK READER PREVIEW */}
+          <section className="homeInsideSection" id="inside">
+            <div className="homeInsideCopy">
+              <h2>
+                Not Just Beautiful Covers.
+                <br />
+                Whole Worlds to Read Through.
+              </h2>
+
+              <p>
+                Every adventure combines easy-to-read text, cinematic artwork,
+                memorable characters, and page-by-page discovery.
+              </p>
+
+              <div className="homeInsideBenefits">
+                <div>
+                  <span className="insideBenefitIcon">▤</span>
+                  <strong>Cinematic Illustrations</strong>
+                </div>
+
+                <div>
+                  <span className="insideBenefitIcon">A</span>
+                  <strong>Easy-to-Read Text</strong>
+                </div>
+
+                <div>
+                  <span className="insideBenefitIcon">★</span>
+                  <strong>Fun Rewards &amp; Achievements</strong>
+                </div>
+
+                <div>
+                  <span className="insideBenefitIcon">♥</span>
+                  <strong>Safe, Ad-Free Environment</strong>
+                </div>
+              </div>
+
+              {featuredBook && (
+                <Link
+                  href={`/books/${featuredBook.slug}`}
+                  className="homePrimaryButton insideStoryButton"
+                >
+                  Try a Story Now
+                  <span aria-hidden="true">→</span>
+                </Link>
+              )}
             </div>
 
-            <div className="marqueeWindow">
-              <div className="marqueeTrack marqueeTrackReverse">
-                {[0, 1].map((setNumber) => (
-                  <div
-                    className="marqueeSet"
-                    key={`learn-set-${setNumber}`}
-                    aria-hidden={setNumber === 1}
-                  >
-                    {marqueeLearnItems.map((item, index) => (
-                      <Link
-                        href={`/learn/${item.slug}`}
-                        className="marqueeCard learnMarqueeCard"
-                        key={`${setNumber}-${item.id}-${index}`}
-                        tabIndex={setNumber === 1 ? -1 : undefined}
-                      >
-                        <img
-                          src={getLearnImage(item)}
-                          alt={setNumber === 0 ? item.title : ""}
-                        />
-
-                        <div className="marqueeCardLabel">
-                          <span>{item.title}</span>
-                        </div>
-                      </Link>
-                    ))}
+            {featuredBook && (
+              <div className="homeBookPreview">
+                <div className="homeBookPages">
+                  <div className="homeBookImagePage">
+                    <img
+                      src={getBookFeatureImage(featuredBook)}
+                      alt={featuredBook.title}
+                    />
                   </div>
-                ))}
+
+                  <div className="homeBookSpine" />
+
+                  <div className="homeBookTextPage">
+                    <p>
+                      The friends crept up the old steps. Something didn’t seem
+                      right.
+                    </p>
+
+                    <p>
+                      “Look!” whispered Luke. A trail of footprints covered in
+                      mud led inside the treehouse.
+                    </p>
+
+                    <p>Someone had been here.</p>
+
+                    <div className="homeBookPawprints">
+                      <span>●</span>
+                      <span>●</span>
+                      <span>●</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="homeBookControls">
+                  <button type="button" aria-label="Previous page">
+                    ‹
+                  </button>
+
+                  <div className="homeBookProgress">
+                    <span />
+                  </div>
+
+                  <span className="homeBookPageNumber">8 / 20</span>
+
+                  <button type="button" aria-label="Next page">
+                    ›
+                  </button>
+                </div>
+              </div>
+            )}
+          </section>
+
+          {/* BOOK MARQUEE */}
+          {marqueeBooks.length > 0 && (
+            <section className="homeRailSection">
+              <div className="homeRailHeading">
+                <h2>Adventures They Can’t Wait to Read</h2>
+
+                <Link href="/library">
+                  View All
+                  <span aria-hidden="true">→</span>
+                </Link>
+              </div>
+
+              <div className="homeRailWindow">
+                <div className="homeRailTrack">
+                  {[0, 1].map((setNumber) => (
+                    <div
+                      className="homeRailSet"
+                      key={`book-set-${setNumber}`}
+                      aria-hidden={setNumber === 1}
+                    >
+                      {marqueeBooks.map((book, index) => (
+                        <Link
+                          href={`/books/${book.slug}`}
+                          className="homeRailCard"
+                          key={`${setNumber}-${book.id}-${index}`}
+                          tabIndex={setNumber === 1 ? -1 : undefined}
+                        >
+                          <span className="homeRailCategory">
+                            {book.category || "New Adventure"}
+                          </span>
+
+                          <img
+                            src={getBookCover(book)}
+                            alt={setNumber === 0 ? book.title : ""}
+                          />
+
+                          <div className="homeRailCardShade" />
+
+                          <div className="homeRailCardTitle">
+                            {book.title}
+                          </div>
+                        </Link>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+          )}
+
+          {/* LEARNING MARQUEE */}
+          {marqueeLearnItems.length > 0 && (
+            <section className="homeRailSection homeLearningRailSection">
+              <div className="homeRailHeading">
+                <h2>New Things to Discover With Luke</h2>
+
+                <Link href="/learn">
+                  View All
+                  <span aria-hidden="true">→</span>
+                </Link>
+              </div>
+
+              <div className="homeRailWindow">
+                <div className="homeRailTrack homeRailTrackReverse">
+                  {[0, 1].map((setNumber) => (
+                    <div
+                      className="homeRailSet"
+                      key={`learn-set-${setNumber}`}
+                      aria-hidden={setNumber === 1}
+                    >
+                      {marqueeLearnItems.map((item, index) => (
+                        <Link
+                          href={`/learn/${item.slug}`}
+                          className="homeRailCard"
+                          key={`${setNumber}-${item.id}-${index}`}
+                          tabIndex={setNumber === 1 ? -1 : undefined}
+                        >
+                          <span className="homeRailCategory learningCategory">
+                            {item.category || "Learn With Luke"}
+                          </span>
+
+                          <img
+                            src={getLearnImage(item)}
+                            alt={setNumber === 0 ? item.title : ""}
+                          />
+
+                          <div className="homeRailCardShade" />
+
+                          <div className="homeRailCardTitle">
+                            {item.title}
+                          </div>
+                        </Link>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+          )}
+        </div>
+
+        {/* BENEFITS STRIP */}
+        <section className="homeTrustSection">
+          <div className="homeTrustInner">
+            <h2>Screen Time You Can Feel Good About</h2>
+
+            <div className="homeTrustGrid">
+              <div className="homeTrustItem">
+                <span>★</span>
+                <p>
+                  <strong>Original Content</strong>
+                  Created for Ages 5–10
+                </p>
+              </div>
+
+              <div className="homeTrustItem">
+                <span>×</span>
+                <p>
+                  <strong>No Third-Party</strong>
+                  Advertising
+                </p>
+              </div>
+
+              <div className="homeTrustItem">
+                <span>●</span>
+                <p>
+                  <strong>Parent-Managed</strong>
+                  Accounts
+                </p>
+              </div>
+
+              <div className="homeTrustItem">
+                <span>▣</span>
+                <p>
+                  <strong>New Adventures</strong>
+                  Added Regularly
+                </p>
+              </div>
+
+              <div className="homeTrustItem">
+                <span>▤</span>
+                <p>
+                  <strong>Stories &amp; Learning</strong>
+                  In One Membership
+                </p>
               </div>
             </div>
-          </section>
-        )}
+          </div>
+        </section>
 
-       <section className="homeBenefitsImageSection">
-  <img
-    src="/images/learntoreadwithluke.png"
-    alt="Learn to Read"
-    className="homeBenefitsImage"
-  />
-</section>
+        {/* MEMBERSHIP */}
+        <section className="homeMembershipSection">
+          <div className="homeMembershipIntro">
+            <h2>
+              Start With One Adventure.
+              <br />
+              Join When They Ask
+              <br />
+              For the Next One.
+            </h2>
+
+            <div className="membershipUnderline" />
+          </div>
+
+          <div className="homePlanCard freePlanCard">
+            <span className="homePlanLabel">Free Reader</span>
+
+            <ul>
+              <li>One complete Read With Luke story</li>
+              <li>One complete Learn With Luke adventure</li>
+              <li>No payment information required</li>
+            </ul>
+
+            <Link href="/signup" className="freePlanButton">
+              Start Reading Free
+            </Link>
+          </div>
+
+          <div className="homePlanCard paidPlanCard">
+            <span className="homePlanLabel">Full Membership</span>
+
+            <div className="paidPlanContent">
+              <ul>
+                <li>Unlimited access to all stories</li>
+                <li>Unlimited learning adventures</li>
+                <li>New releases and continuing series</li>
+                <li>Family reading progress and rewards</li>
+              </ul>
+
+              <div className="homePlanPrices">
+                <strong>
+                  $9.99
+                  <small>/month</small>
+                </strong>
+
+                <span>or</span>
+
+                <strong>
+                  $59.99
+                  <small>/year</small>
+                </strong>
+              </div>
+            </div>
+
+            <Link href="/signup" className="paidPlanButton">
+              Join Today
+            </Link>
+          </div>
+
+          <Link href="/gift" className="homeGiftCard">
+            <span className="giftEmoji">🎁</span>
+            <strong>Gift Reading</strong>
+            <p>Make storytime happen—even when you’re not there.</p>
+            <span>
+              Give a Gift
+              <span aria-hidden="true">→</span>
+            </span>
+          </Link>
+        </section>
       </main>
 
       <Footer />
