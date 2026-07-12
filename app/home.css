@@ -1185,10 +1185,12 @@
   z-index: 2;
 
   width: 100%;
-  padding: 40px 0;
+  padding: 0;
+  margin: 0;
 
-  box-sizing: border-box;
   background: #13294b;
+  line-height: 0;
+  overflow: hidden;
 }
 
 .homeBenefitsImage {
@@ -1197,14 +1199,13 @@
   width: 100%;
   max-width: none;
   height: auto;
-  margin: 0;
 
+  margin: 0;
   border-radius: 0;
-  object-fit: contain;
 }
 @media (max-width: 760px) {
   .homeBenefitsImageSection {
-    padding: 20px 0;
+    padding: 0px 0;
   }
 
   .homeBenefitsImage {
