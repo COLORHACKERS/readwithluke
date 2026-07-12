@@ -181,7 +181,7 @@ export default function Home() {
         {marqueeBooks.length > 0 && (
           <section className="homeMarquee">
             <div className="homeSectionHeading">
-              <h2>New Adventures!</h2>
+              <h2>READ WITH LUKE</h2>
             </div>
 
             <div className="marqueeWindow">
@@ -232,7 +232,7 @@ export default function Home() {
 
                 <div className="largeLearningContent">
                   <span className="featuredEyebrow">
-                    {featuredLearn.category || "Learning"}
+                    {featuredLearn.category || "LEARN WITH LUKE"}
                   </span>
 
                   <h2>{featuredLearn.title}</h2>
@@ -262,7 +262,7 @@ export default function Home() {
 
                   <div className="smallLearningContent">
                     <span className="smallLearningEyebrow">
-                      Latest Learning
+                      NEWEST LEARNING 
                     </span>
 
                     <h3>{secondaryLearn.title}</h3>
