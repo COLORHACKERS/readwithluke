@@ -1142,7 +1142,7 @@
 @media (max-width: 760px) {
   .marqueeCard,
   .learnMarqueeCard {
-    aspect-ratio: 2 / 3;
+    aspect-ratio: 5 / 8;
     background: #ffffff;
   }
 
