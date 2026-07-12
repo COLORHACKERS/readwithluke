@@ -31,33 +31,7 @@ type LearnItem = {
   created_at?: string;
 };
 
-const benefits = [
-  {
-    icon: "📖",
-    title: "Beautiful Stories",
-    text: "Engaging stories that spark imagination and build reading confidence.",
-  },
-  {
-    icon: "🧩",
-    title: "Fun & Games",
-    text: "Puzzles, games, and activities that make learning exciting.",
-  },
-  {
-    icon: "🎓",
-    title: "Learn & Explore",
-    text: "Learning adventures that teach new things in a fun, easy way.",
-  },
-  {
-    icon: "🌕",
-    title: "Earn & Achieve",
-    text: "Earn coins, badges, stickers, and rewards that celebrate progress.",
-  },
-  {
-    icon: "❤️",
-    title: "Made for Families",
-    text: "A safe, positive place for children and a simple experience for parents.",
-  },
-];
+
 
 function fillToSix<T>(items: T[]) {
   if (items.length === 0) {
@@ -346,33 +320,13 @@ export default function Home() {
           </section>
         )}
 
-        <section className="homeBenefits">
-          <div className="benefitsInner">
-            <div className="benefitsGrid">
-              {benefits.map((benefit) => (
-                <article className="benefitCard" key={benefit.title}>
-                  <span className="benefitIcon" aria-hidden="true">
-                    {benefit.icon}
-                  </span>
-
-                  <h3>{benefit.title}</h3>
-
-                  <p>{benefit.text}</p>
-                </article>
-              ))}
-            </div>
-
-            <div className="benefitActions">
-              <Link href="/library" className="benefitOutlineButton">
-                Explore the Library
-              </Link>
-
-              <Link href="/signup" className="benefitWhiteButton">
-                Join Read With Luke
-              </Link>
-            </div>
-          </div>
-        </section>
+       <section className="homeBenefitsImageSection">
+  <img
+    src="/images/home-benefits.png"
+    alt="Read With Luke membership benefits"
+    className="homeBenefitsImage"
+  />
+</section>
       </main>
 
       <Footer />
