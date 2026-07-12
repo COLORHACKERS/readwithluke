@@ -322,8 +322,8 @@ export default function Home() {
 
        <section className="homeBenefitsImageSection">
   <img
-    src="/images/home-benefits.png"
-    alt="Read With Luke membership benefits"
+    src="/images/learntoreadwithluke.png"
+    alt="Learn to Read"
     className="homeBenefitsImage"
   />
 </section>
