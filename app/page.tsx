@@ -317,7 +317,13 @@ export default function Home() {
             </div>
 
             {featuredBook && (
-              <div className="homeBookPreview">
+              <div className="homeIpadImageWrap">
+  <img
+    src="/images/ipad001.png"
+    alt="Read With Luke interactive story reader"
+    className="homeIpadImage"
+  />
+</div>
                 <div className="homeBookPages">
                   <div className="homeBookImagePage">
                     <img
