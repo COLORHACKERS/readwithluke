@@ -427,7 +427,8 @@ export default function Home() {
         <section className="homeTrustSection">
           <div className="homeTrustInner">
             <h2>Screen Time
-              </br>You Can Feel Good About</h2>
+              </br>
+            You Can Feel Good About</h2>
 
             <div className="homeTrustGrid">
               <div className="homeTrustItem">
