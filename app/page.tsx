@@ -132,11 +132,11 @@ export default function Home() {
           <div className="homeHeroInner">
             <div className="homeHeroCopy">
               <h1>
-                TURN “DO I
+                TURN “<strong>DO I</strong>
                 <br />
                 HAVE TO READ?”
                 <br />
-                INTO “CAN I READ
+                INTO “<strong>CAN I</strong> READ
                 <br />
                 ONE MORE?”
               </h1>
