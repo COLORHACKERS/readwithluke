@@ -519,7 +519,7 @@ export default function Home() {
                 <span>or</span>
 
                 <strong>
-                  $59.99
+                  $69.99
                   <small>/year</small>
                 </strong>
               </div>
