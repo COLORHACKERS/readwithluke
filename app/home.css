@@ -927,17 +927,6 @@ html {
   object-position: center;
 }
 
-.homeRailCardShade {
-  position: absolute;
-  inset: 0;
-
-  background:
-    linear-gradient(
-      180deg,
-      rgba(0, 0, 0, 0.02) 42%,
-      rgba(0, 0, 0, 0.8) 100%
-    );
-}
 
 .homeRailCategory {
   position: absolute;
@@ -970,21 +959,6 @@ html {
   background: #815c9f;
 }
 
-.homeRailCardTitle {
-  position: absolute;
-  right: 10px;
-  bottom: 12px;
-  left: 10px;
-  z-index: 3;
-
-  font-family: "DK Woolwich", Impact, sans-serif;
-  font-size: 24px;
-  line-height: 0.95;
-  text-align: center;
-  text-transform: uppercase;
-
-  text-shadow: 0 3px 7px rgba(0, 0, 0, 0.75);
-}
 
 .homeLearningRailSection {
   padding-top: 24px;
@@ -1694,10 +1668,7 @@ html {
     height: 225px;
   }
 
-  .homeRailCardTitle {
-    font-size: 20px;
-  }
-
+ 
  .homeTrustSection {
     min-height: auto;
     padding: 45px 22px;
