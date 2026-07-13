@@ -270,7 +270,7 @@ export default function Home() {
           </section>
 
           {/* BOOK READER PREVIEW */}
-          <section className="homeInsideSection" id="inside">
+         <section className="homeInsideSection" id="inside">
   <div className="homeInsideCopy">
     <h2>
       Not Just Beautiful Covers.
@@ -296,20 +296,12 @@ export default function Home() {
 
       <div>
         <span className="insideBenefitIcon">★</span>
-        <strong>
-          Fun Rewards &amp;
-          <br />
-          Achievements
-        </strong>
+        <strong>Fun Rewards &amp; Achievements</strong>
       </div>
 
       <div>
         <span className="insideBenefitIcon">♥</span>
-        <strong>
-          Safe, Ad-Free
-          <br />
-          Environment
-        </strong>
+        <strong>Safe, Ad-Free Environment</strong>
       </div>
     </div>
 
@@ -332,57 +324,9 @@ export default function Home() {
     />
   </div>
 </section>
-                <div className="homeBookPages">
-                  <div className="homeBookImagePage">
-                    <img
-                      src={getBookFeatureImage(featuredBook)}
-                      alt={featuredBook.title}
-                    />
-                  </div>
 
-                  <div className="homeBookSpine" />
-
-                  <div className="homeBookTextPage">
-                    <p>
-                      The friends crept up the old steps. Something didn’t seem
-                      right.
-                    </p>
-
-                    <p>
-                      “Look!” whispered Luke. A trail of footprints covered in
-                      mud led inside the treehouse.
-                    </p>
-
-                    <p>Someone had been here.</p>
-
-                    <div className="homeBookPawprints">
-                      <span>●</span>
-                      <span>●</span>
-                      <span>●</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="homeBookControls">
-                  <button type="button" aria-label="Previous page">
-                    ‹
-                  </button>
-
-                  <div className="homeBookProgress">
-                    <span />
-                  </div>
-
-                  <span className="homeBookPageNumber">8 / 20</span>
-
-                  <button type="button" aria-label="Next page">
-                    ›
-                  </button>
-                </div>
-              </div>
-         
-          </section>
-
-          {/* BOOK MARQUEE */}
+{/* BOOK MARQUEE */}
+        
           {marqueeBooks.length > 0 && (
             <section className="homeRailSection">
               <div className="homeRailHeading">
