@@ -1011,6 +1011,7 @@ html {
   margin-top: 0;
   padding: 34px 36px 38px;
   overflow: hidden;
+  min-height: 250px;
 
   border-radius: 0;
 
