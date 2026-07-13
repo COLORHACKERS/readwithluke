@@ -66,7 +66,21 @@ function getLearnCover(item: LearnItem) {
     "/images/6to5ratio.png"
   );
 }
+function getLearnImage(item: LearnItem) {
+  return (
+    item.image_url ||
+    item.cover_url ||
+    "/images/6to5ratio.png"
+  );
+}
 
+function getLearnCover(item: LearnItem) {
+  return (
+    item.cover_url ||
+    item.image_url ||
+    "/images/6to5ratio.png"
+  );
+}
 export default function Home() {
   const [books, setBooks] = useState<Book[]>([]);
   const [learnItems, setLearnItems] = useState<LearnItem[]>([]);
