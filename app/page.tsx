@@ -274,7 +274,7 @@ export default function Home() {
   <div className="homeInsideCopy">
     <h2>
       Not Just Beautiful Covers.
-      <br />
+    
       Whole Worlds to Read Through.
     </h2>
 
