@@ -362,9 +362,7 @@ export default function Home() {
 
                           <div className="homeRailCardShade" />
 
-                          <div className="homeRailCardTitle">
-                            {book.title}
-                          </div>
+                          
                         </Link>
                       ))}
                     </div>
@@ -410,9 +408,7 @@ export default function Home() {
 
                           <div className="homeRailCardShade" />
 
-                          <div className="homeRailCardTitle">
-                            {item.title}
-                          </div>
+                        
                         </Link>
                       ))}
                     </div>
