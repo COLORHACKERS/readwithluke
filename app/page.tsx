@@ -271,59 +271,67 @@ export default function Home() {
 
           {/* BOOK READER PREVIEW */}
           <section className="homeInsideSection" id="inside">
-            <div className="homeInsideCopy">
-              <h2>
-                Not Just Beautiful Covers.
-                <br />
-                Whole Worlds to Read Through.
-              </h2>
+  <div className="homeInsideCopy">
+    <h2>
+      Not Just Beautiful Covers.
+      <br />
+      Whole Worlds to Read Through.
+    </h2>
 
-              <p>
-                Every adventure combines easy-to-read text, cinematic artwork,
-                memorable characters, and page-by-page discovery.
-              </p>
+    <p>
+      Every adventure combines easy-to-read text, cinematic artwork,
+      memorable characters, and page-by-page discovery.
+    </p>
 
-              <div className="homeInsideBenefits">
-                <div>
-                  <span className="insideBenefitIcon">▤</span>
-                  <strong>Cinematic Illustrations</strong>
-                </div>
+    <div className="homeInsideBenefits">
+      <div>
+        <span className="insideBenefitIcon">▤</span>
+        <strong>Cinematic Illustrations</strong>
+      </div>
 
-                <div>
-                  <span className="insideBenefitIcon">A</span>
-                  <strong>Easy-to-Read Text</strong>
-                </div>
+      <div>
+        <span className="insideBenefitIcon">A</span>
+        <strong>Easy-to-Read Text</strong>
+      </div>
 
-                <div>
-                  <span className="insideBenefitIcon">★</span>
-                  <strong>Fun Rewards &amp; Achievements</strong>
-                </div>
+      <div>
+        <span className="insideBenefitIcon">★</span>
+        <strong>
+          Fun Rewards &amp;
+          <br />
+          Achievements
+        </strong>
+      </div>
 
-                <div>
-                  <span className="insideBenefitIcon">♥</span>
-                  <strong>Safe, Ad-Free Environment</strong>
-                </div>
-              </div>
+      <div>
+        <span className="insideBenefitIcon">♥</span>
+        <strong>
+          Safe, Ad-Free
+          <br />
+          Environment
+        </strong>
+      </div>
+    </div>
 
-              {featuredBook && (
-                <Link
-                  href={`/books/${featuredBook.slug}`}
-                  className="homePrimaryButton insideStoryButton"
-                >
-                  Try a Story Now
-                  <span aria-hidden="true">→</span>
-                </Link>
-              )}
-            </div>
+    {featuredBook && (
+      <Link
+        href={`/books/${featuredBook.slug}`}
+        className="homePrimaryButton insideStoryButton"
+      >
+        Try a Story Now
+        <span aria-hidden="true">→</span>
+      </Link>
+    )}
+  </div>
 
-            {featuredBook && (
-              <div className="homeIpadImageWrap">
-  <img
-    src="/images/ipad001.png"
-    alt="Read With Luke interactive story reader"
-    className="homeIpadImage"
-  />
-</div>
+  <div className="homeIpadImageWrap">
+    <img
+      src="/images/ipad001.png"
+      alt="Read With Luke interactive story reader"
+      className="homeIpadImage"
+    />
+  </div>
+</section>
                 <div className="homeBookPages">
                   <div className="homeBookImagePage">
                     <img
