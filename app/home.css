@@ -1698,13 +1698,15 @@ html {
     font-size: 20px;
   }
 
-  .homeTrustSection {
-    padding: 27px 19px;
-    border-radius: 22px;
+ .homeTrustSection {
+    min-height: auto;
+    padding: 45px 22px;
   }
-
+ .homeTrustInner {
+    transform: none;
+  }
   .homeTrustSection h2 {
-    font-size: 33px;
+    font-size: 32px;
   }
 
   .homeTrustGrid {
@@ -1968,7 +1970,7 @@ html {
   flex-direction: column;
   justify-content: center;
 
-  transform: translateY(-4px);
+  transform: translateY(10px);
 }
 
 .homeTrustSection h2 {
