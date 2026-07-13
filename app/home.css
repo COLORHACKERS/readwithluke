@@ -1950,3 +1950,32 @@ html {
     padding-block: 35px;
   }
 }
+/* CENTER SCREEN-TIME BANNER CONTENT */
+
+.homeTrustSection {
+  min-height: 360px;
+
+  display: flex;
+  align-items: center;
+
+  padding: 40px 48px;
+}
+
+.homeTrustInner {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  transform: translateY(-4px);
+}
+
+.homeTrustSection h2 {
+  margin: 0 0 42px;
+}
+
+.homeTrustGrid {
+  width: 100%;
+  align-items: center;
+}
