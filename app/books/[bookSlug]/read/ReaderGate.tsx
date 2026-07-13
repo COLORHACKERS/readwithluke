@@ -4,65 +4,66 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 
-export default function ReaderGate({
-  children,
-}: {
+type ReaderGateProps = {
   children: React.ReactNode;
-}) {
+};
+
+type ProfileAccess = {
+  membership_status: string | null;
+  complimentary_access: boolean | null;
+};
+
+export default function ReaderGate({ children }: ReaderGateProps) {
   const router = useRouter();
 
   const [allowed, setAllowed] = useState(false);
   const [checking, setChecking] = useState(true);
 
   useEffect(() => {
-    let isMounted = true;
+    let cancelled = false;
 
     async function checkAccess() {
       try {
-        // Allow admins to preview books.
-        const isAdmin = localStorage.getItem("rwl-admin") === "yes";
-
-        if (isAdmin) {
-          if (isMounted) {
-            setAllowed(true);
-            setChecking(false);
-          }
-
-          return;
-        }
-
-        // Check whether the visitor is signed in.
         const {
           data: { user },
           error: userError,
         } = await supabase.auth.getUser();
 
         if (userError || !user) {
+          if (!cancelled) {
+            setAllowed(false);
+            setChecking(false);
+          }
+
           router.replace("/signup");
           return;
         }
 
-        // Get the reader's membership information.
         const { data: profile, error: profileError } = await supabase
           .from("profiles")
           .select("membership_status, complimentary_access")
           .eq("id", user.id)
-          .maybeSingle();
+          .single<ProfileAccess>();
 
-        if (profileError) {
-          console.error("ReaderGate profile error:", profileError);
+        if (profileError || !profile) {
+          console.error(
+            "ReaderGate could not load this user's profile:",
+            profileError
+          );
+
+          if (!cancelled) {
+            setAllowed(false);
+            setChecking(false);
+          }
+
           router.replace("/membership");
           return;
         }
 
-        if (!profile) {
-          console.error("ReaderGate: No profile found for user", user.id);
-          router.replace("/membership");
-          return;
-        }
-
-        const membershipStatus = profile.membership_status
-          ?.trim()
+        const membershipStatus = String(
+          profile.membership_status ?? ""
+        )
+          .trim()
           .toLowerCase();
 
         const hasPaidAccess =
@@ -72,17 +73,31 @@ export default function ReaderGate({
         const hasComplimentaryAccess =
           profile.complimentary_access === true;
 
-        if (!hasPaidAccess && !hasComplimentaryAccess) {
+        const canAccessReader =
+          hasPaidAccess || hasComplimentaryAccess;
+
+        if (!canAccessReader) {
+          if (!cancelled) {
+            setAllowed(false);
+            setChecking(false);
+          }
+
           router.replace("/membership");
           return;
         }
 
-        if (isMounted) {
+        if (!cancelled) {
           setAllowed(true);
           setChecking(false);
         }
       } catch (error) {
         console.error("ReaderGate access error:", error);
+
+        if (!cancelled) {
+          setAllowed(false);
+          setChecking(false);
+        }
+
         router.replace("/membership");
       }
     }
@@ -90,16 +105,20 @@ export default function ReaderGate({
     checkAccess();
 
     return () => {
-      isMounted = false;
+      cancelled = true;
     };
   }, [router]);
 
-  if (checking || !allowed) {
+  if (checking) {
     return (
       <div className="readerLoading">
         <p>Loading your book...</p>
       </div>
     );
+  }
+
+  if (!allowed) {
+    return null;
   }
 
   return <>{children}</>;
