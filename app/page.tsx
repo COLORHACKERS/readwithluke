@@ -425,12 +425,12 @@ export default function Home() {
 
         {/* BENEFITS STRIP */}
         <section className="homeTrustSection">
-          <div className="homeTrustInner">
-            <h2>Screen Time
-              </br>
-            You Can Feel Good About</h2>
+          <section className="homeTrustSection">
+  <div className="homeTrustInner">
+    <h2>Screen Time<br>You Can Feel Good About</br></h2>
 
-            <div className="homeTrustGrid">
+    <div className="homeTrustGrid">
+
               <div className="homeTrustItem">
                 <span>★</span>
                 <p>
