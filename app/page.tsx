@@ -246,11 +246,11 @@ export default function Home() {
               )}
 
               {featuredLearn && (
-                <Link href="/learn" className="homeWorldCard">
-                <img
-  src={getLearnCover(item)}
-  alt={setNumber === 0 ? item.title : ""}
-/>
+         <Link href="/learn" className="homeWorldCard">
+  <img
+    src={getLearnImage(featuredLearn)}
+    alt={featuredLearn.title}
+  />
 
                   <div className="homeWorldShade" />
 
@@ -396,25 +396,19 @@ export default function Home() {
                       key={`learn-set-${setNumber}`}
                       aria-hidden={setNumber === 1}
                     >
-                      {marqueeLearnItems.map((item, index) => (
-                        <Link
-                          href={`/learn/${item.slug}`}
-                          className="homeRailCard"
-                          key={`${setNumber}-${item.id}-${index}`}
-                          tabIndex={setNumber === 1 ? -1 : undefined}
-                        >
-                      
-
-                          <img
-                            src={getLearnImage(item)}
-                            alt={setNumber === 0 ? item.title : ""}
-                          />
-
-                          <div className="homeRailCardShade" />
-
-                        
-                        </Link>
-                      ))}
+                   {marqueeLearnItems.map((item, index) => (
+  <Link
+    href={`/learn/${item.slug}`}
+    className="homeRailCard"
+    key={`${setNumber}-${item.id}-${index}`}
+    tabIndex={setNumber === 1 ? -1 : undefined}
+  >
+    <img
+      src={getLearnCover(item)}
+      alt={setNumber === 0 ? item.title : ""}
+    />
+  </Link>
+))}
                     </div>
                   ))}
                 </div>
