@@ -145,7 +145,7 @@ export default function Home() {
 
               <p>
                 Original cinematic stories and fascinating learning adventures
-                for curious kids ages 5–10—designed to make reading feel less
+                for curious kids designed to make reading feel less
                 like an assignment and more like an adventure.
               </p>
 
@@ -426,7 +426,8 @@ export default function Home() {
         {/* BENEFITS STRIP */}
         <section className="homeTrustSection">
           <div className="homeTrustInner">
-            <h3>Screen Time You Can Feel Good About</h3>
+            <h2>Screen Time
+              </br>You Can Feel Good About</h2>
 
             <div className="homeTrustGrid">
               <div className="homeTrustItem">
