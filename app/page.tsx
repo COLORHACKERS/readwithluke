@@ -476,7 +476,7 @@ export default function Home() {
         <section className="homeMembershipSection">
           <div className="homeMembershipIntro">
             <h2>
-              Start With One Adventure.Join When They Ask For the Next One.
+              New Stories and learning weekly!
             </h2>
 
             <div className="membershipUnderline" />
