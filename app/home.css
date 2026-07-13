@@ -1011,7 +1011,7 @@ html {
   margin-top: 0;
   padding: 34px 36px 38px;
   overflow: hidden;
-  min-height: 250px;
+  min-height: 280px;
 
   border-radius: 0;
 
@@ -1021,8 +1021,8 @@ html {
     linear-gradient(
       90deg,
       rgba(4, 20, 38, 0.78) 0%,
-      rgba(4, 20, 38, 0.55) 42%,
-      rgba(4, 20, 38, 0.4) 100%
+      rgba(4, 20, 38, 0.55) 30%,
+      rgba(4, 20, 38, 0.4) 60%
     ),
     url("/images/screentime-bg.png");
 
