@@ -247,10 +247,10 @@ export default function Home() {
 
               {featuredLearn && (
                 <Link href="/learn" className="homeWorldCard">
-                  <img
-                    src={getLearnImage(featuredLearn)}
-                    alt="Learn With Luke"
-                  />
+                <img
+  src={getLearnCover(item)}
+  alt={setNumber === 0 ? item.title : ""}
+/>
 
                   <div className="homeWorldShade" />
 
