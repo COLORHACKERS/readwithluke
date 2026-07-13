@@ -422,25 +422,28 @@ export default function Home() {
             </section>
           )}
         </div>
-
         {/* BENEFITS STRIP */}
         <section className="homeTrustSection">
-          <section className="homeTrustSection">
-  <div className="homeTrustInner">
-    <h2>Screen Time<br>You Can Feel Good About</br></h2>
+          <div className="homeTrustInner">
+            <h2>
+              Screen Time
+              <br />
+              You Can Feel Good About
+            </h2>
 
-    <div className="homeTrustGrid">
-
+            <div className="homeTrustGrid">
               <div className="homeTrustItem">
                 <span>★</span>
+
                 <p>
                   <strong>Original Content</strong>
-                  Created for Ages 5–10+
+                  Created for Ages 5–10
                 </p>
               </div>
 
               <div className="homeTrustItem">
                 <span>×</span>
+
                 <p>
                   <strong>No Third-Party</strong>
                   Advertising
@@ -449,6 +452,7 @@ export default function Home() {
 
               <div className="homeTrustItem">
                 <span>●</span>
+
                 <p>
                   <strong>Parent-Managed</strong>
                   Accounts
@@ -457,6 +461,7 @@ export default function Home() {
 
               <div className="homeTrustItem">
                 <span>▣</span>
+
                 <p>
                   <strong>New Adventures</strong>
                   Added Regularly
@@ -465,6 +470,7 @@ export default function Home() {
 
               <div className="homeTrustItem">
                 <span>▤</span>
+
                 <p>
                   <strong>Stories &amp; Learning</strong>
                   In One Membership
@@ -478,7 +484,13 @@ export default function Home() {
         <section className="homeMembershipSection">
           <div className="homeMembershipIntro">
             <h2>
-              New Stories and learning weekly!
+              Start With One
+              <br />
+              Adventure.
+              <br />
+              Join When They Ask
+              <br />
+              For the Next One.
             </h2>
 
             <div className="membershipUnderline" />
@@ -518,7 +530,7 @@ export default function Home() {
                 <span>or</span>
 
                 <strong>
-                  $69.99
+                  $59.99
                   <small>/year</small>
                 </strong>
               </div>
@@ -531,8 +543,13 @@ export default function Home() {
 
           <Link href="/gift" className="homeGiftCard">
             <span className="giftEmoji">🎁</span>
+
             <strong>Gift Reading</strong>
-            <p>Make storytime happen—even when you’re not there.</p>
+
+            <p>
+              Make storytime happen—even when you’re not there.
+            </p>
+
             <span>
               Give a Gift
               <span aria-hidden="true">→</span>
