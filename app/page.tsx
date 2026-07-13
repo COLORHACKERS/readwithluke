@@ -318,7 +318,7 @@ export default function Home() {
 
   <div className="homeIpadImageWrap">
     <img
-      src="/images/ipad001.png"
+      src="/images/ipad002.png"
       alt="Read With Luke interactive story reader"
       className="homeIpadImage"
     />
