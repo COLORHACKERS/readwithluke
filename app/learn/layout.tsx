@@ -1,9 +1,9 @@
-import LearnGate from "./LearnGate";
+import ReaderGate from "@/app/components/ReaderGate";
 
 export default function LearnLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <LearnGate>{children}</LearnGate>;
+  return <ReaderGate>{children}</ReaderGate>;
 }
