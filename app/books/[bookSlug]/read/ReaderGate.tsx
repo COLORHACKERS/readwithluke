@@ -24,6 +24,26 @@ export default function ReaderGate({ children }: ReaderGateProps) {
 
     async function checkAccess() {
       try {
+        /*
+         * Password-only admin access.
+         * This must match the value created by your AdminGate.
+         */
+        const isAdmin =
+          typeof window !== "undefined" &&
+          localStorage.getItem("rwl-admin") === "yes";
+
+        if (isAdmin) {
+          if (!cancelled) {
+            setAllowed(true);
+            setChecking(false);
+          }
+
+          return;
+        }
+
+        /*
+         * Normal customer access.
+         */
         const {
           data: { user },
           error: userError,
