@@ -406,7 +406,7 @@ export default function Home() {
                     >
                    {marqueeLearnItems.map((item, index) => (
   <Link
-    href={`/learn/${item.slug}`}
+    href={`/learn/${item.slug}/read`}
     className="homeRailCard"
     key={`${setNumber}-${item.id}-${index}`}
     tabIndex={setNumber === 1 ? -1 : undefined}
