@@ -31,3 +31,70 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+.setPasswordPage {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 120px 24px 60px;
+  background: #f8f0df;
+}
+
+.setPasswordCard {
+  width: min(100%, 520px);
+  display: grid;
+  gap: 18px;
+  padding: 42px;
+  border-radius: 24px;
+  background: white;
+  box-shadow: 0 18px 45px rgba(10, 38, 61, 0.16);
+}
+
+.setPasswordCard h1 {
+  margin: 0;
+  color: #123a60;
+  font-family: "DK Woolwich", Impact, sans-serif;
+  font-size: 42px;
+  text-transform: uppercase;
+}
+
+.setPasswordCard p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.setPasswordCard label {
+  display: grid;
+  gap: 7px;
+  font-weight: 700;
+}
+
+.setPasswordCard input {
+  width: 100%;
+  min-height: 50px;
+  padding: 0 14px;
+  border: 1px solid #bac4ce;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+.setPasswordCard button {
+  min-height: 52px;
+  border: 0;
+  border-radius: 999px;
+  color: white;
+  background: #ff4e2b;
+  font-family: "DK Woolwich", Impact, sans-serif;
+  font-size: 17px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.setPasswordCard button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.setPasswordMessage {
+  color: #b3261e;
+  font-weight: 700;
+}
