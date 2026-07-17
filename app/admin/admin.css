@@ -410,3 +410,250 @@
   object-position: center top;
   border-radius: 18px;
 }
+/* =========================================================
+   ADMIN SEO SECTION
+========================================================= */
+
+.adminSeoSection {
+  display: grid;
+  gap: 22px;
+
+  margin-top: 34px;
+  padding: 30px;
+
+  border: 2px solid #d8e0e7;
+  border-radius: 22px;
+
+  background: #f7f9fb;
+}
+
+.adminSeoHeading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.adminSeoHeading h2 {
+  margin: 3px 0 0;
+
+  color: #123a60;
+
+  font-family: "DK Woolwich", Impact, sans-serif;
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.adminSeoEyebrow {
+  color: #ff4e2b;
+
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.adminSeoOptional {
+  padding: 7px 12px;
+
+  border-radius: 999px;
+
+  color: #496275;
+  background: #e6edf3;
+
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.adminSeoIntro {
+  max-width: 760px;
+  margin: 0;
+
+  color: #506171;
+
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.adminSeoGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.adminSeoDescriptionField {
+  grid-column: 1 / -1;
+}
+
+.adminSeoSection .adminField {
+  display: grid;
+  gap: 8px;
+}
+
+.adminSeoSection .adminField > span {
+  color: #18364e;
+
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.adminSeoSection input,
+.adminSeoSection textarea {
+  width: 100%;
+  padding: 13px 15px;
+
+  border: 1px solid #bdcbd6;
+  border-radius: 10px;
+  outline: none;
+
+  color: #172f46;
+  background: #ffffff;
+
+  font: inherit;
+}
+
+.adminSeoSection input:focus,
+.adminSeoSection textarea:focus {
+  border-color: #32649f;
+  box-shadow: 0 0 0 3px rgba(50, 100, 159, 0.12);
+}
+
+.adminSeoSection textarea {
+  min-height: 112px;
+  resize: vertical;
+}
+
+.adminSeoSection small {
+  color: #738392;
+  font-size: 11px;
+}
+
+.adminSeoSection .seoWarning {
+  color: #c8432c;
+  font-weight: 800;
+}
+
+.adminSeoCheckbox {
+  grid-column: 1 / -1;
+
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+
+  padding: 16px;
+
+  border: 1px solid #d5dde4;
+  border-radius: 12px;
+
+  background: #ffffff;
+}
+
+.adminSeoCheckbox input {
+  flex: 0 0 auto;
+
+  width: 19px;
+  height: 19px;
+  margin-top: 2px;
+}
+
+.adminSeoCheckbox > span {
+  display: grid;
+  gap: 4px;
+}
+
+.adminSeoCheckbox strong {
+  color: #17364e;
+  font-size: 13px;
+}
+
+.adminSeoPreview {
+  display: grid;
+  gap: 10px;
+
+  padding-top: 20px;
+
+  border-top: 1px solid #d5dde4;
+}
+
+.adminSeoPreviewLabel {
+  color: #496275;
+
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.adminSeoPreviewContent {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 17px;
+  align-items: center;
+
+  padding: 16px;
+
+  border: 1px solid #d5dde4;
+  border-radius: 14px;
+
+  background: #ffffff;
+}
+
+.adminSeoPreviewContent img {
+  width: 110px;
+  height: 75px;
+
+  object-fit: cover;
+
+  border-radius: 8px;
+  background: #e5e8eb;
+}
+
+.adminSeoPreviewContent small {
+  color: #506171;
+}
+
+.adminSeoPreviewContent h3 {
+  margin: 5px 0;
+
+  color: #175db3;
+
+  font-family: Arial, sans-serif;
+  font-size: 19px;
+  font-weight: 500;
+}
+
+.adminSeoPreviewContent p {
+  max-width: 700px;
+  margin: 0;
+
+  color: #4f5f6d;
+
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+@media (max-width: 700px) {
+  .adminSeoSection {
+    padding: 22px 17px;
+  }
+
+  .adminSeoGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .adminSeoDescriptionField,
+  .adminSeoCheckbox {
+    grid-column: auto;
+  }
+
+  .adminSeoPreviewContent {
+    grid-template-columns: 1fr;
+  }
+
+  .adminSeoPreviewContent img {
+    width: 100%;
+    height: 180px;
+  }
+}
