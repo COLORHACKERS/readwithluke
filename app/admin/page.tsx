@@ -62,6 +62,10 @@ export default function AdminPage() {
 
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
+  const [seoTitle, setSeoTitle] = useState("");
+const [seoDescription, setSeoDescription] = useState("");
+const [seoImageUrl, setSeoImageUrl] = useState("");
+const [seoNoindex, setSeoNoindex] = useState(false);
 
   useEffect(() => {
     loadBooks();
