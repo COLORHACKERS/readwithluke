@@ -12,6 +12,8 @@ type Book = {
   slug: string;
   description: string | null;
   cover_url: string | null;
+  hero_url: string | null;
+  hero_image_url: string | null;
   age_range: string | null;
   category: string | null;
   is_published: boolean;
@@ -110,20 +112,25 @@ const [seoNoindex, setSeoNoindex] = useState(false);
     setBooks(data || []);
   }
 
-  function resetForm() {
-    setEditingId(null);
-    setTitle("");
-    setSlug("");
-    setDescription("");
-    setCoverUrl("");
-    setGatewayUrl("");
-    setAgeRange("Ages 5–8");
-    setSelectedCategories(["Adventure"]);
-    setIsPublished(false);
-    setPages(emptyPages);
-    setMessage("");
-  }
+ function resetForm() {
+  setEditingId(null);
+  setTitle("");
+  setSlug("");
+  setDescription("");
+  setCoverUrl("");
+  setGatewayUrl("");
+  setAgeRange("Ages 5–8");
+  setSelectedCategories(["Adventure"]);
+  setIsPublished(false);
+  setPages(emptyPages);
 
+  setSeoTitle("");
+  setSeoDescription("");
+  setSeoImageUrl("");
+  setSeoNoindex(false);
+
+  setMessage("");
+}
   async function uploadImage(file: File, folder: string) {
     const ext = file.name.split(".").pop();
     const filePath = `${folder}/${Date.now()}-${Math.random()
@@ -153,6 +160,10 @@ const [seoNoindex, setSeoNoindex] = useState(false);
     setAgeRange(book.age_range || "Ages 5–8");
     setSelectedCategories(parseCategories(book.category));
     setIsPublished(book.is_published);
+    setSeoTitle(book.seo_title || "");
+setSeoDescription(book.seo_description || "");
+setSeoImageUrl(book.seo_image_url || "");
+setSeoNoindex(book.seo_noindex === true);
 
     const { data, error } = await supabase
       .from("book_pages")
