@@ -505,9 +505,23 @@ const [seoNoindex, setSeoNoindex] = useState(false);
               />
             </div>
           ))}
-        </section>
+             </section>
 
-        <div className="adminActions">
+      <SeoFields
+        seoTitle={seoTitle}
+        setSeoTitle={setSeoTitle}
+        seoDescription={seoDescription}
+        setSeoDescription={setSeoDescription}
+        seoImageUrl={seoImageUrl}
+        setSeoImageUrl={setSeoImageUrl}
+        seoNoindex={seoNoindex}
+        setSeoNoindex={setSeoNoindex}
+        fallbackTitle={title}
+        fallbackDescription={description}
+        fallbackImage={coverUrl}
+      />
+
+      <div className="adminActions">
           <button onClick={() => saveBook(false)} disabled={saving}>
             {saving ? "Saving..." : "Save Draft"}
           </button>
