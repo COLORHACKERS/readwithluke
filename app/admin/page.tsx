@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import "./admin.css";
 import AdminGate from "@/app/components/AdminGate";
+import SeoFields from "@/app/admin/components/SeoFields";
 
 type Book = {
   id: string;
