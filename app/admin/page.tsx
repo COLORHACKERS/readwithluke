@@ -275,17 +275,21 @@ const [seoNoindex, setSeoNoindex] = useState(false);
     setMessage("");
 
     const bookPayload = {
-      title: title.trim(),
-      slug: slug.trim(),
-      description,
-      cover_url: coverUrl || null,
-      hero_url: gatewayUrl || null,
-      hero_image_url: gatewayUrl || null,
-      age_range: ageRange,
-      category: selectedCategories.join(", "),
-      is_published: publishNow ? true : isPublished,
-    };
+  title: title.trim(),
+  slug: slug.trim(),
+  description: description.trim() || null,
+  cover_url: coverUrl || null,
+  hero_url: gatewayUrl || null,
+  hero_image_url: gatewayUrl || null,
+  age_range: ageRange,
+  category: selectedCategories.join(", "),
+  is_published: publishNow ? true : isPublished,
 
+  seo_title: seoTitle.trim() || null,
+  seo_description: seoDescription.trim() || null,
+  seo_image_url: seoImageUrl.trim() || null,
+  seo_noindex: seoNoindex,
+};
     let bookId = editingId;
 
     if (editingId) {
