@@ -5,15 +5,20 @@ import { supabase } from "@/lib/supabase";
 import AdminGate from "@/app/components/AdminGate";
 import "../admin.css";
 
-type LearnItem = {
+type Book = {
   id: string;
   title: string;
   slug: string;
   description: string | null;
   cover_url: string | null;
-  image_url: string | null;
+  age_range: string | null;
   category: string | null;
   is_published: boolean;
+
+  seo_title: string | null;
+  seo_description: string | null;
+  seo_image_url: string | null;
+  seo_noindex: boolean;
 };
 
 type LearnPage = {
