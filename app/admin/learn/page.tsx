@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import AdminGate from "@/app/components/AdminGate";
-import "../admin.css";
 import SeoFields from "@/app/admin/components/SeoFields";
+import "../admin.css";
 
 type LearnItem = {
   id: string;
@@ -19,7 +19,7 @@ type LearnItem = {
   seo_title: string | null;
   seo_description: string | null;
   seo_image_url: string | null;
-  seo_noindex: boolean;
+  seo_noindex: boolean | null;
 };
 
 type LearnPage = {
@@ -28,11 +28,12 @@ type LearnPage = {
   image_url: string;
 };
 
-const emptyPages: LearnPage[] = Array.from({ length: 20 }, (_, index) => ({
-  page_number: index + 1,
-  text: "",
-  image_url: "",
-}));
+const createEmptyPages = (): LearnPage[] =>
+  Array.from({ length: 20 }, (_, index) => ({
+    page_number: index + 1,
+    text: "",
+    image_url: "",
+  }));
 
 const learnCategories = [
   "Learning",
@@ -57,14 +58,16 @@ export default function LearnAdminPage() {
   const [imageUrl, setImageUrl] = useState("");
   const [category, setCategory] = useState("Learning");
   const [isPublished, setIsPublished] = useState(false);
-  const [pages, setPages] = useState<LearnPage[]>(emptyPages);
+
+  const [pages, setPages] = useState<LearnPage[]>(createEmptyPages());
+
+  const [seoTitle, setSeoTitle] = useState("");
+  const [seoDescription, setSeoDescription] = useState("");
+  const [seoImageUrl, setSeoImageUrl] = useState("");
+  const [seoNoindex, setSeoNoindex] = useState(false);
 
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
-  const [seoTitle, setSeoTitle] = useState("");
-const [seoDescription, setSeoDescription] = useState("");
-const [seoImageUrl, setSeoImageUrl] = useState("");
-const [seoNoindex, setSeoNoindex] = useState(false);
 
   useEffect(() => {
     loadItems();
@@ -78,6 +81,14 @@ const [seoNoindex, setSeoNoindex] = useState(false);
       .replace(/^-+|-+$/g, "");
   }
 
+  function getErrorMessage(error: unknown) {
+    if (error instanceof Error) {
+      return error.message;
+    }
+
+    return "Something went wrong. Please try again.";
+  }
+
   async function loadItems() {
     const { data, error } = await supabase
       .from("learn_items")
@@ -89,13 +100,13 @@ const [seoNoindex, setSeoNoindex] = useState(false);
       return;
     }
 
-    setItems(data || []);
+    setItems((data as LearnItem[]) || []);
   }
 
   async function loadPages(learnItemId: string) {
     const { data, error } = await supabase
       .from("learn_pages")
-      .select("*")
+      .select("page_number, text, image_url")
       .eq("learn_item_id", learnItemId)
       .order("page_number", { ascending: true });
 
@@ -104,23 +115,26 @@ const [seoNoindex, setSeoNoindex] = useState(false);
       return;
     }
 
-    const merged = emptyPages.map((emptyPage) => {
-      const found = data?.find(
+    const emptyPages = createEmptyPages();
+
+    const mergedPages = emptyPages.map((emptyPage) => {
+      const matchingPage = data?.find(
         (page) => page.page_number === emptyPage.page_number
       );
 
       return {
         page_number: emptyPage.page_number,
-        text: found?.text || "",
-        image_url: found?.image_url || "",
+        text: matchingPage?.text || "",
+        image_url: matchingPage?.image_url || "",
       };
     });
 
-    setPages(merged);
+    setPages(mergedPages);
   }
 
   function resetForm() {
     setEditingId(null);
+
     setTitle("");
     setSlug("");
     setDescription("");
@@ -128,15 +142,23 @@ const [seoNoindex, setSeoNoindex] = useState(false);
     setImageUrl("");
     setCategory("Learning");
     setIsPublished(false);
-    setPages(emptyPages);
+
+    setPages(createEmptyPages());
+
+    setSeoTitle("");
+    setSeoDescription("");
+    setSeoImageUrl("");
+    setSeoNoindex(false);
+
     setMessage("");
   }
 
   async function uploadImage(file: File, folder: string) {
-    const ext = file.name.split(".").pop();
+    const extension = file.name.split(".").pop() || "jpg";
+
     const filePath = `${folder}/${Date.now()}-${Math.random()
       .toString(36)
-      .slice(2)}.${ext}`;
+      .slice(2)}.${extension}`;
 
     const { error } = await supabase.storage
       .from("book-images")
@@ -156,38 +178,69 @@ const [seoNoindex, setSeoNoindex] = useState(false);
 
   async function handleCoverUpload(file: File) {
     const url = await uploadImage(file, "learn-covers");
-    if (url) setCoverUrl(url);
+
+    if (!url) {
+      alert("Cover image upload failed.");
+      return;
+    }
+
+    setCoverUrl(url);
+    setMessage("Cover image uploaded. Click Save Draft or Publish Learn Item.");
   }
 
   async function handleLearnImageUpload(file: File) {
     const url = await uploadImage(file, "learn-images");
-    if (url) setImageUrl(url);
+
+    if (!url) {
+      alert("Gateway image upload failed.");
+      return;
+    }
+
+    setImageUrl(url);
+    setMessage(
+      "Gateway image uploaded. Click Save Draft or Publish Learn Item."
+    );
   }
 
-  async function handlePageImageUpload(file: File, pageNumber: number) {
+  async function handlePageImageUpload(
+    file: File,
+    pageNumber: number
+  ) {
     const url = await uploadImage(file, "learn-pages");
 
-    if (!url) return;
+    if (!url) {
+      alert("Page image upload failed.");
+      return;
+    }
 
-    setPages((current) =>
-      current.map((page) =>
+    setPages((currentPages) =>
+      currentPages.map((page) =>
         page.page_number === pageNumber
-          ? { ...page, image_url: url }
+          ? {
+              ...page,
+              image_url: url,
+            }
           : page
       )
     );
   }
 
   function updatePageText(pageNumber: number, text: string) {
-    setPages((current) =>
-      current.map((page) =>
-        page.page_number === pageNumber ? { ...page, text } : page
+    setPages((currentPages) =>
+      currentPages.map((page) =>
+        page.page_number === pageNumber
+          ? {
+              ...page,
+              text,
+            }
+          : page
       )
     );
   }
 
   async function editItem(item: LearnItem) {
     setEditingId(item.id);
+
     setTitle(item.title);
     setSlug(item.slug);
     setDescription(item.description || "");
@@ -195,14 +248,25 @@ const [seoNoindex, setSeoNoindex] = useState(false);
     setImageUrl(item.image_url || "");
     setCategory(item.category || "Learning");
     setIsPublished(item.is_published);
+
+    setSeoTitle(item.seo_title || "");
+    setSeoDescription(item.seo_description || "");
+    setSeoImageUrl(item.seo_image_url || "");
+    setSeoNoindex(item.seo_noindex === true);
+
     setMessage(`Editing "${item.title}"`);
 
     await loadPages(item.id);
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   }
 
   async function deleteItem(item: LearnItem) {
     const confirmed = window.confirm(
-      `Delete "${item.title}" from Learn With Luke?`
+      `Delete "${item.title}" and all of its learning pages?`
     );
 
     if (!confirmed) return;
@@ -210,22 +274,40 @@ const [seoNoindex, setSeoNoindex] = useState(false);
     setSaving(true);
     setMessage("");
 
-    const { error } = await supabase
-      .from("learn_items")
+    const { error: pagesError } = await supabase
+      .from("learn_pages")
       .delete()
-      .eq("id", item.id);
+      .eq("learn_item_id", item.id);
 
-    if (error) {
-      alert(error.message);
+    if (pagesError) {
+      alert(`Learning pages delete error: ${pagesError.message}`);
       setSaving(false);
       return;
     }
 
-    if (editingId === item.id) resetForm();
+    const { error: itemError } = await supabase
+      .from("learn_items")
+      .delete()
+      .eq("id", item.id);
+
+    if (itemError) {
+      alert(`Learn item delete error: ${itemError.message}`);
+      setSaving(false);
+      return;
+    }
+
+    setItems((currentItems) =>
+      currentItems.filter((currentItem) => currentItem.id !== item.id)
+    );
+
+    if (editingId === item.id) {
+      resetForm();
+    }
 
     setMessage(`Deleted "${item.title}"`);
     setSaving(false);
-    loadItems();
+
+    await loadItems();
   }
 
   async function savePages(learnItemId: string) {
@@ -238,20 +320,22 @@ const [seoNoindex, setSeoNoindex] = useState(false);
       .map((page) => page.page_number);
 
     if (filledPages.length > 0) {
-      const payload = filledPages.map((page) => ({
+      const pagePayload = filledPages.map((page) => ({
         learn_item_id: learnItemId,
         page_number: page.page_number,
-        text: page.text,
-        image_url: page.image_url,
+        text: page.text.trim(),
+        image_url: page.image_url.trim(),
       }));
 
       const { error } = await supabase
         .from("learn_pages")
-        .upsert(payload, {
+        .upsert(pagePayload, {
           onConflict: "learn_item_id,page_number",
         });
 
-      if (error) throw error;
+      if (error) {
+        throw error;
+      }
     }
 
     if (emptyPageNumbers.length > 0) {
@@ -261,7 +345,9 @@ const [seoNoindex, setSeoNoindex] = useState(false);
         .eq("learn_item_id", learnItemId)
         .in("page_number", emptyPageNumbers);
 
-      if (error) throw error;
+      if (error) {
+        throw error;
+      }
     }
   }
 
@@ -274,22 +360,20 @@ const [seoNoindex, setSeoNoindex] = useState(false);
     setSaving(true);
     setMessage("");
 
-    const bookPayload = {
-  title: title.trim(),
-  slug: slug.trim(),
-  description: description.trim() || null,
-  cover_url: coverUrl || null,
-  hero_url: gatewayUrl || null,
-  hero_image_url: gatewayUrl || null,
-  age_range: ageRange,
-  category: selectedCategories.join(", "),
-  is_published: publishNow ? true : isPublished,
+    const payload = {
+      title: title.trim(),
+      slug: slug.trim(),
+      description: description.trim() || null,
+      cover_url: coverUrl.trim() || null,
+      image_url: imageUrl.trim() || null,
+      category,
+      is_published: publishNow ? true : isPublished,
 
-  seo_title: seoTitle.trim() || null,
-  seo_description: seoDescription.trim() || null,
-  seo_image_url: seoImageUrl.trim() || null,
-  seo_noindex: seoNoindex,
-};
+      seo_title: seoTitle.trim() || null,
+      seo_description: seoDescription.trim() || null,
+      seo_image_url: seoImageUrl.trim() || null,
+      seo_noindex: seoNoindex,
+    };
 
     try {
       let learnItemId = editingId;
@@ -300,15 +384,19 @@ const [seoNoindex, setSeoNoindex] = useState(false);
           .update(payload)
           .eq("id", editingId);
 
-        if (error) throw error;
+        if (error) {
+          throw error;
+        }
       } else {
         const { data, error } = await supabase
           .from("learn_items")
           .insert(payload)
-          .select()
+          .select("id")
           .single();
 
-        if (error) throw error;
+        if (error) {
+          throw error;
+        }
 
         learnItemId = data.id;
         setEditingId(data.id);
@@ -318,14 +406,22 @@ const [seoNoindex, setSeoNoindex] = useState(false);
         await savePages(learnItemId);
       }
 
-      setIsPublished(publishNow ? true : isPublished);
-      setMessage(publishNow ? "Published successfully!" : "Saved successfully!");
-      await loadItems();
-    } catch (error: any) {
-      alert(error.message);
-    }
+      const publishedStatus = publishNow ? true : isPublished;
 
-    setSaving(false);
+      setIsPublished(publishedStatus);
+
+      setMessage(
+        publishNow
+          ? "Published successfully!"
+          : "Saved successfully!"
+      );
+
+      await loadItems();
+    } catch (error: unknown) {
+      alert(getErrorMessage(error));
+    } finally {
+      setSaving(false);
+    }
   }
 
   return (
@@ -333,28 +429,53 @@ const [seoNoindex, setSeoNoindex] = useState(false);
       <main className="adminPage">
         <section className="adminHeader">
           <p>READ WITH LUKE ADMIN</p>
-          <h1>{editingId ? "Edit Learn Item" : "Add Learn Item"}</h1>
-          {message && <div className="successMessage">{message}</div>}
+
+          <h1>
+            {editingId ? "Edit Learn Item" : "Add Learn Item"}
+          </h1>
+
+          {message && (
+            <div className="successMessage">
+              {message}
+            </div>
+          )}
         </section>
 
         <section className="bookList">
           <div className="bookListTop">
             <h2>Learn With Luke</h2>
-            <button onClick={resetForm}>+ New Learn Item</button>
+
+            <button type="button" onClick={resetForm}>
+              + New Learn Item
+            </button>
           </div>
+
+          {items.length === 0 && (
+            <p>No learning posts have been added yet.</p>
+          )}
 
           {items.map((item) => (
             <div className="bookRow" key={item.id}>
               <div>
                 <strong>{item.title}</strong>
-                <span>{item.is_published ? "Published" : "Draft"}</span>
+
+                <span>
+                  {item.is_published ? "Published" : "Draft"}
+                </span>
+
                 <small>{item.category || "No category"}</small>
               </div>
 
               <div className="rowActions">
-                <button onClick={() => editItem(item)}>Edit</button>
+                <button
+                  type="button"
+                  onClick={() => editItem(item)}
+                >
+                  Edit
+                </button>
 
                 <button
+                  type="button"
                   className="deleteButton"
                   onClick={() => deleteItem(item)}
                   disabled={saving}
@@ -367,79 +488,149 @@ const [seoNoindex, setSeoNoindex] = useState(false);
         </section>
 
         <section className="adminCard">
-          <label>Title</label>
+          <label htmlFor="learn-title">Title</label>
+
           <input
+            id="learn-title"
             value={title}
-            onChange={(e) => {
-              setTitle(e.target.value);
-              if (!editingId) setSlug(createSlug(e.target.value));
+            onChange={(event) => {
+              const value = event.target.value;
+
+              setTitle(value);
+
+              if (!editingId) {
+                setSlug(createSlug(value));
+              }
             }}
             placeholder="Why Do Astronauts Wear Space Suits?"
           />
 
-          <label>Slug</label>
+          <label htmlFor="learn-slug">Slug</label>
+
           <input
+            id="learn-slug"
             value={slug}
-            onChange={(e) => setSlug(createSlug(e.target.value))}
+            onChange={(event) =>
+              setSlug(createSlug(event.target.value))
+            }
+            placeholder="why-do-astronauts-wear-space-suits"
           />
 
-          <label>Description</label>
+          <label htmlFor="learn-description">
+            Description
+          </label>
+
           <textarea
+            id="learn-description"
             value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            onChange={(event) =>
+              setDescription(event.target.value)
+            }
+            placeholder="Write a short description of this learning post."
           />
 
-          <label>Category</label>
-          <select value={category} onChange={(e) => setCategory(e.target.value)}>
-            {learnCategories.map((item) => (
-              <option key={item}>{item}</option>
+          <label htmlFor="learn-category">Category</label>
+
+          <select
+            id="learn-category"
+            value={category}
+            onChange={(event) =>
+              setCategory(event.target.value)
+            }
+          >
+            {learnCategories.map((categoryOption) => (
+              <option
+                key={categoryOption}
+                value={categoryOption}
+              >
+                {categoryOption}
+              </option>
             ))}
           </select>
 
-          <label>Cover Image</label>
+          <label htmlFor="learn-cover">Cover Image</label>
+
           <input
+            id="learn-cover"
             type="file"
             accept="image/*"
-            onChange={(e) => {
-              const file = e.target.files?.[0];
-              if (file) handleCoverUpload(file);
+            onChange={(event) => {
+              const file = event.target.files?.[0];
+
+              if (file) {
+                handleCoverUpload(file);
+              }
             }}
           />
 
           {coverUrl && (
-            <img src={coverUrl} alt="Cover preview" className="coverPreview" />
+            <img
+              src={coverUrl}
+              alt="Cover preview"
+              className="coverPreview"
+            />
           )}
 
-       <label>Full Screen Gateway Image</label>
-<input
-  type="file"
-  accept="image/*"
-  onChange={(e) => {
-    const file = e.target.files?.[0];
-    if (file) handleLearnImageUpload(file);
-  }}
-/>
+          <label htmlFor="learn-gateway">
+            Full Screen Gateway Image
+          </label>
 
-{imageUrl && (
-  <img src={imageUrl} alt="Gateway preview" className="gatewayPreview" />
-)}
+          <input
+            id="learn-gateway"
+            type="file"
+            accept="image/*"
+            onChange={(event) => {
+              const file = event.target.files?.[0];
+
+              if (file) {
+                handleLearnImageUpload(file);
+              }
+            }}
+          />
+
+          {imageUrl && (
+            <img
+              src={imageUrl}
+              alt="Gateway preview"
+              className="gatewayPreview"
+            />
+          )}
         </section>
 
         <section className="adminCard">
           <h2>Learning Pages</h2>
-          <p>Add 1 to 20 pages. Blank pages will not show in the reader.</p>
+
+          <p>
+            Add 1 to 20 pages. Blank pages will not show in
+            the reader.
+          </p>
 
           {pages.map((page) => (
-            <div className="pageEditor" key={page.page_number}>
+            <div
+              className="pageEditor"
+              key={page.page_number}
+            >
               <h3>Page {page.page_number}</h3>
 
-              <label>Page Image</label>
+              <label
+                htmlFor={`learn-page-image-${page.page_number}`}
+              >
+                Page Image
+              </label>
+
               <input
+                id={`learn-page-image-${page.page_number}`}
                 type="file"
                 accept="image/*"
-                onChange={(e) => {
-                  const file = e.target.files?.[0];
-                  if (file) handlePageImageUpload(file, page.page_number);
+                onChange={(event) => {
+                  const file = event.target.files?.[0];
+
+                  if (file) {
+                    handlePageImageUpload(
+                      file,
+                      page.page_number
+                    );
+                  }
                 }}
               />
 
@@ -451,43 +642,57 @@ const [seoNoindex, setSeoNoindex] = useState(false);
                 />
               )}
 
-              <label>Page Text</label>
+              <label
+                htmlFor={`learn-page-text-${page.page_number}`}
+              >
+                Page Text
+              </label>
+
               <textarea
+                id={`learn-page-text-${page.page_number}`}
                 value={page.text}
-                onChange={(e) =>
-                  updatePageText(page.page_number, e.target.value)
+                onChange={(event) =>
+                  updatePageText(
+                    page.page_number,
+                    event.target.value
+                  )
                 }
                 placeholder={`Text for page ${page.page_number}`}
               />
             </div>
           ))}
-           </section>
+        </section>
 
-      <SeoFields
-        seoTitle={seoTitle}
-        setSeoTitle={setSeoTitle}
-        seoDescription={seoDescription}
-        setSeoDescription={setSeoDescription}
-        seoImageUrl={seoImageUrl}
-        setSeoImageUrl={setSeoImageUrl}
-        seoNoindex={seoNoindex}
-        setSeoNoindex={setSeoNoindex}
-        fallbackTitle={title}
-        fallbackDescription={description}
-        fallbackImage={coverUrl}
-      />
+        <SeoFields
+          seoTitle={seoTitle}
+          setSeoTitle={setSeoTitle}
+          seoDescription={seoDescription}
+          setSeoDescription={setSeoDescription}
+          seoImageUrl={seoImageUrl}
+          setSeoImageUrl={setSeoImageUrl}
+          seoNoindex={seoNoindex}
+          setSeoNoindex={setSeoNoindex}
+          fallbackTitle={title}
+          fallbackDescription={description}
+          fallbackImage={coverUrl}
+        />
 
-      <div className="adminActions">
-          <button onClick={() => saveItem(false)} disabled={saving}>
+        <div className="adminActions">
+          <button
+            type="button"
+            onClick={() => saveItem(false)}
+            disabled={saving}
+          >
             {saving ? "Saving..." : "Save Draft"}
           </button>
 
           <button
+            type="button"
             className="publishButton"
             onClick={() => saveItem(true)}
             disabled={saving}
           >
-            Publish Learn Item
+            {saving ? "Publishing..." : "Publish Learn Item"}
           </button>
         </div>
       </main>
