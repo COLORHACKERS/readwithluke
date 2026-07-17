@@ -6,13 +6,13 @@ import AdminGate from "@/app/components/AdminGate";
 import "../admin.css";
 import SeoFields from "@/app/admin/components/SeoFields";
 
-type Book = {
+type LearnItem = {
   id: string;
   title: string;
   slug: string;
   description: string | null;
   cover_url: string | null;
-  age_range: string | null;
+  image_url: string | null;
   category: string | null;
   is_published: boolean;
 
