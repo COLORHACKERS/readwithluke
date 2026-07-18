@@ -319,12 +319,11 @@ export default function Home() {
 
     {featuredBook && (
       <Link
-        href={`/books/${featuredBook.slug}`}
-        className="homePrimaryButton insideStoryButton"
-      >
-        Try a Story Now
-        <span aria-hidden="true">→</span>
-      </Link>
+  href="/learn/the-moon-s-secret-powers-part-2/read?page=1"
+  className="yourExistingButtonClass"
+>
+  TRY A STORY NOW →
+</Link>
     )}
   </div>
 
