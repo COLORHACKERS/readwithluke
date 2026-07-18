@@ -1,9 +1,11 @@
-import LearnGate from "./LearnGate";
+import ReaderGate from "@/app/books/[bookSlug]/read/ReaderGate";
 
-export default function LearnReaderLayout({
-  children,
-}: {
+type LearnReadLayoutProps = {
   children: React.ReactNode;
-}) {
-  return <LearnGate>{children}</LearnGate>;
+};
+
+export default function LearnReadLayout({
+  children,
+}: LearnReadLayoutProps) {
+  return <ReaderGate>{children}</ReaderGate>;
 }
