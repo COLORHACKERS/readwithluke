@@ -5,7 +5,7 @@ import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import { supabase } from "@/lib/supabase";
 import "../../home.css";
-import "./membership.css";
+import "./gift.css";
 
 type PendingGift = {
   parentEmail: string;
