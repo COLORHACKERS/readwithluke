@@ -1,9 +1,9 @@
-import ReaderGate from "../books/[bookSlug]/read/ReaderGate";
+type LearnLayoutProps = {
+  children: React.ReactNode;
+};
 
 export default function LearnLayout({
   children,
-}: {
-  children: React.ReactNode;
-}) {
-  return <ReaderGate>{children}</ReaderGate>;
+}: LearnLayoutProps) {
+  return <>{children}</>;
 }
