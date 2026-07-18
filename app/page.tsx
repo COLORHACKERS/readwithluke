@@ -318,11 +318,12 @@ export default function Home() {
     </div>
 
     {featuredBook && (
-      <Link
+<Link
   href="/learn/the-moon-s-secret-powers-part-2/read?page=1"
-  className="yourExistingButtonClass"
+  className="homeFreeStoryButton"
 >
-  TRY A STORY NOW →
+  TRY A LEARNING STORY FOR FREE!
+  <span aria-hidden="true">→</span>
 </Link>
     )}
   </div>
