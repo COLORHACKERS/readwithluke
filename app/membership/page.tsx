@@ -7,9 +7,17 @@ import "./membership.css";
 export const metadata: Metadata = {
   title: "Membership Options | Read With Luke",
   description:
-    "Choose a Read With Luke reader membership or give a membership as a gift.",
+    "Choose a Read With Luke reader membership or give three months of stories and learning as a gift.",
   alternates: {
     canonical: "https://readwithluke.com/membership",
+  },
+  openGraph: {
+    title: "Membership Options | Read With Luke",
+    description:
+      "Choose a reader membership or give Read With Luke as a gift.",
+    url: "https://readwithluke.com/membership",
+    siteName: "Read With Luke",
+    type: "website",
   },
 };
 
@@ -28,11 +36,13 @@ export default function MembershipPage() {
 
           <p>
             Start a reader membership for your family or give
-            someone special the gift of stories and learning.
+            someone special the gift of stories, imagination, and
+            learning.
           </p>
         </section>
 
         <section className="membershipOptions">
+          {/* Reader Membership */}
           <article className="membershipCard membershipReaderCard">
             <div className="membershipCardTop">
               <span className="membershipCardLabel">
@@ -48,7 +58,7 @@ export default function MembershipPage() {
             </div>
 
             <div className="membershipPrice">
-              <strong>$4.99</strong>
+              <strong>$9.99</strong>
               <span>/ month</span>
             </div>
 
@@ -71,10 +81,12 @@ export default function MembershipPage() {
             </Link>
 
             <small>
-              Cancel before the trial ends to avoid being charged.
+              $9.99 per month after the 7-day free trial. Cancel
+              anytime.
             </small>
           </article>
 
+          {/* Gift Membership */}
           <article className="membershipCard membershipGiftCard">
             <div className="membershipGiftBadge">
               A GREAT GIFT
@@ -95,15 +107,19 @@ export default function MembershipPage() {
             </div>
 
             <div className="membershipPrice membershipGiftPrice">
-              <strong>Gift</strong>
-              <span>Choose a plan</span>
+              <strong>$19.99</strong>
+              <span>for 3 months of access</span>
             </div>
 
+            <p className="membershipGiftRenewal">
+              Then $4.99 per month
+            </p>
+
             <div className="membershipBenefits">
-              <p>✓ No subscription for the recipient</p>
-              <p>✓ Choose the gift membership length</p>
-              <p>✓ Delivered as a special gift</p>
-              <p>✓ Full books and learning access</p>
+              <p>✓ Three months of full access included</p>
+              <p>✓ Unlimited books and learning adventures</p>
+              <p>✓ The recipient is not asked for payment</p>
+              <p>✓ Continues for $4.99 per month afterward</p>
             </div>
 
             <Link
@@ -114,7 +130,8 @@ export default function MembershipPage() {
             </Link>
 
             <small>
-              The recipient will not be asked for payment.
+              The purchaser pays $19.99 for the first three months,
+              then $4.99 per month unless canceled.
             </small>
           </article>
         </section>
