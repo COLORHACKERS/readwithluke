@@ -13,7 +13,9 @@ type ProfileAccess = {
   complimentary_access: boolean | null;
 };
 
-export default function ReaderGate({ children }: ReaderGateProps) {
+export default function ReaderGate({
+  children,
+}: ReaderGateProps) {
   const router = useRouter();
 
   const [allowed, setAllowed] = useState(false);
@@ -22,6 +24,15 @@ export default function ReaderGate({ children }: ReaderGateProps) {
   useEffect(() => {
     let cancelled = false;
 
+    async function denyAccess() {
+      if (!cancelled) {
+        setAllowed(false);
+        setChecking(false);
+      }
+
+      router.replace("/membership");
+    }
+
     async function checkAccess() {
       try {
         const {
@@ -29,31 +40,35 @@ export default function ReaderGate({ children }: ReaderGateProps) {
           error: userError,
         } = await supabase.auth.getUser();
 
+        /*
+         * Logged out visitors go to the membership
+         * options page.
+         */
         if (userError || !user) {
-          if (!cancelled) {
-            setAllowed(false);
-            setChecking(false);
-          }
-
-          router.replace("/signup");
+          await denyAccess();
           return;
         }
 
-        const { data: profile, error: profileError } = await supabase
-          .from("profiles")
-          .select("membership_status, complimentary_access")
-          .eq("id", user.id)
-          .maybeSingle<ProfileAccess>();
+        const { data: profile, error: profileError } =
+          await supabase
+            .from("profiles")
+            .select(
+              "membership_status, complimentary_access"
+            )
+            .eq("id", user.id)
+            .maybeSingle<ProfileAccess>();
 
+        /*
+         * Logged-in user without a readable profile
+         * goes to the membership options page.
+         */
         if (profileError || !profile) {
-          console.error("ReaderGate profile error:", profileError);
+          console.error(
+            "ReaderGate profile error:",
+            profileError
+          );
 
-          if (!cancelled) {
-            setAllowed(false);
-            setChecking(false);
-          }
-
-          router.replace("/membership");
+          await denyAccess();
           return;
         }
 
@@ -70,29 +85,33 @@ export default function ReaderGate({ children }: ReaderGateProps) {
         const hasComplimentaryAccess =
           profile.complimentary_access === true;
 
-        if (!hasPaidAccess && !hasComplimentaryAccess) {
-          if (!cancelled) {
-            setAllowed(false);
-            setChecking(false);
-          }
-
-          router.replace("/membership");
+        /*
+         * Logged-in user without active access
+         * goes to the membership options page.
+         */
+        if (
+          !hasPaidAccess &&
+          !hasComplimentaryAccess
+        ) {
+          await denyAccess();
           return;
         }
 
+        /*
+         * Active, trialing, or complimentary users
+         * may enter the reader.
+         */
         if (!cancelled) {
           setAllowed(true);
           setChecking(false);
         }
       } catch (error) {
-        console.error("ReaderGate access error:", error);
+        console.error(
+          "ReaderGate access error:",
+          error
+        );
 
-        if (!cancelled) {
-          setAllowed(false);
-          setChecking(false);
-        }
-
-        router.replace("/membership");
+        await denyAccess();
       }
     }
 
