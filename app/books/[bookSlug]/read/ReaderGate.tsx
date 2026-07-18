@@ -1,7 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import {
+  usePathname,
+  useRouter,
+} from "next/navigation";
 import { supabase } from "@/lib/supabase";
 
 type ReaderGateProps = {
@@ -13,10 +16,16 @@ type ProfileAccess = {
   complimentary_access: boolean | null;
 };
 
+type FreeLearnItem = {
+  is_free: boolean | null;
+  is_published: boolean | null;
+};
+
 export default function ReaderGate({
   children,
 }: ReaderGateProps) {
   const router = useRouter();
+  const pathname = usePathname();
 
   const [allowed, setAllowed] = useState(false);
   const [checking, setChecking] = useState(true);
@@ -24,7 +33,14 @@ export default function ReaderGate({
   useEffect(() => {
     let cancelled = false;
 
-    async function denyAccess() {
+    function allowAccess() {
+      if (cancelled) return;
+
+      setAllowed(true);
+      setChecking(false);
+    }
+
+    function denyAccess() {
       if (!cancelled) {
         setAllowed(false);
         setChecking(false);
@@ -35,40 +51,80 @@ export default function ReaderGate({
 
     async function checkAccess() {
       try {
+        const pathParts = pathname
+          .split("/")
+          .filter(Boolean);
+
+        /*
+         * Learn routes:
+         * /learn/the-moon-s-secret-powers-part-2
+         * /learn/the-moon-s-secret-powers-part-2/read
+         */
+        const isLearnItemRoute =
+          pathParts[0] === "learn" &&
+          Boolean(pathParts[1]);
+
+        if (isLearnItemRoute) {
+          const learnSlug = pathParts[1];
+
+          const {
+            data: learnItem,
+            error: learnItemError,
+          } = await supabase
+            .from("learn_items")
+            .select("is_free, is_published")
+            .eq("slug", learnSlug)
+            .maybeSingle<FreeLearnItem>();
+
+          if (learnItemError) {
+            console.error(
+              "ReaderGate free Learn item error:",
+              learnItemError
+            );
+          }
+
+          const isFreePublishedItem =
+            learnItem?.is_free === true &&
+            learnItem?.is_published === true;
+
+          if (isFreePublishedItem) {
+            allowAccess();
+            return;
+          }
+        }
+
+        /*
+         * All other protected content requires
+         * a valid membership.
+         */
         const {
           data: { user },
           error: userError,
         } = await supabase.auth.getUser();
 
-        /*
-         * Logged out visitors go to the membership
-         * options page.
-         */
         if (userError || !user) {
-          await denyAccess();
+          denyAccess();
           return;
         }
 
-        const { data: profile, error: profileError } =
-          await supabase
-            .from("profiles")
-            .select(
-              "membership_status, complimentary_access"
-            )
-            .eq("id", user.id)
-            .maybeSingle<ProfileAccess>();
+        const {
+          data: profile,
+          error: profileError,
+        } = await supabase
+          .from("profiles")
+          .select(
+            "membership_status, complimentary_access"
+          )
+          .eq("id", user.id)
+          .maybeSingle<ProfileAccess>();
 
-        /*
-         * Logged-in user without a readable profile
-         * goes to the membership options page.
-         */
         if (profileError || !profile) {
           console.error(
             "ReaderGate profile error:",
             profileError
           );
 
-          await denyAccess();
+          denyAccess();
           return;
         }
 
@@ -85,33 +141,22 @@ export default function ReaderGate({
         const hasComplimentaryAccess =
           profile.complimentary_access === true;
 
-        /*
-         * Logged-in user without active access
-         * goes to the membership options page.
-         */
         if (
           !hasPaidAccess &&
           !hasComplimentaryAccess
         ) {
-          await denyAccess();
+          denyAccess();
           return;
         }
 
-        /*
-         * Active, trialing, or complimentary users
-         * may enter the reader.
-         */
-        if (!cancelled) {
-          setAllowed(true);
-          setChecking(false);
-        }
+        allowAccess();
       } catch (error) {
         console.error(
           "ReaderGate access error:",
           error
         );
 
-        await denyAccess();
+        denyAccess();
       }
     }
 
@@ -120,12 +165,12 @@ export default function ReaderGate({
     return () => {
       cancelled = true;
     };
-  }, [router]);
+  }, [pathname, router]);
 
   if (checking) {
     return (
       <div className="readerLoading">
-        <p>Checking membership...</p>
+        <p>Checking access...</p>
       </div>
     );
   }
