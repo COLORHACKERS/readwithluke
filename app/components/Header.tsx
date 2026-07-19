@@ -117,7 +117,7 @@ export default function Header() {
           </Link>
 
           <Link
-            href="/giftp"
+            href="/gift"
             className={active("/gift") ? "giftNav active" : "giftNav"}
           >
             🎁 Gift Reading
