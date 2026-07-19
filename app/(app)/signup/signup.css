@@ -340,3 +340,32 @@
     font-size: 15px;
   }
 }
+.signupSelectedPlan {
+  display: grid;
+  gap: 5px;
+
+  width: 100%;
+  padding: 14px 18px;
+
+  color: #123a60;
+  background: #f8f1e6;
+
+  border: 1px solid rgba(18, 58, 96, 0.18);
+  border-radius: 16px;
+
+  box-sizing: border-box;
+}
+
+.signupSelectedPlan span {
+  color: #e64c2e;
+
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+}
+
+.signupSelectedPlan strong {
+  font-family: "DK Woolwich", Impact, sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+}
