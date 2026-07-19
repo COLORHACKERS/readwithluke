@@ -117,8 +117,8 @@ export default function Header() {
           </Link>
 
           <Link
-            href="/membership"
-            className={active("/membership") ? "giftNav active" : "giftNav"}
+            href="/giftp"
+            className={active("/gift") ? "giftNav active" : "giftNav"}
           >
             🎁 Gift Reading
           </Link>
@@ -145,7 +145,7 @@ export default function Header() {
                 LOGIN
               </Link>
 
-              <Link href="/signup" className="headerSignup">
+              <Link href="/membership" className="headerSignup">
                 JOIN
               </Link>
             </div>
