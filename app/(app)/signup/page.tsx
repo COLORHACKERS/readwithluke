@@ -150,60 +150,43 @@ export default function SignupPage() {
           className="signupCard"
           onSubmit={handleSignup}
         >
-          <h1>
-            {isGiftSignup
-              ? "Create Your Gift Account!"
-              : isYearlyPlan
-                ? "Start Your Yearly Free Trial!"
-                : "Start Your Monthly Free Trial!"}
-          </h1>
+         <h1>
+  {isGiftSignup
+    ? "Create Your Gift Account!"
+    : isYearlyPlan
+      ? "Start Your Yearly Membership!"
+      : "Start Your 7-Day Free Trial!"}
+</h1>
 
-          {isGiftSignup ? (
-            <p>
-              Create your account to continue to the{" "}
-              <strong>
-                $19.99 family gift checkout.
-              </strong>
-              <br />
-              You will return to your completed gift
-              form after signup.
-            </p>
-          ) : isYearlyPlan ? (
-            <p>
-              Create your account to begin your{" "}
-              <strong>7-day free trial.</strong>
-              <br />
-              Your payment method will be securely
-              saved today, but{" "}
-              <strong>
-                you won&apos;t be charged during your
-                trial.
-              </strong>
-              <br />
-              Unless you cancel before your trial ends,
-              your membership will automatically
-              continue for{" "}
-              <strong>$69.99 per year.</strong>
-            </p>
-          ) : (
-            <p>
-              Create your account to begin your{" "}
-              <strong>7-day free trial.</strong>
-              <br />
-              Your payment method will be securely
-              saved today, but{" "}
-              <strong>
-                you won&apos;t be charged during your
-                trial.
-              </strong>
-              <br />
-              Unless you cancel before your trial ends,
-              your membership will automatically
-              continue for{" "}
-              <strong>$9.99 per month.</strong>
-            </p>
-          )}
-
+         {isGiftSignup ? (
+  <p>
+    Create your account to continue to the{" "}
+    <strong>$19.99 family gift checkout.</strong>
+    <br />
+    You will return to your completed gift form after signup.
+  </p>
+) : isYearlyPlan ? (
+  <p>
+    Create your account to start your yearly membership.
+    <br />
+    You will be charged{" "}
+    <strong>$69.99 today</strong> for one full year of access.
+    <br />
+    Your membership will renew automatically for{" "}
+    <strong>$69.99 per year</strong> unless canceled.
+  </p>
+) : (
+  <p>
+    Create your account to begin your{" "}
+    <strong>7-day free trial.</strong>
+    <br />
+    Your payment method will be securely saved today, but{" "}
+    <strong>you won&apos;t be charged during your trial.</strong>
+    <br />
+    Unless you cancel before your trial ends, your membership will
+    automatically continue for <strong>$9.99 per month.</strong>
+  </p>
+)}
           {!isGiftSignup && (
             <div className="signupSelectedPlan">
               <span>SELECTED PLAN</span>
@@ -239,20 +222,19 @@ export default function SignupPage() {
             required
           />
 
-          <button
-            type="submit"
-            disabled={loading}
-          >
-            {loading
-              ? isGiftSignup
-                ? "CREATING ACCOUNT..."
-                : "STARTING TRIAL..."
-              : isGiftSignup
-                ? "CONTINUE TO GIFT CHECKOUT"
-                : isYearlyPlan
-                  ? "START YEARLY FREE TRIAL"
-                  : "START MONTHLY FREE TRIAL"}
-          </button>
+      <button type="submit" disabled={loading}>
+  {loading
+    ? isGiftSignup
+      ? "CREATING ACCOUNT..."
+      : isYearlyPlan
+        ? "OPENING YEARLY CHECKOUT..."
+        : "STARTING TRIAL..."
+    : isGiftSignup
+      ? "CONTINUE TO GIFT CHECKOUT"
+      : isYearlyPlan
+        ? "CONTINUE — $69.99/YEAR"
+        : "START 7-DAY FREE TRIAL"}
+</button>
         </form>
       </main>
 
