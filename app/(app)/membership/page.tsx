@@ -42,49 +42,92 @@ export default function MembershipPage() {
         </section>
 
         <section className="membershipOptions">
-          {/* Reader Membership */}
-          <article className="membershipCard membershipReaderCard">
-            <div className="membershipCardTop">
-              <span className="membershipCardLabel">
-                FOR YOUR FAMILY
-              </span>
+    {/* Reader Membership */}
+<article className="membershipCard membershipReaderCard">
+  <div className="membershipCardTop">
+    <span className="membershipCardLabel">
+      FOR YOUR FAMILY
+    </span>
 
-              <h2>Reader Membership</h2>
+    <h2>Reader Membership</h2>
 
-              <p className="membershipCardDescription">
-                Enjoy unlimited access to Read With Luke books and
-                learning adventures.
-              </p>
-            </div>
+    <p className="membershipCardDescription">
+      Enjoy unlimited access to Read With Luke books and learning
+      adventures.
+    </p>
+  </div>
 
-            <div className="membershipPrice">
-              <strong>$9.99</strong>
-              <span>/ month</span>
-            </div>
+  <div className="membershipPlanHeading">
+    <strong>Choose your plan</strong>
+    <span>Both plans include a 7-day free trial.</span>
+  </div>
 
-            <p className="membershipTrial">
-              Start with a 7-day free trial.
-            </p>
+  <div className="readerPlanChoices">
+    <Link
+      href="/signup?plan=monthly"
+      className="readerPlanOption"
+    >
+      <div className="readerPlanOptionTop">
+        <span className="readerPlanName">
+          Monthly
+        </span>
 
-            <div className="membershipBenefits">
-              <p>✓ Unlimited digital books</p>
-              <p>✓ Learn With Luke adventures</p>
-              <p>✓ New stories and learning posts</p>
-              <p>✓ Read anywhere on your devices</p>
-            </div>
+        <span className="readerPlanPrice">
+          $9.99
+        </span>
+      </div>
 
-            <Link
-              href="/signup"
-              className="membershipButton membershipPrimaryButton"
-            >
-              START FREE TRIAL
-            </Link>
+      <p>Charged every month</p>
 
-            <small>
-              $9.99 per month after the 7-day free trial. Cancel
-              anytime.
-            </small>
-          </article>
+      <span className="readerPlanButton">
+        START MONTHLY PLAN
+      </span>
+    </Link>
+
+    <Link
+      href="/signup?plan=yearly"
+      className="readerPlanOption readerPlanOptionFeatured"
+    >
+      <span className="readerPlanBadge">
+        BEST VALUE
+      </span>
+
+      <div className="readerPlanOptionTop">
+        <span className="readerPlanName">
+          Yearly
+        </span>
+
+        <span className="readerPlanPrice">
+          $69.99
+        </span>
+      </div>
+
+      <p>
+        Charged once per year · About $5.83/month
+      </p>
+
+      <span className="readerPlanSavings">
+        Save $49.89 per year
+      </span>
+
+      <span className="readerPlanButton">
+        START YEARLY PLAN
+      </span>
+    </Link>
+  </div>
+
+  <div className="membershipBenefits">
+    <p>✓ Unlimited digital books</p>
+    <p>✓ Learn With Luke adventures</p>
+    <p>✓ New stories and learning posts</p>
+    <p>✓ Read anywhere on your devices</p>
+  </div>
+
+  <small>
+    Cancel anytime. Your selected price begins after the 7-day
+    free trial.
+  </small>
+</article>
 
           {/* Gift Membership */}
           <article className="membershipCard membershipGiftCard">
