@@ -418,3 +418,165 @@
     font-size: 17px;
   }
 }
+/* =========================================================
+   READER PLAN OPTIONS
+========================================================= */
+
+.membershipPlanHeading {
+  display: grid;
+  gap: 5px;
+  margin: 28px 0 18px;
+}
+
+.membershipPlanHeading strong {
+  color: #123a60;
+  font-family: "DK Woolwich", Impact, sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.membershipPlanHeading span {
+  color: #607589;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.readerPlanChoices {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.readerPlanOption {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  min-height: 210px;
+  padding: 22px 18px;
+
+  color: #123a60;
+  background: #f8f1e6;
+
+  border: 2px solid rgba(18, 58, 96, 0.15);
+  border-radius: 22px;
+
+  text-decoration: none;
+
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.readerPlanOption:hover {
+  transform: translateY(-3px);
+  border-color: #e64c2e;
+  box-shadow: 0 14px 30px rgba(18, 58, 96, 0.12);
+}
+
+.readerPlanOptionFeatured {
+  color: #ffffff;
+  background: #123a60;
+  border-color: #123a60;
+}
+
+.readerPlanOptionFeatured:hover {
+  border-color: #ffbc50;
+}
+
+.readerPlanOptionTop {
+  display: grid;
+  gap: 8px;
+}
+
+.readerPlanName {
+  font-family: "DK Woolwich", Impact, sans-serif;
+  font-size: 25px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.readerPlanPrice {
+  font-family: "DK Woolwich", Impact, sans-serif;
+  font-size: 40px;
+  line-height: 0.95;
+}
+
+.readerPlanOption p {
+  margin: 12px 0 0;
+
+  color: #607589;
+
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.readerPlanOptionFeatured p {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.readerPlanBadge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+
+  padding: 6px 9px;
+
+  color: #123a60;
+  background: #ffbc50;
+
+  border-radius: 999px;
+
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+.readerPlanSavings {
+  display: block;
+  margin-top: 8px;
+
+  color: #ffbc50;
+
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.readerPlanButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 42px;
+  margin-top: auto;
+  padding: 10px 12px;
+
+  color: #ffffff;
+  background: #e64c2e;
+
+  border-radius: 999px;
+
+  font-family: "DK Woolwich", Impact, sans-serif;
+  font-size: 14px;
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.readerPlanOptionFeatured .readerPlanButton {
+  color: #123a60;
+  background: #ffbc50;
+}
+
+@media (max-width: 560px) {
+  .readerPlanChoices {
+    grid-template-columns: 1fr;
+  }
+
+  .readerPlanOption {
+    min-height: 190px;
+  }
+}
