@@ -1,4 +1,4 @@
-import ReaderGate from "@/app/components/ReaderGate";
+import ReaderGate from "./ReaderGate";
 
 export default function BookReaderLayout({
   children,
