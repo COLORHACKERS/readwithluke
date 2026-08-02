@@ -115,11 +115,11 @@ useEffect(() => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            userId,
-            email: cleanEmail,
-            plan: selectedPlan,
-          }),
+        body: JSON.stringify({
+  userId: user.id,
+  email: cleanEmail,
+  plan: selectedPlan,
+}),
         }
       );
 
