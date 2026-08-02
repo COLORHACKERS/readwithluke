@@ -90,7 +90,6 @@ const benefits = [
 export default function MembershipPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [email, setEmail] = useState("");
-  const [loading, setLoading] = useState(false);
 
 function startTrial() {
   const cleanEmail = email.trim().toLowerCase();
@@ -107,6 +106,7 @@ function startTrial() {
   window.location.href = signupUrl;
 }
 
+return (
   const signupUrl =
     `/signup?email=${encodeURIComponent(cleanEmail)}` +
     `&plan=monthly`;
