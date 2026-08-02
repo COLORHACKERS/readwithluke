@@ -91,62 +91,25 @@ export default function MembershipPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [email, setEmail] = useState("");
 
-function startTrial() {
-  const cleanEmail = email.trim().toLowerCase();
+  function startTrial() {
+    const cleanEmail = email.trim().toLowerCase();
 
-  if (!cleanEmail) {
-    alert("Please enter the parent or guardian email.");
-    return;
+    if (!cleanEmail) {
+      alert("Please enter the parent or guardian email.");
+      return;
+    }
+
+    const signupUrl =
+      `/signup?email=${encodeURIComponent(cleanEmail)}` +
+      `&plan=monthly`;
+
+    window.location.href = signupUrl;
   }
 
-  const signupUrl =
-    `/signup?email=${encodeURIComponent(cleanEmail)}` +
-    `&plan=monthly`;
-
-  window.location.href = signupUrl;
-}
-
-return (
-  const signupUrl =
-    `/signup?email=${encodeURIComponent(cleanEmail)}` +
-    `&plan=monthly`;
-
-  window.location.href = signupUrl;
-}
-    setLoading(true);
-
-    try {
-      const response = await fetch("/api/create-checkout-session", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: email.trim().toLowerCase(),
-          plan: "monthly",
-        }),
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.error || "Unable to start checkout.");
-      }
-
-      if (!result.url) {
-        throw new Error("Stripe checkout URL was not returned.");
-      }
-
-      window.location.href = result.url;
-    } catch (error) {
-      const message =
-        error instanceof Error
-          ? error.message
-          : "Something went wrong. Please try again.";
-
-      alert(message);
-      setLoading(false);
-    }
+  function scrollToSignup() {
+    document
+      .getElementById("membership-signup")
+      ?.scrollIntoView({ behavior: "smooth" });
   }
 
   return (
@@ -202,13 +165,13 @@ return (
               </div>
             </div>
 
-           <button
-  type="button"
-  className="membershipCheckoutButton"
-  onClick={startTrial}
->
-  Start My 7-Day Free Trial
-</button>
+            <button
+              type="button"
+              className="membershipPaintButton"
+              onClick={scrollToSignup}
+            >
+              Start My 7-Day Free Trial
+            </button>
 
             <p className="membershipFinePrint">
               🔒 No charge today. Cancel before your trial ends.
@@ -323,11 +286,8 @@ return (
               type="button"
               className="membershipCheckoutButton"
               onClick={startTrial}
-              disabled={loading}
             >
-              {loading
-                ? "Opening Secure Checkout..."
-                : "Start My 7-Day Free Trial"}
+              Start My 7-Day Free Trial
             </button>
 
             <p className="membershipTerms">
