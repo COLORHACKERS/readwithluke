@@ -674,3 +674,13 @@
   line-height: 1.4;
   color: #ff5526;
 }
+.copyPreviewButton {
+  border: 1px solid #ff5526;
+  background: transparent;
+  color: #ff5526;
+}
+
+.copyPreviewButton:hover {
+  background: #ff5526;
+  color: #ffffff;
+}
