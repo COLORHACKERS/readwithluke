@@ -232,6 +232,16 @@ setSeoNoindex(book.seo_noindex === true);
     setSaving(false);
     loadBooks();
   }
+  async function copyBookPreviewLink(slug: string) {
+  const previewUrl = `${window.location.origin}/books/${slug}`;
+
+  try {
+    await navigator.clipboard.writeText(previewUrl);
+    setMessage("Public preview link copied!");
+  } catch {
+    window.prompt("Copy this public preview link:", previewUrl);
+  }
+}
 
   async function handleCoverUpload(file: File) {
     const url = await uploadImage(file, "covers");
@@ -383,17 +393,31 @@ setSeoNoindex(book.seo_noindex === true);
                 <small>{book.category || "No category"}</small>
               </div>
 
-              <div className="rowActions">
-                <button onClick={() => editBook(book)}>Edit</button>
+             <div className="rowActions">
+  <button
+    type="button"
+    onClick={() => editBook(book)}
+  >
+    Edit
+  </button>
 
-                <button
-                  className="deleteButton"
-                  onClick={() => deleteBook(book)}
-                  disabled={saving}
-                >
-                  Delete
-                </button>
-              </div>
+  <button
+    type="button"
+    className="copyPreviewButton"
+    onClick={() => copyBookPreviewLink(book.slug)}
+  >
+    Copy Preview Link
+  </button>
+
+  <button
+    type="button"
+    className="deleteButton"
+    onClick={() => deleteBook(book)}
+    disabled={saving}
+  >
+    Delete
+  </button>
+</div>
             </div>
           ))}
         </section>
