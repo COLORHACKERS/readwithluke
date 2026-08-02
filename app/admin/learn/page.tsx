@@ -310,6 +310,17 @@ export default function LearnAdminPage() {
     await loadItems();
   }
 
+  async function copyLearnPreviewLink(slug: string) {
+  const previewUrl = `${window.location.origin}/learn/${slug}`;
+
+  try {
+    await navigator.clipboard.writeText(previewUrl);
+    setMessage("Public learning preview link copied!");
+  } catch {
+    window.prompt("Copy this public preview link:", previewUrl);
+  }
+}
+
   async function savePages(learnItemId: string) {
     const filledPages = pages.filter(
       (page) => page.text.trim() || page.image_url.trim()
@@ -466,23 +477,31 @@ export default function LearnAdminPage() {
                 <small>{item.category || "No category"}</small>
               </div>
 
-              <div className="rowActions">
-                <button
-                  type="button"
-                  onClick={() => editItem(item)}
-                >
-                  Edit
-                </button>
+      <div className="rowActions">
+  <button
+    type="button"
+    onClick={() => editItem(item)}
+  >
+    Edit
+  </button>
 
-                <button
-                  type="button"
-                  className="deleteButton"
-                  onClick={() => deleteItem(item)}
-                  disabled={saving}
-                >
-                  Delete
-                </button>
-              </div>
+  <button
+    type="button"
+    className="copyPreviewButton"
+    onClick={() => copyLearnPreviewLink(item.slug)}
+  >
+    Copy Preview Link
+  </button>
+
+  <button
+    type="button"
+    className="deleteButton"
+    onClick={() => deleteItem(item)}
+    disabled={saving}
+  >
+    Delete
+  </button>
+</div>
             </div>
           ))}
         </section>
