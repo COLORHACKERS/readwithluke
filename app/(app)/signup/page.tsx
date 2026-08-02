@@ -22,25 +22,29 @@ export default function SignupPage() {
   const [selectedPlan, setSelectedPlan] =
     useState<ReaderPlan>("monthly");
 
-  useEffect(() => {
-    const params = new URLSearchParams(
-      window.location.search
-    );
+useEffect(() => {
+  const params = new URLSearchParams(
+    window.location.search
+  );
 
-    const next = params.get("next");
-    const plan = params.get("plan");
+  const next = params.get("next");
+  const plan = params.get("plan");
+  const emailFromUrl = params.get("email");
 
-    const giftSignup =
-      next === GIFT_RETURN_PATH ||
-      next === OLD_GIFT_RETURN_PATH;
+  const giftSignup =
+    next === GIFT_RETURN_PATH ||
+    next === OLD_GIFT_RETURN_PATH;
 
-    setIsGiftSignup(giftSignup);
+  setIsGiftSignup(giftSignup);
 
-    setSelectedPlan(
-      plan === "yearly" ? "yearly" : "monthly"
-    );
-  }, []);
+  setSelectedPlan(
+    plan === "yearly" ? "yearly" : "monthly"
+  );
 
+  if (emailFromUrl) {
+    setEmail(emailFromUrl);
+  }
+}, []);
   async function handleSignup(
     event: React.FormEvent<HTMLFormElement>
   ) {
