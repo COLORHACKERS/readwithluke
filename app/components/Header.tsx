@@ -105,13 +105,19 @@ export default function Header() {
             Read With Luke
           </Link>
 
-          <Link href="/learn" className={active("/learn") ? "active" : ""}>
-            Learn With Luke
-          </Link>
+        <Link
+  href="/learn"
+  className={isActive("/learn") ? "active" : ""}
+>
+  Learn With Luke
+</Link>
 
-           <Link href="/learn-to-read" className={active("/learn-to-read") ? "active" : ""}>
-            Learn To Read
-          </Link>
+<Link
+  href="/learn-to-read"
+  className={isActive("/learn-to-read") ? "active" : ""}
+>
+  Learn To Read
+</Link>
 
           <Link
             href="/gift"
