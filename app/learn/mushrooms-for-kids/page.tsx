@@ -20,10 +20,14 @@ export const metadata: Metadata = {
     type: "article",
     images: [
       {
+        // IMAGE NEEDED:
+        // A wide 1200 x 630 social-sharing image showing colorful mushrooms
+        // in a magical forest. Include Luke if desired, but avoid placing
+        // important text near the edges because social platforms may crop it.
         url: "/images/mushrooms-for-kids-share.jpg",
         width: 1200,
         height: 630,
-        alt: "Mushrooms for kids learning adventure",
+        alt: "Colorful forest mushrooms featured in a learning adventure for kids",
       },
     ],
   },
@@ -70,9 +74,18 @@ export default function MushroomsForKidsPage() {
             </Link>
           </div>
 
+          {/*
+            IMAGE NEEDED:
+            Filename: public/images/mushrooms-for-kids-hero.jpg
+
+            A wide, cinematic image of colorful mushrooms growing in a lush,
+            magical-looking forest. The image should feel adventurous and
+            welcoming for children. Leave some visual breathing room so the
+            mushrooms are not tightly cropped on desktop or mobile.
+          */}
           <img
             src="/images/mushrooms-for-kids-hero.jpg"
-            alt="Colorful mushrooms growing in a forest for children to explore"
+            alt="Colorful mushrooms growing among moss and plants in a forest"
             className="mushroomHeroImage"
           />
         </section>
@@ -120,9 +133,18 @@ export default function MushroomsForKidsPage() {
             </p>
           </div>
 
+          {/*
+            IMAGE NEEDED:
+            Filename: public/images/parts-of-a-mushroom.jpg
+
+            A simple child-friendly educational diagram of one mushroom.
+            Clearly label the cap, gills, stem, ring, base and underground
+            mycelium. Use large readable labels, a clean background and minimal
+            scientific complexity so young children can understand it.
+          */}
           <img
             src="/images/parts-of-a-mushroom.jpg"
-            alt="Simple educational diagram showing the cap, gills and stem of a mushroom"
+            alt="Diagram labeling the cap, gills, stem, base and mycelium of a mushroom"
           />
         </section>
 
