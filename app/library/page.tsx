@@ -86,7 +86,7 @@ const visibleBooks = filteredBooks.slice(
               <br />
               ADVENTURE.
               <br />
-              FREINDSHIPS.
+              FRIENDSHIPS.
             </h1>
 
             <p>
