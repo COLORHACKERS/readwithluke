@@ -492,6 +492,48 @@
   }
 }
 
+@media (max-width: 1150px) {
+  .membershipHero {
+    min-height: auto;
+    grid-template-columns: 1fr 360px;
+
+    background:
+      linear-gradient(
+        90deg,
+        #ffffff 0%,
+        rgba(255, 255, 255, 0.96) 38%,
+        rgba(255, 255, 255, 0.18) 70%
+      ),
+      url("/images/Luke-membership.png");
+
+    background-size: cover;
+    background-position: center;
+  }
+
+  .membershipHeroCopy {
+    grid-column: 1;
+    padding: 48px 30px;
+  }
+
+  .membershipFaqPanel {
+    grid-column: 2;
+    margin: 25px;
+  }
+
+  .membershipLowerPanel {
+    grid-template-columns: 1fr;
+  }
+
+  .membershipSignup {
+    border-top: 1px solid rgba(43, 36, 28, 0.18);
+    border-left: 0;
+  }
+
+  .membershipBenefitGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px 0;
+  }
+}
 @media (max-width: 760px) {
   .membershipMain {
     width: calc(100% - 20px);
@@ -499,20 +541,32 @@
   }
 
   .membershipHero {
-    grid-template-columns: 1fr;
+    display: block;
+    min-height: auto;
+
+    background:
+      linear-gradient(
+        180deg,
+        #ffffff 0%,
+        #ffffff 40%,
+        rgba(255, 255, 255, 0.6) 58%,
+        rgba(255, 255, 255, 0.08) 100%
+      ),
+      url("/images/Luke-membership.png");
+
+    background-size: auto 720px;
+    background-position: center bottom;
+    background-repeat: no-repeat;
+
+    padding-bottom: 360px;
   }
 
   .membershipHeroCopy {
-    padding: 35px 22px;
+    padding: 35px 22px 20px;
   }
 
-  .membershipHeroArtwork {
-    min-height: 390px;
-  }
-
-  .membershipHeroArtwork img {
-    width: 100%;
-    max-height: 430px;
+  .membershipFaqPanel {
+    margin: 20px 12px 0;
   }
 
   .membershipHeroBenefits {
@@ -522,10 +576,6 @@
 
   .membershipHeroBenefits div:nth-child(2) {
     border-right: 0;
-  }
-
-  .membershipFaqPanel {
-    margin: 12px;
   }
 
   .membershipInformation,
@@ -550,4 +600,9 @@
     font-size: 28px;
     text-align: center;
   }
+}
+.membershipHeroBenefits,
+.membershipPaintButton,
+.membershipFinePrint {
+  max-width: 520px;
 }
