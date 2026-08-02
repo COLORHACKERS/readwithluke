@@ -202,17 +202,13 @@ function startTrial() {
               </div>
             </div>
 
-            <button
-              type="button"
-              className="membershipPaintButton"
-              onClick={() =>
-                document
-                  .getElementById("membership-signup")
-                  ?.scrollIntoView({ behavior: "smooth" })
-              }
-            >
-              Start My 7-Day Free Trial
-            </button>
+           <button
+  type="button"
+  className="membershipCheckoutButton"
+  onClick={startTrial}
+>
+  Start My 7-Day Free Trial
+</button>
 
             <p className="membershipFinePrint">
               🔒 No charge today. Cancel before your trial ends.
