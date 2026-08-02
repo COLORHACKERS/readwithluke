@@ -9,8 +9,6 @@ export default function LearnToReadPage() {
       <Header />
 
       <main className="learnToReadMain">
-        <div className="learnToReadGlow learnToReadGlowOne" />
-        <div className="learnToReadGlow learnToReadGlowTwo" />
 
         <section className="learnToReadCard">
           <p className="learnToReadEyebrow">A NEW ADVENTURE IS COMING</p>
