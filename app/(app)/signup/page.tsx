@@ -50,78 +50,93 @@ useEffect(() => {
     setEmail(emailFromUrl);
   }
 }, []);
-  async function handleSignup(
-    event: React.FormEvent<HTMLFormElement>
-  ) {
-    event.preventDefault();
-    setLoading(true);
 
-    try {
-      const cleanEmail = email
-        .trim()
-        .toLowerCase();
+async function handleSignup(
+  event: React.FormEvent<HTMLFormElement>
+) {
+  event.preventDefault();
+  setLoading(true);
 
-      const { data, error } =
-        await supabase.auth.signUp({
-          email: cleanEmail,
-          password,
-        });
+  try {
+    const cleanEmail = email.trim().toLowerCase();
 
-      if (error) {
-        alert(error.message);
-        setLoading(false);
-        return;
-      }
+    if (!cleanEmail) {
+      throw new Error("Please enter your email.");
+    }
 
-      const userId = data.user?.id;
+    if (!password) {
+      throw new Error("Please enter a password.");
+    }
 
-      if (!userId) {
-        alert("Unable to create your account.");
-        setLoading(false);
-        return;
-      }
+    const {
+      data: signupData,
+      error: signupError,
+    } = await supabase.auth.signUp({
+      email: cleanEmail,
+      password,
+    });
 
-      const params = new URLSearchParams(
-        window.location.search
+    if (signupError) {
+      throw signupError;
+    }
+
+    const newUser = signupData.user;
+
+    if (!newUser) {
+      throw new Error(
+        "Your account could not be created. Please try again."
       );
+    }
 
-      const next = params.get("next");
+    /*
+     * Gift memberships return to the gift page
+     * after the account is created.
+     */
+    if (isGiftSignup) {
+      window.location.href = GIFT_RETURN_PATH;
+      return;
+    }
 
-      const isReturningToGift =
-        next === GIFT_RETURN_PATH ||
-        next === OLD_GIFT_RETURN_PATH;
-
-      /*
-       * GIFT SIGNUP
-       *
-       * Return to the gift page after creating
-       * the purchaser account.
-       */
-      if (isReturningToGift) {
-        window.location.href = GIFT_RETURN_PATH;
-        return;
-      }
-
-      /*
-       * READER MEMBERSHIP SIGNUP
-       *
-       * Send the selected monthly or yearly plan
-       * to the Stripe checkout API.
-       */
-      const response = await fetch(
-        "/api/create-checkout-session",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+    const response = await fetch(
+      "/api/create-checkout-session",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
-  userId: user.id,
-  email: cleanEmail,
-  plan: selectedPlan,
-}),
-        }
+          userId: newUser.id,
+          email: cleanEmail,
+          plan: selectedPlan,
+        }),
+      }
+    );
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(
+        result.error || "Unable to start checkout."
       );
+    }
+
+    if (!result.url) {
+      throw new Error(
+        "Stripe checkout URL was not returned."
+      );
+    }
+
+    window.location.href = result.url;
+  } catch (error) {
+    const message =
+      error instanceof Error
+        ? error.message
+        : "Something went wrong. Please try again.";
+
+    alert(message);
+    setLoading(false);
+  }
+}
 
       const checkout = await response.json();
 
