@@ -19,8 +19,9 @@ export default function SignupPage() {
   const [loading, setLoading] = useState(false);
   const [isGiftSignup, setIsGiftSignup] = useState(false);
 
-  const [selectedPlan, setSelectedPlan] =
-    useState<ReaderPlan>("monthly");
+ const [selectedPlan, setSelectedPlan] = useState<
+  "monthly" | "yearly" | "partner30"
+>("monthly");
 
 useEffect(() => {
   const params = new URLSearchParams(
@@ -37,9 +38,13 @@ useEffect(() => {
 
   setIsGiftSignup(giftSignup);
 
-  setSelectedPlan(
-    plan === "yearly" ? "yearly" : "monthly"
-  );
+  if (plan === "yearly") {
+    setSelectedPlan("yearly");
+  } else if (plan === "partner30") {
+    setSelectedPlan("partner30");
+  } else {
+    setSelectedPlan("monthly");
+  }
 
   if (emailFromUrl) {
     setEmail(emailFromUrl);
