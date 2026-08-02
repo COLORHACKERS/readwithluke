@@ -1,0 +1,176 @@
+@font-face {
+  font-family: "DK Woolwich";
+  src: url("/fonts/dk-woolwich.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+.learnToReadPage {
+  min-height: 100vh;
+  background: #050505;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+}
+
+.learnToReadMain {
+  position: relative;
+  flex: 1;
+  min-height: 760px;
+  padding: 170px 30px 100px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.learnToReadMain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      circle at 50% 35%,
+      rgba(255, 85, 38, 0.2),
+      transparent 42%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(5, 5, 5, 0.25),
+      rgba(5, 5, 5, 0.95)
+    );
+  pointer-events: none;
+}
+
+.learnToReadGlow {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(80px);
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.learnToReadGlowOne {
+  width: 330px;
+  height: 330px;
+  top: 18%;
+  left: -100px;
+  background: #ff5526;
+}
+
+.learnToReadGlowTwo {
+  width: 300px;
+  height: 300px;
+  right: -90px;
+  bottom: 10%;
+  background: #f8f1e6;
+  opacity: 0.13;
+}
+
+.learnToReadCard {
+  position: relative;
+  z-index: 2;
+  width: min(820px, 100%);
+  padding: 75px 60px;
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  border-radius: 38px;
+  background: rgba(13, 13, 13, 0.88);
+  backdrop-filter: blur(18px);
+  text-align: center;
+  box-sizing: border-box;
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.35);
+}
+
+.learnToReadEyebrow {
+  margin: 0 0 22px;
+  font-family: "Courier New", monospace;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: #ff7a52;
+}
+
+.learnToReadCard h1 {
+  margin: 0;
+  font-family: "DK Woolwich", Georgia, serif;
+  font-size: clamp(58px, 8vw, 104px);
+  line-height: 0.92;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+}
+
+.learnToReadDescription {
+  max-width: 630px;
+  margin: 32px auto 0;
+  font-family: "Courier New", monospace;
+  font-size: 18px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.learnToReadBadge {
+  width: fit-content;
+  margin: 38px auto 0;
+  padding: 13px 22px;
+  border-radius: 999px;
+  background: #ff5526;
+  color: #ffffff;
+  font-family: "Courier New", monospace;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  box-shadow: 0 10px 32px rgba(255, 85, 38, 0.25);
+}
+
+.learnToReadButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 180px;
+  margin-top: 34px;
+  padding: 15px 25px;
+  border: 2px solid #ffffff;
+  border-radius: 999px;
+  color: #ffffff;
+  background: transparent;
+  font-family: "Courier New", monospace;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.learnToReadButton:hover {
+  background: #ffffff;
+  color: #050505;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 700px) {
+  .learnToReadMain {
+    min-height: 680px;
+    padding: 135px 18px 70px;
+  }
+
+  .learnToReadCard {
+    padding: 55px 24px;
+    border-radius: 28px;
+  }
+
+  .learnToReadCard h1 {
+    font-size: clamp(52px, 17vw, 76px);
+  }
+
+  .learnToReadDescription {
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  .learnToReadEyebrow {
+    font-size: 11px;
+    line-height: 1.5;
+  }
+}
