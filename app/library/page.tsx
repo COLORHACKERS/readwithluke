@@ -167,7 +167,7 @@ const visibleBooks = filteredBooks.slice(
           <div className="emptyLibrary">
             <h2>No books found.</h2>
             <p>Try another category or publish a new story.</p>
-            <Link href="/admin">Open Admin</Link>
+         
           </div>
         )}
       </main>
