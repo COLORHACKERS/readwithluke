@@ -305,13 +305,17 @@
 .membershipBenefitGrid {
   margin-top: 25px;
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  align-items: start;
 }
 
 .membershipBenefit {
   min-width: 0;
-  padding: 0 13px;
+  padding: 0 18px;
   border-right: 1px solid rgba(43, 36, 28, 0.18);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
 }
 
@@ -320,9 +324,12 @@
 }
 
 .membershipBenefit img {
-  width: 82px;
-  height: 82px;
+  display: block;
+  width: 96px;
+  height: 96px;
+  margin: 0 auto 18px;
   object-fit: contain;
+  object-position: center;
 }
 
 .membershipBenefit h3 {
