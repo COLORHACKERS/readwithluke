@@ -1,0 +1,216 @@
+.mushroomSeoPage {
+  min-height: 100vh;
+  background: #f8f1e6;
+  color: #111111;
+}
+
+.mushroomSeoPage main {
+  overflow: hidden;
+}
+
+.mushroomHero {
+  min-height: 760px;
+  padding: 170px 6vw 90px;
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 60px;
+  align-items: center;
+  background: #111111;
+  color: #ffffff;
+}
+
+.mushroomHeroContent {
+  max-width: 650px;
+}
+
+.mushroomEyebrow,
+.sectionLabel {
+  margin: 0 0 18px;
+  font-family: "Courier New", monospace;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: #ff5526;
+}
+
+.mushroomHero h1,
+.mushroomSection h2,
+.mushroomFactsSection h2,
+.mushroomCta h2 {
+  font-family: "DK Woolwich", Georgia, serif;
+  font-weight: 400;
+}
+
+.mushroomHero h1 {
+  margin: 0;
+  max-width: 700px;
+  font-size: clamp(68px, 9vw, 132px);
+  line-height: 0.88;
+}
+
+.mushroomIntro {
+  max-width: 600px;
+  margin: 30px 0;
+  font-family: "Courier New", monospace;
+  font-size: 18px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.mushroomHeroImage {
+  width: 100%;
+  height: 610px;
+  object-fit: cover;
+  border: 4px solid #ffffff;
+  border-radius: 34px;
+}
+
+.mushroomPrimaryButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 25px;
+  border-radius: 999px;
+  background: #ff5526;
+  color: #ffffff;
+  font-family: "Courier New", monospace;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.mushroomSection,
+.mushroomFactsSection,
+.mushroomCta {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 110px 40px;
+  box-sizing: border-box;
+}
+
+.mushroomSection h2,
+.mushroomFactsSection h2,
+.mushroomCta h2 {
+  max-width: 850px;
+  margin: 0;
+  font-size: clamp(48px, 6vw, 82px);
+  line-height: 0.95;
+}
+
+.mushroomSection > p,
+.mushroomSection div > p:last-child,
+.mushroomCta > p:not(.sectionLabel) {
+  max-width: 820px;
+  margin: 28px 0 0;
+  font-family: "Courier New", monospace;
+  font-size: 18px;
+  line-height: 1.8;
+}
+
+.mushroomFactsSection {
+  max-width: none;
+  background: #ff5526;
+}
+
+.mushroomFactsSection .sectionHeading,
+.mushroomFactGrid {
+  width: min(1240px, calc(100% - 80px));
+  margin: 0 auto;
+}
+
+.mushroomFactsSection .sectionLabel {
+  color: #ffffff;
+}
+
+.mushroomFactGrid {
+  margin-top: 50px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+
+.mushroomFactCard {
+  min-height: 250px;
+  padding: 34px;
+  border-radius: 28px;
+  background: #ffffff;
+}
+
+.mushroomFactCard h3 {
+  margin: 0;
+  font-family: "DK Woolwich", Georgia, serif;
+  font-size: 38px;
+  font-weight: 400;
+}
+
+.mushroomFactCard p {
+  margin: 20px 0 0;
+  font-family: "Courier New", monospace;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.mushroomParts {
+  display: grid;
+  grid-template-columns: 1fr 0.9fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.mushroomParts img {
+  width: 100%;
+  border-radius: 28px;
+}
+
+.mushroomCta {
+  margin-bottom: 90px;
+  border-radius: 38px;
+  background: #111111;
+  color: #ffffff;
+  text-align: center;
+}
+
+.mushroomCta h2,
+.mushroomCta p {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.mushroomCta .mushroomPrimaryButton {
+  margin-top: 35px;
+}
+
+@media (max-width: 850px) {
+  .mushroomHero,
+  .mushroomParts {
+    grid-template-columns: 1fr;
+  }
+
+  .mushroomHero {
+    padding: 140px 20px 65px;
+  }
+
+  .mushroomHeroImage {
+    height: 430px;
+  }
+
+  .mushroomFactGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .mushroomSection,
+  .mushroomFactsSection,
+  .mushroomCta {
+    padding: 75px 22px;
+  }
+
+  .mushroomFactsSection .sectionHeading,
+  .mushroomFactGrid {
+    width: 100%;
+  }
+
+  .mushroomCta {
+    border-radius: 0;
+    margin-bottom: 0;
+  }
+}
