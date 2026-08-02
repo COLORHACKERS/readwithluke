@@ -30,6 +30,7 @@
   display: grid;
   grid-template-columns: 1.05fr 0.95fr 0.82fr;
   align-items: stretch;
+  background: #ffffff;
 }
 
 .membershipHeroCopy {
