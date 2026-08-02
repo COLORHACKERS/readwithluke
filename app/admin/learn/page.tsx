@@ -526,14 +526,21 @@ export default function LearnAdminPage() {
 
           <label htmlFor="learn-slug">Slug</label>
 
-          <input
-            id="learn-slug"
-            value={slug}
-            onChange={(event) =>
-              setSlug(createSlug(event.target.value))
-            }
-            placeholder="why-do-astronauts-wear-space-suits"
-          />
+     <input
+  id="learn-slug"
+  value={slug}
+  onChange={(event) =>
+    setSlug(createSlug(event.target.value))
+  }
+  placeholder="why-do-astronauts-wear-space-suits"
+  readOnly={Boolean(editingId)}
+/>
+
+{editingId && (
+  <p className="slugNotice">
+    The public URL stays permanent. You can still edit the entire learning story.
+  </p>
+)}
 
           <label htmlFor="learn-description">
             Description
