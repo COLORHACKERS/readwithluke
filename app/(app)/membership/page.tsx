@@ -92,13 +92,20 @@ export default function MembershipPage() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
 
-  function startTrial() {
+function startTrial() {
   const cleanEmail = email.trim().toLowerCase();
 
   if (!cleanEmail) {
     alert("Please enter the parent or guardian email.");
     return;
   }
+
+  const signupUrl =
+    `/signup?email=${encodeURIComponent(cleanEmail)}` +
+    `&plan=monthly`;
+
+  window.location.href = signupUrl;
+}
 
   const signupUrl =
     `/signup?email=${encodeURIComponent(cleanEmail)}` +
