@@ -8,6 +8,9 @@ import "./header.css";
 
 export default function Header() {
   const pathname = usePathname();
+  const isActive = (href: string) => {
+  return pathname === href || pathname.startsWith(`${href}/`);
+};
 
   const [initials, setInitials] = useState<string | null>(null);
   const [coins, setCoins] = useState(0);
