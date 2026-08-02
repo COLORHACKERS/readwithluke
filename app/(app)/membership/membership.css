@@ -50,7 +50,7 @@
   margin: 0;
   max-width: 610px;
   font-family: "DK Woolwich", Impact, sans-serif;
-  font-size: clamp(60px, 6vw, 102px);
+  font-size: clamp(60px, 6vw, 80px);
   font-weight: 400;
   line-height: 0.86;
   text-transform: uppercase;
