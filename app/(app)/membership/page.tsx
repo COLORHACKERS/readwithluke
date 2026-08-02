@@ -1,200 +1,349 @@
-import type { Metadata } from "next";
-import Link from "next/link";
+"use client";
+
+import { useState } from "react";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import "./membership.css";
 
-export const metadata: Metadata = {
-  title: "Membership Options | Read With Luke",
-  description:
-    "Choose a Read With Luke reader membership or give three months of stories and learning as a gift.",
-  alternates: {
-    canonical: "https://readwithluke.com/membership",
-  },
-  openGraph: {
-    title: "Membership Options | Read With Luke",
-    description:
-      "Choose a reader membership or give Read With Luke as a gift.",
-    url: "https://readwithluke.com/membership",
-    siteName: "Read With Luke",
-    type: "website",
-  },
+type FaqItem = {
+  question: string;
+  answer: string;
 };
 
+const faqItems: FaqItem[] = [
+  {
+    question: "Will I be charged today?",
+    answer:
+      "No. Your card is saved securely by Stripe, but you will not be charged until your 7-day trial ends.",
+  },
+  {
+    question: "When will I be charged?",
+    answer:
+      "Your first membership payment begins after your 7-day free trial.",
+  },
+  {
+    question: "Can I cancel anytime?",
+    answer:
+      "Yes. You can cancel before your trial ends or anytime after your membership begins.",
+  },
+  {
+    question: "Is Read With Luke safe for children?",
+    answer:
+      "Yes. Read With Luke is designed as a positive, family-friendly reading and learning experience without outside advertisements.",
+  },
+];
+
+const howItWorks = [
+  {
+    number: "1",
+    image: "/images/luke-trial-signup.png",
+    title: "Start Your Free Trial",
+    text: "Create your parent account and securely add your payment details. You will not be charged today.",
+  },
+  {
+    number: "2",
+    image: "/images/luke-reading-activities.png",
+    title: "Explore the Adventures",
+    text: "Enjoy illustrated stories, learning adventures and activities with your child.",
+  },
+  {
+    number: "3",
+    image: "/images/luke-trial-reminder.png",
+    title: "We’ll Remind You",
+    text: "We’ll send you a reminder before the trial ends so there are no surprises.",
+  },
+];
+
+const benefits = [
+  {
+    image: "/images/benefit-unlimited-stories.png",
+    title: "Unlimited Stories",
+    text: "Magical illustrated adventures for curious young readers.",
+  },
+  {
+    image: "/images/benefit-learning.png",
+    title: "Learning Adventures",
+    text: "Kid-friendly science, nature, history and discovery stories.",
+  },
+  {
+    image: "/images/benefit-activities.png",
+    title: "Fun Activities",
+    text: "Creative activities that extend reading and learning.",
+  },
+  {
+    image: "/images/benefit-coins.png",
+    title: "Coins & Rewards",
+    text: "Celebrate progress and help children stay motivated.",
+  },
+  {
+    image: "/images/benefit-safe.png",
+    title: "Safe for Kids",
+    text: "A positive and family-friendly space without outside ads.",
+  },
+  {
+    image: "/images/benefit-cancel.png",
+    title: "Cancel Anytime",
+    text: "Manage or cancel your membership without hassle.",
+  },
+];
+
 export default function MembershipPage() {
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  async function startTrial() {
+    if (!email.trim()) {
+      alert("Please enter the parent or guardian email.");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const response = await fetch("/api/create-checkout-session", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email.trim().toLowerCase(),
+          plan: "monthly",
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || "Unable to start checkout.");
+      }
+
+      if (!result.url) {
+        throw new Error("Stripe checkout URL was not returned.");
+      }
+
+      window.location.href = result.url;
+    } catch (error) {
+      const message =
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Please try again.";
+
+      alert(message);
+      setLoading(false);
+    }
+  }
+
   return (
-    <>
+    <div className="membershipPage">
       <Header />
 
-      <main className="membershipPage">
+      <main className="membershipMain">
         <section className="membershipHero">
-          <span className="membershipEyebrow">
-            JOIN READ WITH LUKE
-          </span>
+          <div className="membershipHeroCopy">
+            <p className="membershipEyebrow">7-DAY ADVENTURE PASS</p>
 
-          <h1>Choose Your Adventure</h1>
+            <h1>
+              Try Read With Luke
+              <span>Free for 7 Days!</span>
+            </h1>
 
-          <p>
-            Start a reader membership for your family or give
-            someone special the gift of stories, imagination, and
-            learning.
-          </p>
-        </section>
-
-        <section className="membershipOptions">
-    {/* Reader Membership */}
-<article className="membershipCard membershipReaderCard">
-  <div className="membershipCardTop">
-    <span className="membershipCardLabel">
-      FOR YOUR FAMILY
-    </span>
-
-    <h2>Reader Membership</h2>
-
-    <p className="membershipCardDescription">
-      Enjoy unlimited access to Read With Luke books and learning
-      adventures.
-    </p>
-  </div>
-
-  <div className="membershipPlanHeading">
-    <strong>Choose your plan</strong>
-    <span>Both plans include a 7-day free trial.</span>
-  </div>
-
-  <div className="readerPlanChoices">
-    <Link
-      href="/signup?plan=monthly"
-      className="readerPlanOption"
-    >
-      <div className="readerPlanOptionTop">
-        <span className="readerPlanName">
-          Monthly
-        </span>
-
-        <span className="readerPlanPrice">
-          $9.99
-        </span>
-      </div>
-
-      <p>Charged every month</p>
-
-      <span className="readerPlanButton">
-        START MONTHLY PLAN
-      </span>
-    </Link>
-
-    <Link
-      href="/signup?plan=yearly"
-      className="readerPlanOption readerPlanOptionFeatured"
-    >
-      <span className="readerPlanBadge">
-        BEST VALUE
-      </span>
-
-      <div className="readerPlanOptionTop">
-        <span className="readerPlanName">
-          Yearly
-        </span>
-
-        <span className="readerPlanPrice">
-          $69.99
-        </span>
-      </div>
-
-      <p>
-        Charged once per year · About $5.83/month
-      </p>
-
-      <span className="readerPlanSavings">
-        Save $49.89 per year
-      </span>
-
-      <span className="readerPlanButton">
-        START YEARLY PLAN
-      </span>
-    </Link>
-  </div>
-
-  <div className="membershipBenefits">
-    <p>✓ Unlimited digital books</p>
-    <p>✓ Learn With Luke adventures</p>
-    <p>✓ New stories and learning posts</p>
-    <p>✓ Read anywhere on your devices</p>
-  </div>
-
-  <small>
-    Cancel anytime. Your selected price begins after the 7-day
-    free trial.
-  </small>
-</article>
-
-          {/* Gift Membership */}
-          <article className="membershipCard membershipGiftCard">
-            <div className="membershipGiftBadge">
-              A GREAT GIFT
-            </div>
-
-            <div className="membershipCardTop">
-              <span className="membershipCardLabel">
-                FOR SOMEONE SPECIAL
-              </span>
-
-              <h2>Gift a Membership</h2>
-
-              <p className="membershipCardDescription">
-                Give a child access to imaginative stories,
-                fascinating discoveries, and screen time parents
-                can feel good about.
-              </p>
-            </div>
-
-            <div className="membershipPrice membershipGiftPrice">
-              <strong>$19.99</strong>
-              <span>for 3 months of access</span>
-            </div>
-
-            <p className="membershipGiftRenewal">
-              Then $4.99 per month
+            <p className="membershipHeroDescription">
+              Give your child access to magical stories and playful learning
+              adventures. No charge today. Cancel before billing begins.
             </p>
 
-            <div className="membershipBenefits">
-              <p>✓ Three months of full access included</p>
-              <p>✓ Unlimited books and learning adventures</p>
-              <p>✓ The recipient is not asked for payment</p>
-              <p>✓ Continues for $4.99 per month afterward</p>
+            <div className="membershipHeroBenefits">
+              <div>
+                <img
+                  src="/images/benefit-unlimited-stories.png"
+                  alt=""
+                />
+                <span>Unlimited Stories</span>
+              </div>
+
+              <div>
+                <img
+                  src="/images/benefit-activities.png"
+                  alt=""
+                />
+                <span>Fun Activities</span>
+              </div>
+
+              <div>
+                <img
+                  src="/images/benefit-coins.png"
+                  alt=""
+                />
+                <span>Coins & Rewards</span>
+              </div>
+
+              <div>
+                <img
+                  src="/images/benefit-safe.png"
+                  alt=""
+                />
+                <span>Kid-Friendly</span>
+              </div>
             </div>
 
-            <Link
-              href="/gift"
-              className="membershipButton membershipGiftButton"
+            <button
+              type="button"
+              className="membershipPaintButton"
+              onClick={() =>
+                document
+                  .getElementById("membership-signup")
+                  ?.scrollIntoView({ behavior: "smooth" })
+              }
             >
-              GIVE A MEMBERSHIP
-            </Link>
+              Start My 7-Day Free Trial
+            </button>
 
-            <small>
-              The purchaser pays $19.99 for the first three months,
-              then $4.99 per month unless canceled.
-            </small>
-          </article>
+            <p className="membershipFinePrint">
+              🔒 No charge today. Cancel before your trial ends.
+            </p>
+          </div>
+
+          <div className="membershipHeroArtwork">
+            {/*
+              IMAGE NEEDED:
+              A transparent PNG showing Luke sitting with a tablet,
+              preferably with his squirrel friend beside him.
+
+              Filename:
+              public/images/luke-membership-hero.png
+            */}
+            <img
+              src="/images/luke-membership-hero.png"
+              alt="Luke reading an illustrated story on a tablet with his squirrel friend"
+            />
+          </div>
+
+          <aside className="membershipFaqPanel">
+            <p className="membershipFaqTitle">
+              Questions? We’ve Got Answers.
+            </p>
+
+            {faqItems.map((item, index) => {
+              const isOpen = openFaq === index;
+
+              return (
+                <div className="membershipFaqItem" key={item.question}>
+                  <button
+                    type="button"
+                    onClick={() => setOpenFaq(isOpen ? null : index)}
+                    aria-expanded={isOpen}
+                  >
+                    <span>{item.question}</span>
+                    <span>{isOpen ? "−" : "+"}</span>
+                  </button>
+
+                  {isOpen && <p>{item.answer}</p>}
+                </div>
+              );
+            })}
+          </aside>
         </section>
 
-        <section className="membershipBottom">
-          <h2>Stories That Make Screen Time Count</h2>
+        <section className="membershipLowerPanel">
+          <div className="membershipInformation">
+            <div className="membershipSectionHeading">
+              <span />
+              <h2>How It Works</h2>
+              <span />
+            </div>
 
-          <p>
-            Read With Luke combines cinematic storytelling,
-            imagination, discovery, and learning in one growing
-            digital library for children.
-          </p>
+            <div className="membershipSteps">
+              {howItWorks.map((step) => (
+                <article className="membershipStep" key={step.number}>
+                  <span className="membershipStepNumber">{step.number}</span>
 
-          <Link href="/library">
-            Explore the library
-          </Link>
+                  <img src={step.image} alt="" />
+
+                  <div>
+                    <h3>{step.title}</h3>
+                    <p>{step.text}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            <div className="membershipSectionHeading membershipBenefitsHeading">
+              <span />
+              <h2>Why Families Love Read With Luke</h2>
+              <span />
+            </div>
+
+            <div className="membershipBenefitGrid">
+              {benefits.map((benefit) => (
+                <article className="membershipBenefit" key={benefit.title}>
+                  <img src={benefit.image} alt="" />
+                  <h3>{benefit.title}</h3>
+                  <p>{benefit.text}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+
+          <aside className="membershipSignup" id="membership-signup">
+            <p className="membershipSignupEyebrow">7-DAY FREE TRIAL</p>
+            <h2>Unlimited Access</h2>
+
+            <label htmlFor="membership-email">
+              Parent or Guardian Email
+            </label>
+
+            <input
+              id="membership-email"
+              type="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              placeholder="parent@email.com"
+              autoComplete="email"
+            />
+
+            <div className="membershipSecureBox">
+              <span>🔒</span>
+
+              <div>
+                <strong>Secure Stripe Checkout</strong>
+                <p>
+                  Your payment details are entered securely on Stripe. Read
+                  With Luke does not store your card number.
+                </p>
+              </div>
+            </div>
+
+            <div className="membershipChargeBox">
+              <span>Today’s Charge</span>
+              <strong>$0.00</strong>
+            </div>
+
+            <p className="membershipSignupNote">
+              Your card will not be charged until your 7-day trial ends.
+            </p>
+
+            <button
+              type="button"
+              className="membershipCheckoutButton"
+              onClick={startTrial}
+              disabled={loading}
+            >
+              {loading
+                ? "Opening Secure Checkout..."
+                : "Start My 7-Day Free Trial"}
+            </button>
+
+            <p className="membershipTerms">
+              By starting your trial, you agree to our{" "}
+              <a href="/terms">Terms of Use</a> and{" "}
+              <a href="/privacy">Privacy Policy</a>.
+            </p>
+          </aside>
         </section>
       </main>
 
       <Footer />
-    </>
+    </div>
   );
 }
