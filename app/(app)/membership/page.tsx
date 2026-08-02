@@ -204,21 +204,6 @@ export default function MembershipPage() {
             </p>
           </div>
 
-          <div className="membershipHeroArtwork">
-            {/*
-              IMAGE NEEDED:
-              A transparent PNG showing Luke sitting with a tablet,
-              preferably with his squirrel friend beside him.
-
-              Filename:
-              public/images/luke-membership-hero.png
-            */}
-            <img
-              src="/images/luke-membership-hero.png"
-              alt="Luke reading an illustrated story on a tablet with his squirrel friend"
-            />
-          </div>
-
           <aside className="membershipFaqPanel">
             <p className="membershipFaqTitle">
               Questions? We’ve Got Answers.
