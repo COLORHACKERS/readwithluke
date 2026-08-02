@@ -7,13 +7,15 @@
 }
 
 .membershipMain {
-  width: min(1460px, calc(100% - 44px));
+  width: min(1368px, calc(100% - 44px));
   margin: 0 auto;
   padding: 115px 0 70px;
 }
 
 .membershipHero,
 .membershipLowerPanel {
+  width: 100%;
+  box-sizing: border-box;
   overflow: hidden;
   border: 3px solid rgba(255, 255, 255, 0.76);
   border-radius: 32px;
