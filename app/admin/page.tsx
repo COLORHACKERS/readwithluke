@@ -433,11 +433,18 @@ setSeoNoindex(book.seo_noindex === true);
             placeholder="Treehouse Mysteries"
           />
 
-          <label>Slug</label>
-          <input
-            value={slug}
-            onChange={(e) => setSlug(createSlug(e.target.value))}
-          />
+      <label>Slug</label>
+<input
+  value={slug}
+  onChange={(e) => setSlug(createSlug(e.target.value))}
+  readOnly={Boolean(editingId)}
+/>
+
+{editingId && (
+  <p className="slugNotice">
+    This public URL is permanent and cannot be changed while editing.
+  </p>
+)}
 
           <label>Description</label>
           <textarea
