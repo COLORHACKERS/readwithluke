@@ -21,6 +21,10 @@ type FreeLearnItem = {
   is_published: boolean | null;
 };
 
+const FREE_BOOK_SLUGS = [
+  "space-rabbits-the-origin-story",
+];
+
 export default function ReaderGate({
   children,
 }: ReaderGateProps) {
@@ -34,7 +38,9 @@ export default function ReaderGate({
     let cancelled = false;
 
     function allowAccess() {
-      if (cancelled) return;
+      if (cancelled) {
+        return;
+      }
 
       setAllowed(true);
       setChecking(false);
@@ -54,6 +60,27 @@ export default function ReaderGate({
         const pathParts = pathname
           .split("/")
           .filter(Boolean);
+
+        /*
+         * Free book routes:
+         * /books/space-rabbits-the-origin-story
+         * /books/space-rabbits-the-origin-story/read
+         */
+        const isBookRoute =
+          pathParts[0] === "books" &&
+          Boolean(pathParts[1]);
+
+        if (isBookRoute) {
+          const bookSlug = pathParts[1];
+
+          const isFreeBook =
+            FREE_BOOK_SLUGS.includes(bookSlug);
+
+          if (isFreeBook) {
+            allowAccess();
+            return;
+          }
+        }
 
         /*
          * Learn routes:
