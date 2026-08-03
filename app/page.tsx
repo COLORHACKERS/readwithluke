@@ -523,7 +523,7 @@ export default function Home() {
               <li>No payment information required</li>
             </ul>
 
-            <Link href="/signup" className="freePlanButton">
+            <Link href="/free-reads" className="freePlanButton">
               Start Reading Free
             </Link>
           </div>
