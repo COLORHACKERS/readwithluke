@@ -22,7 +22,7 @@ type FreeLearnItem = {
 };
 
 const FREE_BOOK_SLUGS = [
-  "space-rabbits-the-origin-story",
+  "the-great-frog-croak-off",
 ];
 
 export default function ReaderGate({
