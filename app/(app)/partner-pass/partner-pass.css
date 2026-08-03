@@ -304,17 +304,20 @@
 .partnerPassHeroButton {
   width: min(525px, 100%);
   margin-top: 30px;
-  padding: 17px 24px;
-  font-size: 27px;
+  padding: 18px 28px;
 
-  clip-path: polygon(
-    2% 10%,
-    98% 0,
-    100% 17%,
-    98% 93%,
-    2% 100%,
-    0 82%
-  );
+  border: 0;
+  border-radius: 999px;
+  background: #ef4b21;
+  color: #ffffff;
+
+  font-family: "DK Woolwich", Impact, sans-serif;
+  font-size: 27px;
+  text-transform: uppercase;
+
+  cursor: pointer;
+
+  clip-path: none;
 }
 
 .partnerPassHeroButton:hover,
