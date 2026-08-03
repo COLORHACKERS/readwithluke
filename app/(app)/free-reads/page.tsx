@@ -17,7 +17,7 @@ type FreeReadItem = {
 };
 
 const FREE_BOOK_SLUG =
-  "space-rabbits-the-origin-story";
+  "the-great-frog-croak-off";
 
 const FREE_LEARN_SLUG =
   "the-moon-s-secret-powers-part-2";
