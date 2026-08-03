@@ -134,25 +134,32 @@
   cursor: pointer;
 }
 
-.partnerPassHeroButton {
-  width: min(525px, 100%);
+.membershipPaintButton {
+  display: block;
+  width: min(520px, 100%);
+  min-height: 64px;
   margin-top: 30px;
   padding: 18px 28px;
 
   border: 0;
   border-radius: 999px;
-  background: #ef4b21;
+  background: #f04b20;
   color: #ffffff;
 
   font-family: "DK Woolwich", Impact, sans-serif;
   font-size: 27px;
+  line-height: 1;
+  text-align: center;
   text-transform: uppercase;
 
   cursor: pointer;
-
   clip-path: none;
+  box-sizing: border-box;
 }
 
+.membershipPaintButton:hover {
+  background: #d93c16;
+}
 .membershipFinePrint {
   margin: 12px 0 0;
   text-align: center;
@@ -603,6 +610,12 @@
   .membershipSectionHeading h2 {
     font-size: 28px;
     text-align: center;
+  }
+    .membershipPaintButton {
+    width: 100%;
+    min-height: 58px;
+    padding: 16px 20px;
+    font-size: 23px;
   }
 }
 .membershipHeroBenefits,
