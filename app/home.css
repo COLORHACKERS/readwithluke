@@ -614,11 +614,48 @@ html {
 }
 
 .homeInsideBenefits {
+  margin-top: 34px;
   display: grid;
-  grid-template-columns: repeat(4, minmax(72px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: start;
+}
 
-  margin-top: 20px;
+.insideBenefitItem {
+  min-width: 0;
+  padding: 0 24px;
+  border-right: 1px solid rgba(18, 18, 18, 0.18);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.insideBenefitItem:first-child {
+  padding-left: 0;
+}
+
+.insideBenefitItem:last-child {
+  padding-right: 0;
+  border-right: 0;
+}
+
+.insideBenefitImage {
+  width: 108px;
+  height: 108px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto 16px;
+}
+
+.insideBenefitItem strong {
+  display: block;
+  max-width: 180px;
+  margin: 0 auto;
+  font-family: "Courier New", monospace;
+  font-size: 15px;
+  line-height: 1.35;
+  color: #172033;
 }
 
 .homeInsideBenefits > div {
@@ -1468,6 +1505,19 @@ html {
   .homeTrustGrid {
     grid-template-columns: repeat(2, 1fr);
   }
+  
+  .homeInsideBenefits {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px 0;
+  }
+
+  .insideBenefitItem:nth-child(2) {
+    border-right: 0;
+  }
+
+  .insideBenefitItem strong {
+    font-size: 13px;
+  }
 }
 
 /* =========================================================
@@ -1622,6 +1672,16 @@ html {
 
   .homeInsideBenefits {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .insideBenefitItem {
+    padding: 0 14px;
+  }
+
+  .insideBenefitImage {
+    width: 84px;
+    height: 84px;
+    margin-bottom: 12px;
   }
 
   .homeBookPreview {
