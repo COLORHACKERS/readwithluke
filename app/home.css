@@ -438,13 +438,7 @@ html {
 
   border-radius: 32px 32px 0 0;
 
-  background:
-    radial-gradient(
-      circle at 16% 15%,
-      rgba(255, 255, 255, 0.62),
-      transparent 34%
-    ),
-    var(--home-cream);
+   background: #071521
 
   box-shadow: 0 -8px 35px rgba(19, 31, 42, 0.2);
 }
