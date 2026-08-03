@@ -63,8 +63,8 @@ export default function ReaderGate({
 
         /*
          * Free book routes:
-         * /books/space-rabbits-the-origin-story
-         * /books/space-rabbits-the-origin-story/read
+         * /books/treehouse-mysteries-the-park-bandit
+         * /books/treehouse-mysteries-the-park-bandit-part-1
          */
         const isBookRoute =
           pathParts[0] === "books" &&
