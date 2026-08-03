@@ -88,10 +88,6 @@ async function handleSignup(
       );
     }
 
-    /*
-     * Gift memberships return to the gift page
-     * after the account is created.
-     */
     if (isGiftSignup) {
       window.location.href = GIFT_RETURN_PATH;
       return;
@@ -112,28 +108,24 @@ async function handleSignup(
       }
     );
 
-    const result = await response.json();
+    const checkout = await response.json();
 
-    if (!response.ok) {
+    if (!response.ok || !checkout.url) {
       throw new Error(
-        result.error || "Unable to start checkout."
+        checkout.error || "Unable to start checkout."
       );
     }
 
-    if (!result.url) {
-      throw new Error(
-        "Stripe checkout URL was not returned."
-      );
-    }
-
-    window.location.href = result.url;
+    window.location.href = checkout.url;
   } catch (error) {
-    const message =
+    console.error("Signup error:", error);
+
+    alert(
       error instanceof Error
         ? error.message
-        : "Something went wrong. Please try again.";
+        : "Something went wrong. Please try again."
+    );
 
-    alert(message);
     setLoading(false);
   }
 }
