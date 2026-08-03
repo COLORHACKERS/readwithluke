@@ -486,7 +486,7 @@ export default function Home() {
         <section className="homeMembershipSection">
           <div className="homeMembershipIntro">
             <h2>
-              Start With One
+              Start With 1
               <br />
               Adventure.
               <br />
