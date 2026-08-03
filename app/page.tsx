@@ -295,27 +295,43 @@ export default function Home() {
       memorable characters, and page-by-page discovery.
     </p>
 
-    <div className="homeInsideBenefits">
-      <div>
-        <span className="insideBenefitIcon">▤</span>
-        <strong>Cinematic Illustrations</strong>
-      </div>
+   <div className="homeInsideBenefits">
+  <div className="insideBenefitItem">
+    <img
+      src="/images/icon-cinematic-reading.png"
+      alt="Open magical storybook icon"
+      className="insideBenefitImage"
+    />
+    <strong>Cinematic Reading</strong>
+  </div>
 
-      <div>
-        <span className="insideBenefitIcon">A</span>
-        <strong>Easy-to-Read Text</strong>
-      </div>
+  <div className="insideBenefitItem">
+    <img
+      src="/images/icon-easy-to-read.png"
+      alt="Easy-to-read letter card icon"
+      className="insideBenefitImage"
+    />
+    <strong>Easy-to-Read</strong>
+  </div>
 
-      <div>
-        <span className="insideBenefitIcon">★</span>
-        <strong>Fun Rewards &amp; Achievements</strong>
-      </div>
+  <div className="insideBenefitItem">
+    <img
+      src="/images/icon-fun-rewards.png"
+      alt="Reward coins and badge icon"
+      className="insideBenefitImage"
+    />
+    <strong>Fun Rewards</strong>
+  </div>
 
-      <div>
-        <span className="insideBenefitIcon">♥</span>
-        <strong>Safe, Ad-Free Environment</strong>
-      </div>
-    </div>
+  <div className="insideBenefitItem">
+    <img
+      src="/images/icon-safe-ad-free.png"
+      alt="Shield with heart icon for safe ad-free environment"
+      className="insideBenefitImage"
+    />
+    <strong>Safe, Ad-Free</strong>
+  </div>
+</div>
 
     {featuredBook && (
 <Link
