@@ -151,18 +151,30 @@
 }
 
 .giftHeroButton {
+  display: block;
   width: min(520px, 100%);
+  min-height: 64px;
   margin-top: 28px;
-  padding: 16px 24px;
+  padding: 18px 28px;
+
+  border: 0;
+  border-radius: 999px;
+  background: #ef4b21;
+  color: #ffffff;
+
+  font-family: "DK Woolwich", Impact, sans-serif;
   font-size: 28px;
-  clip-path: polygon(
-    2% 10%,
-    98% 0,
-    100% 17%,
-    98% 93%,
-    2% 100%,
-    0 82%
-  );
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+
+  cursor: pointer;
+  clip-path: none;
+  box-sizing: border-box;
+}
+
+.giftHeroButton:hover {
+  background: #d93c16;
 }
 
 .giftHeroFinePrint {
@@ -621,5 +633,11 @@
   .giftPinkieBox img {
     width: 72px;
     height: 95px;
+  }
+    .giftHeroButton {
+    width: 100%;
+    min-height: 58px;
+    padding: 16px 20px;
+    font-size: 23px;
   }
 }
