@@ -162,7 +162,7 @@ export default function Home() {
               </p>
 
               <div className="homeHeroButtons">
-                <Link href="/library" className="homePrimaryButton">
+                <Link href="/learn/the-moon-s-secret-powers-part-2/read?page=1" className="homePrimaryButton">
                   <span className="buttonIcon">▣</span>
                   Read a Free Adventure
                 </Link>
@@ -175,7 +175,7 @@ export default function Home() {
 
               <div className="homeHeroNote">
                 <strong>
-                  One learning adventure to read for free!
+                  One learning adventure to read for FREE!
                 </strong>
                 <span>No card required.</span>
               </div>
