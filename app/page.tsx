@@ -195,7 +195,7 @@ export default function Home() {
 
                 <div className="heroFeaturedContent">
                   <span className="heroFeatureBadge">
-                    ★ Free Featured Adventure
+                    ★ NEW READING ADVENTURE
                   </span>
 
                   <h2>{featuredBook.title}</h2>
