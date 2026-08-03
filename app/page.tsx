@@ -175,7 +175,7 @@ export default function Home() {
 
               <div className="homeHeroNote">
                 <strong>
-                  One complete story and one learning adventure free.
+                  One learning adventure to read for free!
                 </strong>
                 <span>No card required.</span>
               </div>
