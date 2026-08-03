@@ -7,147 +7,143 @@ import { supabase } from "@/lib/supabase";
 import "../../home.css";
 import "./signup.css";
 
-type ReaderPlan = "monthly" | "yearly";
+type ReaderPlan =
+  | "monthly"
+  | "yearly"
+  | "partner30";
 
 const GIFT_RETURN_PATH = "/gift?resumeGift=1";
-const OLD_GIFT_RETURN_PATH = "/membership?resumeGift=1";
+const OLD_GIFT_RETURN_PATH =
+  "/membership?resumeGift=1";
 
 export default function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [loading, setLoading] = useState(false);
-  const [isGiftSignup, setIsGiftSignup] = useState(false);
+  const [loading, setLoading] =
+    useState(false);
 
- const [selectedPlan, setSelectedPlan] = useState<
-  "monthly" | "yearly" | "partner30"
->("monthly");
+  const [isGiftSignup, setIsGiftSignup] =
+    useState(false);
 
-useEffect(() => {
-  const params = new URLSearchParams(
-    window.location.search
-  );
+  const [selectedPlan, setSelectedPlan] =
+    useState<ReaderPlan>("monthly");
 
-  const next = params.get("next");
-  const plan = params.get("plan");
-  const emailFromUrl = params.get("email");
+  useEffect(() => {
+    const params = new URLSearchParams(
+      window.location.search
+    );
 
-  const giftSignup =
-    next === GIFT_RETURN_PATH ||
-    next === OLD_GIFT_RETURN_PATH;
+    const next = params.get("next");
+    const plan = params.get("plan");
+    const emailFromUrl = params.get("email");
 
-  setIsGiftSignup(giftSignup);
+    const giftSignup =
+      next === GIFT_RETURN_PATH ||
+      next === OLD_GIFT_RETURN_PATH;
 
-  if (plan === "yearly") {
-    setSelectedPlan("yearly");
-  } else if (plan === "partner30") {
-    setSelectedPlan("partner30");
-  } else {
-    setSelectedPlan("monthly");
-  }
+    setIsGiftSignup(giftSignup);
 
-  if (emailFromUrl) {
-    setEmail(emailFromUrl);
-  }
-}, []);
-
-async function handleSignup(
-  event: React.FormEvent<HTMLFormElement>
-) {
-  event.preventDefault();
-  setLoading(true);
-
-  try {
-    const cleanEmail = email.trim().toLowerCase();
-
-    if (!cleanEmail) {
-      throw new Error("Please enter your email.");
+    if (plan === "yearly") {
+      setSelectedPlan("yearly");
+    } else if (plan === "partner30") {
+      setSelectedPlan("partner30");
+    } else {
+      setSelectedPlan("monthly");
     }
 
-    if (!password) {
-      throw new Error("Please enter a password.");
+    if (emailFromUrl) {
+      setEmail(emailFromUrl);
     }
+  }, []);
 
-    const {
-      data: signupData,
-      error: signupError,
-    } = await supabase.auth.signUp({
-      email: cleanEmail,
-      password,
-    });
+  async function handleSignup(
+    event: React.FormEvent<HTMLFormElement>
+  ) {
+    event.preventDefault();
+    setLoading(true);
 
-    if (signupError) {
-      throw signupError;
-    }
+    try {
+      const cleanEmail = email
+        .trim()
+        .toLowerCase();
 
-    const newUser = signupData.user;
-
-    if (!newUser) {
-      throw new Error(
-        "Your account could not be created. Please try again."
-      );
-    }
-
-    if (isGiftSignup) {
-      window.location.href = GIFT_RETURN_PATH;
-      return;
-    }
-
-    const response = await fetch(
-      "/api/create-checkout-session",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId: newUser.id,
-          email: cleanEmail,
-          plan: selectedPlan,
-        }),
+      if (!cleanEmail) {
+        throw new Error(
+          "Please enter your email."
+        );
       }
-    );
 
-    const checkout = await response.json();
+      if (!password) {
+        throw new Error(
+          "Please enter a password."
+        );
+      }
 
-    if (!response.ok || !checkout.url) {
-      throw new Error(
-        checkout.error || "Unable to start checkout."
+      const {
+        data: signupData,
+        error: signupError,
+      } = await supabase.auth.signUp({
+        email: cleanEmail,
+        password,
+      });
+
+      if (signupError) {
+        throw signupError;
+      }
+
+      const newUser = signupData.user;
+
+      if (!newUser) {
+        throw new Error(
+          "Your account could not be created. Please try again."
+        );
+      }
+
+      if (isGiftSignup) {
+        window.location.href =
+          GIFT_RETURN_PATH;
+
+        return;
+      }
+
+      const response = await fetch(
+        "/api/create-checkout-session",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type":
+              "application/json",
+          },
+          body: JSON.stringify({
+            userId: newUser.id,
+            email: cleanEmail,
+            plan: selectedPlan,
+          }),
+        }
       );
-    }
 
-    window.location.href = checkout.url;
-  } catch (error) {
-    console.error("Signup error:", error);
-
-    alert(
-      error instanceof Error
-        ? error.message
-        : "Something went wrong. Please try again."
-    );
-
-    setLoading(false);
-  }
-}
-
-      const checkout = await response.json();
+      const checkout =
+        await response.json();
 
       if (!response.ok || !checkout.url) {
-        alert(
+        throw new Error(
           checkout.error ||
             "Unable to start checkout."
         );
-
-        setLoading(false);
-        return;
       }
 
       window.location.href = checkout.url;
     } catch (error) {
-      console.error("Signup error:", error);
+      console.error(
+        "Signup error:",
+        error
+      );
 
       alert(
-        "Something went wrong. Please try again."
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Please try again."
       );
 
       setLoading(false);
@@ -156,6 +152,9 @@ async function handleSignup(
 
   const isYearlyPlan =
     selectedPlan === "yearly";
+
+  const isPartnerPlan =
+    selectedPlan === "partner30";
 
   return (
     <>
@@ -166,43 +165,87 @@ async function handleSignup(
           className="signupCard"
           onSubmit={handleSignup}
         >
-         <h1>
-  {isGiftSignup
-    ? "Create Your Gift Account!"
-    : isYearlyPlan
-      ? "Start Your Yearly Membership!"
-      : "Start Your 7-Day Free Trial!"}
-</h1>
+          <h1>
+            {isGiftSignup
+              ? "Create Your Gift Account!"
+              : isYearlyPlan
+                ? "Start Your Yearly Membership!"
+                : isPartnerPlan
+                  ? "Start Your 30-Day Partner Pass!"
+                  : "Start Your 7-Day Free Trial!"}
+          </h1>
 
-         {isGiftSignup ? (
-  <p>
-    Create your account to continue to the{" "}
-    <strong>$19.99 family gift checkout.</strong>
-    <br />
-    You will return to your completed gift form after signup.
-  </p>
-) : isYearlyPlan ? (
-  <p>
-    Create your account to start your yearly membership.
-    <br />
-    You will be charged{" "}
-    <strong>$69.99 today</strong> for one full year of access.
-    <br />
-    Your membership will renew automatically for{" "}
-    <strong>$69.99 per year</strong> unless canceled.
-  </p>
-) : (
-  <p>
-    Create your account to begin your{" "}
-    <strong>7-day free trial.</strong>
-    <br />
-    Your payment method will be securely saved today, but{" "}
-    <strong>you won&apos;t be charged during your trial.</strong>
-    <br />
-    Unless you cancel before your trial ends, your membership will
-    automatically continue for <strong>$9.99 per month.</strong>
-  </p>
-)}
+          {isGiftSignup ? (
+            <p>
+              Create your account to continue
+              to the{" "}
+              <strong>
+                $19.99 family gift checkout.
+              </strong>
+              <br />
+              You will return to your completed
+              gift form after signup.
+            </p>
+          ) : isYearlyPlan ? (
+            <p>
+              Create your account to start your
+              yearly membership.
+              <br />
+              You will be charged{" "}
+              <strong>$69.99 today</strong> for
+              one full year of access.
+              <br />
+              Your membership will renew
+              automatically for{" "}
+              <strong>
+                $69.99 per year
+              </strong>{" "}
+              unless canceled.
+            </p>
+          ) : isPartnerPlan ? (
+            <p>
+              Create your account to begin your{" "}
+              <strong>
+                private 30-day partner pass.
+              </strong>
+              <br />
+              Your payment method will be
+              securely saved today, but{" "}
+              <strong>
+                you will not be charged during
+                your 30-day trial.
+              </strong>
+              <br />
+              Unless you cancel before the pass
+              ends, your membership will
+              automatically continue for{" "}
+              <strong>
+                $9.99 per month.
+              </strong>
+            </p>
+          ) : (
+            <p>
+              Create your account to begin your{" "}
+              <strong>
+                7-day free trial.
+              </strong>
+              <br />
+              Your payment method will be
+              securely saved today, but{" "}
+              <strong>
+                you won&apos;t be charged during
+                your trial.
+              </strong>
+              <br />
+              Unless you cancel before your
+              trial ends, your membership will
+              automatically continue for{" "}
+              <strong>
+                $9.99 per month.
+              </strong>
+            </p>
+          )}
+
           {!isGiftSignup && (
             <div className="signupSelectedPlan">
               <span>SELECTED PLAN</span>
@@ -210,7 +253,9 @@ async function handleSignup(
               <strong>
                 {isYearlyPlan
                   ? "YEARLY — $69.99/YEAR"
-                  : "MONTHLY — $9.99/MONTH"}
+                  : isPartnerPlan
+                    ? "PARTNER PASS — 30 DAYS FREE"
+                    : "MONTHLY — 7 DAYS FREE"}
               </strong>
             </div>
           )}
@@ -238,19 +283,26 @@ async function handleSignup(
             required
           />
 
-      <button type="submit" disabled={loading}>
-  {loading
-    ? isGiftSignup
-      ? "CREATING ACCOUNT..."
-      : isYearlyPlan
-        ? "OPENING YEARLY CHECKOUT..."
-        : "STARTING TRIAL..."
-    : isGiftSignup
-      ? "CONTINUE TO GIFT CHECKOUT"
-      : isYearlyPlan
-        ? "CONTINUE — $69.99/YEAR"
-        : "START 7-DAY FREE TRIAL"}
-</button>
+          <button
+            type="submit"
+            disabled={loading}
+          >
+            {loading
+              ? isGiftSignup
+                ? "CREATING ACCOUNT..."
+                : isYearlyPlan
+                  ? "OPENING YEARLY CHECKOUT..."
+                  : isPartnerPlan
+                    ? "OPENING 30-DAY PASS..."
+                    : "STARTING TRIAL..."
+              : isGiftSignup
+                ? "CONTINUE TO GIFT CHECKOUT"
+                : isYearlyPlan
+                  ? "CONTINUE — $69.99/YEAR"
+                  : isPartnerPlan
+                    ? "START 30-DAY PARTNER PASS"
+                    : "START 7-DAY FREE TRIAL"}
+          </button>
         </form>
       </main>
 
