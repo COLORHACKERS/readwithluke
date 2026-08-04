@@ -1,144 +1,145 @@
-.learnPage {
+.learnMarketingPage {
   min-height: 100vh;
   background:
     linear-gradient(
-      rgba(3, 13, 20, 0.38),
-      rgba(3, 13, 20, 0.72)
+      rgba(3, 12, 18, 0.16),
+      rgba(3, 12, 18, 0.42)
     ),
     url("/images/learn-page-background.jpg")
-      center / cover fixed;
-
-  color: #111111;
+      center top / cover fixed;
+  color: #171717;
 }
 
-.learnMain {
+.learnMarketingMain {
   width: min(1368px, calc(100% - 44px));
   margin: 0 auto;
-  padding: 115px 0 70px;
+  padding: 115px 0 60px;
 }
 
 /* =========================================
    IMAGE PLACEHOLDERS
 ========================================= */
 
-.learnVisualImage,
-.learnVisualPlaceholder {
+.learnMarketingImage,
+.learnMarketingPlaceholder {
   display: block;
   width: 100%;
   height: 100%;
 }
 
-.learnVisualImage {
+.learnMarketingImage {
   object-fit: cover;
 }
 
-.learnVisualPlaceholder {
-  padding: 28px;
-  border: 3px dashed rgba(239, 75, 33, 0.6);
+.learnMarketingPlaceholder {
+  min-height: 100%;
+  padding: 20px;
+  border: 2px dashed rgba(230, 87, 33, 0.75);
   background:
     repeating-linear-gradient(
       -45deg,
       #fff8e9,
-      #fff8e9 18px,
-      #f8ecd8 18px,
-      #f8ecd8 36px
+      #fff8e9 17px,
+      #f3e5cc 17px,
+      #f3e5cc 34px
     );
-
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
-  color: #172435;
+  color: #172536;
   text-align: center;
   box-sizing: border-box;
 }
 
-.learnVisualPlaceholder > span {
-  padding: 8px 13px;
+.learnMarketingPlaceholder > strong {
+  padding: 7px 12px;
   border-radius: 999px;
   background: #ef4b21;
   color: #ffffff;
   font-family: "Courier New", monospace;
-  font-size: 11px;
-  font-weight: 900;
-  letter-spacing: 0.08em;
+  font-size: 10px;
 }
 
-.learnVisualPlaceholder p {
-  max-width: 700px;
-  margin: 14px auto 0;
+.learnMarketingPlaceholder > span {
+  margin-top: 8px;
   font-family: "Courier New", monospace;
-  font-size: 12px;
-  font-weight: 700;
-  line-height: 1.5;
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.learnMarketingPlaceholder p {
+  max-width: 680px;
+  margin: 10px 0 0;
+  font-family: "Courier New", monospace;
+  font-size: 9px;
+  line-height: 1.45;
 }
 
 /* =========================================
-   SHARED
+   COMMON PANELS
 ========================================= */
 
-.learnHero,
-.learnDiscoverySection,
-.learnMethodSection,
-.learnQuestionsSection,
-.learnBenefitsSection,
-.learnFaqSection,
-.learnFinalCta {
-  overflow: hidden;
-  border: 3px solid rgba(255, 255, 255, 0.8);
-  border-radius: 30px;
+.learnTopPanel,
+.learnTreePanel,
+.learnQuestionsPanel,
+.learnBenefitsPanel,
+.learnFaqPanel {
+  border: 2px solid #dfc9a2;
+  border-radius: 22px;
   background: #f8f1e6;
-  box-shadow: 0 24px 65px rgba(0, 0, 0, 0.28);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.22);
 }
 
-.learnPrimaryButton,
-.learnSecondaryButton,
-.learnExploreButton {
-  min-height: 54px;
-  padding: 14px 24px;
-  border-radius: 999px;
-
+.learnOrangeButton,
+.learnCreamButton,
+.learnQuestionsButton {
+  min-height: 48px;
+  padding: 13px 23px;
+  border-radius: 12px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
   font-family: "DK Woolwich", Impact, sans-serif;
-  font-size: 21px;
+  font-size: 19px;
+  line-height: 1;
   text-decoration: none;
   text-transform: uppercase;
   box-sizing: border-box;
 }
 
-.learnPrimaryButton,
-.learnExploreButton {
+.learnOrangeButton,
+.learnQuestionsButton {
   background: #ef4b21;
   color: #ffffff;
 }
 
-.learnSecondaryButton {
-  border: 2px solid #6c4b2a;
-  background: rgba(255, 249, 235, 0.88);
-  color: #2d241b;
+.learnCreamButton {
+  border: 1px solid #8c6d43;
+  background: rgba(255, 249, 235, 0.94);
+  color: #362b20;
 }
 
 /* =========================================
-   HERO
+   TOP PANEL
 ========================================= */
+
+.learnTopPanel {
+  overflow: hidden;
+}
 
 .learnHero {
   position: relative;
-  min-height: 680px;
+  min-height: 445px;
 }
 
-.learnHeroBackground {
+.learnHeroMedia {
   position: absolute;
   inset: 0;
 }
 
-.learnHeroBackground .learnVisualPlaceholder {
+.learnHeroMedia .learnMarketingPlaceholder {
   border: 0;
-  border-radius: 0;
 }
 
 .learnHeroOverlay {
@@ -147,215 +148,233 @@
   background:
     linear-gradient(
       90deg,
-      rgba(255, 249, 235, 0.98) 0%,
-      rgba(255, 249, 235, 0.93) 34%,
-      rgba(255, 249, 235, 0.4) 58%,
-      rgba(0, 0, 0, 0.05) 100%
+      rgba(255, 249, 235, 0.99) 0%,
+      rgba(255, 249, 235, 0.96) 28%,
+      rgba(255, 249, 235, 0.69) 45%,
+      rgba(255, 249, 235, 0.08) 70%,
+      rgba(0, 0, 0, 0.03) 100%
     );
 }
 
 .learnHeroCopy {
   position: relative;
   z-index: 2;
-  max-width: 650px;
-  padding: 60px 50px;
+  width: 510px;
+  max-width: calc(100% - 60px);
+  padding: 42px 0 30px 38px;
 }
 
-.learnEyebrow {
-  margin: 0 0 10px;
+.learnHeroBrand {
+  margin: 0;
   font-family: "DK Woolwich", Impact, sans-serif;
-  font-size: 62px;
-  line-height: 0.9;
-  color: #132c46;
+  font-size: clamp(46px, 5vw, 68px);
+  line-height: 0.88;
+  color: #17334e;
+  text-transform: uppercase;
 }
 
 .learnHero h1 {
-  margin: 0;
+  margin: 11px 0 0;
   font-family: "DK Woolwich", Impact, sans-serif;
-  font-size: clamp(54px, 6vw, 92px);
+  font-size: clamp(33px, 3.6vw, 49px);
+  line-height: 0.9;
   font-weight: 400;
-  line-height: 0.88;
   text-transform: uppercase;
 }
 
 .learnHero h1 span,
+.learnHero h1 strong,
 .learnHero h1 em {
   display: block;
   font-style: normal;
+  font-weight: 400;
 }
 
-.learnHero h1 span {
+.learnHero h1 strong {
   color: #ef4b21;
 }
 
 .learnHero h1 em {
-  color: #d88a00;
+  color: #dc9200;
 }
 
-.learnHeroDescription {
-  max-width: 570px;
-  margin: 23px 0 0;
+.learnHeroText {
+  max-width: 405px;
+  margin: 17px 0 0;
   font-family: "Courier New", monospace;
-  font-size: 15px;
+  font-size: 12px;
   font-weight: 700;
-  line-height: 1.55;
+  line-height: 1.5;
 }
 
-.learnHeroButtons {
-  margin-top: 25px;
+.learnHeroActions {
+  margin-top: 19px;
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 10px;
 }
 
-.learnHeroDetails {
-  margin-top: 24px;
+.learnHeroMeta {
+  margin-top: 17px;
   display: flex;
   flex-wrap: wrap;
-  gap: 9px 17px;
+  gap: 7px 14px;
 }
 
-.learnHeroDetails span {
+.learnHeroMeta span {
   font-family: "Courier New", monospace;
-  font-size: 10px;
+  font-size: 8px;
   font-weight: 800;
 }
 
 /* =========================================
-   DISCOVERY
+   SHELF
 ========================================= */
 
-.learnDiscoverySection {
-  margin-top: 14px;
-  padding: 35px 30px 25px;
+.learnShelfPanel {
+  margin: 0 10px 10px;
+  padding: 14px;
+  border: 1px solid #cdb995;
+  border-radius: 15px;
+  background: rgba(255, 250, 239, 0.98);
 }
 
-.learnSectionHeading p {
-  margin: 0;
-  font-family: "DK Woolwich", Impact, sans-serif;
-  font-size: 24px;
-  color: #ef4b21;
-}
-
-.learnSectionHeading h2 {
-  margin: 4px 0 0;
-  font-family: "Courier New", monospace;
-  font-size: 16px;
-}
-
-.learnDiscoveryLayout {
-  margin-top: 22px;
+.learnShelfHeader {
   display: grid;
-  grid-template-columns: 260px 1fr;
-  gap: 22px;
-}
-
-.learnDiscoverySidebar {
-  padding: 20px;
-  border: 1px solid #d8c5a8;
-  border-radius: 20px;
-  background: rgba(255, 250, 239, 0.82);
-}
-
-.learnDiscoverySidebar label {
-  display: block;
-  font-family: "Courier New", monospace;
-  font-size: 11px;
-  font-weight: 800;
-}
-
-.learnDiscoverySidebar input {
-  width: 100%;
-  height: 43px;
-  margin: 8px 0 16px;
-  padding: 0 13px;
-  border: 1px solid #d8c5a8;
-  border-radius: 999px;
-  font-family: "Courier New", monospace;
-  box-sizing: border-box;
-}
-
-.learnDiscoverySidebar button,
-.learnDiscoverySidebar a {
-  width: 100%;
-  padding: 12px 0;
-  border: 0;
-  border-bottom: 1px solid rgba(65, 49, 33, 0.12);
-  background: transparent;
-
-  display: flex;
-  justify-content: space-between;
-
-  color: #1b2633;
-  font-family: "Courier New", monospace;
-  font-size: 11px;
-  font-weight: 800;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.learnDiscoverySidebar .isActive {
-  color: #ef4b21;
-}
-
-.learnAdventureGrid {
-  display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: 180px 1fr;
   gap: 12px;
 }
 
-.learnAdventureCard {
-  position: relative;
-  min-height: 245px;
-  overflow: hidden;
-  border-radius: 14px;
-  background: #0a1926;
-  color: #ffffff;
-  text-decoration: none;
+.learnShelfHeader > div:first-child > p {
+  margin: 0;
+  font-family: "DK Woolwich", Impact, sans-serif;
+  font-size: 18px;
+  line-height: 1;
+  text-transform: uppercase;
 }
 
-.learnAdventureCard img {
+.learnShelfSearch {
+  position: relative;
+  margin-top: 11px;
+}
+
+.learnShelfSearch input {
+  width: 100%;
+  height: 34px;
+  padding: 0 34px 0 10px;
+  border: 1px solid #cdb995;
+  border-radius: 7px;
+  background: #ffffff;
+  font-family: "Courier New", monospace;
+  font-size: 8px;
+  box-sizing: border-box;
+}
+
+.learnShelfSearch span {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+}
+
+.learnShelfCards {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.learnShelfCard {
+  position: relative;
+  height: 190px;
+  overflow: hidden;
+  border: 2px solid rgba(43, 37, 28, 0.38);
+  border-radius: 7px;
+  background: #071521;
+  color: #ffffff;
+  text-decoration: none;
+  box-shadow: 0 4px 10px rgba(30, 20, 10, 0.25);
+}
+
+.learnShelfCard img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.learnAdventureShade {
+.learnShelfCard > div {
   position: absolute;
   inset: 0;
   background:
     linear-gradient(
       180deg,
-      rgba(0, 0, 0, 0.03) 45%,
-      rgba(0, 0, 0, 0.75) 100%
+      rgba(0, 0, 0, 0.02) 42%,
+      rgba(0, 0, 0, 0.72) 100%
     );
 }
 
-.learnAdventureTitle {
+.learnShelfCard strong {
   position: absolute;
   z-index: 2;
-  right: 10px;
-  bottom: 12px;
-  left: 10px;
-
+  right: 5px;
+  bottom: 8px;
+  left: 5px;
   font-family: "DK Woolwich", Impact, sans-serif;
-  font-size: 24px;
-  line-height: 0.95;
+  font-size: 15px;
+  line-height: 0.92;
   text-align: center;
   text-transform: uppercase;
 }
 
+.learnShelfBottom {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 12px;
+}
+
+.learnShelfLinks {
+  padding-right: 11px;
+  border-right: 1px solid rgba(52, 43, 32, 0.17);
+}
+
+.learnShelfLinks button,
+.learnShelfLinks a {
+  width: 100%;
+  padding: 8px 0;
+  border: 0;
+  border-bottom: 1px solid rgba(52, 43, 32, 0.1);
+  background: transparent;
+  display: grid;
+  grid-template-columns: 17px 1fr auto;
+  align-items: center;
+  gap: 7px;
+  color: #1d2935;
+  font-family: "Courier New", monospace;
+  font-size: 8px;
+  font-weight: 800;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.learnShelfLinks b {
+  color: #ef4b21;
+}
+
+.learnShelfLinks .isActive {
+  color: #ef4b21;
+}
+
 .learnCategoryRail {
-  margin-top: 18px;
   display: grid;
   grid-template-columns: repeat(9, minmax(0, 1fr));
 }
 
 .learnCategoryRail button {
   min-width: 0;
-  padding: 12px 7px;
+  padding: 5px 3px;
   border: 0;
-  border-right: 1px solid rgba(45, 38, 29, 0.16);
+  border-right: 1px solid rgba(48, 40, 30, 0.15);
   background: transparent;
   cursor: pointer;
 }
@@ -370,13 +389,14 @@
 }
 
 .learnCategoryRail span {
-  font-size: 25px;
+  font-size: 19px;
 }
 
 .learnCategoryRail strong {
-  margin-top: 6px;
+  margin-top: 3px;
   font-family: "Courier New", monospace;
-  font-size: 9px;
+  font-size: 6px;
+  line-height: 1.15;
 }
 
 .learnCategoryRail .isActive {
@@ -384,217 +404,308 @@
 }
 
 /* =========================================
-   WOW
+   WOW SECTION
 ========================================= */
 
 .learnWowSection {
   position: relative;
-  min-height: 440px;
-  margin-top: 14px;
-  border-radius: 0;
+  min-height: 360px;
+  margin-top: 10px;
+  overflow: hidden;
 }
 
-.learnWowBackground {
+.learnWowMedia {
   position: absolute;
   inset: 0;
 }
 
-.learnWowBackground .learnVisualPlaceholder {
+.learnWowMedia .learnMarketingPlaceholder {
   border: 0;
-  border-radius: 0;
 }
 
-.learnWowOverlay {
+.learnWowShade {
   position: absolute;
   inset: 0;
   background:
     linear-gradient(
       90deg,
-      rgba(2, 14, 21, 0.85) 0%,
-      rgba(2, 14, 21, 0.45) 45%,
-      rgba(2, 14, 21, 0.06) 100%
+      rgba(2, 10, 14, 0.86) 0%,
+      rgba(2, 10, 14, 0.55) 35%,
+      rgba(2, 10, 14, 0.06) 78%
     );
 }
 
 .learnWowCopy {
   position: relative;
   z-index: 2;
-  max-width: 470px;
-  padding: 55px 45px;
+  width: 390px;
+  padding: 40px 0 35px 32px;
   color: #ffffff;
 }
 
 .learnWowCopy > p:first-child {
   margin: 0;
   font-family: "DK Woolwich", Impact, sans-serif;
-  font-size: 35px;
+  font-size: 31px;
+  text-transform: uppercase;
 }
 
 .learnWowCopy h2 {
   margin: 0;
   font-family: "DK Woolwich", Impact, sans-serif;
-  font-size: 58px;
-  line-height: 0.9;
+  font-size: 43px;
+  line-height: 0.88;
   text-transform: uppercase;
 }
 
 .learnWowCopy h2 span {
   display: block;
-  font-size: 82px;
+  font-size: 61px;
 }
 
-.learnWowDescription {
+.learnWowStars {
+  margin-top: 7px;
+  color: #ffd125;
+  font-size: 21px;
+}
+
+.learnWowBody {
+  margin: 10px 0 0;
   font-family: "Courier New", monospace;
-  font-size: 14px;
-  font-weight: 700;
+  font-size: 10px;
   line-height: 1.5;
 }
 
-.learnWowPrompt {
+.learnWowBody strong {
+  color: #ffd125;
+}
+
+.learnWowDirection {
   position: absolute;
   z-index: 2;
-  right: 40px;
-  bottom: 35px;
-  width: 160px;
-
-  color: #ffd326;
+  right: 34px;
+  bottom: 30px;
+  color: #ffd125;
   font-family: "DK Woolwich", Impact, sans-serif;
-  font-size: 27px;
+  font-size: 22px;
+  line-height: 0.95;
   text-align: center;
   text-transform: uppercase;
   transform: rotate(4deg);
 }
 
-.learnWowPrompt span {
+.learnWowDirection span {
   display: block;
-  font-size: 48px;
+  margin-top: 7px;
+  font-size: 39px;
 }
 
 /* =========================================
-   METHOD
+   TREE EXPLAINER
 ========================================= */
 
-.learnMethodSection {
-  margin-top: 14px;
-  padding: 35px;
+.learnTreePanel {
+  margin-top: 10px;
+  padding: 19px;
   display: grid;
-  grid-template-columns: 340px 1fr;
-  gap: 25px;
-}
-
-.learnMethodIntro > p {
-  margin: 0;
-  font-family: "DK Woolwich", Impact, sans-serif;
-  font-size: 25px;
-  color: #ef4b21;
-}
-
-.learnMethodIntro h2 {
-  margin: 8px 0 0;
-  font-family: "Courier New", monospace;
-  font-size: 18px;
-  line-height: 1.35;
-}
-
-.learnMethodIntro > span {
-  display: block;
-  margin-top: 16px;
-  font-family: "Courier New", monospace;
-  font-size: 12px;
-  line-height: 1.55;
-}
-
-.learnMethodSteps {
-  margin-top: 24px;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 250px 1fr 125px;
   gap: 15px;
 }
 
-.learnMethodSteps div {
-  padding: 15px;
-  border: 1px solid #d9c7aa;
-  border-radius: 16px;
-  text-align: center;
-}
-
-.learnMethodSteps span {
-  width: 28px;
-  height: 28px;
-  margin: 0 auto 7px;
-  border-radius: 50%;
-
-  display: grid;
-  place-items: center;
-
-  background: #ef4b21;
-  color: #ffffff;
-  font-family: "Courier New", monospace;
-  font-weight: 800;
-}
-
-.learnMethodSteps strong {
-  display: block;
+.learnOrangeEyebrow {
+  margin: 0;
+  color: #ef4b21;
   font-family: "DK Woolwich", Impact, sans-serif;
-  font-size: 22px;
+  font-size: 20px;
+  line-height: 1;
   text-transform: uppercase;
 }
 
-.learnMethodSteps p {
-  margin: 7px 0 0;
+.learnTreeIntro h2 {
+  margin: 13px 0 0;
   font-family: "Courier New", monospace;
-  font-size: 9px;
-  line-height: 1.4;
+  font-size: 12px;
+  line-height: 1.45;
 }
 
-.learnMethodVisual {
-  min-height: 500px;
-  border-radius: 22px;
+.learnTreeIntro > p:not(.learnOrangeEyebrow) {
+  font-family: "Courier New", monospace;
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+.learnJourney {
+  margin-top: 22px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 3px;
+}
+
+.learnJourney div {
+  text-align: center;
+}
+
+.learnJourney div span,
+.learnJourney div strong {
+  display: block;
+}
+
+.learnJourney div span {
+  font-size: 24px;
+}
+
+.learnJourney div strong {
+  margin-top: 4px;
+  font-family: "DK Woolwich", Impact, sans-serif;
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+.learnJourney > b {
+  margin-top: 12px;
+  color: #ef4b21;
+}
+
+.learnTreeHeading {
+  text-align: center;
+}
+
+.learnTreeHeading h2 {
+  margin: 0;
+  font-family: "DK Woolwich", Impact, sans-serif;
+  font-size: 21px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.learnTreeHeading p {
+  margin: 2px 0 9px;
+  font-family: "Courier New", monospace;
+  font-size: 7px;
+}
+
+.learnTreeGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 5px;
+}
+
+.learnTreeGrid article {
+  overflow: hidden;
+  border: 2px solid #675038;
+  border-radius: 5px;
+  background: #071521;
+}
+
+.learnTreeCardMedia {
+  height: 105px;
+}
+
+.learnTreeCardMedia .learnMarketingPlaceholder {
+  padding: 5px;
+  border: 0;
+}
+
+.learnTreeCardMedia .learnMarketingPlaceholder > strong {
+  padding: 4px;
+  font-size: 5px;
+}
+
+.learnTreeCardMedia .learnMarketingPlaceholder > span,
+.learnTreeCardMedia .learnMarketingPlaceholder p {
+  font-size: 5px;
+}
+
+.learnTreeCardLabel {
+  min-height: 27px;
+  padding: 4px;
+  display: flex;
+  gap: 4px;
+  align-items: flex-start;
+  background: #1d1b17;
+  color: #ffffff;
+}
+
+.learnTreeCardLabel span {
+  flex: 0 0 auto;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #f1a700;
+  color: #111111;
+  font-family: "Courier New", monospace;
+  font-size: 6px;
+  font-weight: 900;
+}
+
+.learnTreeCardLabel strong {
+  font-family: "DK Woolwich", Impact, sans-serif;
+  font-size: 8px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.learnTreeNotes {
+  padding-top: 48px;
+}
+
+.learnTreeNotes p {
+  margin: 0 0 22px;
+  color: #563b26;
+  font-family: "Courier New", monospace;
+  font-size: 7px;
+  font-weight: 800;
+  line-height: 1.3;
+  transform: rotate(-2deg);
 }
 
 /* =========================================
    QUESTIONS
 ========================================= */
 
-.learnQuestionsSection {
-  margin-top: 14px;
-  padding: 35px;
+.learnQuestionsPanel {
+  margin-top: 10px;
+  padding: 18px;
 }
 
-.learnCenteredHeading {
-  display: grid;
-  grid-template-columns: auto auto auto;
+.learnCenteredTitle {
+  display: flex;
   align-items: center;
   justify-content: center;
-  gap: 14px;
+  gap: 13px;
 }
 
-.learnCenteredHeading h2 {
+.learnCenteredTitle h2 {
   margin: 0;
   font-family: "DK Woolwich", Impact, sans-serif;
-  font-size: 36px;
+  font-size: 24px;
   font-weight: 400;
+  line-height: 1;
   text-align: center;
   text-transform: uppercase;
 }
 
-.learnCenteredHeading > span {
+.learnCenteredTitle > span {
   color: #ef4b21;
-  font-size: 22px;
 }
 
 .learnQuestionGrid {
-  margin-top: 25px;
+  margin-top: 14px;
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 15px;
+  gap: 9px;
 }
 
 .learnQuestionCard {
   position: relative;
-  min-height: 320px;
+  height: 245px;
   overflow: hidden;
-  border-radius: 17px;
+  border: 2px solid rgba(64, 47, 28, 0.3);
+  border-radius: 9px;
+  background: #071521;
   color: #ffffff;
   text-decoration: none;
 }
@@ -605,245 +716,279 @@
   object-fit: cover;
 }
 
-.learnQuestionShade {
+.learnQuestionCard > div {
   position: absolute;
   inset: 0;
   background:
     linear-gradient(
       180deg,
-      rgba(0, 0, 0, 0.02) 45%,
-      rgba(0, 0, 0, 0.78) 100%
+      rgba(0, 0, 0, 0.08) 35%,
+      rgba(0, 0, 0, 0.75) 100%
     );
 }
 
 .learnQuestionCard strong {
   position: absolute;
   z-index: 2;
-  right: 15px;
-  bottom: 17px;
-  left: 15px;
-
+  top: 11px;
+  right: 8px;
+  left: 8px;
   font-family: "DK Woolwich", Impact, sans-serif;
-  font-size: 29px;
-  line-height: 0.95;
+  font-size: 18px;
+  line-height: 0.92;
   text-align: center;
   text-transform: uppercase;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.65);
 }
 
-.learnExploreButton {
+.learnQuestionsButton {
   width: min(420px, 100%);
-  margin: 28px auto 0;
+  min-height: 38px;
+  margin: 13px auto 0;
   display: flex;
+  border-radius: 6px;
+  font-size: 16px;
 }
 
 /* =========================================
    BENEFITS
 ========================================= */
 
-.learnBenefitsSection {
+.learnBenefitsPanel {
+  margin-top: 10px;
+  padding: 18px;
+}
+
+.learnBenefitsLayout {
   margin-top: 14px;
-  padding: 35px;
+  display: grid;
+  grid-template-columns: 1fr 255px;
+  gap: 12px;
 }
 
 .learnBenefitGrid {
-  margin-top: 25px;
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr)) 260px;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
 }
 
-.learnBenefitItem {
+.learnBenefitGrid article {
   min-width: 0;
-  padding: 10px 16px;
-  border-right: 1px solid rgba(45, 38, 29, 0.16);
+  padding: 4px 11px;
+  border-right: 1px solid rgba(50, 41, 31, 0.15);
   text-align: center;
 }
 
-.learnBenefitItem > span {
+.learnBenefitGrid article:last-child {
+  border-right: 0;
+}
+
+.learnBenefitGrid article > span {
   display: block;
-  min-height: 42px;
+  min-height: 36px;
   font-family: "DK Woolwich", Impact, sans-serif;
-  font-size: 34px;
+  font-size: 28px;
 }
 
-.learnBenefitItem h3 {
-  margin: 8px 0 0;
-  font-family: "Courier New", monospace;
-  font-size: 12px;
-}
-
-.learnBenefitItem p {
-  margin: 9px 0 0;
+.learnBenefitGrid h3 {
+  margin: 6px 0 0;
   font-family: "Courier New", monospace;
   font-size: 9px;
-  line-height: 1.5;
+}
+
+.learnBenefitGrid p {
+  margin: 7px 0 0;
+  font-family: "Courier New", monospace;
+  font-size: 7px;
+  line-height: 1.4;
 }
 
 .learnGrowingCard {
-  padding: 15px;
+  padding: 12px;
+  border: 1px solid #d2bd99;
+  border-radius: 12px;
   display: grid;
-  grid-template-columns: 1fr 100px;
-  gap: 10px;
+  grid-template-columns: 1fr 105px;
+  gap: 8px;
 }
 
 .learnGrowingCard p {
   margin: 0;
   font-family: "DK Woolwich", Impact, sans-serif;
-  font-size: 22px;
+  font-size: 20px;
+  text-transform: uppercase;
 }
 
 .learnGrowingCard h3 {
   margin: 5px 0;
   font-family: "Courier New", monospace;
-  font-size: 12px;
+  font-size: 9px;
 }
 
 .learnGrowingCard div > span {
   font-family: "Courier New", monospace;
-  font-size: 9px;
+  font-size: 7px;
   line-height: 1.4;
 }
 
-.learnGrowingCard .learnVisualPlaceholder {
-  min-height: 150px;
-  padding: 8px;
+.learnGrowingMedia {
+  height: 115px;
 }
 
-.learnGrowingCard .learnVisualPlaceholder > span {
-  font-size: 7px;
+.learnGrowingMedia .learnMarketingPlaceholder {
+  padding: 5px;
 }
 
-.learnGrowingCard .learnVisualPlaceholder p {
-  font-size: 7px;
+.learnGrowingMedia .learnMarketingPlaceholder > strong,
+.learnGrowingMedia .learnMarketingPlaceholder > span,
+.learnGrowingMedia .learnMarketingPlaceholder p {
+  font-size: 5px;
 }
 
 /* =========================================
    FAQ
 ========================================= */
 
-.learnFaqSection {
-  margin-top: 14px;
-  padding: 30px 35px;
+.learnFaqPanel {
+  margin-top: 10px;
+  padding: 17px 18px 0;
   display: grid;
   grid-template-columns: 1fr 220px;
   align-items: end;
 }
 
-.learnFaqContent > p {
-  margin: 0 0 20px;
+.learnFaqContent h2 {
+  margin: 0 0 12px;
   font-family: "DK Woolwich", Impact, sans-serif;
-  font-size: 30px;
+  font-size: 23px;
+  font-weight: 400;
+  text-transform: uppercase;
 }
 
 .learnFaqGrid {
+  padding-bottom: 17px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
 }
 
-.learnFaqItem {
+.learnFaqGrid article {
   overflow: hidden;
-  border: 1px solid #d8c5a8;
-  border-radius: 12px;
+  border: 1px solid #d1bc97;
+  border-radius: 6px;
 }
 
-.learnFaqItem button {
+.learnFaqGrid button {
   width: 100%;
-  padding: 13px;
+  padding: 8px;
   border: 0;
   background: transparent;
-
   display: flex;
   justify-content: space-between;
-  gap: 12px;
-
+  gap: 7px;
   font-family: "Courier New", monospace;
-  font-size: 9px;
+  font-size: 7px;
   font-weight: 800;
   text-align: left;
   cursor: pointer;
 }
 
-.learnFaqItem p {
+.learnFaqGrid article p {
   margin: 0;
-  padding: 0 13px 13px;
+  padding: 0 8px 8px;
   font-family: "Courier New", monospace;
-  font-size: 9px;
+  font-size: 7px;
   line-height: 1.45;
 }
 
 .learnFaqLuke {
-  min-height: 230px;
-  border-radius: 20px;
+  height: 170px;
+}
+
+.learnFaqLuke .learnMarketingPlaceholder {
+  padding: 8px;
+  border-bottom: 0;
+}
+
+.learnFaqLuke .learnMarketingPlaceholder > strong,
+.learnFaqLuke .learnMarketingPlaceholder > span,
+.learnFaqLuke .learnMarketingPlaceholder p {
+  font-size: 6px;
 }
 
 /* =========================================
    FINAL CTA
 ========================================= */
 
-.learnFinalCta {
+.learnFinalPanel {
   position: relative;
-  min-height: 430px;
-  margin-top: 14px;
+  min-height: 280px;
+  margin-top: 10px;
+  overflow: hidden;
 }
 
-.learnFinalBackground {
+.learnFinalMedia {
   position: absolute;
   inset: 0;
 }
 
-.learnFinalBackground .learnVisualPlaceholder {
+.learnFinalMedia .learnMarketingPlaceholder {
   border: 0;
-  border-radius: 0;
 }
 
-.learnFinalOverlay {
+.learnFinalShade {
   position: absolute;
   inset: 0;
-  background: rgba(2, 15, 24, 0.55);
+  background:
+    linear-gradient(
+      180deg,
+      rgba(3, 14, 20, 0.24),
+      rgba(3, 14, 20, 0.7)
+    );
 }
 
-.learnFinalContent {
+.learnFinalCopy {
   position: relative;
   z-index: 2;
-  max-width: 920px;
+  max-width: 850px;
   margin: 0 auto;
-  padding: 75px 30px;
+  padding: 48px 20px 30px;
   color: #ffffff;
   text-align: center;
 }
 
-.learnFinalContent > p {
+.learnFinalCopy > p {
   margin: 0;
   font-family: "Courier New", monospace;
-  font-size: 17px;
+  font-size: 13px;
   font-weight: 800;
   text-transform: uppercase;
 }
 
-.learnFinalContent > p em {
-  color: #ffbd2f;
+.learnFinalCopy > p strong {
+  color: #ffd126;
 }
 
-.learnFinalContent h2 {
-  margin: 8px 0 25px;
+.learnFinalCopy h2 {
+  margin: 6px 0 18px;
   font-family: "DK Woolwich", Impact, sans-serif;
-  font-size: clamp(52px, 6vw, 84px);
+  font-size: clamp(42px, 5vw, 66px);
+  font-weight: 400;
   line-height: 0.9;
   text-transform: uppercase;
 }
 
-.learnFinalContent > div {
+.learnFinalCopy > div {
   display: flex;
-  justify-content: center;
   flex-wrap: wrap;
-  gap: 12px;
+  justify-content: center;
+  gap: 10px;
 }
 
-.learnFinalContent > span {
+.learnFinalCopy > span {
   display: block;
-  margin-top: 15px;
+  margin-top: 10px;
   font-family: "Courier New", monospace;
-  font-size: 10px;
+  font-size: 8px;
 }
 
 /* =========================================
@@ -851,30 +996,34 @@
 ========================================= */
 
 @media (max-width: 1100px) {
-  .learnAdventureGrid {
+  .learnShelfCards {
     grid-template-columns: repeat(3, 1fr);
   }
 
-  .learnCategoryRail {
-    grid-template-columns: repeat(5, 1fr);
-    gap: 15px 0;
+  .learnShelfCard {
+    height: 220px;
   }
 
-  .learnMethodSection {
+  .learnTreePanel {
     grid-template-columns: 1fr;
   }
 
-  .learnQuestionGrid {
-    grid-template-columns: repeat(3, 1fr);
+  .learnTreeNotes {
+    display: none;
+  }
+
+  .learnBenefitsLayout {
+    grid-template-columns: 1fr;
   }
 
   .learnBenefitGrid {
     grid-template-columns: repeat(3, 1fr);
-    gap: 25px 0;
+    gap: 20px 0;
   }
 
   .learnGrowingCard {
-    grid-column: 1 / -1;
+    max-width: 500px;
+    margin: 0 auto;
   }
 }
 
@@ -883,52 +1032,83 @@
 ========================================= */
 
 @media (max-width: 700px) {
-  .learnMain {
+  .learnMarketingMain {
     width: calc(100% - 20px);
     padding-top: 95px;
   }
 
-  .learnHeroCopy {
-    padding: 40px 22px;
+  .learnHero {
+    min-height: 650px;
   }
 
-  .learnEyebrow {
-    font-size: 42px;
+  .learnHeroOverlay {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(255, 249, 235, 0.99) 0%,
+        rgba(255, 249, 235, 0.92) 55%,
+        rgba(255, 249, 235, 0.12) 100%
+      );
+  }
+
+  .learnHeroCopy {
+    width: auto;
+    max-width: none;
+    padding: 30px 20px;
+  }
+
+  .learnHeroBrand {
+    font-size: 46px;
   }
 
   .learnHero h1 {
-    font-size: 53px;
+    font-size: 38px;
   }
 
-  .learnDiscoveryLayout {
+  .learnShelfHeader,
+  .learnShelfBottom {
     grid-template-columns: 1fr;
   }
 
-  .learnAdventureGrid {
+  .learnShelfCards {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .learnShelfCard {
+    height: 230px;
+  }
+
+  .learnShelfLinks {
+    border-right: 0;
   }
 
   .learnCategoryRail {
     grid-template-columns: repeat(3, 1fr);
+    gap: 12px 0;
+  }
+
+  .learnWowSection {
+    min-height: 480px;
   }
 
   .learnWowCopy {
-    padding: 40px 22px;
+    width: auto;
+    padding: 35px 20px;
   }
 
-  .learnWowPrompt {
+  .learnWowDirection {
     display: none;
   }
 
-  .learnMethodSection,
-  .learnQuestionsSection,
-  .learnBenefitsSection,
-  .learnFaqSection {
-    padding: 28px 20px;
+  .learnTreePanel,
+  .learnQuestionsPanel,
+  .learnBenefitsPanel,
+  .learnFaqPanel {
+    padding: 18px 12px;
   }
 
-  .learnMethodSteps {
-    grid-template-columns: 1fr;
+  .learnTreeGrid {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .learnQuestionGrid {
@@ -936,18 +1116,20 @@
   }
 
   .learnQuestionCard {
-    min-height: 260px;
+    height: 235px;
   }
 
-  .learnCenteredHeading h2 {
-    font-size: 27px;
+  .learnQuestionCard:last-child {
+    grid-column: 1 / -1;
+    width: 50%;
+    justify-self: center;
   }
 
   .learnBenefitGrid {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .learnFaqSection {
+  .learnFaqPanel {
     grid-template-columns: 1fr;
   }
 
@@ -956,14 +1138,18 @@
   }
 
   .learnFaqLuke {
-    margin-top: 20px;
+    height: 210px;
   }
 
-  .learnFinalContent {
-    padding: 60px 20px;
+  .learnFinalPanel {
+    min-height: 390px;
   }
 
-  .learnFinalContent h2 {
-    font-size: 50px;
+  .learnFinalCopy {
+    padding: 65px 18px 30px;
+  }
+
+  .learnFinalCopy h2 {
+    font-size: 46px;
   }
 }
