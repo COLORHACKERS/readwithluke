@@ -642,15 +642,7 @@ export default function LearnWithLukePage() {
           <div className="learnFinalShade" />
 
           <div className="learnFinalCopy">
-            <p>
-              Your Child Already Asks
-              <strong> Big Questions.</strong>
-            </p>
-
-            <h2>
-              Give Them a Place to Chase Every One.
-            </h2>
-
+           
             <div>
               <Link href="/membership" className="learnOrangeButton">
                 Start the 7-Day Free Trial
