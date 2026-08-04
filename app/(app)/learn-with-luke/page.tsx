@@ -318,23 +318,44 @@ export default function LearnWithLukePage() {
               </Link>
             </div>
 
-            <div className="learnCarouselWindow">
-              <div className="learnCarouselTrack">
-                {shelfItems.map((item) => (
-                  <Link
-                    key={item.id}
-                    href={`/learn/${item.slug}`}
-                    className="learnCarouselCard"
-                    aria-label={`Explore ${item.title}`}
-                  >
-                    <img
-                      src={getLearnCover(item)}
-                      alt={item.title}
-                    />
-                  </Link>
-                ))}
-              </div>
-            </div>
+         <div className="learnCarouselWindow">
+  <div className="learnCarouselTrack">
+    <div className="learnCarouselGroup">
+      {shelfItems.map((item) => (
+        <Link
+          key={`first-${item.id}`}
+          href={`/learn/${item.slug}`}
+          className="learnCarouselCard"
+          aria-label={`Explore ${item.title}`}
+        >
+          <img
+            src={getLearnCover(item)}
+            alt={item.title}
+          />
+        </Link>
+      ))}
+    </div>
+
+    <div
+      className="learnCarouselGroup"
+      aria-hidden="true"
+    >
+      {shelfItems.map((item) => (
+        <Link
+          key={`second-${item.id}`}
+          href={`/learn/${item.slug}`}
+          className="learnCarouselCard"
+          tabIndex={-1}
+        >
+          <img
+            src={getLearnCover(item)}
+            alt=""
+          />
+        </Link>
+      ))}
+    </div>
+  </div>
+</div>
           </div>
         </section>
 
