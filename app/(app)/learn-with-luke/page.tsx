@@ -26,74 +26,62 @@ type VisualProps = {
   className?: string;
 };
 
-const categories = [
-  { label: "Space & Sky", icon: "🪐" },
-  { label: "Wild Earth", icon: "🌿" },
-  { label: "Ocean Worlds", icon: "🌊" },
-  { label: "Animals", icon: "🐾" },
-  { label: "The Human Body", icon: "🫀" },
-  { label: "How Things Work", icon: "⚙️" },
-  { label: "Everyday Mysteries", icon: "❓" },
-  { label: "Tiny Science", icon: "🔬" },
-  { label: "Big Questions", icon: "💡" },
-];
-
 const treeDiscoveries = [
   {
     number: "1",
     title: "Roots Hold Fast",
-    image: "",
+    image: "/images/tree-roots.jpg",
     filename: "tree-roots.jpg",
     alt: "Close cinematic view of enormous tree roots gripping dark forest soil, with smaller roots spreading outward underground.",
   },
   {
     number: "2",
     title: "The Trunk Is a Highway",
-    image: "",
+    image: "/images/tree-trunk-water.jpg",
     filename: "tree-trunk-water.jpg",
     alt: "Cross-section of a giant tree trunk showing water traveling upward through the inner wood in glowing blue channels.",
   },
   {
     number: "3",
     title: "Inside: Sapwood & Heartwood",
-    image: "",
+    image: "/images/tree-rings.jpg",
     filename: "tree-rings.jpg",
-    alt: "Detailed cross-section of tree rings showing outer bark, sapwood and darker heartwood with clear visual labels.",
+    alt: "Detailed cross-section of tree rings showing outer bark, sapwood and darker heartwood.",
   },
   {
     number: "4",
     title: "Branches Spread Out",
-    image: "",
+    image: "/images/tree-branches.jpg",
     filename: "tree-branches.jpg",
-    alt: "Looking upward through the huge branches of an ancient tree as they spread toward sunlight in the forest canopy.",
+    alt: "Looking upward through the huge branches of an ancient tree as they spread toward sunlight.",
   },
   {
     number: "5",
     title: "Twigs Grow Buds",
-    image: "",
+    image: "/images/tree-buds.jpg",
     filename: "tree-buds.jpg",
-    alt: "Close-up of small new buds growing from twigs on a giant tree, with warm sunlight and a softly blurred forest.",
+    alt: "Close-up of new buds growing from twigs with warm sunlight in the forest.",
   },
   {
     number: "6",
     title: "Leaves Make Food",
-    image: "",
+    image: "/images/tree-leaves-food.jpg",
     filename: "tree-leaves-food.jpg",
-    alt: "Bright green leaves receiving sunlight, with a simple magical visual showing leaves making food for the tree.",
+    alt: "Bright green leaves receiving sunlight and making food for the tree.",
   },
   {
     number: "7",
     title: "The Crown Reaches High",
-    image: "",
+    image: "/images/tree-crown.jpg",
     filename: "tree-crown.jpg",
-    alt: "The high crown of a giant tree reaching above the surrounding forest into bright sunlight and drifting clouds.",
+    alt: "The high crown of a giant tree reaching above the forest into bright sunlight.",
   },
   {
     number: "8",
     title: "All the Parts Work Together",
-    image: "",
+    image: "/images/tree-whole-system.jpg",
     filename: "tree-whole-system.jpg",
-    alt: "Full giant tree showing roots, trunk, branches and leaves connected as one complete living system.",
+    alt: "Full giant tree showing roots, trunk, branches and leaves working together.",
   },
 ];
 
@@ -192,6 +180,7 @@ function Visual({
     >
       <strong>IMAGE TO UPLOAD</strong>
       <span>{filename}</span>
+
       <p>
         <b>ALT:</b> {alt}
       </p>
@@ -209,7 +198,9 @@ function getLearnCover(item: LearnItem) {
 
 export default function LearnWithLukePage() {
   const [items, setItems] = useState<LearnItem[]>([]);
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [openFaq, setOpenFaq] = useState<number | null>(
+    null
+  );
 
   useEffect(() => {
     async function loadItems() {
@@ -217,11 +208,17 @@ export default function LearnWithLukePage() {
         .from("learn_items")
         .select("*")
         .eq("is_published", true)
-        .order("created_at", { ascending: false })
+        .order("created_at", {
+          ascending: false,
+        })
         .limit(18);
 
       if (error) {
-        console.error("Unable to load learning adventures:", error);
+        console.error(
+          "Unable to load learning adventures:",
+          error
+        );
+
         return;
       }
 
@@ -231,8 +228,7 @@ export default function LearnWithLukePage() {
     loadItems();
   }, []);
 
-
-  const shelfItems = filteredItems.slice(0, 10);
+  const shelfItems = items.slice(0, 10);
   const questionItems = items.slice(0, 5);
 
   return (
@@ -240,21 +236,23 @@ export default function LearnWithLukePage() {
       <Header />
 
       <main className="learnMarketingMain">
-        {/* TOP HERO + LIBRARY */}
+        {/* HERO AND 10-ITEM CAROUSEL */}
         <section className="learnTopPanel">
           <div className="learnHero">
             <div className="learnHeroMedia">
               <Visual
                 src="/images/learn-with-luke-hero.jpg"
                 filename="learn-with-luke-hero.jpg"
-                alt="Wide cinematic scene showing Luke on the right in a dramatic world combining snowy mountains, lightning, clouds, forest plants and distant discoveries. Leave open cream-colored space on the left for text."
+                alt="Wide cinematic scene showing Luke on the right in a dramatic world combining snowy mountains, lightning, clouds, forest plants and distant discoveries."
               />
             </div>
 
             <div className="learnHeroOverlay" />
 
             <div className="learnHeroCopy">
-              <p className="learnHeroBrand">Learn With Luke</p>
+              <p className="learnHeroBrand">
+                Learn With Luke
+              </p>
 
               <h1>
                 <span>Big Questions.</span>
@@ -263,18 +261,25 @@ export default function LearnWithLukePage() {
               </h1>
 
               <p className="learnHeroText">
-                A growing library of cinematic learning adventures
-                that helps curious kids ages 5–10 explore space,
-                animals, oceans, weather, forests, the human body,
+                A growing library of cinematic learning
+                adventures that helps curious kids ages
+                5–10 explore space, animals, oceans,
+                weather, forests, the human body,
                 everyday mysteries and more.
               </p>
 
               <div className="learnHeroActions">
-                <Link href="/learn" className="learnOrangeButton">
+                <Link
+                  href="/learn"
+                  className="learnOrangeButton"
+                >
                   Explore the Full Library
                 </Link>
 
-                <Link href="/membership" className="learnCreamButton">
+                <Link
+                  href="/membership"
+                  className="learnCreamButton"
+                >
                   Start 7-Day Free Trial
                 </Link>
               </div>
@@ -282,110 +287,64 @@ export default function LearnWithLukePage() {
               <div className="learnHeroMeta">
                 <span>🧒 Ages 5–10+</span>
                 <span>🎬 Cinematic Reading</span>
-                <span>🪙 Coins & Stickers</span>
-                <span>✨ New Adventures Added Regularly</span>
+                <span>🪙 Coins &amp; Stickers</span>
+                <span>
+                  ✨ New Adventures Added Regularly
+                </span>
               </div>
             </div>
           </div>
 
-      <div className="learnShelfPanel" id="adventures">
-  <div className="learnCarouselHeader">
-    <div>
-      <p>Choose Your Next Adventure</p>
-      <h2>Explore the latest Learn With Luke adventures.</h2>
-    </div>
+          <div
+            className="learnShelfPanel"
+            id="adventures"
+          >
+            <div className="learnCarouselHeader">
+              <div>
+                <p>Choose Your Next Adventure</p>
 
-    <Link href="/learn" className="learnCarouselViewAll">
-      View Full Library
-      <span aria-hidden="true">→</span>
-    </Link>
-  </div>
+                <h2>
+                  Explore the latest Learn With Luke
+                  adventures.
+                </h2>
+              </div>
 
-  <div className="learnCarouselWindow">
-    <div className="learnCarouselTrack">
-      {shelfItems.map((item) => (
-        <Link
-          key={item.id}
-          href={`/learn/${item.slug}`}
-          className="learnCarouselCard"
-          aria-label={`Explore ${item.title}`}
-        >
-          <img
-            src={getLearnCover(item)}
-            alt={item.title}
-          />
-        </Link>
-      ))}
-    </div>
-  </div>
-</div>
-              <div className="learnShelfCards">
+              <Link
+                href="/learn"
+                className="learnCarouselViewAll"
+              >
+                View Full Library
+                <span aria-hidden="true">→</span>
+              </Link>
+            </div>
+
+            <div className="learnCarouselWindow">
+              <div className="learnCarouselTrack">
                 {shelfItems.map((item) => (
                   <Link
                     key={item.id}
                     href={`/learn/${item.slug}`}
-                    className="learnShelfCard"
+                    className="learnCarouselCard"
+                    aria-label={`Explore ${item.title}`}
                   >
                     <img
                       src={getLearnCover(item)}
                       alt={item.title}
                     />
-
-                    <div />
-
-                    <strong>{item.title}</strong>
                   </Link>
                 ))}
               </div>
             </div>
+          </div>
+        </section>
 
-    <div className="learnShelfPanel" id="adventures">
-  <div className="learnCarouselHeader">
-    <div>
-      <p>Choose Your Next Adventure</p>
-
-      <h2>
-        Explore the latest Learn With Luke adventures.
-      </h2>
-    </div>
-
-    <Link
-      href="/learn"
-      className="learnCarouselViewAll"
-    >
-      View Full Library
-      <span aria-hidden="true">→</span>
-    </Link>
-  </div>
-
-  <div className="learnCarouselWindow">
-    <div className="learnCarouselTrack">
-      {shelfItems.map((item) => (
-        <Link
-          key={item.id}
-          href={`/learn/${item.slug}`}
-          className="learnCarouselCard"
-          aria-label={`Explore ${item.title}`}
-        >
-          <img
-            src={getLearnCover(item)}
-            alt={item.title}
-          />
-        </Link>
-      ))}
-    </div>
-  </div>
-</div>
-     </section>
-
-{/* WOW SECTION */}
-<section className="learnWowSection">
+        {/* WOW SECTION */}
         <section className="learnWowSection">
           <div className="learnWowMedia">
             <Visual
               src="/images/learn-wow-giant-tree.jpg"
               filename="learn-wow-giant-tree.jpg"
-              alt="A small child explorer standing at the base of an impossibly enormous ancient tree in a glowing cinematic forest, with giant roots, sunbeams and floating golden particles."
+              alt="A small child explorer standing at the base of an impossibly enormous ancient tree in a glowing cinematic forest."
             />
           </div>
 
@@ -399,7 +358,9 @@ export default function LearnWithLukePage() {
               <span>“Wow.”</span>
             </h2>
 
-            <div className="learnWowStars">✧　☆　✧</div>
+            <div className="learnWowStars">
+              ✧　☆　✧
+            </div>
 
             <p className="learnWowBody">
               A towering tree. A glowing sea.
@@ -408,8 +369,10 @@ export default function LearnWithLukePage() {
               <br />
               A volcano surrounded by rings.
               <br />
+
               <strong>
-                Learning begins when something feels too amazing to ignore.
+                Learning begins when something feels
+                too amazing to ignore.
               </strong>
             </p>
           </div>
@@ -432,12 +395,13 @@ export default function LearnWithLukePage() {
             </p>
 
             <h2>
-              A child first sees one enormous living giant.
+              A child first sees one enormous living
+              giant.
             </h2>
 
             <p>
-              Then Luke explores how every part works together
-              to keep the tree alive.
+              Then Luke explores how every part works
+              together to keep the tree alive.
             </p>
 
             <div className="learnJourney">
@@ -471,9 +435,13 @@ export default function LearnWithLukePage() {
 
           <div className="learnTreeContent">
             <div className="learnTreeHeading">
-              <h2>What Are the Parts of a Tree?</h2>
+              <h2>
+                What Are the Parts of a Tree?
+              </h2>
+
               <p>
-                Exploring a Living Giant From Roots to Crown
+                Exploring a Living Giant From Roots to
+                Crown
               </p>
             </div>
 
@@ -499,9 +467,13 @@ export default function LearnWithLukePage() {
 
           <aside className="learnTreeNotes">
             <p>← One Focused Question</p>
-            <p>← Connected Visual Discoveries</p>
+            <p>
+              ← Connected Visual Discoveries
+            </p>
             <p>☆ Short Explanations</p>
-            <p>← A Clear Final Understanding</p>
+            <p>
+              ← A Clear Final Understanding
+            </p>
           </aside>
         </section>
 
@@ -509,7 +481,11 @@ export default function LearnWithLukePage() {
         <section className="learnQuestionsPanel">
           <div className="learnCenteredTitle">
             <span>✦</span>
-            <h2>The Questions Kids Already Want Answered</h2>
+
+            <h2>
+              The Questions Kids Already Want Answered
+            </h2>
+
             <span>✦</span>
           </div>
 
@@ -532,7 +508,10 @@ export default function LearnWithLukePage() {
             ))}
           </div>
 
-          <Link href="/learn" className="learnQuestionsButton">
+          <Link
+            href="/learn"
+            className="learnQuestionsButton"
+          >
             Explore These and Hundreds More!
           </Link>
         </section>
@@ -541,7 +520,11 @@ export default function LearnWithLukePage() {
         <section className="learnBenefitsPanel">
           <div className="learnCenteredTitle">
             <span>🌿</span>
-            <h2>Built for Curious Kids. Loved by Parents.</h2>
+
+            <h2>
+              Built for Curious Kids. Loved by Parents.
+            </h2>
+
             <span>🌿</span>
           </div>
 
@@ -559,17 +542,22 @@ export default function LearnWithLukePage() {
             <article className="learnGrowingCard">
               <div>
                 <p>Always Growing</p>
-                <h3>New Adventures Added Regularly</h3>
+
+                <h3>
+                  New Adventures Added Regularly
+                </h3>
+
                 <span>
-                  There is always something new to explore.
+                  There is always something new to
+                  explore.
                 </span>
               </div>
 
               <div className="learnGrowingMedia">
                 <Visual
-                  src=""
+                  src="/images/learn-always-growing.png"
                   filename="learn-always-growing.png"
-                  alt="Three colorful Learn With Luke adventure covers leaning together with Luke peeking up from the corner."
+                  alt="Three colorful Learn With Luke adventure covers leaning together."
                 />
               </div>
             </article>
@@ -579,7 +567,9 @@ export default function LearnWithLukePage() {
         {/* FAQ */}
         <section className="learnFaqPanel">
           <div className="learnFaqContent">
-            <h2>Questions? We’ve Got Answers.</h2>
+            <h2>
+              Questions? We’ve Got Answers.
+            </h2>
 
             <div className="learnFaqGrid">
               {faqItems.map((item, index) => {
@@ -590,7 +580,9 @@ export default function LearnWithLukePage() {
                     <button
                       type="button"
                       onClick={() =>
-                        setOpenFaq(isOpen ? null : index)
+                        setOpenFaq(
+                          isOpen ? null : index
+                        )
                       }
                       aria-expanded={isOpen}
                     >
@@ -598,7 +590,9 @@ export default function LearnWithLukePage() {
                       <b>{isOpen ? "−" : "⌄"}</b>
                     </button>
 
-                    {isOpen && <p>{item.answer}</p>}
+                    {isOpen && (
+                      <p>{item.answer}</p>
+                    )}
                   </article>
                 );
               })}
@@ -607,9 +601,9 @@ export default function LearnWithLukePage() {
 
           <div className="learnFaqLuke">
             <Visual
-              src=""
+              src="/images/learn-faq-luke.png"
               filename="learn-faq-luke.png"
-              alt="Luke smiling while kneeling and holding a large magnifying glass, looking toward the FAQ questions."
+              alt="Luke smiling while holding a large magnifying glass."
             />
           </div>
         </section>
@@ -620,25 +614,30 @@ export default function LearnWithLukePage() {
             <Visual
               src="/images/learn-final-universe.jpg"
               filename="learn-final-universe.jpg"
-              alt="Epic cinematic scene showing Luke from behind on a cliff looking across planets, a rocket, ocean waves, mountains, forests, animals and scientific discoveries."
+              alt="Epic cinematic scene showing Luke looking across planets, mountains, forests, oceans and scientific discoveries."
             />
           </div>
 
-          <div className="learnFinalShade" />
-
           <div className="learnFinalCopy">
-           
             <div>
-              <Link href="/membership" className="learnOrangeButton">
+              <Link
+                href="/membership"
+                className="learnOrangeButton"
+              >
                 Start the 7-Day Free Trial
               </Link>
 
-              <Link href="/learn" className="learnCreamButton">
+              <Link
+                href="/learn"
+                className="learnCreamButton"
+              >
                 Explore the Library
               </Link>
             </div>
 
-            <span>Explore first. Cancel anytime.</span>
+            <span>
+              Explore first. Cancel anytime.
+            </span>
           </div>
         </section>
       </main>
