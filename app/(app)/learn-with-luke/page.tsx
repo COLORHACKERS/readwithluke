@@ -298,8 +298,8 @@ export default function LearnWithLukePage() {
               </div>
 
               <div className="learnHeroMeta">
-                <span>🧒 Ages 5–10</span>
-                <span>🎬 Cinematic Visual Lessons</span>
+                <span>🧒 Ages 5–10+</span>
+                <span>🎬 Cinematic Reading</span>
                 <span>🪙 Coins & Stickers</span>
                 <span>✨ New Adventures Added Regularly</span>
               </div>
