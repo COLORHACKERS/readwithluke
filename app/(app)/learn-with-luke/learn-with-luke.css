@@ -935,14 +935,7 @@
 }
 
 .learnFinalShade {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(
-      180deg,
-      rgba(3, 14, 20, 0.24),
-      rgba(3, 14, 20, 0.7)
-    );
+  display: none;
 }
 
 .learnFinalCopy {
@@ -967,7 +960,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 12px;
+  gap: 16px;
 }
 
 .learnFinalCopy > span {
@@ -977,7 +970,7 @@
 .learnFinalCopy > p {
   margin: 0;
   font-family: "Courier New", monospace;
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 800;
   text-transform: uppercase;
 }
