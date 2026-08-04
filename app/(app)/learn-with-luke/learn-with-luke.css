@@ -2,14 +2,13 @@
   min-height: 100vh;
   background:
     linear-gradient(
-      rgba(3, 12, 18, 0.16),
-      rgba(3, 12, 18, 0.42)
+      rgba(0, 0, 0, 0.78),
+      rgba(0, 0, 0, 0.92)
     ),
     url("/images/learn-page-background.jpg")
       center top / cover fixed;
   color: #171717;
 }
-
 .learnMarketingMain {
   width: min(1368px, calc(100% - 44px));
   margin: 0 auto;
