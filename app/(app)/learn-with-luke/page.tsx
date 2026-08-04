@@ -19,71 +19,81 @@ type LearnItem = {
   created_at?: string;
 };
 
-type VisualPlaceholderProps = {
+type VisualProps = {
   src?: string;
   alt: string;
+  filename: string;
   className?: string;
 };
 
 const categories = [
-  {
-    label: "Space & Sky",
-    icon: "🪐",
-  },
-  {
-    label: "Wild Earth",
-    icon: "🌿",
-  },
-  {
-    label: "Ocean Worlds",
-    icon: "🌊",
-  },
-  {
-    label: "Animals",
-    icon: "🐾",
-  },
-  {
-    label: "The Human Body",
-    icon: "🫀",
-  },
-  {
-    label: "How Things Work",
-    icon: "⚙️",
-  },
-  {
-    label: "Everyday Mysteries",
-    icon: "❓",
-  },
-  {
-    label: "Tiny Science",
-    icon: "🔬",
-  },
-  {
-    label: "Big Questions",
-    icon: "💡",
-  },
+  { label: "Space & Sky", icon: "🪐" },
+  { label: "Wild Earth", icon: "🌿" },
+  { label: "Ocean Worlds", icon: "🌊" },
+  { label: "Animals", icon: "🐾" },
+  { label: "The Human Body", icon: "🫀" },
+  { label: "How Things Work", icon: "⚙️" },
+  { label: "Everyday Mysteries", icon: "❓" },
+  { label: "Tiny Science", icon: "🔬" },
+  { label: "Big Questions", icon: "💡" },
 ];
 
-const learningSteps = [
+const treeDiscoveries = [
   {
     number: "1",
-    title: "Wow",
-    text: "Begin with a cinematic moment that immediately captures attention.",
+    title: "Roots Hold Fast",
+    image: "",
+    filename: "tree-roots.jpg",
+    alt: "Close cinematic view of enormous tree roots gripping dark forest soil, with smaller roots spreading outward underground.",
   },
   {
     number: "2",
-    title: "Wonder",
-    text: "Turn that first reaction into one focused question.",
+    title: "The Trunk Is a Highway",
+    image: "",
+    filename: "tree-trunk-water.jpg",
+    alt: "Cross-section of a giant tree trunk showing water traveling upward through the inner wood in glowing blue channels.",
   },
   {
     number: "3",
-    title: "Explore",
-    text: "Follow Luke through visual discoveries and connected ideas.",
+    title: "Inside: Sapwood & Heartwood",
+    image: "",
+    filename: "tree-rings.jpg",
+    alt: "Detailed cross-section of tree rings showing outer bark, sapwood and darker heartwood with clear visual labels.",
   },
   {
     number: "4",
-    title: "Understand",
-    text: "Finish with a clear explanation children can remember.",
+    title: "Branches Spread Out",
+    image: "",
+    filename: "tree-branches.jpg",
+    alt: "Looking upward through the huge branches of an ancient tree as they spread toward sunlight in the forest canopy.",
+  },
+  {
+    number: "5",
+    title: "Twigs Grow Buds",
+    image: "",
+    filename: "tree-buds.jpg",
+    alt: "Close-up of small new buds growing from twigs on a giant tree, with warm sunlight and a softly blurred forest.",
+  },
+  {
+    number: "6",
+    title: "Leaves Make Food",
+    image: "",
+    filename: "tree-leaves-food.jpg",
+    alt: "Bright green leaves receiving sunlight, with a simple magical visual showing leaves making food for the tree.",
+  },
+  {
+    number: "7",
+    title: "The Crown Reaches High",
+    image: "",
+    filename: "tree-crown.jpg",
+    alt: "The high crown of a giant tree reaching above the surrounding forest into bright sunlight and drifting clouds.",
+  },
+  {
+    number: "8",
+    title: "All the Parts Work Together",
+    image: "",
+    filename: "tree-whole-system.jpg",
+    alt: "Full giant tree showing roots, trunk, branches and leaves connected as one complete living system.",
   },
 ];
 
@@ -91,17 +101,17 @@ const benefits = [
   {
     icon: "📖",
     title: "Short & Engaging Text",
-    text: "Perfect for children ages 5–10, with approachable words and clear explanations.",
+    text: "Perfect for ages 5–10 with big pictures and approachable words.",
   },
   {
     icon: "🌎",
     title: "Real Knowledge",
-    text: "Supported by factual information and beautifully told visual stories.",
+    text: "Supported by real information and beautifully told visual stories.",
   },
   {
     icon: "Aa",
     title: "Vocabulary in Context",
-    text: "New words are introduced naturally, with simple explanations.",
+    text: "New words are introduced naturally with clear visual explanations.",
   },
   {
     icon: "💡",
@@ -111,12 +121,12 @@ const benefits = [
   {
     icon: "👨‍👩‍👦",
     title: "Independent or Together",
-    text: "Children can explore alone or share family learning time.",
+    text: "Explore independently or enjoy learning together as a family.",
   },
   {
     icon: "🏅",
     title: "Earn & Celebrate",
-    text: "Coins, stickers and reading streaks help celebrate progress.",
+    text: "Coins, stickers and streaks reward curiosity and progress.",
   },
 ];
 
@@ -129,7 +139,22 @@ const faqItems = [
   {
     question: "Can my child explore independently?",
     answer:
-      "Yes. The stories use clear text, strong visuals and focused explanations that children can explore independently or with a grown-up.",
+      "Yes. The adventures use clear text, strong visuals and focused explanations that children can explore alone or with a grown-up.",
+  },
+  {
+    question: "How do coins and adventures work?",
+    answer:
+      "Children can earn coins and rewards as they complete stories and learning adventures.",
+  },
+  {
+    question: "Can I cancel anytime?",
+    answer:
+      "Yes. Membership can be managed or canceled through the parent account.",
+  },
+  {
+    question: "What does a learning adventure include?",
+    answer:
+      "Each adventure begins with a surprising visual, follows one focused question and ends with a clear explanation.",
   },
   {
     question: "How often are new adventures added?",
@@ -137,46 +162,38 @@ const faqItems = [
       "New learning adventures and continuing topics are added regularly.",
   },
   {
-    question: "Can I cancel anytime?",
-    answer:
-      "Yes. Membership can be managed or canceled from the parent account.",
-  },
-  {
-    question: "How does a learning adventure work?",
-    answer:
-      "Each adventure begins with a surprising visual moment, follows one clear question and ends with an understandable explanation.",
-  },
-  {
     question: "Can I read one for free?",
     answer:
-      "Yes. The Moon’s Secret Powers: Part 2 is available as a complete free learning adventure with no signup required.",
+      "Yes. The Moon’s Secret Powers: Part 2 is available as a complete free learning adventure.",
   },
 ];
 
-function VisualPlaceholder({
+function Visual({
   src = "",
   alt,
+  filename,
   className = "",
-}: VisualPlaceholderProps) {
+}: VisualProps) {
   if (src.trim()) {
     return (
       <img
         src={src}
         alt={alt}
-        className={`learnVisualImage ${className}`}
+        className={`learnMarketingImage ${className}`}
       />
     );
   }
 
   return (
     <div
-      className={`learnVisualPlaceholder ${className}`}
+      className={`learnMarketingPlaceholder ${className}`}
       role="img"
       aria-label={alt}
     >
-      <span>IMAGE TO UPLOAD</span>
+      <strong>IMAGE TO UPLOAD</strong>
+      <span>{filename}</span>
       <p>
-        <strong>ALT:</strong> {alt}
+        <b>ALT:</b> {alt}
       </p>
     </div>
   );
@@ -190,37 +207,34 @@ function getLearnCover(item: LearnItem) {
   );
 }
 
-export default function LearnPage() {
+export default function LearnWithLukePage() {
   const [items, setItems] = useState<LearnItem[]>([]);
-  const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [activeCategory, setActiveCategory] = useState("All");
   const [search, setSearch] = useState("");
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   useEffect(() => {
-    async function loadLearnItems() {
+    async function loadItems() {
       const { data, error } = await supabase
         .from("learn_items")
         .select("*")
         .eq("is_published", true)
         .order("created_at", { ascending: false })
-        .limit(12);
+        .limit(18);
 
       if (error) {
-        console.error(
-          "Unable to load Learn With Luke adventures:",
-          error
-        );
+        console.error("Unable to load learning adventures:", error);
         return;
       }
 
       setItems(data || []);
     }
 
-    loadLearnItems();
+    loadItems();
   }, []);
 
   const filteredItems = useMemo(() => {
-    const normalizedSearch = search.trim().toLowerCase();
+    const cleanSearch = search.trim().toLowerCase();
 
     return items.filter((item) => {
       const categoryMatches =
@@ -228,329 +242,366 @@ export default function LearnPage() {
         item.category === activeCategory;
 
       const searchMatches =
-        !normalizedSearch ||
-        item.title.toLowerCase().includes(normalizedSearch) ||
-        item.description
-          ?.toLowerCase()
-          .includes(normalizedSearch);
+        !cleanSearch ||
+        item.title.toLowerCase().includes(cleanSearch) ||
+        item.description?.toLowerCase().includes(cleanSearch);
 
       return categoryMatches && searchMatches;
     });
   }, [items, activeCategory, search]);
 
-  const featuredItems = filteredItems.slice(0, 6);
+  const shelfItems = filteredItems.slice(0, 6);
   const questionItems = items.slice(0, 5);
 
   return (
-    <div className="learnPage">
+    <div className="learnMarketingPage">
       <Header />
 
-      <main className="learnMain">
-        {/* HERO */}
-        <section className="learnHero">
-          <div className="learnHeroBackground">
-            <VisualPlaceholder
-              src=""
-              alt="Cinematic wide landscape showing Luke standing confidently in a dramatic world that blends a frozen mountain, storm clouds, a green forest, ocean waves and distant planets. Luke should be centered slightly right, smiling and inviting children into the adventure."
-            />
-          </div>
-
-          <div className="learnHeroOverlay" />
-
-          <div className="learnHeroCopy">
-            <p className="learnEyebrow">
-              LEARN WITH LUKE
-            </p>
-
-            <h1>
-              Big Questions.
-              <span>Wild Adventures.</span>
-              <em>Real Understanding.</em>
-            </h1>
-
-            <p className="learnHeroDescription">
-              A growing library of cinematic learning adventures
-              that helps curious children ages 5–10 explore space,
-              animals, oceans, weather, forests, the human body,
-              everyday mysteries and more.
-            </p>
-
-            <div className="learnHeroButtons">
-              <a href="#adventures" className="learnPrimaryButton">
-                Explore the Full Library
-              </a>
-
-              <Link
-                href="/membership"
-                className="learnSecondaryButton"
-              >
-                Start 7-Day Free Trial
-              </Link>
-            </div>
-
-            <div className="learnHeroDetails">
-              <span>🧒 Ages 5–10</span>
-              <span>🎬 Cinematic Visual Lessons</span>
-              <span>🪙 Coins & Stickers</span>
-              <span>✨ New Adventures Added Regularly</span>
-            </div>
-          </div>
-        </section>
-
-        {/* DISCOVERY LIBRARY */}
-        <section
-          className="learnDiscoverySection"
-          id="adventures"
-        >
-          <div className="learnSectionHeading">
-            <p>CHOOSE YOUR NEXT ADVENTURE</p>
-
-            <h2>
-              What Are You Curious About?
-            </h2>
-          </div>
-
-          <div className="learnDiscoveryLayout">
-            <aside className="learnDiscoverySidebar">
-              <label htmlFor="learn-search">
-                Search Adventures
-              </label>
-
-              <input
-                id="learn-search"
-                type="search"
-                placeholder="What are you curious about?"
-                value={search}
-                onChange={(event) =>
-                  setSearch(event.target.value)
-                }
+      <main className="learnMarketingMain">
+        {/* TOP HERO + LIBRARY */}
+        <section className="learnTopPanel">
+          <div className="learnHero">
+            <div className="learnHeroMedia">
+              <Visual
+                src=""
+                filename="learn-with-luke-hero.jpg"
+                alt="Wide cinematic scene showing Luke on the right in a dramatic world combining snowy mountains, lightning, clouds, forest plants and distant discoveries. Leave open cream-colored space on the left for text."
               />
+            </div>
 
-              <button
-                type="button"
-                onClick={() => setActiveCategory("All")}
-                className={
-                  activeCategory === "All"
-                    ? "isActive"
-                    : ""
-                }
-              >
-                All Adventures
-                <span>→</span>
-              </button>
+            <div className="learnHeroOverlay" />
 
-              <Link href="/learn">
-                New Adventures
-                <span>→</span>
-              </Link>
+            <div className="learnHeroCopy">
+              <p className="learnHeroBrand">Learn With Luke</p>
 
-              <Link href="/free-reads">
-                Try a Free Adventure
-                <span>→</span>
-              </Link>
-            </aside>
+              <h1>
+                <span>Big Questions.</span>
+                <strong>Wild Adventures.</strong>
+                <em>Real Understanding.</em>
+              </h1>
 
-            <div className="learnAdventureGrid">
-              {featuredItems.map((item) => (
-                <Link
-                  href={`/learn/${item.slug}`}
-                  className="learnAdventureCard"
-                  key={item.id}
-                >
-                  <img
-                    src={getLearnCover(item)}
-                    alt={item.title}
+              <p className="learnHeroText">
+                A growing library of cinematic learning adventures
+                that helps curious kids ages 5–10 explore space,
+                animals, oceans, weather, forests, the human body,
+                everyday mysteries and more.
+              </p>
+
+              <div className="learnHeroActions">
+                <Link href="/learn" className="learnOrangeButton">
+                  Explore the Full Library
+                </Link>
+
+                <Link href="/membership" className="learnCreamButton">
+                  Start 7-Day Free Trial
+                </Link>
+              </div>
+
+              <div className="learnHeroMeta">
+                <span>🧒 Ages 5–10</span>
+                <span>🎬 Cinematic Visual Lessons</span>
+                <span>🪙 Coins & Stickers</span>
+                <span>✨ New Adventures Added Regularly</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="learnShelfPanel" id="adventures">
+            <div className="learnShelfHeader">
+              <div>
+                <p>Choose Your Next Adventure</p>
+
+                <div className="learnShelfSearch">
+                  <input
+                    type="search"
+                    value={search}
+                    onChange={(event) => setSearch(event.target.value)}
+                    placeholder="What are you curious about?"
+                    aria-label="Search learning adventures"
                   />
 
-                  <div className="learnAdventureShade" />
+                  <span aria-hidden="true">⌕</span>
+                </div>
+              </div>
 
-                  <div className="learnAdventureTitle">
-                    {item.title}
-                  </div>
-                </Link>
-              ))}
+              <div className="learnShelfCards">
+                {shelfItems.map((item) => (
+                  <Link
+                    key={item.id}
+                    href={`/learn/${item.slug}`}
+                    className="learnShelfCard"
+                  >
+                    <img
+                      src={getLearnCover(item)}
+                      alt={item.title}
+                    />
+
+                    <div />
+
+                    <strong>{item.title}</strong>
+                  </Link>
+                ))}
+              </div>
             </div>
-          </div>
 
-          <div className="learnCategoryRail">
-            {categories.map((category) => (
-              <button
-                type="button"
-                key={category.label}
-                onClick={() =>
-                  setActiveCategory(category.label)
-                }
-                className={
-                  activeCategory === category.label
-                    ? "isActive"
-                    : ""
-                }
-              >
-                <span>{category.icon}</span>
-                <strong>{category.label}</strong>
-              </button>
-            ))}
+            <div className="learnShelfBottom">
+              <nav className="learnShelfLinks">
+                <button
+                  type="button"
+                  onClick={() => setActiveCategory("All")}
+                  className={
+                    activeCategory === "All" ? "isActive" : ""
+                  }
+                >
+                  <span>▣</span>
+                  Continue Learning
+                  <b>→</b>
+                </button>
+
+                <Link href="/learn">
+                  <span>◉</span>
+                  New Adventures
+                  <b>→</b>
+                </Link>
+
+                <Link href="/learn">
+                  <span>▥</span>
+                  View Full Library
+                  <b>→</b>
+                </Link>
+              </nav>
+
+              <div className="learnCategoryRail">
+                {categories.map((category) => (
+                  <button
+                    type="button"
+                    key={category.label}
+                    onClick={() =>
+                      setActiveCategory(category.label)
+                    }
+                    className={
+                      activeCategory === category.label
+                        ? "isActive"
+                        : ""
+                    }
+                  >
+                    <span>{category.icon}</span>
+                    <strong>{category.label}</strong>
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
         </section>
 
         {/* WOW SECTION */}
         <section className="learnWowSection">
-          <div className="learnWowBackground">
-            <VisualPlaceholder
+          <div className="learnWowMedia">
+            <Visual
               src=""
-              alt="A small child explorer standing at the base of an enormous ancient tree in a cinematic glowing forest. The tree should feel impossibly tall, with sunbeams, visible roots and floating golden particles creating a powerful sense of wonder."
+              filename="learn-wow-giant-tree.jpg"
+              alt="A small child explorer standing at the base of an impossibly enormous ancient tree in a glowing cinematic forest, with giant roots, sunbeams and floating golden particles."
             />
           </div>
 
-          <div className="learnWowOverlay" />
+          <div className="learnWowShade" />
 
           <div className="learnWowCopy">
-            <p>FIRST,</p>
+            <p>First,</p>
 
             <h2>
               We Make Them Say
               <span>“Wow.”</span>
             </h2>
 
-            <p className="learnWowDescription">
-              A towering tree. A glowing sea. A storm forming
-              overhead. We begin with something that feels too
-              amazing to ignore.
+            <div className="learnWowStars">✧　☆　✧</div>
+
+            <p className="learnWowBody">
+              A towering tree. A glowing sea.
+              <br />
+              A storm forming overhead.
+              <br />
+              A volcano surrounded by rings.
+              <br />
+              <strong>
+                Learning begins when something feels too amazing to ignore.
+              </strong>
             </p>
           </div>
 
-          <div className="learnWowPrompt">
-            Follow Luke into the question
+          <div className="learnWowDirection">
+            Follow
+            <br />
+            Luke Into
+            <br />
+            the Question
             <span>↓</span>
           </div>
         </section>
 
-        {/* HOW LEARNING WORKS */}
-        <section className="learnMethodSection">
-          <div className="learnMethodIntro">
-            <p>START WITH WONDER. END WITH “I GET IT.”</p>
+        {/* TREE EXPLAINER */}
+        <section className="learnTreePanel">
+          <div className="learnTreeIntro">
+            <p className="learnOrangeEyebrow">
+              Start With Wonder. End With “I Get It.”
+            </p>
 
             <h2>
-              One Focused Question.
-              <br />
-              Connected Visual Discoveries.
+              A child first sees one enormous living giant.
             </h2>
 
-            <span>
-              Children first see one unforgettable moment.
+            <p>
               Then Luke explores how every part works together
-              to explain the big idea.
-            </span>
+              to keep the tree alive.
+            </p>
 
-            <div className="learnMethodSteps">
-              {learningSteps.map((step) => (
-                <div key={step.number}>
-                  <span>{step.number}</span>
-                  <strong>{step.title}</strong>
-                  <p>{step.text}</p>
-                </div>
+            <div className="learnJourney">
+              <div>
+                <span>◉</span>
+                <strong>Wow</strong>
+              </div>
+
+              <b>→</b>
+
+              <div>
+                <span>⌕</span>
+                <strong>Wonder</strong>
+              </div>
+
+              <b>→</b>
+
+              <div>
+                <span>▤</span>
+                <strong>Explore</strong>
+              </div>
+
+              <b>→</b>
+
+              <div>
+                <span>💡</span>
+                <strong>Understand</strong>
+              </div>
+            </div>
+          </div>
+
+          <div className="learnTreeContent">
+            <div className="learnTreeHeading">
+              <h2>What Are the Parts of a Tree?</h2>
+              <p>
+                Exploring a Living Giant From Roots to Crown
+              </p>
+            </div>
+
+            <div className="learnTreeGrid">
+              {treeDiscoveries.map((item) => (
+                <article key={item.number}>
+                  <div className="learnTreeCardMedia">
+                    <Visual
+                      src={item.image}
+                      filename={item.filename}
+                      alt={item.alt}
+                    />
+                  </div>
+
+                  <div className="learnTreeCardLabel">
+                    <span>{item.number}</span>
+                    <strong>{item.title}</strong>
+                  </div>
+                </article>
               ))}
             </div>
           </div>
 
-          <VisualPlaceholder
-            src=""
-            className="learnMethodVisual"
-            alt="Eight connected illustrated learning panels explaining the parts of a giant tree: roots holding fast, the trunk carrying water, bark and heartwood, branches reaching sunlight, twigs growing buds, leaves making food, the crown reaching high and all parts working together."
-          />
+          <aside className="learnTreeNotes">
+            <p>← One Focused Question</p>
+            <p>← Connected Visual Discoveries</p>
+            <p>☆ Short Explanations</p>
+            <p>← A Clear Final Understanding</p>
+          </aside>
         </section>
 
         {/* QUESTION CARDS */}
-        <section className="learnQuestionsSection">
-          <div className="learnCenteredHeading">
+        <section className="learnQuestionsPanel">
+          <div className="learnCenteredTitle">
             <span>✦</span>
-            <h2>
-              The Questions Kids Already Want Answered
-            </h2>
+            <h2>The Questions Kids Already Want Answered</h2>
             <span>✦</span>
           </div>
 
           <div className="learnQuestionGrid">
             {questionItems.map((item) => (
               <Link
+                key={item.id}
                 href={`/learn/${item.slug}`}
                 className="learnQuestionCard"
-                key={item.id}
               >
                 <img
                   src={getLearnCover(item)}
                   alt={item.title}
                 />
 
-                <div className="learnQuestionShade" />
+                <div />
 
                 <strong>{item.title}</strong>
               </Link>
             ))}
           </div>
 
-          <Link href="/learn" className="learnExploreButton">
-            Explore These and Hundreds More
+          <Link href="/learn" className="learnQuestionsButton">
+            Explore These and Hundreds More!
           </Link>
         </section>
 
         {/* BENEFITS */}
-        <section className="learnBenefitsSection">
-          <div className="learnCenteredHeading">
+        <section className="learnBenefitsPanel">
+          <div className="learnCenteredTitle">
             <span>🌿</span>
-            <h2>
-              Built for Curious Kids. Loved by Parents.
-            </h2>
+            <h2>Built for Curious Kids. Loved by Parents.</h2>
             <span>🌿</span>
           </div>
 
-          <div className="learnBenefitGrid">
-            {benefits.map((benefit) => (
-              <article
-                className="learnBenefitItem"
-                key={benefit.title}
-              >
-                <span>{benefit.icon}</span>
-                <h3>{benefit.title}</h3>
-                <p>{benefit.text}</p>
-              </article>
-            ))}
+          <div className="learnBenefitsLayout">
+            <div className="learnBenefitGrid">
+              {benefits.map((benefit) => (
+                <article key={benefit.title}>
+                  <span>{benefit.icon}</span>
+                  <h3>{benefit.title}</h3>
+                  <p>{benefit.text}</p>
+                </article>
+              ))}
+            </div>
 
             <article className="learnGrowingCard">
               <div>
-                <p>ALWAYS GROWING</p>
-
-                <h3>
-                  New Adventures Added Regularly
-                </h3>
-
+                <p>Always Growing</p>
+                <h3>New Adventures Added Regularly</h3>
                 <span>
-                  There is always something new waiting to explore.
+                  There is always something new to explore.
                 </span>
               </div>
 
-              <VisualPlaceholder
-                src=""
-                alt="A small stack of three colorful Learn With Luke adventure covers leaning together, with Luke peeking up from the bottom corner and holding a magnifying glass."
-              />
+              <div className="learnGrowingMedia">
+                <Visual
+                  src=""
+                  filename="learn-always-growing.png"
+                  alt="Three colorful Learn With Luke adventure covers leaning together with Luke peeking up from the corner."
+                />
+              </div>
             </article>
           </div>
         </section>
 
         {/* FAQ */}
-        <section className="learnFaqSection">
+        <section className="learnFaqPanel">
           <div className="learnFaqContent">
-            <p>QUESTIONS? WE’VE GOT ANSWERS.</p>
+            <h2>Questions? We’ve Got Answers.</h2>
 
             <div className="learnFaqGrid">
               {faqItems.map((item, index) => {
                 const isOpen = openFaq === index;
 
                 return (
-                  <article
-                    className="learnFaqItem"
-                    key={item.question}
-                  >
+                  <article key={item.question}>
                     <button
                       type="button"
                       onClick={() =>
@@ -559,7 +610,7 @@ export default function LearnPage() {
                       aria-expanded={isOpen}
                     >
                       <span>{item.question}</span>
-                      <span>{isOpen ? "−" : "+"}</span>
+                      <b>{isOpen ? "−" : "⌄"}</b>
                     </button>
 
                     {isOpen && <p>{item.answer}</p>}
@@ -569,28 +620,31 @@ export default function LearnPage() {
             </div>
           </div>
 
-          <VisualPlaceholder
-            src=""
-            className="learnFaqLuke"
-            alt="Luke smiling and kneeling while holding a large magnifying glass, looking toward the FAQ questions."
-          />
+          <div className="learnFaqLuke">
+            <Visual
+              src=""
+              filename="learn-faq-luke.png"
+              alt="Luke smiling while kneeling and holding a large magnifying glass, looking toward the FAQ questions."
+            />
+          </div>
         </section>
 
         {/* FINAL CTA */}
-        <section className="learnFinalCta">
-          <div className="learnFinalBackground">
-            <VisualPlaceholder
+        <section className="learnFinalPanel">
+          <div className="learnFinalMedia">
+            <Visual
               src=""
-              alt="Epic cinematic final scene showing Luke from behind, standing on a cliff and looking across a vast world filled with planets, a rocket, oceans, glowing forests, mountains, animals and scientific discoveries."
+              filename="learn-final-universe.jpg"
+              alt="Epic cinematic scene showing Luke from behind on a cliff looking across planets, a rocket, ocean waves, mountains, forests, animals and scientific discoveries."
             />
           </div>
 
-          <div className="learnFinalOverlay" />
+          <div className="learnFinalShade" />
 
-          <div className="learnFinalContent">
+          <div className="learnFinalCopy">
             <p>
               Your Child Already Asks
-              <em>Big Questions.</em>
+              <strong> Big Questions.</strong>
             </p>
 
             <h2>
@@ -598,19 +652,13 @@ export default function LearnPage() {
             </h2>
 
             <div>
-              <Link
-                href="/membership"
-                className="learnPrimaryButton"
-              >
+              <Link href="/membership" className="learnOrangeButton">
                 Start the 7-Day Free Trial
               </Link>
 
-              <a
-                href="#adventures"
-                className="learnSecondaryButton"
-              >
+              <Link href="/learn" className="learnCreamButton">
                 Explore the Library
-              </a>
+              </Link>
             </div>
 
             <span>Explore first. Cancel anytime.</span>
