@@ -1194,3 +1194,246 @@
   object-position: center center;
 }
 }
+/* =========================================
+   FONT SIZE + WEIGHT IMPROVEMENTS
+   Paste at the bottom of learn-with-luke.css
+========================================= */
+
+/* Main body text */
+.learnMarketingPage p,
+.learnMarketingPage a,
+.learnMarketingPage button,
+.learnMarketingPage input,
+.learnMarketingPage span,
+.learnMarketingPage strong {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Hero description */
+.learnHeroText {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.55;
+  color: #171717;
+}
+
+/* Hero detail row */
+.learnHeroMeta span {
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+/* Shelf title */
+.learnShelfHeader > div:first-child > p {
+  font-size: 24px;
+  font-weight: 400;
+}
+
+/* Search input */
+.learnShelfSearch input {
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* Left shelf navigation */
+.learnShelfLinks button,
+.learnShelfLinks a {
+  font-size: 10px;
+  font-weight: 900;
+  line-height: 1.3;
+}
+
+/* Category labels */
+.learnCategoryRail strong {
+  font-size: 9px;
+  font-weight: 900;
+  line-height: 1.25;
+}
+
+/* Shelf card titles */
+.learnShelfCard strong {
+  font-size: 19px;
+  font-weight: 400;
+  line-height: 0.95;
+}
+
+/* WOW section body copy */
+.learnWowBody {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.55;
+}
+
+/* WOW yellow highlighted line */
+.learnWowBody strong {
+  font-size: 13px;
+  font-weight: 900;
+}
+
+/* Tree intro headline */
+.learnOrangeEyebrow {
+  font-size: 26px;
+  line-height: 1;
+}
+
+/* Tree section supporting copy */
+.learnTreeIntro h2 {
+  font-size: 15px;
+  font-weight: 900;
+  line-height: 1.45;
+}
+
+.learnTreeIntro > p:not(.learnOrangeEyebrow) {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.55;
+}
+
+/* Wow / Wonder / Explore / Understand */
+.learnJourney div strong {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+/* Tree panel heading */
+.learnTreeHeading h2 {
+  font-size: 27px;
+}
+
+.learnTreeHeading p {
+  font-size: 10px;
+  font-weight: 700;
+}
+
+/* Tree card labels */
+.learnTreeCardLabel strong {
+  font-size: 10px;
+  line-height: 1.15;
+}
+
+/* Notes on right side of tree panel */
+.learnTreeNotes p {
+  font-size: 10px;
+  font-weight: 900;
+  line-height: 1.4;
+}
+
+/* Questions section heading */
+.learnCenteredTitle h2 {
+  font-size: 30px;
+}
+
+/* Question card titles */
+.learnQuestionCard strong {
+  font-size: 23px;
+  line-height: 0.95;
+}
+
+/* Benefit titles and text */
+.learnBenefitGrid h3 {
+  font-size: 11px;
+  font-weight: 900;
+  line-height: 1.3;
+}
+
+.learnBenefitGrid p {
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+/* Always Growing card */
+.learnGrowingCard p {
+  font-size: 24px;
+}
+
+.learnGrowingCard h3 {
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.learnGrowingCard div > span {
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+/* FAQ heading */
+.learnFaqContent h2 {
+  font-size: 29px;
+}
+
+/* FAQ questions */
+.learnFaqGrid button {
+  font-size: 9px;
+  font-weight: 900;
+  line-height: 1.35;
+}
+
+/* FAQ answers */
+.learnFaqGrid article p {
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+/* Buttons */
+.learnOrangeButton,
+.learnCreamButton,
+.learnQuestionsButton {
+  font-size: 22px;
+  font-weight: 400;
+}
+
+/* Final small note */
+.learnFinalCopy > span {
+  font-size: 10px;
+  font-weight: 700;
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+  .learnHeroText {
+    font-size: 14px;
+  }
+
+  .learnHeroMeta span {
+    font-size: 10px;
+  }
+
+  .learnShelfLinks button,
+  .learnShelfLinks a {
+    font-size: 11px;
+  }
+
+  .learnCategoryRail strong {
+    font-size: 9px;
+  }
+
+  .learnWowBody {
+    font-size: 12px;
+  }
+
+  .learnTreeIntro h2 {
+    font-size: 14px;
+  }
+
+  .learnTreeIntro > p:not(.learnOrangeEyebrow) {
+    font-size: 12px;
+  }
+
+  .learnBenefitGrid h3 {
+    font-size: 11px;
+  }
+
+  .learnBenefitGrid p {
+    font-size: 9px;
+  }
+
+  .learnFaqGrid button,
+  .learnFaqGrid article p {
+    font-size: 10px;
+  }
+}
