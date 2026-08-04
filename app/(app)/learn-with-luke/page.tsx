@@ -263,7 +263,7 @@ export default function LearnWithLukePage() {
           <div className="learnHero">
             <div className="learnHeroMedia">
               <Visual
-                src=""
+                src="/images/learn-with-luke-hero.jpg"
                 filename="learn-with-luke-hero.jpg"
                 alt="Wide cinematic scene showing Luke on the right in a dramatic world combining snowy mountains, lightning, clouds, forest plants and distant discoveries. Leave open cream-colored space on the left for text."
               />
@@ -398,7 +398,7 @@ export default function LearnWithLukePage() {
         <section className="learnWowSection">
           <div className="learnWowMedia">
             <Visual
-              src=""
+              src="/images/learn-wow-giant-tree.jpg"
               filename="learn-wow-giant-tree.jpg"
               alt="A small child explorer standing at the base of an impossibly enormous ancient tree in a glowing cinematic forest, with giant roots, sunbeams and floating golden particles."
             />
@@ -633,7 +633,7 @@ export default function LearnWithLukePage() {
         <section className="learnFinalPanel">
           <div className="learnFinalMedia">
             <Visual
-              src=""
+              src="/images/learn-final-universe.jpg"
               filename="learn-final-universe.jpg"
               alt="Epic cinematic scene showing Luke from behind on a cliff looking across planets, a rocket, ocean waves, mountains, forests, animals and scientific discoveries."
             />
