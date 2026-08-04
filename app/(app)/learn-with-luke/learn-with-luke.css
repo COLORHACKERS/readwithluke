@@ -948,11 +948,30 @@
 .learnFinalCopy {
   position: relative;
   z-index: 2;
-  max-width: 850px;
-  margin: 0 auto;
-  padding: 48px 20px 30px;
+  min-height: 280px;
+  padding: 0 20px 34px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+
   color: #ffffff;
   text-align: center;
+  box-sizing: border-box;
+}
+.learnFinalCopy > div {
+  margin-top: auto;
+  transform: translateY(95px);
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.learnFinalCopy > span {
+  margin-top: 105px;
 }
 
 .learnFinalCopy > p {
