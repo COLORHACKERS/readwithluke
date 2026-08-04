@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
@@ -338,57 +339,47 @@ export default function LearnWithLukePage() {
               </div>
             </div>
 
-            <div className="learnShelfBottom">
-              <nav className="learnShelfLinks">
-                <button
-                  type="button"
-                  onClick={() => setActiveCategory("All")}
-                  className={
-                    activeCategory === "All" ? "isActive" : ""
-                  }
-                >
-                  <span>▣</span>
-                  Continue Learning
-                  <b>→</b>
-                </button>
+    <div className="learnShelfPanel" id="adventures">
+  <div className="learnCarouselHeader">
+    <div>
+      <p>Choose Your Next Adventure</p>
 
-                <Link href="/learn">
-                  <span>◉</span>
-                  New Adventures
-                  <b>→</b>
-                </Link>
+      <h2>
+        Explore the latest Learn With Luke adventures.
+      </h2>
+    </div>
 
-                <Link href="/learn">
-                  <span>▥</span>
-                  View Full Library
-                  <b>→</b>
-                </Link>
-              </nav>
+    <Link
+      href="/learn"
+      className="learnCarouselViewAll"
+    >
+      View Full Library
+      <span aria-hidden="true">→</span>
+    </Link>
+  </div>
 
-              <div className="learnCategoryRail">
-                {categories.map((category) => (
-                  <button
-                    type="button"
-                    key={category.label}
-                    onClick={() =>
-                      setActiveCategory(category.label)
-                    }
-                    className={
-                      activeCategory === category.label
-                        ? "isActive"
-                        : ""
-                    }
-                  >
-                    <span>{category.icon}</span>
-                    <strong>{category.label}</strong>
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
+  <div className="learnCarouselWindow">
+    <div className="learnCarouselTrack">
+      {shelfItems.map((item) => (
+        <Link
+          key={item.id}
+          href={`/learn/${item.slug}`}
+          className="learnCarouselCard"
+          aria-label={`Explore ${item.title}`}
+        >
+          <img
+            src={getLearnCover(item)}
+            alt={item.title}
+          />
+        </Link>
+      ))}
+    </div>
+  </div>
+</div>
+     </section>
 
-        {/* WOW SECTION */}
+{/* WOW SECTION */}
+<section className="learnWowSection">
         <section className="learnWowSection">
           <div className="learnWowMedia">
             <Visual
