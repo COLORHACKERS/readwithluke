@@ -410,8 +410,10 @@
   position: relative;
   width: 100%;
   height: 520px;
-  margin-top: 10px;
+  margin: 0;
+  padding: 0;
   overflow: hidden;
+  background: #000000;
 }
 
 .learnWowMedia {
@@ -419,19 +421,31 @@
   inset: 0;
   width: 100%;
   height: 100%;
+  margin: 0;
+  padding: 0;
+  line-height: 0;
 }
 
 .learnWowMedia .learnMarketingImage {
+  position: absolute;
+  inset: 0;
+
   display: block;
   width: 100%;
   height: 100%;
+  margin: 0;
+
   object-fit: cover;
-  object-position: center;
+  object-position: center center;
 }
 
 .learnWowMedia .learnMarketingPlaceholder {
+  position: absolute;
+  inset: 0;
+
   width: 100%;
   height: 100%;
+  margin: 0;
   border: 0;
 }
 .learnWowShade {
@@ -1176,6 +1190,7 @@
     font-size: 46px;
   }
     .learnWowMedia .learnMarketingImage {
-    object-position: center;
-  }
+  object-fit: cover;
+  object-position: center center;
+}
 }
