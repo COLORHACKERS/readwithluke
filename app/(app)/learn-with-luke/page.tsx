@@ -238,126 +238,125 @@ export default function LearnWithLukePage() {
       <main className="learnMarketingMain">
         {/* HERO AND 10-ITEM CAROUSEL */}
         <section className="learnTopPanel">
-          <div className="learnHero">
-            <div className="learnHeroMedia">
-              <Visual
-                src="/images/learn-with-luke-hero.jpg"
-                filename="learn-with-luke-hero.jpg"
-                alt="Wide cinematic scene showing Luke on the right in a dramatic world combining snowy mountains, lightning, clouds, forest plants and distant discoveries."
-              />
-            </div>
+  <div className="learnTopBackground">
+    <Visual
+      src="/images/learn-with-luke-hero.jpg"
+      filename="learn-with-luke-hero.jpg"
+      alt="Wide cinematic world showing Luke exploring mountains, ocean, weather, space and nature."
+    />
+  </div>
 
-            <div className="learnHeroOverlay" />
+  <div className="learnTopOverlay" />
 
-            <div className="learnHeroCopy">
-              <p className="learnHeroBrand">
-                Learn With Luke
-              </p>
+  <div className="learnHero">
+    <div className="learnHeroCopy">
+      <p className="learnHeroBrand">
+        Learn With Luke
+      </p>
 
-              <h1>
-                <span>Big Questions.</span>
-                <strong>Wild Adventures.</strong>
-                <em>Real Understanding.</em>
-              </h1>
+      <h1>
+        <span>Big Questions.</span>
+        <strong>Wild Adventures.</strong>
+        <em>Real Understanding.</em>
+      </h1>
 
-              <p className="learnHeroText">
-                A growing library of cinematic learning
-                adventures that helps curious kids ages
-                5–10 explore space, animals, oceans,
-                weather, forests, the human body,
-                everyday mysteries and more.
-              </p>
+      <p className="learnHeroText">
+        A growing library of cinematic learning
+        adventures that helps curious kids ages
+        5–10 explore space, animals, oceans,
+        weather, forests, the human body,
+        everyday mysteries and more.
+      </p>
 
-              <div className="learnHeroActions">
-                <Link
-                  href="/learn"
-                  className="learnOrangeButton"
-                >
-                  Explore the Full Library
-                </Link>
-
-                <Link
-                  href="/membership"
-                  className="learnCreamButton"
-                >
-                  Start 7-Day Free Trial
-                </Link>
-              </div>
-
-              <div className="learnHeroMeta">
-                <span>🧒 Ages 5–10+</span>
-                <span>🎬 Cinematic Reading</span>
-                <span>🪙 Coins &amp; Stickers</span>
-                <span>
-                  ✨ New Adventures Added Regularly
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div
-            className="learnShelfPanel"
-            id="adventures"
-          >
-            <div className="learnCarouselHeader">
-              <div>
-                <p>Choose Your Next Adventure</p>
-
-                <h2>
-                  Explore the latest Learn With Luke
-                  adventures.
-                </h2>
-              </div>
-
-              <Link
-                href="/learn"
-                className="learnCarouselViewAll"
-              >
-                View Full Library
-                <span aria-hidden="true">→</span>
-              </Link>
-            </div>
-
-         <div className="learnCarouselWindow">
-  <div className="learnCarouselTrack">
-    <div className="learnCarouselGroup">
-      {shelfItems.map((item) => (
+      <div className="learnHeroActions">
         <Link
-          key={`first-${item.id}`}
-          href={`/learn/${item.slug}`}
-          className="learnCarouselCard"
-          aria-label={`Explore ${item.title}`}
+          href="/learn"
+          className="learnOrangeButton"
         >
-          <img
-            src={getLearnCover(item)}
-            alt={item.title}
-          />
+          Explore the Full Library
         </Link>
-      ))}
-    </div>
 
-    <div
-      className="learnCarouselGroup"
-      aria-hidden="true"
-    >
-      {shelfItems.map((item) => (
         <Link
-          key={`second-${item.id}`}
-          href={`/learn/${item.slug}`}
-          className="learnCarouselCard"
-          tabIndex={-1}
+          href="/membership"
+          className="learnCreamButton"
         >
-          <img
-            src={getLearnCover(item)}
-            alt=""
-          />
+          Start 7-Day Free Trial
         </Link>
-      ))}
+      </div>
+
+      <div className="learnHeroMeta">
+        <span>🧒 Ages 5–10+</span>
+        <span>🎬 Cinematic Reading</span>
+        <span>🌕 Coins &amp; Stickers</span>
+        <span>
+          ✨ New Adventures Added Regularly
+        </span>
+      </div>
     </div>
   </div>
-</div>
-          </div>
-        </section>
+
+  <div
+    className="learnShelfPanel"
+    id="adventures"
+  >
+    <div className="learnCarouselHeader">
+      <div>
+        <p>Choose Your Next Adventure</p>
+
+        <h2>
+          Explore the latest Learn With Luke adventures.
+        </h2>
+      </div>
+
+      <Link
+        href="/learn"
+        className="learnCarouselViewAll"
+      >
+        View Full Library
+        <span aria-hidden="true">→</span>
+      </Link>
+    </div>
+
+    <div className="learnCarouselWindow">
+      <div className="learnCarouselTrack">
+        <div className="learnCarouselGroup">
+          {shelfItems.map((item) => (
+            <Link
+              key={`first-${item.id}`}
+              href={`/learn/${item.slug}`}
+              className="learnCarouselCard"
+              aria-label={`Explore ${item.title}`}
+            >
+              <img
+                src={getLearnCover(item)}
+                alt={item.title}
+              />
+            </Link>
+          ))}
+        </div>
+
+        <div
+          className="learnCarouselGroup"
+          aria-hidden="true"
+        >
+          {shelfItems.map((item) => (
+            <Link
+              key={`second-${item.id}`}
+              href={`/learn/${item.slug}`}
+              className="learnCarouselCard"
+              tabIndex={-1}
+            >
+              <img
+                src={getLearnCover(item)}
+                alt=""
+              />
+            </Link>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
         {/* WOW SECTION */}
         <section className="learnWowSection">
