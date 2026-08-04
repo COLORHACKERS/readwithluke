@@ -144,14 +144,15 @@
 .learnHeroOverlay {
   position: absolute;
   inset: 0;
+
   background:
     linear-gradient(
       90deg,
       rgba(255, 249, 235, 0.99) 0%,
-      rgba(255, 249, 235, 0.96) 28%,
-      rgba(255, 249, 235, 0.69) 45%,
-      rgba(255, 249, 235, 0.08) 70%,
-      rgba(0, 0, 0, 0.03) 100%
+      rgba(255, 249, 235, 0.96) 24%,
+      rgba(255, 249, 235, 0.72) 38%,
+      rgba(255, 249, 235, 0.22) 52%,
+      rgba(255, 249, 235, 0) 64%
     );
 }
 
