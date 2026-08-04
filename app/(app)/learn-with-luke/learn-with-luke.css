@@ -1109,7 +1109,7 @@
   }
 
   .learnWowSection {
-    min-height: 480px;
+    min-height: 560px;
   }
 
   .learnWowCopy {
@@ -1172,5 +1172,8 @@
 
   .learnFinalCopy h2 {
     font-size: 46px;
+  }
+    .learnWowMedia .learnMarketingImage {
+    object-position: center;
   }
 }
