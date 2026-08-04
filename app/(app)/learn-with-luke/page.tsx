@@ -5,7 +5,7 @@ import Link from "next/link";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import { supabase } from "@/lib/supabase";
-import "./learn.css";
+import "./learn-with-luke.css";
 
 type LearnItem = {
   id: string;
