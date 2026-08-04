@@ -7,7 +7,7 @@
     ),
     url("/images/learn-page-background.jpg")
       center top / cover fixed;
-  color: #171717;
+  color: #000000;
 }
 .learnMarketingMain {
   width: min(1368px, calc(100% - 44px));
