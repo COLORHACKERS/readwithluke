@@ -298,15 +298,41 @@
 
 .learnCarouselWindow {
   width: 100%;
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding-bottom: 14px;
+  overflow: hidden;
+  padding: 8px 0 14px;
+  box-sizing: border-box;
+}
 
-  scrollbar-width: thin;
-  scrollbar-color: #ef4b21 #eadcc4;
+.learnCarouselTrack {
+  width: max-content;
+  display: flex;
+  gap: 12px;
+  animation: learnCarouselMove 38s linear infinite;
+  will-change: transform;
+  animation-duration: 32s;
+}
 
-  scroll-snap-type: x proximity;
-  -webkit-overflow-scrolling: touch;
+.learnCarouselGroup {
+  display: flex;
+  flex-shrink: 0;
+  gap: 12px;
+}
+
+.learnCarouselWindow:hover
+  .learnCarouselTrack {
+  animation-play-state: paused;
+}
+
+@keyframes learnCarouselMove {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(
+      calc(-50% - 8px)
+    );
+  }
 }
 
 .learnCarouselWindow::-webkit-scrollbar {
@@ -321,13 +347,6 @@
 .learnCarouselWindow::-webkit-scrollbar-thumb {
   border-radius: 999px;
   background: #ef4b21;
-}
-
-.learnCarouselTrack {
-  width: max-content;
-
-  display: flex;
-  gap: 16px;
 }
 
 .learnCarouselCard {
@@ -1577,3 +1596,29 @@
     font-size: 10px;
   }
 }
+  .learnCarouselTrack {
+    gap: 12px;
+    animation-duration: 32s;
+  }
+
+  .learnCarouselGroup {
+    gap: 12px;
+  }
+
+  .learnCarouselCard {
+    flex-basis: 165px;
+    width: 165px;
+    height: 240px;
+  }
+
+  @keyframes learnCarouselMove {
+    from {
+      transform: translateX(0);
+    }
+
+    to {
+      transform: translateX(
+        calc(-50% - 6px)
+      );
+    }
+  }
