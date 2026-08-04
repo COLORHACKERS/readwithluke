@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
@@ -209,8 +208,6 @@ function getLearnCover(item: LearnItem) {
 
 export default function LearnWithLukePage() {
   const [items, setItems] = useState<LearnItem[]>([]);
-  const [activeCategory, setActiveCategory] = useState("All");
-  const [search, setSearch] = useState("");
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   useEffect(() => {
@@ -233,24 +230,8 @@ export default function LearnWithLukePage() {
     loadItems();
   }, []);
 
-  const filteredItems = useMemo(() => {
-    const cleanSearch = search.trim().toLowerCase();
 
-    return items.filter((item) => {
-      const categoryMatches =
-        activeCategory === "All" ||
-        item.category === activeCategory;
-
-      const searchMatches =
-        !cleanSearch ||
-        item.title.toLowerCase().includes(cleanSearch) ||
-        item.description?.toLowerCase().includes(cleanSearch);
-
-      return categoryMatches && searchMatches;
-    });
-  }, [items, activeCategory, search]);
-
-  const shelfItems = filteredItems.slice(0, 6);
+  const shelfItems = filteredItems.slice(0, 10);
   const questionItems = items.slice(0, 5);
 
   return (
@@ -306,24 +287,37 @@ export default function LearnWithLukePage() {
             </div>
           </div>
 
-          <div className="learnShelfPanel" id="adventures">
-            <div className="learnShelfHeader">
-              <div>
-                <p>Choose Your Next Adventure</p>
+      <div className="learnShelfPanel" id="adventures">
+  <div className="learnCarouselHeader">
+    <div>
+      <p>Choose Your Next Adventure</p>
+      <h2>Explore the latest Learn With Luke adventures.</h2>
+    </div>
 
-                <div className="learnShelfSearch">
-                  <input
-                    type="search"
-                    value={search}
-                    onChange={(event) => setSearch(event.target.value)}
-                    placeholder="What are you curious about?"
-                    aria-label="Search learning adventures"
-                  />
+    <Link href="/learn" className="learnCarouselViewAll">
+      View Full Library
+      <span aria-hidden="true">→</span>
+    </Link>
+  </div>
 
-                  <span aria-hidden="true">⌕</span>
-                </div>
-              </div>
-
+  <div className="learnCarouselWindow">
+    <div className="learnCarouselTrack">
+      {shelfItems.map((item) => (
+        <Link
+          key={item.id}
+          href={`/learn/${item.slug}`}
+          className="learnCarouselCard"
+          aria-label={`Explore ${item.title}`}
+        >
+          <img
+            src={getLearnCover(item)}
+            alt={item.title}
+          />
+        </Link>
+      ))}
+    </div>
+  </div>
+</div>
               <div className="learnShelfCards">
                 {shelfItems.map((item) => (
                   <Link
