@@ -87,32 +87,38 @@ const treeDiscoveries = [
 
 const benefits = [
   {
-    icon: "📖",
+    image: "/images/learn-icon-reading.png",
+    alt: "Open illustrated book",
     title: "Short & Engaging Text",
-    text: "Perfect for ages 5–10+ with big pictures and approachable words.",
+    text: "Perfect for ages 5–10 with big pictures and approachable words.",
   },
   {
-    icon: "🌎",
+    image: "/images/learn-icon-knowledge.png",
+    alt: "Illustrated globe representing real-world knowledge",
     title: "Real Knowledge",
     text: "Supported by real information and beautifully told visual stories.",
   },
   {
-    icon: "Aa",
+    image: "/images/learn-icon-vocabulary.png",
+    alt: "Illustrated Aa letters representing vocabulary",
     title: "Vocabulary in Context",
     text: "New words are introduced naturally with clear visual explanations.",
   },
   {
-    icon: "💡",
+    image: "/images/learn-icon-thinking.png",
+    alt: "Glowing lightbulb representing critical thinking",
     title: "Critical Thinking",
     text: "Encourages observation, questions and big ideas.",
   },
   {
-    icon: "👨‍👩‍👦",
+    image: "/images/learn-icon-together.png",
+    alt: "Two illustrated people representing learning together",
     title: "Independent or Together",
     text: "Explore independently or enjoy learning together as a family.",
   },
   {
-    icon: "🏅",
+    image: "/images/learn-icon-rewards.png",
+    alt: "Golden star coin representing rewards",
     title: "Earn & Celebrate",
     text: "Coins, stickers and streaks reward curiosity and progress.",
   },
@@ -546,15 +552,21 @@ export default function LearnWithLukePage() {
           </div>
 
           <div className="learnBenefitsLayout">
-            <div className="learnBenefitGrid">
-              {benefits.map((benefit) => (
-                <article key={benefit.title}>
-                  <span>{benefit.icon}</span>
-                  <h3>{benefit.title}</h3>
-                  <p>{benefit.text}</p>
-                </article>
-              ))}
-            </div>
+        <div className="learnBenefitGrid">
+  {benefits.map((benefit) => (
+    <article key={benefit.title}>
+      <img
+        src={benefit.image}
+        alt={benefit.alt}
+        className="learnBenefitIcon"
+      />
+
+      <h3>{benefit.title}</h3>
+
+      <p>{benefit.text}</p>
+    </article>
+  ))}
+</div>
 
             <article className="learnGrowingCard">
               <div>
