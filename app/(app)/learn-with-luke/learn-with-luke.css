@@ -911,13 +911,12 @@
   right: 8px;
   left: 8px;
   font-family: "DK Woolwich", Impact, sans-serif;
-  font-size: 18px;
-  line-height: 0.92;
+  font-size: 23px;
+  line-height: 0.95;
   text-align: center;
   text-transform: uppercase;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.65);
 }
-
 .learnQuestionsButton {
   width: min(420px, 100%);
   min-height: 38px;
