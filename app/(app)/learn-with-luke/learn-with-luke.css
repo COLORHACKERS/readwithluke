@@ -958,11 +958,14 @@
   border-right: 0;
 }
 
-.learnBenefitGrid article > span {
+.learnBenefitIcon {
   display: block;
-  min-height: 36px;
-  font-family: "DK Woolwich", Impact, sans-serif;
-  font-size: 28px;
+  width: 82px;
+  height: 82px;
+  margin: 0 auto 12px;
+
+  object-fit: contain;
+  object-position: center;
 }
 
 .learnBenefitGrid h3 {
@@ -1590,7 +1593,10 @@
   .learnBenefitGrid p {
     font-size: 9px;
   }
-
+.learnBenefitIcon {
+  width: 72px;
+  height: 72px;
+}
   .learnFaqGrid button,
   .learnFaqGrid article p {
     font-size: 10px;
