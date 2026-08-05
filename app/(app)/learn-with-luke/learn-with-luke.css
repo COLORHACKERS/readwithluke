@@ -615,29 +615,29 @@
 .learnWowCopy {
   position: relative;
   z-index: 2;
-  width: 390px;
-  padding: 40px 0 35px 32px;
+  width: 520px;
+  padding: 55px 0 45px 42px;
   color: #ffffff;
 }
 
 .learnWowCopy > p:first-child {
   margin: 0;
   font-family: "DK Woolwich", Impact, sans-serif;
-  font-size: 31px;
+  font-size: 42px;
   text-transform: uppercase;
 }
 
 .learnWowCopy h2 {
-  margin: 0;
+  margin: 4px 0 0;
   font-family: "DK Woolwich", Impact, sans-serif;
-  font-size: 43px;
+  font-size: 58px;
   line-height: 0.88;
   text-transform: uppercase;
 }
 
 .learnWowCopy h2 span {
   display: block;
-  font-size: 61px;
+  font-size: 86px;
 }
 
 .learnWowStars {
@@ -647,24 +647,27 @@
 }
 
 .learnWowBody {
-  margin: 10px 0 0;
+  margin: 20px 0 0;
+  max-width: 500px;
   font-family: "Courier New", monospace;
-  font-size: 10px;
-  line-height: 1.5;
+  font-size: 17px;
+  line-height: 1.6;
 }
 
 .learnWowBody strong {
   color: #ffd125;
+  font-size: 17px;
+  font-weight: 900;
 }
 
 .learnWowDirection {
   position: absolute;
   z-index: 2;
-  right: 34px;
-  bottom: 30px;
+  right: 42px;
+  bottom: 34px;
   color: #ffd125;
   font-family: "DK Woolwich", Impact, sans-serif;
-  font-size: 22px;
+  font-size: 30px;
   line-height: 0.95;
   text-align: center;
   text-transform: uppercase;
@@ -673,8 +676,8 @@
 
 .learnWowDirection span {
   display: block;
-  margin-top: 7px;
-  font-size: 39px;
+  margin-top: 10px;
+  font-size: 54px;
 }
 
 /* =========================================
@@ -1616,6 +1619,27 @@
     width: 165px;
     height: 240px;
   }
+.learnWowCopy {
+  width: auto;
+  padding: 38px 22px;
+}
+
+.learnWowCopy > p:first-child {
+  font-size: 32px;
+}
+
+.learnWowCopy h2 {
+  font-size: 44px;
+}
+
+.learnWowCopy h2 span {
+  font-size: 64px;
+}
+
+.learnWowBody,
+.learnWowBody strong {
+  font-size: 14px;
+}
 
   @keyframes learnCarouselMove {
     from {
