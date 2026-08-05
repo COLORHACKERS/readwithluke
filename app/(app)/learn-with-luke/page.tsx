@@ -415,49 +415,7 @@ export default function LearnWithLukePage() {
 
         {/* TREE EXPLAINER */}
         <section className="learnTreePanel">
-          <div className="learnTreeIntro">
-            <p className="learnOrangeEyebrow">
-              Start With Wonder. End With “I Get It.”
-            </p>
-
-            <h2>
-              A child first sees one enormous living
-              giant.
-            </h2>
-
-            <p>
-              Then Luke explores how every part works
-              together to keep the tree alive.
-            </p>
-
-            <div className="learnJourney">
-              <div>
-                <span>◉</span>
-                <strong>Wow</strong>
-              </div>
-
-              <b>→</b>
-
-              <div>
-                <span>⌕</span>
-                <strong>Wonder</strong>
-              </div>
-
-              <b>→</b>
-
-              <div>
-                <span>▤</span>
-                <strong>Explore</strong>
-              </div>
-
-              <b>→</b>
-
-              <div>
-                <span>💡</span>
-                <strong>Understand</strong>
-              </div>
-            </div>
-          </div>
+        
 
           <div className="learnTreeContent">
             <div className="learnTreeHeading">
