@@ -89,7 +89,7 @@ const benefits = [
   {
     icon: "📖",
     title: "Short & Engaging Text",
-    text: "Perfect for ages 5–10 with big pictures and approachable words.",
+    text: "Perfect for ages 5–10+ with big pictures and approachable words.",
   },
   {
     icon: "🌎",
