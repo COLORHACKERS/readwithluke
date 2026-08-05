@@ -526,28 +526,7 @@ export default function LearnWithLukePage() {
   ))}
 </div>
 
-            <article className="learnGrowingCard">
-              <div>
-                <p>Always Growing</p>
 
-                <h3>
-                  New Adventures Added Regularly
-                </h3>
-
-                <span>
-                  There is always something new to
-                  explore.
-                </span>
-              </div>
-
-              <div className="learnGrowingMedia">
-                <Visual
-                  src="/images/learn-always-growing.png"
-                  filename="learn-always-growing.png"
-                  alt="Three colorful Learn With Luke adventure covers leaning together."
-                />
-              </div>
-            </article>
           </div>
         </section>
 
