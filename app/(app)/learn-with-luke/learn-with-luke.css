@@ -1264,7 +1264,26 @@
   .learnHero {
     min-height: 650px;
   }
+.learnBenefitGrid {
+  grid-template-columns: repeat(2, 1fr);
+}
 
+.learnBenefitGrid article:nth-child(even) {
+  border-right: 0;
+}
+
+.learnBenefitIcon {
+  width: 72px;
+  height: 72px;
+}
+
+.learnBenefitGrid h3 {
+  font-size: 13px;
+}
+
+.learnBenefitGrid p {
+  font-size: 11px;
+}
   .learnHeroOverlay {
     background:
       linear-gradient(
