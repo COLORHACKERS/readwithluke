@@ -237,18 +237,18 @@ export default function LearnWithLukePage() {
 
       <main className="learnMarketingMain">
         {/* HERO AND 10-ITEM CAROUSEL */}
-        <section className="learnTopPanel">
-  <div className="learnTopBackground">
-    <Visual
-      src="/images/learn-with-luke-hero.jpg"
-      filename="learn-with-luke-hero.jpg"
-      alt="Wide cinematic world showing Luke exploring mountains, ocean, weather, space and nature."
-    />
-  </div>
-
-  <div className="learnTopOverlay" />
-
+      <section className="learnTopPanel">
   <div className="learnHero">
+    <div className="learnHeroMedia">
+      <Visual
+        src="/images/learn-with-luke-hero.jpg"
+        filename="learn-with-luke-hero.jpg"
+        alt="Wide cinematic scene showing Luke on the right in a dramatic world combining snowy mountains, lightning, clouds, forest plants and distant discoveries."
+      />
+    </div>
+
+    <div className="learnHeroOverlay" />
+
     <div className="learnHeroCopy">
       <p className="learnHeroBrand">
         Learn With Luke
@@ -287,7 +287,7 @@ export default function LearnWithLukePage() {
       <div className="learnHeroMeta">
         <span>🧒 Ages 5–10+</span>
         <span>🎬 Cinematic Reading</span>
-        <span>🌕 Coins &amp; Stickers</span>
+        <span>🪙 Coins &amp; Stickers</span>
         <span>
           ✨ New Adventures Added Regularly
         </span>
