@@ -520,10 +520,7 @@ export default function LearnWithLukePage() {
                   src={getLearnCover(item)}
                   alt={item.title}
                 />
-
-                <div />
-
-                <strong>{item.title}</strong>
+                
               </Link>
             ))}
           </div>
