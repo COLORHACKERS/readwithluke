@@ -1123,37 +1123,60 @@
 
 .learnFinalPanel {
   position: relative;
-  min-height: 450px;
-  margin-top: 10px;
+  width: 100%;
+  height: 520px;
+  margin: 0;
+  padding: 0;
   overflow: hidden;
+
+  background: #000000;
 }
 
+
+/* Image fills the full section */
 .learnFinalMedia {
   position: absolute;
   inset: 0;
+
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+
+  line-height: 0;
 }
 
-.learnFinalMedia .learnMarketingPlaceholder {
-  border: 0;
+.learnFinalMedia .learnMarketingImage {
+  position: absolute;
+  inset: 0;
+
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+
+  object-fit: cover;
+  object-position: center center;
 }
 
 .learnFinalShade {
   display: none;
 }
 
+/* Keeps the buttons above the edge fade */
 .learnFinalCopy {
   position: relative;
   z-index: 2;
-  min-height: 280px;
-  padding: 0 20px 34px;
+
+  width: 100%;
+  height: 100%;
 
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
   align-items: center;
+  justify-content: flex-end;
 
-  color: #ffffff;
-  text-align: center;
+  padding: 0 20px 34px;
   box-sizing: border-box;
 }
 .learnFinalCopy > div {
@@ -1203,6 +1226,36 @@
   margin-top: 10px;
   font-family: "Courier New", monospace;
   font-size: 8px;
+}
+/* Fade the top, bottom, left and right edges into black */
+.learnFinalPanel::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      90deg,
+      #000000 0%,
+      rgba(0, 0, 0, 0.55) 3%,
+      rgba(0, 0, 0, 0) 10%,
+      rgba(0, 0, 0, 0) 90%,
+      rgba(0, 0, 0, 0.55) 97%,
+      #000000 100%
+    ),
+    linear-gradient(
+      180deg,
+      #000000 0%,
+      rgba(0, 0, 0, 0.48) 4%,
+      rgba(0, 0, 0, 0) 13%,
+      rgba(0, 0, 0, 0) 87%,
+      rgba(0, 0, 0, 0.62) 96%,
+      #000000 100%
+    );
 }
 
 /* =========================================
