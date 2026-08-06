@@ -260,26 +260,32 @@ export default function SignupPage() {
             </div>
           )}
 
-<input
-  id="signup-email"
-  type="email"
-  value={email}
-  readOnly
-  autoComplete="off"
-  className="signupEmailReadonly"
-/>
+<div className="signupEmailSection">
+  <label htmlFor="signup-email">
+    Parent Email
+  </label>
+
+  <input
+    id="signup-email"
+    type="email"
+    value={email}
+    readOnly
+    autoComplete="off"
+    className="signupEmailReadonly"
+  />
 </div>
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(event) =>
-              setPassword(event.target.value)
-            }
-            autoComplete="new-password"
-            minLength={6}
-            required
-          />
+
+<input
+  type="password"
+  placeholder="Password"
+  value={password}
+  onChange={(event) =>
+    setPassword(event.target.value)
+  }
+  autoComplete="new-password"
+  minLength={6}
+  required
+/>
 
           <button
             type="submit"
