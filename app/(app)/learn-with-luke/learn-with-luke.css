@@ -1052,71 +1052,92 @@
 
 .learnFaqPanel {
   margin-top: 10px;
-  padding: 17px 18px 0;
-  display: grid;
-  grid-template-columns: 1fr 220px;
-  align-items: end;
+  padding: 28px 28px 30px;
+
+  display: block;
+
+  border: 2px solid #d8bd8c;
+  border-radius: 24px;
+
+  background: #fff8ea;
+  box-sizing: border-box;
+}
+
+.learnFaqContent {
+  width: 100%;
 }
 
 .learnFaqContent h2 {
-  margin: 0 0 12px;
+  margin: 0 0 22px;
+
   font-family: "DK Woolwich", Impact, sans-serif;
-  font-size: 23px;
+  font-size: clamp(36px, 3vw, 52px);
   font-weight: 400;
+  line-height: 1;
   text-transform: uppercase;
 }
 
 .learnFaqGrid {
-  padding-bottom: 17px;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 6px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
 }
 
 .learnFaqGrid article {
+  min-width: 0;
   overflow: hidden;
+
   border: 1px solid #d1bc97;
-  border-radius: 6px;
+  border-radius: 10px;
+
+  background: #fffaf0;
 }
 
 .learnFaqGrid button {
   width: 100%;
-  padding: 8px;
+  min-height: 62px;
+  padding: 14px 16px;
+
   border: 0;
   background: transparent;
+
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  gap: 7px;
-  font-family: "Courier New", monospace;
-  font-size: 7px;
-  font-weight: 800;
+  gap: 12px;
+
+  color: #171717;
+
+  font-family: "Courier New", Courier, monospace;
+  font-size: 15px;
+  font-weight: 900;
+  line-height: 1.3;
   text-align: left;
+
   cursor: pointer;
+}
+
+.learnFaqGrid button b {
+  flex: 0 0 auto;
+  font-size: 18px;
 }
 
 .learnFaqGrid article p {
   margin: 0;
-  padding: 0 8px 8px;
-  font-family: "Courier New", monospace;
-  font-size: 7px;
-  line-height: 1.45;
+  padding: 0 16px 16px;
+
+  color: #171717;
+
+  font-family: "Courier New", Courier, monospace;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.55;
 }
 
+/* Luke image removed */
 .learnFaqLuke {
-  height: 170px;
+  display: none;
 }
-
-.learnFaqLuke .learnMarketingPlaceholder {
-  padding: 8px;
-  border-bottom: 0;
-}
-
-.learnFaqLuke .learnMarketingPlaceholder > strong,
-.learnFaqLuke .learnMarketingPlaceholder > span,
-.learnFaqLuke .learnMarketingPlaceholder p {
-  font-size: 6px;
-}
-
 /* =========================================
    FINAL CTA
 ========================================= */
@@ -1783,3 +1804,31 @@
       );
     }
   }
+@media (max-width: 1100px) {
+  .learnFaqGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .learnFaqPanel {
+    padding: 24px 16px;
+  }
+
+  .learnFaqContent h2 {
+    font-size: 34px;
+  }
+
+  .learnFaqGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .learnFaqGrid button {
+    min-height: 58px;
+    font-size: 14px;
+  }
+
+  .learnFaqGrid article p {
+    font-size: 13px;
+  }
+}
