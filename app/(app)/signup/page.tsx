@@ -13,6 +13,7 @@ type ReaderPlan =
   | "partner30";
 
 const GIFT_RETURN_PATH = "/gift?resumeGift=1";
+
 const OLD_GIFT_RETURN_PATH =
   "/membership?resumeGift=1";
 
@@ -53,14 +54,90 @@ export default function SignupPage() {
     }
 
     if (emailFromUrl) {
-      setEmail(emailFromUrl);
+      setEmail(
+        emailFromUrl.trim().toLowerCase()
+      );
     }
   }, []);
+
+  async function handleGiftSignup(
+    cleanEmail: string
+  ) {
+    if (!password) {
+      throw new Error(
+        "Please create a password."
+      );
+    }
+
+    if (password.length < 6) {
+      throw new Error(
+        "Your password must contain at least 6 characters."
+      );
+    }
+
+    const {
+      data: signupData,
+      error: signupError,
+    } = await supabase.auth.signUp({
+      email: cleanEmail,
+      password,
+    });
+
+    if (signupError) {
+      throw signupError;
+    }
+
+    if (!signupData.user) {
+      throw new Error(
+        "Your account could not be created. Please try again."
+      );
+    }
+
+    window.location.href = GIFT_RETURN_PATH;
+  }
+
+  async function openStripeCheckout(
+    cleanEmail: string
+  ) {
+    /*
+     * Do not create the Supabase member here.
+     * Stripe must successfully collect the card first.
+     */
+    const response = await fetch(
+      "/api/create-checkout-session",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: cleanEmail,
+          plan: selectedPlan,
+        }),
+      }
+    );
+
+    const checkout = await response.json();
+
+    if (!response.ok || !checkout.url) {
+      throw new Error(
+        checkout.error ||
+          "Unable to open secure checkout."
+      );
+    }
+
+    window.location.href = checkout.url;
+  }
 
   async function handleSignup(
     event: React.FormEvent<HTMLFormElement>
   ) {
     event.preventDefault();
+
+    if (loading) {
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -70,73 +147,19 @@ export default function SignupPage() {
 
       if (!cleanEmail) {
         throw new Error(
-          "Please enter your email."
-        );
-      }
-
-      if (!password) {
-        throw new Error(
-          "Please enter a password."
-        );
-      }
-
-      const {
-        data: signupData,
-        error: signupError,
-      } = await supabase.auth.signUp({
-        email: cleanEmail,
-        password,
-      });
-
-      if (signupError) {
-        throw signupError;
-      }
-
-      const newUser = signupData.user;
-
-      if (!newUser) {
-        throw new Error(
-          "Your account could not be created. Please try again."
+          "Please enter the parent email."
         );
       }
 
       if (isGiftSignup) {
-        window.location.href =
-          GIFT_RETURN_PATH;
-
+        await handleGiftSignup(cleanEmail);
         return;
       }
 
-      const response = await fetch(
-        "/api/create-checkout-session",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type":
-              "application/json",
-          },
-          body: JSON.stringify({
-            userId: newUser.id,
-            email: cleanEmail,
-            plan: selectedPlan,
-          }),
-        }
-      );
-
-      const checkout =
-        await response.json();
-
-      if (!response.ok || !checkout.url) {
-        throw new Error(
-          checkout.error ||
-            "Unable to start checkout."
-        );
-      }
-
-      window.location.href = checkout.url;
+      await openStripeCheckout(cleanEmail);
     } catch (error) {
       console.error(
-        "Signup error:",
+        "Signup or checkout error:",
         error
       );
 
@@ -156,6 +179,58 @@ export default function SignupPage() {
   const isPartnerPlan =
     selectedPlan === "partner30";
 
+  function getHeading() {
+    if (isGiftSignup) {
+      return "Create Your Gift Account!";
+    }
+
+    if (isYearlyPlan) {
+      return "Start Your Yearly Membership!";
+    }
+
+    if (isPartnerPlan) {
+      return "Start Your 30-Day Partner Pass!";
+    }
+
+    return "Start Your 7-Day Free Trial!";
+  }
+
+  function getSelectedPlanLabel() {
+    if (isYearlyPlan) {
+      return "YEARLY — $69.99/YEAR";
+    }
+
+    if (isPartnerPlan) {
+      return "PARTNER PASS — 30 DAYS FREE";
+    }
+
+    return "MONTHLY — 7 DAYS FREE";
+  }
+
+  function getButtonText() {
+    if (loading) {
+      if (isGiftSignup) {
+        return "CREATING ACCOUNT...";
+      }
+
+      return "OPENING SECURE CHECKOUT...";
+    }
+
+    if (isGiftSignup) {
+      return "CONTINUE TO GIFT CHECKOUT";
+    }
+
+    if (isYearlyPlan) {
+      return "CONTINUE — $69.99/YEAR";
+    }
+
+    if (isPartnerPlan) {
+      return "START 30-DAY PARTNER PASS";
+    }
+
+    return "CONTINUE TO SECURE CHECKOUT";
+  }
+
   return (
     <>
       <Header />
@@ -165,20 +240,12 @@ export default function SignupPage() {
           className="signupCard"
           onSubmit={handleSignup}
         >
-          <h1>
-            {isGiftSignup
-              ? "Create Your Gift Account!"
-              : isYearlyPlan
-                ? "Start Your Yearly Membership!"
-                : isPartnerPlan
-                  ? "Start Your 30-Day Partner Pass!"
-                  : "Start Your 7-Day Free Trial!"}
-          </h1>
+          <h1>{getHeading()}</h1>
 
           {isGiftSignup ? (
             <p>
-              Create your account to continue
-              to the{" "}
+              Create your purchaser account to
+              continue to the{" "}
               <strong>
                 $19.99 family gift checkout.
               </strong>
@@ -188,61 +255,46 @@ export default function SignupPage() {
             </p>
           ) : isYearlyPlan ? (
             <p>
-              Create your account to start your
-              yearly membership.
+              Continue to Stripe to securely
+              enter your payment information.
               <br />
               You will be charged{" "}
               <strong>$69.99 today</strong> for
               one full year of access.
               <br />
-              Your membership will renew
-              automatically for{" "}
-              <strong>
-                $69.99 per year
-              </strong>{" "}
-              unless canceled.
+              You will create your Read With
+              Luke password after payment is
+              confirmed.
             </p>
           ) : isPartnerPlan ? (
             <p>
-              Create your account to begin your{" "}
+              Continue to Stripe to securely
+              save your payment method for your{" "}
               <strong>
                 private 30-day partner pass.
               </strong>
               <br />
-              Your payment method will be
-              securely saved today, but{" "}
-              <strong>
-                you will not be charged during
-                your 30-day trial.
-              </strong>
+              You will not be charged during
+              the 30-day trial.
               <br />
-              Unless you cancel before the pass
-              ends, your membership will
-              automatically continue for{" "}
-              <strong>
-                $9.99 per month.
-              </strong>
+              You will create your Read With
+              Luke password after Stripe
+              confirms your pass.
             </p>
           ) : (
             <p>
-              Create your account to begin your{" "}
+              Continue to Stripe to securely
+              save your payment method for your{" "}
               <strong>
                 7-day free trial.
               </strong>
               <br />
-              Your payment method will be
-              securely saved today, but{" "}
-              <strong>
-                you won&apos;t be charged during
-                your trial.
-              </strong>
+              You will not be charged during
+              the trial.
               <br />
-              Unless you cancel before your
-              trial ends, your membership will
-              automatically continue for{" "}
-              <strong>
-                $9.99 per month.
-              </strong>
+              You will create your Read With
+              Luke password after Stripe
+              confirms your trial.
             </p>
           )}
 
@@ -251,57 +303,41 @@ export default function SignupPage() {
               <span>SELECTED PLAN</span>
 
               <strong>
-                {isYearlyPlan
-                  ? "YEARLY — $69.99/YEAR"
-                  : isPartnerPlan
-                    ? "PARTNER PASS — 30 DAYS FREE"
-                    : "MONTHLY — 7 DAYS FREE"}
+                {getSelectedPlanLabel()}
               </strong>
             </div>
           )}
 
-<input
-  type="email"
-  placeholder="Parent email"
-  value={email}
-  onChange={(event) =>
-    setEmail(event.target.value)
-  }
-  autoComplete="email"
-  required
-/>
+          <input
+            type="email"
+            placeholder="Parent email"
+            value={email}
+            onChange={(event) =>
+              setEmail(event.target.value)
+            }
+            autoComplete="email"
+            required
+          />
 
-<input
-  type="password"
-  placeholder="Password"
-  value={password}
-  onChange={(event) =>
-    setPassword(event.target.value)
-  }
-  autoComplete="new-password"
-  minLength={6}
-  required
-/>
+          {isGiftSignup && (
+            <input
+              type="password"
+              placeholder="Create password"
+              value={password}
+              onChange={(event) =>
+                setPassword(event.target.value)
+              }
+              autoComplete="new-password"
+              minLength={6}
+              required
+            />
+          )}
 
           <button
             type="submit"
             disabled={loading}
           >
-            {loading
-              ? isGiftSignup
-                ? "CREATING ACCOUNT..."
-                : isYearlyPlan
-                  ? "OPENING YEARLY CHECKOUT..."
-                  : isPartnerPlan
-                    ? "OPENING 30-DAY PASS..."
-                    : "STARTING TRIAL..."
-              : isGiftSignup
-                ? "CONTINUE TO GIFT CHECKOUT"
-                : isYearlyPlan
-                  ? "CONTINUE — $69.99/YEAR"
-                  : isPartnerPlan
-                    ? "START 30-DAY PARTNER PASS"
-                    : "START 7-DAY FREE TRIAL"}
+            {getButtonText()}
           </button>
         </form>
       </main>
