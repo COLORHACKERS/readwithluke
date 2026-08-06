@@ -260,17 +260,30 @@ export default function SignupPage() {
             </div>
           )}
 
-          <input
-            type="email"
-            placeholder="Parent email"
-            value={email}
-            onChange={(event) =>
-              setEmail(event.target.value)
-            }
-            autoComplete="email"
-            required
-          />
+        <div className="signupEmailSection">
+  <label htmlFor="signup-email">
+    Parent Email
+  </label>
 
+  <input
+    id="signup-email"
+    type="email"
+    value={email}
+    readOnly
+    autoComplete="off"
+    className="signupEmailReadonly"
+  />
+
+  <button
+    type="button"
+    className="signupChangeEmail"
+    onClick={() => {
+      window.location.href = "/membership";
+    }}
+  >
+    Change Email
+  </button>
+</div>
           <input
             type="password"
             placeholder="Password"
