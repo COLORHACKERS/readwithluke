@@ -1121,6 +1121,10 @@
    FINAL CTA
 ========================================= */
 
+/* =========================================
+   FINAL CTA IMAGE + BUTTONS
+========================================= */
+
 .learnFinalPanel {
   position: relative;
   width: 100%;
@@ -1128,69 +1132,91 @@
   margin: 0;
   padding: 0;
   overflow: hidden;
-
   background: #000000;
 }
 
-
-/* Image fills the full section */
 .learnFinalMedia {
   position: absolute;
   inset: 0;
-
   width: 100%;
   height: 100%;
-  margin: 0;
-  padding: 0;
-
   line-height: 0;
 }
 
 .learnFinalMedia .learnMarketingImage {
-  position: absolute;
-  inset: 0;
-
   display: block;
   width: 100%;
   height: 100%;
-  margin: 0;
-
   object-fit: cover;
-  object-position: center center;
+  object-position: center;
 }
 
-.learnFinalShade {
-  display: none;
+/* Soft black fade around the edges */
+.learnFinalPanel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      90deg,
+      #000000 0%,
+      rgba(0, 0, 0, 0.45) 4%,
+      transparent 12%,
+      transparent 88%,
+      rgba(0, 0, 0, 0.45) 96%,
+      #000000 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.35) 0%,
+      transparent 12%,
+      transparent 82%,
+      rgba(0, 0, 0, 0.72) 100%
+    );
 }
 
-/* Keeps the buttons above the edge fade */
+/* Button area */
 .learnFinalCopy {
-  position: relative;
-  z-index: 2;
-
-  width: 100%;
-  height: 100%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 28px;
+  z-index: 3;
 
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
 
-  padding: 0 20px 34px;
+  padding: 0 20px;
   box-sizing: border-box;
 }
+
 .learnFinalCopy > div {
-  margin-top: auto;
-  transform: translateY(95px);
+  position: static;
+  width: auto;
+  margin: 0;
+  transform: none;
 
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 16px;
+  gap: 14px;
 }
 
 .learnFinalCopy > span {
-  margin-top: 105px;
+  position: static;
+  display: block;
+  margin: 10px 0 0;
+  transform: none;
+
+  color: #ffffff;
+  font-family: "Courier New", monospace;
+  font-size: 11px;
+  font-weight: 700;
+  text-shadow: 0 2px 7px rgba(0, 0, 0, 0.8);
 }
 
 .learnFinalCopy > p {
