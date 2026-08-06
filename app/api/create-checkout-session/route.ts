@@ -1,31 +1,29 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 
-type ReaderPlan = "monthly" | "yearly" | "partner30";
+type ReaderPlan =
+  | "monthly"
+  | "yearly"
+  | "partner30";
 
-export async function POST(req: Request) {
+export async function POST(request: Request) {
   try {
-    const body = await req.json();
+    const body = await request.json();
 
-    const userId = String(body.userId ?? "").trim();
     const email = String(body.email ?? "")
       .trim()
       .toLowerCase();
 
-    let selectedPlan: ReaderPlan = "monthly";
+    const selectedPlan: ReaderPlan =
+      body.plan === "yearly"
+        ? "yearly"
+        : body.plan === "partner30"
+          ? "partner30"
+          : "monthly";
 
-    if (body.plan === "yearly") {
-      selectedPlan = "yearly";
-    } else if (body.plan === "partner30") {
-      selectedPlan = "partner30";
-    }
+    const secretKey =
+      process.env.STRIPE_SECRET_KEY;
 
-    const secretKey = process.env.STRIPE_SECRET_KEY;
-
-    /*
-     * partner30 uses the normal monthly Stripe price,
-     * but receives a 30-day trial instead of 7 days.
-     */
     const monthlyPriceId =
       process.env.STRIPE_MONTHLY_PRICE_ID ||
       process.env.NEXT_PUBLIC_STRIPE_PRICE_ID;
@@ -39,20 +37,20 @@ export async function POST(req: Request) {
     ).replace(/\/$/, "");
 
     if (!secretKey) {
-      throw new Error("Missing STRIPE_SECRET_KEY");
-    }
-
-    if (!userId) {
-      throw new Error("Missing userId");
+      throw new Error(
+        "Missing STRIPE_SECRET_KEY"
+      );
     }
 
     if (!email) {
-      throw new Error("Missing email");
+      throw new Error(
+        "Please enter a valid email address."
+      );
     }
 
     if (!monthlyPriceId) {
       throw new Error(
-        "Missing monthly Stripe price ID"
+        "Missing STRIPE_MONTHLY_PRICE_ID"
       );
     }
 
@@ -65,13 +63,17 @@ export async function POST(req: Request) {
       );
     }
 
-    const isYearly = selectedPlan === "yearly";
+    const isYearly =
+      selectedPlan === "yearly";
+
     const isPartner30 =
       selectedPlan === "partner30";
 
     /*
-     * Yearly uses the yearly price.
-     * Monthly and partner30 both use the monthly price.
+     * Monthly and partner30 use the recurring
+     * monthly Stripe price.
+     *
+     * Yearly uses the recurring yearly price.
      */
     const priceId = isYearly
       ? yearlyPriceId
@@ -79,18 +81,45 @@ export async function POST(req: Request) {
 
     if (!priceId) {
       throw new Error(
-        "Unable to determine Stripe price ID"
+        "Unable to determine the Stripe price."
+      );
+    }
+
+    /*
+     * Stripe Checkout subscription mode requires
+     * a recurring Stripe Price ID beginning with
+     * price_, not a Product ID beginning with prod_.
+     */
+    if (!priceId.startsWith("price_")) {
+      throw new Error(
+        "The Stripe environment variable must contain a Price ID beginning with price_."
       );
     }
 
     const stripe = new Stripe(secretKey);
 
     /*
-     * Monthly: 7-day trial
-     * Partner: 30-day trial
+     * Monthly: 7-day free trial
+     * Partner: 30-day free trial
      * Yearly: charged immediately
      */
-    const trialDays = isPartner30 ? 30 : 7;
+    const trialDays = isPartner30
+      ? 30
+      : 7;
+
+    const subscriptionData: Stripe.Checkout.SessionCreateParams.SubscriptionData =
+      {
+        metadata: {
+          email,
+          plan: selectedPlan,
+        },
+
+        ...(!isYearly
+          ? {
+              trial_period_days: trialDays,
+            }
+          : {}),
+      };
 
     const session =
       await stripe.checkout.sessions.create({
@@ -99,12 +128,10 @@ export async function POST(req: Request) {
         customer_email: email,
 
         /*
-         * Always collect a payment method now so Stripe
-         * can begin billing after the trial ends.
+         * Collect the card even when the amount
+         * due today is $0 during a trial.
          */
         payment_method_collection: "always",
-
-        client_reference_id: userId,
 
         line_items: [
           {
@@ -113,29 +140,23 @@ export async function POST(req: Request) {
           },
         ],
 
-        subscription_data: isYearly
-          ? {
-              metadata: {
-                user_id: userId,
-                plan: selectedPlan,
-              },
-            }
-          : {
-              trial_period_days: trialDays,
-
-              metadata: {
-                user_id: userId,
-                plan: selectedPlan,
-              },
-            },
+        subscription_data: subscriptionData,
 
         metadata: {
-          user_id: userId,
+          email,
           plan: selectedPlan,
         },
 
+        /*
+         * Do not create the Supabase user before
+         * this checkout succeeds.
+         *
+         * Stripe sends the customer here after
+         * their card has been submitted.
+         */
         success_url:
-          `${siteUrl}/dashboard?checkout=success&plan=${selectedPlan}`,
+          `${siteUrl}/complete-signup` +
+          `?session_id={CHECKOUT_SESSION_ID}`,
 
         cancel_url: isPartner30
           ? `${siteUrl}/partner-pass?checkout=cancelled`
@@ -144,7 +165,7 @@ export async function POST(req: Request) {
 
     if (!session.url) {
       throw new Error(
-        "Stripe did not return a checkout URL"
+        "Stripe did not return a checkout URL."
       );
     }
 
@@ -155,7 +176,7 @@ export async function POST(req: Request) {
     const message =
       error instanceof Error
         ? error.message
-        : "Checkout error";
+        : "Unable to start checkout.";
 
     console.error(
       "Create checkout session error:",
