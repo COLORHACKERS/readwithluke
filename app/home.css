@@ -612,8 +612,14 @@ html {
   line-height: 1.48;
 }
 
+/* =========================================================
+   READER PREVIEW BENEFIT ICONS
+========================================================= */
+
 .homeInsideBenefits {
-  margin-top: 34px;
+  width: 100%;
+  margin-top: 26px;
+
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   align-items: start;
@@ -621,13 +627,17 @@ html {
 
 .insideBenefitItem {
   min-width: 0;
-  padding: 0 24px;
-  border-right: 1px solid rgba(18, 18, 18, 0.18);
+  padding: 6px 18px 4px;
 
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
+
+  border-right: 1px solid rgba(18, 18, 18, 0.18);
+
   text-align: center;
+  box-sizing: border-box;
 }
 
 .insideBenefitItem:first-child {
@@ -640,70 +650,36 @@ html {
 }
 
 .insideBenefitImage {
-  width: 108px;
-  height: 108px;
-  object-fit: contain;
   display: block;
-  margin: 0 auto 16px;
+
+  width: 118px;
+  height: 118px;
+  margin: 0 auto 6px;
+
+  object-fit: contain;
+  object-position: center;
 }
 
 .insideBenefitItem strong {
   display: block;
-  max-width: 180px;
-  margin: 0 auto;
-  font-family: "Courier New", monospace;
-  font-size: 15px;
-  line-height: 1.35;
-  color: #172033;
-}
 
-.homeInsideBenefits > div {
-  display: grid;
-  justify-items: center;
-  gap: 7px;
+  width: 100%;
+  max-width: 175px;
+  margin: 0 auto;
+
+  color: #172033;
+
+  font-family: "Courier New", Courier, monospace;
+  font-size: 16px;
+  font-weight: 900;
+  line-height: 1.18;
 
   text-align: center;
 }
 
-.insideBenefitIcon {
-  display: grid;
-  place-items: center;
-
-  width: 42px;
-  height: 42px;
-
-  border: 3px solid currentColor;
-  border-radius: 50%;
-
-  color: #3973b7;
-
-  font-family: Arial, sans-serif;
-  font-size: 20px;
-  font-weight: 900;
-}
-
-.homeInsideBenefits > div:nth-child(2) .insideBenefitIcon {
-  color: #a257e8;
-}
-
-.homeInsideBenefits > div:nth-child(3) .insideBenefitIcon {
-  color: #3aa96a;
-}
-
-.homeInsideBenefits > div:nth-child(4) .insideBenefitIcon {
-  color: #ff4568;
-}
-
-.homeInsideBenefits strong {
-  font-family: "Courier New", Courier, monospace;
-  font-size: 9px;
-  line-height: 1.3;
-}
-
 .insideStoryButton {
-  margin-top: 22px;
+  margin-top: 28px;
 }
-
 /* OPEN BOOK */
 
 .homeBookPreview {
@@ -1505,18 +1481,23 @@ html {
     grid-template-columns: repeat(2, 1fr);
   }
   
-  .homeInsideBenefits {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 28px 0;
-  }
+ .homeInsideBenefits {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 26px 0;
+}
 
-  .insideBenefitItem:nth-child(2) {
-    border-right: 0;
-  }
+.insideBenefitItem:nth-child(2) {
+  border-right: 0;
+}
 
-  .insideBenefitItem strong {
-    font-size: 13px;
-  }
+.insideBenefitImage {
+  width: 104px;
+  height: 104px;
+}
+
+.insideBenefitItem strong {
+  font-size: 15px;
+}
 }
 
 /* =========================================================
@@ -1669,20 +1650,31 @@ html {
     font-size: 36px;
   }
 
-  .homeInsideBenefits {
-    grid-template-columns: repeat(2, 1fr);
-  }
+ .homeInsideBenefits {
+  margin-top: 24px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px 0;
+}
 
-  .insideBenefitItem {
-    padding: 0 14px;
-  }
+.insideBenefitItem {
+  padding: 4px 12px;
+}
 
-  .insideBenefitImage {
-    width: 84px;
-    height: 84px;
-    margin-bottom: 12px;
-  }
+.insideBenefitItem:nth-child(2) {
+  border-right: 0;
+}
 
+.insideBenefitImage {
+  width: 92px;
+  height: 92px;
+  margin-bottom: 5px;
+}
+
+.insideBenefitItem strong {
+  max-width: 145px;
+  font-size: 14px;
+  line-height: 1.2;
+}
   .homeBookPreview {
     padding: 7px 7px 12px;
     border-width: 5px;
