@@ -564,14 +564,6 @@ export default function LearnWithLukePage() {
               })}
             </div>
           </div>
-
-          <div className="learnFaqLuke">
-            <Visual
-              src="/images/learn-faq-luke.png"
-              filename="learn-faq-luke.png"
-              alt="Luke smiling while holding a large magnifying glass."
-            />
-          </div>
         </section>
 
         {/* FINAL CTA */}
