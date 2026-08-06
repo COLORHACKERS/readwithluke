@@ -52,7 +52,7 @@ const partnerSteps = [
   },
   {
     number: "3",
-    image: "/images/luke-trial-reminder.png",
+    image: "/images/luke-trial-reminder30.png",
     title: "Share Honestly",
     text: "Create genuine content based on your experience with Read With Luke.",
   },
