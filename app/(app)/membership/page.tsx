@@ -6,6 +6,14 @@ import Footer from "@/app/components/Footer";
 import ReaderEmbeddedCheckout from "@/app/components/ReaderEmbeddedCheckout";
 import "./membership.css";
 
+const passwordsMatch =
+  confirmPassword.length > 0 &&
+  password === confirmPassword;
+
+const passwordsDoNotMatch =
+  confirmPassword.length > 0 &&
+  password !== confirmPassword;
+
 type FaqItem = {
   question: string;
   answer: string;
@@ -481,6 +489,17 @@ export default function MembershipPage() {
                     </button>
                   </div>
                 </div>
+                {passwordsMatch && (
+  <p className="passwordMatchMessage passwordMatchSuccess">
+    ✓ Passwords match
+  </p>
+)}
+
+{passwordsDoNotMatch && (
+  <p className="passwordMatchMessage passwordMatchError">
+    ✕ Passwords do not match
+  </p>
+)}
 
                 {formError && (
                   <p className="membershipFormError">
