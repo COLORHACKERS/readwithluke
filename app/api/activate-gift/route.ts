@@ -10,127 +10,343 @@ const supabaseAdmin = createClient(
 
 export async function POST(req: Request) {
   try {
-    const authorization = req.headers.get("authorization");
-    const accessToken = authorization?.replace("Bearer ", "").trim();
+    const body = await req.json();
 
-    if (!accessToken) {
-      return NextResponse.json(
-        { error: "Please sign in before activating the gift." },
-        { status: 401 }
-      );
-    }
+    const token = String(
+      body.token || ""
+    ).trim();
 
-    const { token } = await req.json();
+    const password = String(
+      body.password || ""
+    );
 
     if (!token) {
       return NextResponse.json(
-        { error: "Missing gift activation token." },
-        { status: 400 }
+        {
+          error:
+            "Missing gift activation token.",
+        },
+        {
+          status: 400,
+        }
       );
     }
+
+    if (password.length < 6) {
+      return NextResponse.json(
+        {
+          error:
+            "Your password must contain at least 6 characters.",
+        },
+        {
+          status: 400,
+        }
+      );
+    }
+
+    /* =====================================================
+       FIND THE GIFT
+    ===================================================== */
 
     const {
-      data: { user },
-      error: userError,
-    } = await supabaseAdmin.auth.getUser(accessToken);
-
-    if (userError || !user?.email) {
-      return NextResponse.json(
-        { error: "Your login session is invalid. Please sign in again." },
-        { status: 401 }
-      );
-    }
-
-    const { data: gift, error: giftError } = await supabaseAdmin
+      data: gift,
+      error: giftError,
+    } = await supabaseAdmin
       .from("gift_memberships")
       .select(
         `
           id,
+          purchaser_name,
+          purchaser_email,
           parent_email,
           parent_user_id,
+          relationship,
+          progress_report_requested,
+          progress_report_approved,
           status,
           stripe_customer_id,
-          stripe_subscription_id
+          stripe_subscription_id,
+          activated_at
         `
       )
-      .eq("activation_token", token)
+      .eq(
+        "activation_token",
+        token
+      )
       .maybeSingle();
 
     if (giftError) {
-      throw new Error(giftError.message);
+      throw new Error(
+        giftError.message
+      );
     }
 
     if (!gift) {
       return NextResponse.json(
-        { error: "This gift invitation could not be found." },
-        { status: 404 }
-      );
-    }
-
-    const signedInEmail = user.email.trim().toLowerCase();
-    const invitedEmail = gift.parent_email.trim().toLowerCase();
-
-    if (signedInEmail !== invitedEmail) {
-      return NextResponse.json(
         {
-          error: `Please sign in using the invited parent email: ${gift.parent_email}`,
+          error:
+            "This gift invitation could not be found.",
         },
-        { status: 403 }
-      );
-    }
-
-    if (gift.parent_user_id && gift.parent_user_id !== user.id) {
-      return NextResponse.json(
-        { error: "This gift has already been claimed by another account." },
-        { status: 409 }
+        {
+          status: 404,
+        }
       );
     }
 
     if (gift.status === "cancelled") {
       return NextResponse.json(
-        { error: "This gift membership is no longer active." },
-        { status: 410 }
+        {
+          error:
+            "This gift membership is no longer active.",
+        },
+        {
+          status: 410,
+        }
       );
     }
 
-    const now = new Date().toISOString();
+    const guardianEmail =
+      gift.parent_email
+        ?.trim()
+        .toLowerCase();
 
-    const { error: activationError } = await supabaseAdmin
+    if (!guardianEmail) {
+      return NextResponse.json(
+        {
+          error:
+            "This gift invitation is missing the guardian email.",
+        },
+        {
+          status: 400,
+        }
+      );
+    }
+
+    /* =====================================================
+       ALREADY ACTIVATED
+    ===================================================== */
+
+    if (
+      gift.parent_user_id &&
+      gift.activated_at
+    ) {
+      return NextResponse.json(
+        {
+          error:
+            "This gift has already been activated. Please sign in with the guardian account.",
+          alreadyActivated: true,
+          email: guardianEmail,
+        },
+        {
+          status: 409,
+        }
+      );
+    }
+
+    /* =====================================================
+       CHECK FOR EXISTING SUPABASE ACCOUNT
+    ===================================================== */
+
+    const {
+      data: usersData,
+      error: usersError,
+    } =
+      await supabaseAdmin.auth.admin.listUsers(
+        {
+          page: 1,
+          perPage: 1000,
+        }
+      );
+
+    if (usersError) {
+      throw new Error(
+        usersError.message
+      );
+    }
+
+    const existingUser =
+      usersData.users.find(
+        (user) =>
+          user.email
+            ?.trim()
+            .toLowerCase() ===
+          guardianEmail
+      );
+
+    /*
+     * IMPORTANT:
+     *
+     * If this email already owns a Read With Luke
+     * account, we do NOT overwrite that account's
+     * password.
+     *
+     * The guardian should sign in normally instead.
+     */
+    if (existingUser) {
+      return NextResponse.json(
+        {
+          success: false,
+          accountExists: true,
+          email: guardianEmail,
+          message:
+            "An account already exists for this email. Please sign in to activate your gift.",
+        },
+        {
+          status: 409,
+        }
+      );
+    }
+
+    /* =====================================================
+       CREATE GUARDIAN ACCOUNT
+    ===================================================== */
+
+    const {
+      data: createdUserData,
+      error: createUserError,
+    } =
+      await supabaseAdmin.auth.admin.createUser(
+        {
+          email:
+            guardianEmail,
+
+          password,
+
+          email_confirm:
+            true,
+        }
+      );
+
+    if (
+      createUserError ||
+      !createdUserData.user
+    ) {
+      throw new Error(
+        createUserError?.message ||
+          "Could not create the guardian account."
+      );
+    }
+
+    const guardianUser =
+      createdUserData.user;
+
+    /* =====================================================
+       ATTACH GIFT TO GUARDIAN
+    ===================================================== */
+
+    const now =
+      new Date().toISOString();
+
+    const {
+      error: activationError,
+    } = await supabaseAdmin
       .from("gift_memberships")
       .update({
-        parent_user_id: user.id,
-        status: "active",
-        activated_at: now,
+        parent_user_id:
+          guardianUser.id,
+
+        status:
+          "active",
+
+        activated_at:
+          now,
+
+        /*
+         * Do NOT approve sharing automatically.
+         */
+        progress_report_approved:
+          false,
       })
-      .eq("id", gift.id);
+      .eq(
+        "id",
+        gift.id
+      );
 
     if (activationError) {
-      throw new Error(activationError.message);
+      throw new Error(
+        activationError.message
+      );
     }
 
-    const { error: profileError } = await supabaseAdmin
+    /* =====================================================
+       CREATE / UPDATE GUARDIAN PROFILE
+    ===================================================== */
+
+    const {
+      error: profileError,
+    } = await supabaseAdmin
       .from("profiles")
-      .update({
-        membership_status: "active",
-        stripe_customer_id: gift.stripe_customer_id,
-        stripe_subscription_id: gift.stripe_subscription_id,
-      })
-      .eq("id", user.id);
+      .upsert(
+        {
+          id:
+            guardianUser.id,
+
+          email:
+            guardianEmail,
+
+          membership_status:
+            "active",
+
+          stripe_customer_id:
+            gift.stripe_customer_id,
+
+          stripe_subscription_id:
+            gift.stripe_subscription_id,
+        },
+        {
+          onConflict: "id",
+        }
+      );
 
     if (profileError) {
-      throw new Error(profileError.message);
+      throw new Error(
+        profileError.message
+      );
     }
+
+    /* =====================================================
+       RETURN INFO FOR NEXT SCREEN
+    ===================================================== */
 
     return NextResponse.json({
       success: true,
-      message: "Your Read With Luke gift is active!",
+
+      message:
+        "Your Read With Luke gift is active!",
+
+      email:
+        guardianEmail,
+
+      giftId:
+        gift.id,
+
+      gifterName:
+        gift.purchaser_name ||
+        "Your gift giver",
+
+      progressReportRequested:
+        Boolean(
+          gift.progress_report_requested
+        ),
     });
   } catch (error) {
-    console.error("Activate gift error:", error);
+    console.error(
+      "Activate gift error:",
+      error
+    );
 
     const message =
-      error instanceof Error ? error.message : "Could not activate gift.";
+      error instanceof Error
+        ? error.message
+        : "Could not activate gift.";
 
-    return NextResponse.json({ error: message }, { status: 500 });
+    return NextResponse.json(
+      {
+        error: message,
+      },
+      {
+        status: 500,
+      }
+    );
   }
 }
