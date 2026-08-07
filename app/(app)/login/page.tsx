@@ -1,6 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import {
+  FormEvent,
+  useEffect,
+  useState,
+} from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Header from "@/app/components/Header";
@@ -12,23 +16,53 @@ import "../signup/signup.css";
 export default function LoginPage() {
   const router = useRouter();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] =
+    useState("");
 
-  async function handleLogin(e: React.FormEvent) {
+  const [password, setPassword] =
+    useState("");
+
+  const [nextPath, setNextPath] =
+    useState("/dashboard");
+
+  useEffect(() => {
+    const params =
+      new URLSearchParams(
+        window.location.search
+      );
+
+    const next =
+      params.get("next");
+
+    if (
+      next &&
+      next.startsWith("/")
+    ) {
+      setNextPath(next);
+    }
+  }, []);
+
+  async function handleLogin(
+    e: FormEvent<HTMLFormElement>
+  ) {
     e.preventDefault();
 
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    const { error } =
+      await supabase.auth.signInWithPassword(
+        {
+          email:
+            email.trim().toLowerCase(),
+
+          password,
+        }
+      );
 
     if (error) {
       alert(error.message);
       return;
     }
 
-    router.push("/dashboard");
+    router.push(nextPath);
   }
 
   return (
@@ -36,37 +70,59 @@ export default function LoginPage() {
       <Header />
 
       <main className="signupPage">
-        <form className="signupCard" onSubmit={handleLogin}>
+        <form
+          className="signupCard"
+          onSubmit={handleLogin}
+        >
           <h1>LOG IN</h1>
 
-          <p>Welcome back! Continue your reading adventure.</p>
+          <p>
+            Welcome back! Continue
+            your reading adventure.
+          </p>
 
           <input
             placeholder="Parent email"
             type="email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) =>
+              setEmail(
+                e.target.value
+              )
+            }
             required
+            autoComplete="email"
           />
 
           <input
             placeholder="Password"
             type="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) =>
+              setPassword(
+                e.target.value
+              )
+            }
             required
+            autoComplete="current-password"
           />
 
-          <button type="submit">LOG IN</button>
+          <button type="submit">
+            LOG IN
+          </button>
+
           <div className="forgotPassword">
-  <Link href="/forgot-password">
-    Forgot your password?
-  </Link>
-</div>
+            <Link href="/forgot-password">
+              Forgot your password?
+            </Link>
+          </div>
 
           <p className="authSmallText">
-            Don&apos;t have an account?{" "}
-            <Link href="/signup">Join here</Link>
+            Don&apos;t have an
+            account?{" "}
+            <Link href="/signup">
+              Join here
+            </Link>
           </p>
         </form>
       </main>
