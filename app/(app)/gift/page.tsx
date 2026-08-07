@@ -432,7 +432,7 @@ export default function GiftReadingPage() {
 
             <div className="giftPinkieBox">
               <img
-                src="/images/luke-pinkie-swear.png"
+                src="/images/luke-pinkie-swear2.png"
                 alt="Luke holding out his pinkie"
               />
 
