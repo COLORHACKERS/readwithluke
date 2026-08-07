@@ -258,3 +258,115 @@
     border-width: 6px;
   }
 }
+/* =========================================================
+   CURRENT READER SELECTOR
+========================================================= */
+
+.dashboardReaderSide {
+  min-width: 0;
+}
+
+.dashboardReaderSelector {
+  margin-top: 16px;
+}
+
+.dashboardReaderSelector > span {
+  display: block;
+  margin-bottom: 7px;
+
+  font-family: "Courier New", monospace;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+
+  color: #13294b;
+}
+
+.dashboardReaderSelectRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.dashboardReaderSelectRow select {
+  min-width: 210px;
+  height: 44px;
+
+  padding: 0 38px 0 18px;
+
+  border: 2px solid #ff5526;
+  border-radius: 999px;
+
+  background: #ffffff;
+  color: #13294b;
+
+  font-family: "Courier New", monospace;
+  font-size: 13px;
+  font-weight: 900;
+
+  cursor: pointer;
+  outline: none;
+}
+
+.dashboardReaderSelectRow select:focus {
+  border-color: #13294b;
+}
+
+.dashboardReaderSelectRow select:disabled {
+  opacity: 0.55;
+  cursor: wait;
+}
+
+.dashboardAddReader {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 44px;
+  padding: 0 18px;
+
+  border: 2px solid #13294b;
+  border-radius: 999px;
+
+  background: #ffffff;
+  color: #13294b;
+
+  font-family: "Courier New", monospace;
+  font-size: 11px;
+  font-weight: 900;
+
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.dashboardAddReader:hover {
+  background: #13294b;
+  color: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .dashboardAvatarWrap {
+    width: 100%;
+  }
+
+  .dashboardAvatarWrap > div:last-child {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .dashboardReaderSelectRow {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .dashboardReaderSelectRow select,
+  .dashboardAddReader {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .dashboardReaderSelectRow select {
+    min-width: 0;
+  }
+}
