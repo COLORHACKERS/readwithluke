@@ -69,12 +69,6 @@ export async function POST(request: Request) {
     const isPartner30 =
       selectedPlan === "partner30";
 
-    /*
-     * Monthly and partner30 use the recurring
-     * monthly Stripe price.
-     *
-     * Yearly uses the recurring yearly price.
-     */
     const priceId = isYearly
       ? yearlyPriceId
       : monthlyPriceId;
@@ -85,27 +79,17 @@ export async function POST(request: Request) {
       );
     }
 
-    /*
-     * Stripe Checkout subscription mode requires
-     * a recurring Stripe Price ID beginning with
-     * price_, not a Product ID beginning with prod_.
-     */
     if (!priceId.startsWith("price_")) {
       throw new Error(
         "The Stripe environment variable must contain a Price ID beginning with price_."
       );
     }
 
-    const stripe = new Stripe(secretKey);
+    const stripe =
+      new Stripe(secretKey);
 
-    /*
-     * Monthly: 7-day free trial
-     * Partner: 30-day free trial
-     * Yearly: charged immediately
-     */
-    const trialDays = isPartner30
-      ? 30
-      : 7;
+    const trialDays =
+      isPartner30 ? 30 : 7;
 
     const subscriptionData: Stripe.Checkout.SessionCreateParams.SubscriptionData =
       {
@@ -116,22 +100,31 @@ export async function POST(request: Request) {
 
         ...(!isYearly
           ? {
-              trial_period_days: trialDays,
+              trial_period_days:
+                trialDays,
             }
           : {}),
       };
 
     const session =
       await stripe.checkout.sessions.create({
+        /*
+         * EMBED STRIPE DIRECTLY
+         * INSIDE READ WITH LUKE
+         */
+        ui_mode: "embedded_page",
+
         mode: "subscription",
 
         customer_email: email,
 
         /*
-         * Collect the card even when the amount
-         * due today is $0 during a trial.
+         * Collect card information
+         * even though today's charge
+         * is $0 during the trial.
          */
-        payment_method_collection: "always",
+        payment_method_collection:
+          "always",
 
         line_items: [
           {
@@ -140,7 +133,8 @@ export async function POST(request: Request) {
           },
         ],
 
-        subscription_data: subscriptionData,
+        subscription_data:
+          subscriptionData,
 
         metadata: {
           email,
@@ -148,29 +142,24 @@ export async function POST(request: Request) {
         },
 
         /*
-         * Do not create the Supabase user before
-         * this checkout succeeds.
-         *
-         * Stripe sends the customer here after
-         * their card has been submitted.
+         * Embedded Checkout uses
+         * return_url instead of
+         * success_url / cancel_url.
          */
-        success_url:
+        return_url:
           `${siteUrl}/complete-signup` +
           `?session_id={CHECKOUT_SESSION_ID}`,
-
-        cancel_url: isPartner30
-          ? `${siteUrl}/partner-pass?checkout=cancelled`
-          : `${siteUrl}/membership?checkout=cancelled`,
       });
 
-    if (!session.url) {
+    if (!session.client_secret) {
       throw new Error(
-        "Stripe did not return a checkout URL."
+        "Stripe did not return an embedded checkout client secret."
       );
     }
 
     return NextResponse.json({
-      url: session.url,
+      clientSecret:
+        session.client_secret,
     });
   } catch (error) {
     const message =
@@ -179,7 +168,7 @@ export async function POST(request: Request) {
         : "Unable to start checkout.";
 
     console.error(
-      "Create checkout session error:",
+      "Create embedded checkout session error:",
       error
     );
 
