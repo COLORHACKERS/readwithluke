@@ -811,3 +811,183 @@
     height: 78px;
   }
 }
+/* =========================================================
+   30-DAY PARTNER SIGNUP FORM
+========================================================= */
+
+.partnerPassFormFields {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.partnerPassFormFields label {
+  margin: 16px 0 7px;
+
+  color: #171717;
+
+  font-family: "Courier New", Courier, monospace;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.partnerPassFormFields > input,
+.partnerPassPasswordField input {
+  width: 100%;
+  height: 52px;
+
+  padding: 0 16px;
+
+  border: 1px solid #cfcfcf;
+  border-radius: 10px;
+
+  background: #ffffff;
+  color: #171717;
+
+  font-family: "Courier New", Courier, monospace;
+  font-size: 14px;
+
+  box-sizing: border-box;
+  outline: none;
+}
+
+.partnerPassFormFields > input:focus,
+.partnerPassPasswordField input:focus {
+  border-color: #ff5526;
+}
+
+.partnerPassPasswordField {
+  position: relative;
+  width: 100%;
+}
+
+.partnerPassPasswordField input {
+  padding-right: 54px;
+}
+
+.partnerPassPasswordField button {
+  position: absolute;
+  top: 50%;
+  right: 14px;
+
+  width: 34px;
+  height: 34px;
+
+  padding: 0;
+
+  display: grid;
+  place-items: center;
+
+  transform: translateY(-50%);
+
+  border: 0;
+  background: transparent;
+  color: #535353;
+
+  cursor: pointer;
+}
+
+.partnerPassPasswordMatch {
+  margin: 7px 0 0;
+
+  font-family: "Courier New", Courier, monospace;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.partnerPassPasswordSuccess {
+  color: #238636;
+}
+
+.partnerPassPasswordError,
+.partnerPassFormError {
+  color: #d63a2f;
+}
+
+.partnerPassFormError {
+  margin: 12px 0 0;
+
+  font-family: "Courier New", Courier, monospace;
+  font-size: 11px;
+  font-weight: 900;
+  line-height: 1.4;
+}
+
+.partnerPassCheckoutButton:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.partnerPassCheckoutSummary {
+  width: 100%;
+  margin: 18px 0;
+  padding: 14px 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+
+  border: 1px solid #e1cda5;
+  border-radius: 14px;
+
+  background: #fff8e8;
+
+  box-sizing: border-box;
+}
+
+.partnerPassCheckoutSummary div {
+  min-width: 0;
+}
+
+.partnerPassCheckoutSummary span {
+  display: block;
+
+  margin-bottom: 4px;
+
+  font-family: "Courier New", Courier, monospace;
+  font-size: 9px;
+  font-weight: 900;
+}
+
+.partnerPassCheckoutSummary strong {
+  display: block;
+
+  overflow: hidden;
+
+  font-family: "Courier New", Courier, monospace;
+  font-size: 12px;
+  font-weight: 900;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.partnerPassCheckoutSummary button {
+  flex: 0 0 auto;
+
+  padding: 8px 13px;
+
+  border: 1px solid #ff5526;
+  border-radius: 999px;
+
+  background: #ffffff;
+  color: #ff5526;
+
+  font-family: "Courier New", Courier, monospace;
+  font-size: 10px;
+  font-weight: 900;
+
+  cursor: pointer;
+}
+
+.partnerPassEmbeddedStripe {
+  width: 100%;
+  margin-top: 14px;
+
+  overflow: hidden;
+
+  border-radius: 18px;
+
+  background: #ffffff;
+}
