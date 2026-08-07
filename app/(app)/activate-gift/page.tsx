@@ -14,8 +14,10 @@ import "./activate-gift.css";
 type ActivationStage =
   | "loading"
   | "setup"
+  | "child"
   | "report"
   | "complete"
+  | "existing-account"
   | "already-activated"
   | "error";
 
@@ -25,6 +27,14 @@ type GiftInfo = {
   relationship: string;
   progressReportRequested: boolean;
   alreadyActivated: boolean;
+};
+
+type Child = {
+  id: string;
+  name: string;
+  age_range: string | null;
+  avatar: string | null;
+  favorite_theme: string | null;
 };
 
 function EyeIcon({
@@ -78,6 +88,17 @@ export default function ActivateGiftPage() {
   const [giftInfo, setGiftInfo] =
     useState<GiftInfo | null>(null);
 
+  const [stage, setStage] =
+    useState<ActivationStage>("loading");
+
+  const [loading, setLoading] =
+    useState(false);
+
+  const [message, setMessage] =
+    useState("");
+
+  /* ACCOUNT */
+
   const [password, setPassword] =
     useState("");
 
@@ -96,16 +117,34 @@ export default function ActivateGiftPage() {
     setShowConfirmPassword,
   ] = useState(false);
 
-  const [stage, setStage] =
-    useState<ActivationStage>(
-      "loading"
-    );
+  /* CHILD */
 
-  const [loading, setLoading] =
-    useState(false);
+  const [children, setChildren] =
+    useState<Child[]>([]);
 
-  const [message, setMessage] =
+  const [
+    selectedChildId,
+    setSelectedChildId,
+  ] = useState("");
+
+  const [
+    createNewReader,
+    setCreateNewReader,
+  ] = useState(false);
+
+  const [childName, setChildName] =
     useState("");
+
+  const [ageRange, setAgeRange] =
+    useState("5-6");
+
+  const [avatar, setAvatar] =
+    useState("🐸");
+
+  const [
+    favoriteTheme,
+    setFavoriteTheme,
+  ] = useState("Adventure");
 
   const passwordsMatch =
     confirmPassword.length > 0 &&
@@ -114,6 +153,10 @@ export default function ActivateGiftPage() {
   const passwordsDoNotMatch =
     confirmPassword.length > 0 &&
     password !== confirmPassword;
+
+  /* =========================================================
+     LOAD GIFT
+  ========================================================= */
 
   useEffect(() => {
     async function loadGift() {
@@ -174,13 +217,10 @@ export default function ActivateGiftPage() {
             ),
         });
 
-        if (
-          data.alreadyActivated
-        ) {
+        if (data.alreadyActivated) {
           setStage(
             "already-activated"
           );
-
           return;
         }
 
@@ -203,6 +243,10 @@ export default function ActivateGiftPage() {
 
     loadGift();
   }, []);
+
+  /* =========================================================
+     CREATE GUARDIAN ACCOUNT
+  ========================================================= */
 
   async function handleActivation(
     event: FormEvent<HTMLFormElement>
@@ -241,12 +285,10 @@ export default function ActivateGiftPage() {
         "/api/activate-gift",
         {
           method: "POST",
-
           headers: {
             "Content-Type":
               "application/json",
           },
-
           body: JSON.stringify({
             token,
             password,
@@ -263,11 +305,11 @@ export default function ActivateGiftPage() {
       ) {
         setMessage(
           data.message ||
-            "An account already exists for this email. Please sign in to activate your gift."
+            "An account already exists for this email."
         );
 
         setStage(
-          "already-activated"
+          "existing-account"
         );
 
         return;
@@ -286,7 +328,7 @@ export default function ActivateGiftPage() {
 
       if (!guardianEmail) {
         throw new Error(
-          "The guardian email could not be found."
+          "Guardian email could not be found."
         );
       }
 
@@ -297,36 +339,17 @@ export default function ActivateGiftPage() {
           {
             email:
               guardianEmail,
-
             password,
           }
         );
 
       if (signInError) {
         throw new Error(
-          "Your gift was activated, but we could not sign you in automatically. Please use your new password on the login page."
+          "Your gift was activated, but automatic sign in failed. Please sign in with your new password."
         );
       }
 
-      if (
-        data.progressReportRequested
-      ) {
-        setGiftInfo(
-          (current) =>
-            current
-              ? {
-                  ...current,
-                  gifterName:
-                    data.gifterName ||
-                    current.gifterName,
-                }
-              : current
-        );
-
-        setStage("report");
-      } else {
-        setStage("complete");
-      }
+      await loadChildren();
     } catch (error) {
       console.error(
         "Gift activation error:",
@@ -336,12 +359,191 @@ export default function ActivateGiftPage() {
       setMessage(
         error instanceof Error
           ? error.message
-          : "Could not activate this gift. Please try again."
+          : "Could not activate this gift."
       );
     } finally {
       setLoading(false);
     }
   }
+
+  /* =========================================================
+     LOAD GUARDIAN CHILDREN
+  ========================================================= */
+
+  async function loadChildren() {
+    const {
+      data: { session },
+    } =
+      await supabase.auth.getSession();
+
+    if (!session) {
+      throw new Error(
+        "Your login session could not be found."
+      );
+    }
+
+    const response = await fetch(
+      `/api/gift-child?token=${encodeURIComponent(
+        token
+      )}`,
+      {
+        headers: {
+          Authorization:
+            `Bearer ${session.access_token}`,
+        },
+      }
+    );
+
+    const data =
+      await response.json();
+
+    if (!response.ok) {
+      throw new Error(
+        data.error ||
+          "Could not load readers."
+      );
+    }
+
+    const childRows =
+      (data.children ||
+        []) as Child[];
+
+    setChildren(childRows);
+
+    if (
+      data.selectedChildId
+    ) {
+      setSelectedChildId(
+        data.selectedChildId
+      );
+    }
+
+    /*
+     * If guardian has no children,
+     * immediately show New Reader.
+     */
+    if (
+      childRows.length === 0
+    ) {
+      setCreateNewReader(true);
+    }
+
+    setStage("child");
+  }
+
+  /* =========================================================
+     ASSIGN CHILD TO GIFT
+  ========================================================= */
+
+  async function saveGiftChild() {
+    if (
+      !createNewReader &&
+      !selectedChildId
+    ) {
+      setMessage(
+        "Please choose who this gift is for."
+      );
+      return;
+    }
+
+    if (
+      createNewReader &&
+      !childName.trim()
+    ) {
+      setMessage(
+        "Please enter the reader's name."
+      );
+      return;
+    }
+
+    setLoading(true);
+    setMessage("");
+
+    try {
+      const {
+        data: { session },
+      } =
+        await supabase.auth.getSession();
+
+      if (!session) {
+        throw new Error(
+          "Your login session could not be found."
+        );
+      }
+
+      const response = await fetch(
+        "/api/gift-child",
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type":
+              "application/json",
+
+            Authorization:
+              `Bearer ${session.access_token}`,
+          },
+
+          body: JSON.stringify({
+            token,
+
+            childId:
+              createNewReader
+                ? ""
+                : selectedChildId,
+
+            name:
+              createNewReader
+                ? childName.trim()
+                : "",
+
+            ageRange,
+            avatar,
+            favoriteTheme,
+          }),
+        }
+      );
+
+      const data =
+        await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          data.error ||
+            "Could not save the reader."
+        );
+      }
+
+      setSelectedChildId(
+        data.childId
+      );
+
+      if (
+        giftInfo?.progressReportRequested
+      ) {
+        setStage("report");
+      } else {
+        setStage("complete");
+      }
+    } catch (error) {
+      console.error(
+        "Gift child error:",
+        error
+      );
+
+      setMessage(
+        error instanceof Error
+          ? error.message
+          : "Could not save the reader."
+      );
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  /* =========================================================
+     REPORT CARD CONSENT
+  ========================================================= */
 
   async function handleReportChoice(
     approved: boolean
@@ -414,11 +616,16 @@ export default function ActivateGiftPage() {
 
       <main className="activateGiftPage">
         <section className="activateGiftCard">
+
+          {/* LOADING */}
+
           {stage === "loading" && (
             <div className="activateGiftLoading">
               Checking your gift...
             </div>
           )}
+
+          {/* ERROR */}
 
           {stage === "error" && (
             <>
@@ -430,9 +637,7 @@ export default function ActivateGiftPage() {
                 GIFT INVITATION
               </p>
 
-              <h1>
-                OH NO!
-              </h1>
+              <h1>OH NO!</h1>
 
               <p className="activateGiftDescription">
                 {message}
@@ -446,6 +651,8 @@ export default function ActivateGiftPage() {
               </Link>
             </>
           )}
+
+          {/* ACCOUNT SETUP */}
 
           {stage === "setup" &&
             giftInfo && (
@@ -477,9 +684,9 @@ export default function ActivateGiftPage() {
 
                 <p className="activateGiftDescription">
                   Create your password
-                  below to activate the
-                  gift. No payment
-                  information is required.
+                  to activate the gift.
+                  No payment information
+                  is required.
                 </p>
 
                 <form
@@ -488,34 +695,24 @@ export default function ActivateGiftPage() {
                     handleActivation
                   }
                 >
-                  <label htmlFor="giftEmail">
-                    Parent or Guardian
-                    Email
+                  <label>
+                    Parent or Guardian Email
                   </label>
 
                   <input
-                    id="giftEmail"
                     type="email"
                     value={
                       giftInfo.guardianEmail
                     }
                     readOnly
-                    aria-readonly="true"
                   />
 
-                  <p className="activateGiftEmailNote">
-                    This gift was sent
-                    specifically to this
-                    email address.
-                  </p>
-
-                  <label htmlFor="giftPassword">
+                  <label>
                     Create Password
                   </label>
 
                   <div className="activateGiftPasswordField">
                     <input
-                      id="giftPassword"
                       type={
                         showPassword
                           ? "text"
@@ -529,8 +726,6 @@ export default function ActivateGiftPage() {
                       }
                       placeholder="Create a password"
                       minLength={6}
-                      autoComplete="new-password"
-                      required
                     />
 
                     <button
@@ -541,11 +736,6 @@ export default function ActivateGiftPage() {
                             !current
                         )
                       }
-                      aria-label={
-                        showPassword
-                          ? "Hide password"
-                          : "Show password"
-                      }
                     >
                       <EyeIcon
                         hidden={
@@ -555,13 +745,12 @@ export default function ActivateGiftPage() {
                     </button>
                   </div>
 
-                  <label htmlFor="giftConfirmPassword">
+                  <label>
                     Confirm Password
                   </label>
 
                   <div className="activateGiftPasswordField">
                     <input
-                      id="giftConfirmPassword"
                       type={
                         showConfirmPassword
                           ? "text"
@@ -575,10 +764,8 @@ export default function ActivateGiftPage() {
                           event.target.value
                         )
                       }
-                      placeholder="Confirm your password"
+                      placeholder="Confirm password"
                       minLength={6}
-                      autoComplete="new-password"
-                      required
                     />
 
                     <button
@@ -588,11 +775,6 @@ export default function ActivateGiftPage() {
                           (current) =>
                             !current
                         )
-                      }
-                      aria-label={
-                        showConfirmPassword
-                          ? "Hide password"
-                          : "Show password"
                       }
                     >
                       <EyeIcon
@@ -611,8 +793,7 @@ export default function ActivateGiftPage() {
 
                   {passwordsDoNotMatch && (
                     <p className="activateGiftPasswordMatch activateGiftPasswordError">
-                      ✕ Passwords do not
-                      match
+                      ✕ Passwords do not match
                     </p>
                   )}
 
@@ -627,26 +808,257 @@ export default function ActivateGiftPage() {
                     className="activateGiftButton"
                     disabled={
                       loading ||
-                      password.length <
-                        6 ||
+                      password.length < 6 ||
                       password !==
                         confirmPassword
                     }
                   >
                     {loading
                       ? "ACTIVATING..."
-                      : "CREATE ACCOUNT & ACTIVATE"}
+                      : "CREATE ACCOUNT & CONTINUE"}
                   </button>
                 </form>
-
-                <p className="activateGiftNoPayment">
-                  🔒 You will not be asked
-                  for a credit card. The
-                  gift has already been
-                  purchased for you.
-                </p>
               </>
             )}
+
+          {/* CHILD SELECTION */}
+
+          {stage === "child" && (
+            <>
+              <div className="activateGiftIcon">
+                📚
+              </div>
+
+              <p className="activateGiftEyebrow">
+                YOUR READER
+              </p>
+
+              <h1>
+                WHO IS THIS
+                <br />
+                GIFT FOR?
+              </h1>
+
+              {children.length >
+                0 &&
+                !createNewReader && (
+                  <>
+                    <p className="activateGiftDescription">
+                      Choose the reader who
+                      received this gift.
+                    </p>
+
+                    <div className="giftChildOptions">
+                      {children.map(
+                        (child) => (
+                          <button
+                            key={
+                              child.id
+                            }
+                            type="button"
+                            className={
+                              selectedChildId ===
+                              child.id
+                                ? "giftChildOption active"
+                                : "giftChildOption"
+                            }
+                            onClick={() =>
+                              setSelectedChildId(
+                                child.id
+                              )
+                            }
+                          >
+                            <span>
+                              {child.avatar ||
+                                "📚"}
+                            </span>
+
+                            <strong>
+                              {child.name}
+                            </strong>
+                          </button>
+                        )
+                      )}
+                    </div>
+
+                    <button
+                      type="button"
+                      className="activateGiftSecondaryButton"
+                      onClick={() => {
+                        setCreateNewReader(
+                          true
+                        );
+                        setSelectedChildId(
+                          ""
+                        );
+                        setMessage("");
+                      }}
+                    >
+                      + CREATE A NEW READER
+                    </button>
+                  </>
+                )}
+
+              {createNewReader && (
+                <div className="giftNewReaderForm">
+                  <p className="activateGiftDescription">
+                    Create the reader who
+                    received this gift.
+                  </p>
+
+                  <label>
+                    Reader Name
+                  </label>
+
+                  <input
+                    type="text"
+                    value={childName}
+                    onChange={(event) =>
+                      setChildName(
+                        event.target.value
+                      )
+                    }
+                    placeholder="Reader name"
+                  />
+
+                  <label>
+                    Age
+                  </label>
+
+                  <select
+                    value={ageRange}
+                    onChange={(event) =>
+                      setAgeRange(
+                        event.target.value
+                      )
+                    }
+                  >
+                    <option value="3-4">
+                      Age 3-4
+                    </option>
+
+                    <option value="5-6">
+                      Age 5-6
+                    </option>
+
+                    <option value="7-8">
+                      Age 7-8
+                    </option>
+
+                    <option value="9+">
+                      Age 9+
+                    </option>
+                  </select>
+
+                  <label>
+                    Pick an Avatar
+                  </label>
+
+                  <select
+                    value={avatar}
+                    onChange={(event) =>
+                      setAvatar(
+                        event.target.value
+                      )
+                    }
+                  >
+                    <option value="🐸">
+                      🐸 Frog
+                    </option>
+
+                    <option value="🦊">
+                      🦊 Fox
+                    </option>
+
+                    <option value="🦖">
+                      🦖 Dinosaur
+                    </option>
+
+                    <option value="🚀">
+                      🚀 Rocket
+                    </option>
+                  </select>
+
+                  <label>
+                    Favorite Type of Book
+                  </label>
+
+                  <select
+                    value={
+                      favoriteTheme
+                    }
+                    onChange={(event) =>
+                      setFavoriteTheme(
+                        event.target.value
+                      )
+                    }
+                  >
+                    <option value="Adventure">
+                      Adventure
+                    </option>
+
+                    <option value="Magic">
+                      Magic
+                    </option>
+
+                    <option value="Animals">
+                      Animals
+                    </option>
+
+                    <option value="Space">
+                      Space
+                    </option>
+
+                    <option value="Ocean">
+                      Ocean
+                    </option>
+                  </select>
+
+                  {children.length >
+                    0 && (
+                    <button
+                      type="button"
+                      className="activateGiftTextButton"
+                      onClick={() => {
+                        setCreateNewReader(
+                          false
+                        );
+                        setMessage("");
+                      }}
+                    >
+                      ← Choose an existing reader
+                    </button>
+                  )}
+                </div>
+              )}
+
+              {message && (
+                <p className="activateGiftMessage">
+                  {message}
+                </p>
+              )}
+
+              <button
+                type="button"
+                className="activateGiftButton"
+                onClick={
+                  saveGiftChild
+                }
+                disabled={
+                  loading ||
+                  (createNewReader
+                    ? !childName.trim()
+                    : !selectedChildId)
+                }
+              >
+                {loading
+                  ? "SAVING..."
+                  : "CONTINUE"}
+              </button>
+            </>
+          )}
+
+          {/* REPORT APPROVAL */}
 
           {stage === "report" &&
             giftInfo && (
@@ -677,8 +1089,8 @@ export default function ActivateGiftPage() {
                 <p className="activateGiftDescription">
                   With your permission,
                   we&apos;ll email them a
-                  monthly summary of your
-                  child&apos;s reading and
+                  monthly summary of this
+                  reader&apos;s reading and
                   learning progress.
                 </p>
 
@@ -690,8 +1102,6 @@ export default function ActivateGiftPage() {
                   <p>
                     Nothing will be shared
                     unless you choose Yes.
-                    You can change this
-                    later.
                   </p>
                 </div>
 
@@ -731,6 +1141,8 @@ export default function ActivateGiftPage() {
               </>
             )}
 
+          {/* COMPLETE */}
+
           {stage === "complete" && (
             <>
               <div className="activateGiftIcon">
@@ -748,9 +1160,9 @@ export default function ActivateGiftPage() {
               </h1>
 
               <p className="activateGiftDescription">
-                Your Read With Luke
-                account is ready and your
-                3-month gift is active.
+                Your reader&apos;s
+                3-month Read With Luke
+                gift is ready.
               </p>
 
               <Link
@@ -761,6 +1173,40 @@ export default function ActivateGiftPage() {
               </Link>
             </>
           )}
+
+          {/* EXISTING ACCOUNT */}
+
+          {stage ===
+            "existing-account" && (
+            <>
+              <div className="activateGiftIcon">
+                👋
+              </div>
+
+              <p className="activateGiftEyebrow">
+                WELCOME BACK
+              </p>
+
+              <h1>
+                YOU ALREADY
+                <br />
+                HAVE AN ACCOUNT
+              </h1>
+
+              <p className="activateGiftDescription">
+                {message}
+              </p>
+
+              <Link
+                href="/login"
+                className="activateGiftButton"
+              >
+                SIGN IN
+              </Link>
+            </>
+          )}
+
+          {/* ALREADY ACTIVATED */}
 
           {stage ===
             "already-activated" && (
@@ -780,8 +1226,9 @@ export default function ActivateGiftPage() {
               </h1>
 
               <p className="activateGiftDescription">
-                {message ||
-                  "This gift is connected to an existing Read With Luke account."}
+                This gift has already
+                been connected to a
+                reader.
               </p>
 
               <Link
@@ -789,13 +1236,6 @@ export default function ActivateGiftPage() {
                 className="activateGiftButton"
               >
                 SIGN IN
-              </Link>
-
-              <Link
-                href="/forgot-password"
-                className="activateGiftForgot"
-              >
-                Forgot your password?
               </Link>
             </>
           )}
