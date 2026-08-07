@@ -1,50 +1,40 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
-import { supabase } from "@/lib/supabase";
 import "./gift.css";
-
-type PendingGift = {
-  parentEmail: string;
-  relationship: string;
-  progressEmails: boolean;
-  familyConfirmed: boolean;
-};
 
 type FaqItem = {
   question: string;
   answer: string;
 };
 
-const PENDING_GIFT_KEY = "rwl-pending-gift";
-
 const faqItems: FaqItem[] = [
   {
     question: "Who is this gift for?",
     answer:
-      "This family gift membership is for a child and must be purchased by a grandparent, aunt, uncle, or another family member.",
+      "Gift Reading is for anyone who wants to give a child a Read With Luke reading adventure.",
   },
   {
-    question: "Does the giver receive account access?",
+    question: "Who pays for the membership?",
     answer:
-      "No. The child’s parent or guardian receives the activation instructions and manages the child’s account.",
+      "The gifter pays for the gift and receives payment receipts and billing information.",
   },
   {
-    question: "Who sets up the child’s account?",
+    question: "Who creates the Read With Luke account?",
     answer:
-      "The parent or guardian receives an email and completes the child’s Read With Luke setup.",
+      "The parent or guardian receives an invitation email and creates the account and password for the child.",
   },
   {
-    question: "Can the giver receive updates?",
+    question: "Can the gifter receive reading updates?",
     answer:
-      "Yes. When the parent allows it, the giver can receive optional monthly reading updates.",
+      "The gifter can request a monthly Read With Luke report card. The parent or guardian must approve the request before anything is shared.",
   },
   {
-    question: "When does the gift begin?",
+    question: "What happens after the 3 months?",
     answer:
-      "The gift begins after purchase and the parent or guardian receives the activation email.",
+      "The gift includes 3 months of access. After that, the gifter's payment method continues at $4.99 per month unless canceled.",
   },
 ];
 
@@ -53,19 +43,19 @@ const giftSteps = [
     number: "1",
     image: "/images/gift-step-purchase.png",
     title: "Purchase the Gift",
-    text: "Enter the parent or guardian’s email and tell us your relationship to the child.",
+    text: "Enter your information and the parent or guardian’s email, then securely purchase the gift.",
   },
   {
     number: "2",
     image: "/images/gift-step-parent.png",
-    title: "Parent Activates It",
-    text: "We email the parent or guardian instructions to activate the child’s membership.",
+    title: "Guardian Activates It",
+    text: "We email the parent or guardian a special invitation to create the child’s Read With Luke account.",
   },
   {
     number: "3",
     image: "/images/gift-step-adventure.png",
     title: "Share the Adventure",
-    text: "The child receives access to stories, learning adventures, coins and rewards.",
+    text: "The child receives stories, learning adventures, coins and rewards for 3 included months.",
   },
 ];
 
@@ -88,146 +78,108 @@ const giftBenefits = [
   },
   {
     image: "/images/gift-benefit-email.png",
-    title: "Optional Updates",
+    title: "Optional Report Cards",
   },
 ];
 
 export default function GiftReadingPage() {
-  const [parentEmail, setParentEmail] = useState("");
+  const [gifterName, setGifterName] = useState("");
+  const [gifterEmail, setGifterEmail] = useState("");
+  const [guardianEmail, setGuardianEmail] = useState("");
   const [relationship, setRelationship] = useState("");
-  const [progressEmails, setProgressEmails] = useState(true);
-  const [familyConfirmed, setFamilyConfirmed] = useState(false);
+
+  const [
+    progressReportRequested,
+    setProgressReportRequested,
+  ] = useState(false);
+
   const [loading, setLoading] = useState(false);
-  const [openFaq, setOpenFaq] = useState<number | null>(0);
 
-  const resumeStarted = useRef(false);
-
-  async function openGiftCheckout(gift: PendingGift) {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    if (!user) {
-      throw new Error("Please sign in before purchasing the gift.");
-    }
-
-    const response = await fetch("/api/create-gift-checkout-session", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userId: user.id,
-        purchaserEmail: user.email || "",
-        parentEmail: gift.parentEmail,
-        relationship: gift.relationship,
-        progressEmails: gift.progressEmails,
-        familyConfirmed: gift.familyConfirmed,
-      }),
-    });
-
-    const data = await response.json();
-
-    if (!response.ok || !data.url) {
-      throw new Error(data.error || "Could not start gift checkout.");
-    }
-
-    sessionStorage.removeItem(PENDING_GIFT_KEY);
-    window.location.href = data.url;
-  }
-
-  useEffect(() => {
-    async function resumeGiftCheckout() {
-      const params = new URLSearchParams(window.location.search);
-      const shouldResumeGift = params.get("resumeGift") === "1";
-
-      if (!shouldResumeGift || resumeStarted.current) {
-        return;
-      }
-
-      const savedGift = sessionStorage.getItem(PENDING_GIFT_KEY);
-
-      if (!savedGift) {
-        return;
-      }
-
-      try {
-        const gift: PendingGift = JSON.parse(savedGift);
-
-        resumeStarted.current = true;
-
-        setParentEmail(gift.parentEmail);
-        setRelationship(gift.relationship);
-        setProgressEmails(gift.progressEmails);
-        setFamilyConfirmed(gift.familyConfirmed);
-        setLoading(true);
-
-        await openGiftCheckout(gift);
-      } catch (error) {
-        console.error("Gift checkout error:", error);
-
-        alert(
-          error instanceof Error
-            ? error.message
-            : "Could not start gift checkout."
-        );
-
-        resumeStarted.current = false;
-        setLoading(false);
-      }
-    }
-
-    resumeGiftCheckout();
-  }, []);
+  const [openFaq, setOpenFaq] =
+    useState<number | null>(0);
 
   async function startGiftCheckout() {
-    if (!parentEmail.trim()) {
-      alert("Please enter the parent or guardian’s email.");
+    const cleanGifterName =
+      gifterName.trim();
+
+    const cleanGifterEmail =
+      gifterEmail.trim().toLowerCase();
+
+    const cleanGuardianEmail =
+      guardianEmail.trim().toLowerCase();
+
+    if (!cleanGifterName) {
+      alert("Please enter the gifter's name.");
+      return;
+    }
+
+    if (!cleanGifterEmail) {
+      alert("Please enter the gifter's email.");
+      return;
+    }
+
+    if (!cleanGuardianEmail) {
+      alert(
+        "Please enter the parent or guardian's email."
+      );
       return;
     }
 
     if (!relationship) {
-      alert("Please choose your relationship to the child.");
+      alert(
+        "Please choose your relationship to the child."
+      );
       return;
     }
-
-    if (!familyConfirmed) {
-      alert("Please check the Pinkie Promise first.");
-      return;
-    }
-
-    const pendingGift: PendingGift = {
-      parentEmail: parentEmail.trim().toLowerCase(),
-      relationship,
-      progressEmails,
-      familyConfirmed: true,
-    };
 
     setLoading(true);
 
     try {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
+      const response = await fetch(
+        "/api/create-gift-checkout-session",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type":
+              "application/json",
+          },
+          body: JSON.stringify({
+            gifterName:
+              cleanGifterName,
 
-      if (!user) {
-        sessionStorage.setItem(
-          PENDING_GIFT_KEY,
-          JSON.stringify(pendingGift)
+            gifterEmail:
+              cleanGifterEmail,
+
+            guardianEmail:
+              cleanGuardianEmail,
+
+            relationship,
+
+            progressReportRequested,
+          }),
+        }
+      );
+
+      const data =
+        await response.json();
+
+      if (
+        !response.ok ||
+        !data.url
+      ) {
+        throw new Error(
+          data.error ||
+            "Could not start gift checkout."
         );
-
-        const returnPath = `${window.location.pathname}?resumeGift=1`;
-
-        window.location.href = `/signup?next=${encodeURIComponent(
-          returnPath
-        )}`;
-
-        return;
       }
 
-      await openGiftCheckout(pendingGift);
+      window.location.href =
+        data.url;
     } catch (error) {
-      console.error("Gift checkout error:", error);
+      console.error(
+        "Gift checkout error:",
+        error
+      );
 
       alert(
         error instanceof Error
@@ -241,9 +193,20 @@ export default function GiftReadingPage() {
 
   function scrollToGiftForm() {
     document
-      .getElementById("gift-checkout")
-      ?.scrollIntoView({ behavior: "smooth" });
+      .getElementById(
+        "gift-checkout"
+      )
+      ?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
   }
+
+  const formReady =
+    gifterName.trim().length > 0 &&
+    gifterEmail.trim().length > 0 &&
+    guardianEmail.trim().length > 0 &&
+    relationship.length > 0;
 
   return (
     <div className="giftPage">
@@ -252,7 +215,9 @@ export default function GiftReadingPage() {
       <main className="giftMain">
         <section className="giftHero">
           <div className="giftHeroCopy">
-            <p className="giftEyebrow">FAMILY GIFT MEMBERSHIP</p>
+            <p className="giftEyebrow">
+              FAMILY GIFT MEMBERSHIP
+            </p>
 
             <h1>
               Gift
@@ -260,47 +225,79 @@ export default function GiftReadingPage() {
             </h1>
 
             <p className="giftDescription">
-              A special family gift for grandparents, aunts, uncles and family
-              members who want to support a child’s reading adventure.
+              Give a child three months of
+              magical stories, playful
+              learning adventures and a
+              reading experience created
+              just for kids.
             </p>
 
             <div className="giftPrice">
-              <strong>$19.99</strong>
-              <span>3 months included, then $4.99/month</span>
+              <strong>
+                $19.99
+              </strong>
+
+              <span>
+                3 months included, then
+                $4.99/month
+              </span>
             </div>
 
             <div className="giftQuickBenefits">
               <div>
-                <img src="/images/gift-starts-now.png" alt="" />
-                <span>Starts Right Away</span>
+                <img
+                  src="/images/gift-starts-now.png"
+                  alt=""
+                />
+                <span>
+                  3 Months Included
+                </span>
               </div>
 
               <div>
-                <img src="/images/gift-parent-activates.png" alt="" />
-                <span>Parent Activates</span>
+                <img
+                  src="/images/gift-parent-activates.png"
+                  alt=""
+                />
+                <span>
+                  Guardian Activates
+                </span>
               </div>
 
               <div>
-                <img src="/images/gift-updates.png" alt="" />
-                <span>Optional Updates</span>
+                <img
+                  src="/images/gift-updates.png"
+                  alt=""
+                />
+                <span>
+                  Optional Report Cards
+                </span>
               </div>
 
               <div>
-                <img src="/images/benefit-safe.png" alt="" />
-                <span>Safe for Kids</span>
+                <img
+                  src="/images/benefit-safe.png"
+                  alt=""
+                />
+                <span>
+                  Safe for Kids
+                </span>
               </div>
             </div>
 
             <button
               type="button"
               className="giftHeroButton"
-              onClick={scrollToGiftForm}
+              onClick={
+                scrollToGiftForm
+              }
             >
               Gift Read With Luke
             </button>
 
             <p className="giftHeroFinePrint">
-              ★ A family gift that begins right away—no trial required.
+              ★ A meaningful reading gift
+              for someone special.
             </p>
           </div>
 
@@ -309,24 +306,49 @@ export default function GiftReadingPage() {
               Questions? We’ve Got Answers.
             </p>
 
-            {faqItems.map((item, index) => {
-              const isOpen = openFaq === index;
+            {faqItems.map(
+              (item, index) => {
+                const isOpen =
+                  openFaq === index;
 
-              return (
-                <div className="giftFaqItem" key={item.question}>
-                  <button
-                    type="button"
-                    onClick={() => setOpenFaq(isOpen ? null : index)}
-                    aria-expanded={isOpen}
+                return (
+                  <div
+                    className="giftFaqItem"
+                    key={item.question}
                   >
-                    <span>{item.question}</span>
-                    <span>{isOpen ? "−" : "+"}</span>
-                  </button>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setOpenFaq(
+                          isOpen
+                            ? null
+                            : index
+                        )
+                      }
+                      aria-expanded={
+                        isOpen
+                      }
+                    >
+                      <span>
+                        {item.question}
+                      </span>
 
-                  {isOpen && <p>{item.answer}</p>}
-                </div>
-              );
-            })}
+                      <span>
+                        {isOpen
+                          ? "−"
+                          : "+"}
+                      </span>
+                    </button>
+
+                    {isOpen && (
+                      <p>
+                        {item.answer}
+                      </p>
+                    )}
+                  </div>
+                );
+              }
+            )}
           </aside>
         </section>
 
@@ -334,140 +356,279 @@ export default function GiftReadingPage() {
           <div className="giftInformation">
             <div className="giftSectionHeading">
               <span />
-              <h2>How It Works</h2>
+              <h2>
+                How It Works
+              </h2>
               <span />
             </div>
 
             <div className="giftSteps">
-              {giftSteps.map((step) => (
-                <article className="giftStep" key={step.number}>
-                  <span className="giftStepNumber">{step.number}</span>
+              {giftSteps.map(
+                (step) => (
+                  <article
+                    className="giftStep"
+                    key={step.number}
+                  >
+                    <span className="giftStepNumber">
+                      {step.number}
+                    </span>
 
-                  <img src={step.image} alt="" />
+                    <img
+                      src={step.image}
+                      alt=""
+                    />
 
-                  <div>
-                    <h3>{step.title}</h3>
-                    <p>{step.text}</p>
-                  </div>
-                </article>
-              ))}
+                    <div>
+                      <h3>
+                        {step.title}
+                      </h3>
+
+                      <p>
+                        {step.text}
+                      </p>
+                    </div>
+                  </article>
+                )
+              )}
             </div>
 
             <div className="giftSectionHeading giftBenefitsHeading">
               <span />
-              <h2>Why Families Love Gift Reading</h2>
+
+              <h2>
+                Why Families Love
+                Gift Reading
+              </h2>
+
               <span />
             </div>
 
             <div className="giftBenefitGrid">
-              {giftBenefits.map((benefit) => (
-                <article className="giftBenefit" key={benefit.title}>
-                  <img src={benefit.image} alt="" />
-                  <h3>{benefit.title}</h3>
-                </article>
-              ))}
+              {giftBenefits.map(
+                (benefit) => (
+                  <article
+                    className="giftBenefit"
+                    key={
+                      benefit.title
+                    }
+                  >
+                    <img
+                      src={
+                        benefit.image
+                      }
+                      alt=""
+                    />
+
+                    <h3>
+                      {benefit.title}
+                    </h3>
+                  </article>
+                )
+              )}
             </div>
           </div>
 
-          <aside className="giftCheckout" id="gift-checkout">
-            <p className="giftCheckoutEyebrow">GIFT READING</p>
-            <h2>Support a Child’s Reading Adventure</h2>
+          <aside
+            className="giftCheckout"
+            id="gift-checkout"
+          >
+            <p className="giftCheckoutEyebrow">
+              GIFT READING
+            </p>
 
-            <label htmlFor="parentEmail">
-              Parent or Guardian’s Email
+            <h2>
+              Give a Reading Adventure
+            </h2>
+
+            {/* GIFTER NAME */}
+
+            <label htmlFor="gifterName">
+              Gifter&apos;s Name
             </label>
 
             <input
-              id="parentEmail"
-              type="email"
-              placeholder="parent@email.com"
-              value={parentEmail}
+              id="gifterName"
+              type="text"
+              placeholder="Your name"
+              value={gifterName}
               onChange={(event) =>
-                setParentEmail(event.target.value)
+                setGifterName(
+                  event.target.value
+                )
+              }
+              autoComplete="name"
+            />
+
+            <p className="giftFieldNote">
+              We&apos;ll tell the guardian
+              who sent their Read With Luke
+              gift.
+            </p>
+
+            {/* GIFTER EMAIL */}
+
+            <label htmlFor="gifterEmail">
+              Gifter&apos;s Email
+            </label>
+
+            <input
+              id="gifterEmail"
+              type="email"
+              placeholder="you@email.com"
+              value={gifterEmail}
+              onChange={(event) =>
+                setGifterEmail(
+                  event.target.value
+                )
               }
               autoComplete="email"
             />
 
             <p className="giftFieldNote">
-              We’ll email the parent or guardian instructions to activate the
-              child’s membership.
+              Your payment receipt, billing
+              information and gift
+              confirmation will be sent here.
             </p>
 
+            {/* GUARDIAN EMAIL */}
+
+            <label htmlFor="guardianEmail">
+              Parent or Guardian Email
+            </label>
+
+            <input
+              id="guardianEmail"
+              type="email"
+              placeholder="parent@email.com"
+              value={guardianEmail}
+              onChange={(event) =>
+                setGuardianEmail(
+                  event.target.value
+                )
+              }
+              autoComplete="off"
+            />
+
+            <p className="giftFieldNote">
+              We&apos;ll send the guardian
+              an invitation to create the
+              child&apos;s Read With Luke
+              account.
+            </p>
+
+            {/* RELATIONSHIP */}
+
             <label htmlFor="relationship">
-              Your relationship to the child
+              Your Relationship to the Child
             </label>
 
             <select
               id="relationship"
               value={relationship}
               onChange={(event) =>
-                setRelationship(event.target.value)
+                setRelationship(
+                  event.target.value
+                )
               }
             >
-              <option value="">Choose relationship</option>
-              <option value="grandparent">Grandparent</option>
-              <option value="aunt_uncle">Aunt or Uncle</option>
-              <option value="family_member">Other Family Member</option>
+              <option value="">
+                Choose relationship
+              </option>
+
+              <option value="grandparent">
+                Grandparent
+              </option>
+
+              <option value="aunt">
+                Aunt
+              </option>
+
+              <option value="uncle">
+                Uncle
+              </option>
+
+              <option value="godparent">
+                Godparent
+              </option>
+
+              <option value="parent">
+                Parent
+              </option>
+
+              <option value="family_friend">
+                Family Friend
+              </option>
+
+              <option value="family_member">
+                Other Family Member
+              </option>
+
+              <option value="other">
+                Other
+              </option>
             </select>
+
+            {/* REPORT CARD REQUEST */}
 
             <label className="giftProgressOption">
               <input
                 type="checkbox"
-                checked={progressEmails}
+                checked={
+                  progressReportRequested
+                }
                 onChange={(event) =>
-                  setProgressEmails(event.target.checked)
+                  setProgressReportRequested(
+                    event.target.checked
+                  )
                 }
               />
 
               <span>
-                Email me monthly reading updates with completed books, coins,
-                rewards and reading streaks.
+                <strong>
+                  Request a monthly Read
+                  With Luke report card.
+                </strong>
+
+                <small>
+                  The parent or guardian
+                  will be asked to approve
+                  sharing the child&apos;s
+                  monthly reading progress
+                  with you by email.
+                </small>
               </span>
             </label>
 
+            {/* CHARGE */}
+
             <div className="giftChargeBox">
-              <span>Today’s Charge</span>
-              <strong>$19.99</strong>
+              <span>
+                Today&apos;s Charge
+              </span>
+
+              <strong>
+                $19.99
+              </strong>
             </div>
 
-            <div className="giftPinkieBox">
-              <img
-                src="/images/luke-pinkie-swear2.png"
-                alt="Luke holding out his pinkie"
-              />
+            <p className="giftCheckoutRenewal">
+              Includes 3 months of Read With
+              Luke. After that, your payment
+              method will be charged
+              <strong> $4.99/month </strong>
+              unless canceled.
+            </p>
 
-              <div>
-                <h3>Pinkie Promise</h3>
-
-                <p>
-                  Please confirm this gift is from a grandparent, aunt, uncle
-                  or another family member.
-                </p>
-
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={familyConfirmed}
-                    onChange={(event) =>
-                      setFamilyConfirmed(event.target.checked)
-                    }
-                  />
-
-                  <span>
-                    I pinkie promise I am a family member.
-                  </span>
-                </label>
-              </div>
-            </div>
+            {/* CHECKOUT */}
 
             <button
               type="button"
-              onClick={startGiftCheckout}
+              onClick={
+                startGiftCheckout
+              }
               className="giftCheckoutButton"
               disabled={
-                !parentEmail.trim() ||
-                !relationship ||
-                !familyConfirmed ||
+                !formReady ||
                 loading
               }
             >
@@ -477,7 +638,10 @@ export default function GiftReadingPage() {
             </button>
 
             <p className="giftCheckoutFinePrint">
-              🔒 By continuing, you confirm this gift is from a family member.
+              🔒 Secure payment powered by
+              Stripe. The parent or guardian
+              will never be asked for payment
+              information.
             </p>
           </aside>
         </section>
