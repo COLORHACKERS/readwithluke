@@ -168,6 +168,9 @@ export default function ActivateGiftPage() {
       const giftToken =
         params.get("token") || "";
 
+      const claim =
+  params.get("claim") === "1";
+
       setToken(giftToken);
 
       if (!giftToken) {
@@ -216,6 +219,71 @@ export default function ActivateGiftPage() {
               data.alreadyActivated
             ),
         });
+
+        if (claim) {
+  const {
+    data: { session },
+  } =
+    await supabase.auth.getSession();
+
+  if (!session) {
+    setStage(
+      "existing-account"
+    );
+    return;
+  }
+
+  try {
+    const response =
+      await fetch(
+        "/api/claim-existing-gift",
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type":
+              "application/json",
+
+            Authorization:
+              `Bearer ${session.access_token}`,
+          },
+
+          body: JSON.stringify({
+            token: giftToken,
+          }),
+        }
+      );
+
+    const claimData =
+      await response.json();
+
+    if (!response.ok) {
+      throw new Error(
+        claimData.error ||
+          "Could not claim this gift."
+      );
+    }
+
+    await loadChildren();
+
+    return;
+  } catch (error) {
+    console.error(
+      "Existing gift claim error:",
+      error
+    );
+
+    setMessage(
+      error instanceof Error
+        ? error.message
+        : "Could not claim this gift."
+    );
+
+    setStage("error");
+
+    return;
+  }
+}
 
         if (data.alreadyActivated) {
           setStage(
