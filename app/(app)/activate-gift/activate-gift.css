@@ -229,3 +229,114 @@
     height: 54px;
   }
 }
+/* =========================================================
+   GIFT CHILD SELECTION
+========================================================= */
+
+.giftChildOptions {
+  width: 100%;
+  margin: 24px 0;
+
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.giftChildOption {
+  min-height: 92px;
+  padding: 16px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  border: 2px solid #ded1ba;
+  border-radius: 20px;
+
+  background: #ffffff;
+  color: #13294b;
+
+  cursor: pointer;
+}
+
+.giftChildOption span {
+  font-size: 34px;
+  line-height: 1;
+}
+
+.giftChildOption strong {
+  font-family: "Courier New", monospace;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.giftChildOption.active {
+  border-color: #ff5526;
+  background: #fff4ec;
+}
+
+.giftNewReaderForm {
+  width: 100%;
+  margin-top: 20px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.giftNewReaderForm label {
+  margin: 15px 0 7px;
+
+  font-family: "Courier New", monospace;
+  font-size: 11px;
+  font-weight: 900;
+
+  color: #13294b;
+}
+
+.giftNewReaderForm input,
+.giftNewReaderForm select {
+  width: 100%;
+  height: 50px;
+  padding: 0 16px;
+
+  border: 1px solid #d8c5a8;
+  border-radius: 999px;
+
+  background: #ffffff;
+  color: #13294b;
+
+  font-family: "Courier New", monospace;
+  font-size: 13px;
+
+  box-sizing: border-box;
+  outline: none;
+}
+
+.giftNewReaderForm input:focus,
+.giftNewReaderForm select:focus {
+  border-color: #ff5526;
+}
+
+.activateGiftTextButton {
+  margin: 18px auto 0;
+  padding: 0;
+
+  border: 0;
+  background: transparent;
+  color: #13294b;
+
+  font-family: "Courier New", monospace;
+  font-size: 11px;
+  font-weight: 900;
+
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .giftChildOptions {
+    grid-template-columns: 1fr;
+  }
+}
