@@ -27,10 +27,192 @@ type GiftMetadata = {
 async function sendWelcomeEmail({
   email,
   readerName,
+  plan,
 }: {
   email: string;
   readerName?: string | null;
+  plan: "monthly" | "yearly" | "partner30";
 }) {
+  const siteUrl =
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    "https://www.readwithluke.com";
+
+  let subject = "";
+  let headline = "";
+  let mainMessage = "";
+  let billingMessage = "";
+
+  if (plan === "partner30") {
+    subject =
+      "🎉 Your 30-Day Read With Luke Partner Pass Has Started!";
+
+    headline =
+      "Your 30-Day Partner Pass Is Ready!";
+
+    mainMessage = `
+      <p>
+        <strong>
+          Your private 30-day Read With Luke Partner Pass
+          has officially begun! 🎉
+        </strong>
+      </p>
+
+      <p>
+        Your family now has unlimited access to the
+        Read With Luke library, including beautifully
+        illustrated stories and learning adventures.
+      </p>
+
+      <p>
+        Your payment method has been securely saved,
+        but you will not be charged during your
+        30-day pass.
+      </p>
+    `;
+
+    billingMessage = `
+      <p>
+        Unless you cancel before the 30 days end,
+        your membership will automatically continue
+        at <strong>$9.99 per month</strong>.
+      </p>
+    `;
+  } else if (plan === "yearly") {
+    subject =
+      "🎉 Welcome to Your Read With Luke Yearly Membership!";
+
+    headline =
+      "Your Year of Adventures Has Started!";
+
+    mainMessage = `
+      <p>
+        <strong>
+          Your Read With Luke yearly membership is
+          officially active! 🎉
+        </strong>
+      </p>
+
+      <p>
+        Your family now has unlimited access to the
+        Read With Luke library, including stories
+        and learning adventures.
+      </p>
+    `;
+
+    billingMessage = `
+      <p>
+        Your yearly membership will renew at
+        <strong>$69.99 per year</strong> unless
+        canceled before your renewal date.
+      </p>
+    `;
+  } else {
+    subject =
+      "🎉 Your 7-Day Read With Luke Free Trial Has Started!";
+
+    headline =
+      "Welcome to Read With Luke!";
+
+    mainMessage = `
+      <p>
+        <strong>
+          Your 7-day free trial has officially begun! 🎉
+        </strong>
+      </p>
+
+      <p>
+        Your family now has unlimited access to the
+        Read With Luke library, filled with beautifully
+        illustrated stories and learning adventures.
+      </p>
+
+      <p>
+        Your payment method has been securely saved,
+        but you will not be charged during your
+        free trial.
+      </p>
+    `;
+
+    billingMessage = `
+      <p>
+        Unless you cancel before the 7-day trial ends,
+        your membership will automatically continue at
+        <strong>$9.99 per month</strong>.
+      </p>
+    `;
+  }
+
+  await resend.emails.send({
+    from:
+      "Read With Luke <hello@readwithluke.com>",
+
+    to: email,
+
+    subject,
+
+    html: `
+      <div style="
+        font-family:Arial,sans-serif;
+        max-width:600px;
+        margin:auto;
+        padding:40px;
+        background:#F8F1E6;
+        border-radius:24px;
+      ">
+        <h1 style="
+          color:#13294B;
+          font-size:38px;
+          line-height:1.05;
+        ">
+          ${headline}
+        </h1>
+
+        <p>
+          Hi ${readerName || "Friend"},
+        </p>
+
+        ${mainMessage}
+
+        ${billingMessage}
+
+        <p style="margin-top:32px;">
+          <a
+            href="${siteUrl}/library"
+            style="
+              background:#FF5526;
+              color:white;
+              text-decoration:none;
+              padding:16px 28px;
+              border-radius:999px;
+              font-weight:bold;
+              display:inline-block;
+            "
+          >
+            Start Reading →
+          </a>
+        </p>
+
+        <hr style="
+          margin:40px 0;
+          border:none;
+          border-top:1px solid #ddd;
+        ">
+
+        <p style="
+          color:#666;
+          font-size:14px;
+          line-height:1.6;
+        ">
+          Happy Reading! 📚
+          <br />
+          <strong>
+            The Read With Luke Team
+          </strong>
+        </p>
+      </div>
+    `,
+  });
+}
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
 
   await resend.emails.send({
@@ -187,6 +369,12 @@ async function sendGiftActivationEmail({
 async function handleRegularCheckout(
   session: Stripe.Checkout.Session
 ) {
+  const plan =
+  session.metadata?.plan === "partner30"
+    ? "partner30"
+    : session.metadata?.plan === "yearly"
+      ? "yearly"
+      : "monthly";
   const userId =
     session.metadata?.user_id ||
     session.client_reference_id;
@@ -235,10 +423,11 @@ async function handleRegularCheckout(
     session.customer_email;
 
   if (email && !profile?.welcome_email_sent) {
-    await sendWelcomeEmail({
-      email,
-      readerName: profile?.full_name,
-    });
+   await sendWelcomeEmail({
+  email,
+  readerName: profile?.full_name,
+  plan,
+});
 
     await supabaseAdmin
       .from("profiles")
