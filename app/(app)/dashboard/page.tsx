@@ -19,35 +19,107 @@ type SavedBook = {
   }[] | null;
 };
 
+type Child = {
+  id: string;
+  name: string;
+  avatar: string | null;
+};
+
 export default function DashboardPage() {
   const router = useRouter();
 
-  const [readerName, setReaderName] = useState("Reader");
-  const [avatar, setAvatar] = useState("🔥");
+  const [readerName, setReaderName] =
+    useState("Reader");
 
-  const [completedCount, setCompletedCount] = useState(0);
-  const [coins, setCoins] = useState(0);
-  const [streak, setStreak] = useState(0);
+  const [avatar, setAvatar] =
+    useState("🔥");
 
-  const [continueBook, setContinueBook] =
-    useState<SavedBook | null>(null);
+  const [children, setChildren] =
+    useState<Child[]>([]);
+
+  const [
+    activeChildId,
+    setActiveChildId,
+  ] = useState("");
+
+  const [
+    switchingReader,
+    setSwitchingReader,
+  ] = useState(false);
+
+  const [
+    completedCount,
+    setCompletedCount,
+  ] = useState(0);
+
+  const [coins, setCoins] =
+    useState(0);
+
+  const [streak, setStreak] =
+    useState(0);
+
+  const [
+    continueBook,
+    setContinueBook,
+  ] =
+    useState<SavedBook | null>(
+      null
+    );
 
   const [favorites, setFavorites] =
     useState<SavedBook[]>([]);
 
-  const [savedBooks, setSavedBooks] =
-    useState<SavedBook[]>([]);
+  const [
+    savedBooks,
+    setSavedBooks,
+  ] = useState<SavedBook[]>([]);
 
   useEffect(() => {
     async function loadDashboard() {
       const {
         data: { user },
-      } = await supabase.auth.getUser();
+      } =
+        await supabase.auth.getUser();
 
       if (!user) {
         router.push("/signup");
         return;
       }
+
+      /* =====================================================
+         LOAD ALL CHILDREN
+      ===================================================== */
+
+      const {
+        data: childRows,
+        error: childrenError,
+      } = await supabase
+        .from("children")
+        .select(
+          "id, name, avatar"
+        )
+        .eq(
+          "user_id",
+          user.id
+        )
+        .order("created_at", {
+          ascending: true,
+        });
+
+      if (childrenError) {
+        console.error(
+          "Children error:",
+          childrenError
+        );
+      }
+
+      const readerChildren =
+        (childRows ||
+          []) as Child[];
+
+      setChildren(
+        readerChildren
+      );
 
       /* =====================================================
          FIND ACTIVE CHILD
@@ -58,7 +130,9 @@ export default function DashboardPage() {
         error: profileError,
       } = await supabase
         .from("profiles")
-        .select("active_child_id")
+        .select(
+          "active_child_id"
+        )
         .eq("id", user.id)
         .maybeSingle();
 
@@ -69,99 +143,72 @@ export default function DashboardPage() {
         );
       }
 
-      let activeChildId =
-        profile?.active_child_id || null;
+      let selectedChildId =
+        profile?.active_child_id ||
+        "";
 
       /*
-       * Older accounts may not have
-       * active_child_id yet.
+       * Older accounts may not
+       * have an active reader yet.
        */
-      if (!activeChildId) {
-        const {
-          data: firstChild,
-          error: firstChildError,
-        } = await supabase
-          .from("children")
-          .select("id")
-          .eq("user_id", user.id)
-          .order("created_at", {
-            ascending: true,
+      if (
+        !selectedChildId &&
+        readerChildren.length > 0
+      ) {
+        selectedChildId =
+          readerChildren[0].id;
+
+        await supabase
+          .from("profiles")
+          .update({
+            active_child_id:
+              selectedChildId,
           })
-          .limit(1)
-          .maybeSingle();
-
-        if (firstChildError) {
-          console.error(
-            "Child lookup error:",
-            firstChildError
-          );
-        }
-
-        if (firstChild) {
-          activeChildId =
-            firstChild.id;
-
-          await supabase
-            .from("profiles")
-            .update({
-              active_child_id:
-                firstChild.id,
-            })
-            .eq("id", user.id);
-        }
-      }
-
-      /* =====================================================
-         ACTIVE CHILD PROFILE
-      ===================================================== */
-
-      if (activeChildId) {
-        const {
-          data: child,
-          error: childError,
-        } = await supabase
-          .from("children")
-          .select(
-            "id, name, avatar"
-          )
           .eq(
             "id",
-            activeChildId
-          )
-          .eq(
-            "user_id",
             user.id
-          )
-          .maybeSingle();
-
-        if (childError) {
-          console.error(
-            "Child error:",
-            childError
           );
-        }
+      }
 
-        if (child) {
-          setReaderName(
-            child.name || "Reader"
-          );
+      setActiveChildId(
+        selectedChildId
+      );
 
-          setAvatar(
-            child.avatar || "🔥"
-          );
-        }
+      /* =====================================================
+         ACTIVE CHILD DETAILS
+      ===================================================== */
+
+      const activeChild =
+        readerChildren.find(
+          (child) =>
+            child.id ===
+            selectedChildId
+        );
+
+      if (activeChild) {
+        setReaderName(
+          activeChild.name ||
+            "Reader"
+        );
+
+        setAvatar(
+          activeChild.avatar ||
+            "🔥"
+        );
       }
 
       /* =====================================================
          ACTIVE CHILD READING STATS
       ===================================================== */
 
-      if (activeChildId) {
+      if (selectedChildId) {
         const {
           data: history,
           error: historyError,
         } = await supabase
-          .from("reading_history")
+          .from(
+            "reading_history"
+          )
           .select(
             "completed_at, coins_earned"
           )
@@ -171,7 +218,7 @@ export default function DashboardPage() {
           )
           .eq(
             "child_id",
-            activeChildId
+            selectedChildId
           );
 
         if (historyError) {
@@ -196,27 +243,32 @@ export default function DashboardPage() {
             )
           );
 
-          const dates = Array.from(
-            new Set(
-              history
-                .filter(
-                  (item) =>
-                    item.completed_at
-                )
-                .map((item) =>
-                  new Date(
-                    item.completed_at
+          const dates =
+            Array.from(
+              new Set(
+                history
+                  .filter(
+                    (item) =>
+                      item.completed_at
                   )
-                    .toISOString()
-                    .slice(0, 10)
-                )
-            )
-          ).sort(
-            (a, b) =>
-              b.localeCompare(a)
-          );
+                  .map((item) =>
+                    new Date(
+                      item.completed_at
+                    )
+                      .toISOString()
+                      .slice(
+                        0,
+                        10
+                      )
+                  )
+              )
+            ).sort(
+              (a, b) =>
+                b.localeCompare(a)
+            );
 
-          let currentStreak = 0;
+          let currentStreak =
+            0;
 
           const today =
             new Date();
@@ -230,7 +282,8 @@ export default function DashboardPage() {
               new Date(today);
 
             checkDate.setDate(
-              today.getDate() - i
+              today.getDate() -
+                i
             );
 
             const expected =
@@ -266,7 +319,9 @@ export default function DashboardPage() {
       const {
         data: bookmarks,
       } = await supabase
-        .from("book_bookmarks")
+        .from(
+          "book_bookmarks"
+        )
         .select(
           "id, page_number, books(title, slug, cover_url)"
         )
@@ -284,7 +339,8 @@ export default function DashboardPage() {
 
       if (bookmarks) {
         setContinueBook(
-          bookmarks[0] || null
+          bookmarks[0] ||
+            null
         );
 
         setSavedBooks(
@@ -318,6 +374,98 @@ export default function DashboardPage() {
 
     loadDashboard();
   }, [router]);
+
+  /* =========================================================
+     SWITCH ACTIVE READER
+  ========================================================= */
+
+  async function switchReader(
+    childId: string
+  ) {
+    if (
+      !childId ||
+      childId === activeChildId
+    ) {
+      return;
+    }
+
+    setSwitchingReader(true);
+
+    try {
+      const {
+        data: { user },
+      } =
+        await supabase.auth.getUser();
+
+      if (!user) {
+        router.push(
+          "/signup"
+        );
+        return;
+      }
+
+      /*
+       * Verify this child belongs
+       * to the logged-in guardian.
+       */
+      const child =
+        children.find(
+          (item) =>
+            item.id === childId
+        );
+
+      if (!child) {
+        throw new Error(
+          "Reader could not be found."
+        );
+      }
+
+      const {
+        error,
+      } = await supabase
+        .from("profiles")
+        .update({
+          active_child_id:
+            childId,
+        })
+        .eq(
+          "id",
+          user.id
+        );
+
+      if (error) {
+        throw new Error(
+          error.message
+        );
+      }
+
+      setActiveChildId(
+        childId
+      );
+
+      /*
+       * Reload so every dashboard
+       * stat immediately reflects
+       * the newly selected reader.
+       */
+      window.location.reload();
+    } catch (error) {
+      console.error(
+        "Switch reader error:",
+        error
+      );
+
+      alert(
+        error instanceof Error
+          ? error.message
+          : "Could not switch readers."
+      );
+
+      setSwitchingReader(
+        false
+      );
+    }
+  }
 
   const continueBookInfo =
     Array.isArray(
@@ -355,11 +503,71 @@ export default function DashboardPage() {
           </div>
 
           <div className="dashboardWelcome">
-            <div>
-              <h2>
-                WELCOME BACK,{" "}
-                {readerName.toUpperCase()}!
-              </h2>
+            <div className="dashboardReaderSide">
+              <div className="dashboardAvatarWrap">
+                <div className="dashboardAvatar">
+                  {avatar}
+                </div>
+
+                <div>
+                  <h2>
+                    WELCOME BACK,{" "}
+                    {readerName.toUpperCase()}!
+                  </h2>
+
+                  <div className="dashboardReaderSelector">
+                    <span>
+                      CURRENT READER
+                    </span>
+
+                    <div className="dashboardReaderSelectRow">
+                      <select
+                        value={
+                          activeChildId
+                        }
+                        onChange={(
+                          event
+                        ) =>
+                          switchReader(
+                            event
+                              .target
+                              .value
+                          )
+                        }
+                        disabled={
+                          switchingReader
+                        }
+                      >
+                        {children.map(
+                          (child) => (
+                            <option
+                              key={
+                                child.id
+                              }
+                              value={
+                                child.id
+                              }
+                            >
+                              {child.avatar ||
+                                "📚"}{" "}
+                              {
+                                child.name
+                              }
+                            </option>
+                          )
+                        )}
+                      </select>
+
+                      <Link
+                        href="/reader-setup"
+                        className="dashboardAddReader"
+                      >
+                        + ADD READER
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div className="dashboardStats">
@@ -367,13 +575,17 @@ export default function DashboardPage() {
                 <strong>
                   🪙 {coins}
                 </strong>
-                <span>coins</span>
+
+                <span>
+                  coins
+                </span>
               </div>
 
               <div className="dashboardStat">
                 <strong>
                   {completedCount}
                 </strong>
+
                 <span>
                   completed
                 </span>
@@ -383,6 +595,7 @@ export default function DashboardPage() {
                 <strong>
                   🔥 {streak}
                 </strong>
+
                 <span>
                   day streak
                 </span>
