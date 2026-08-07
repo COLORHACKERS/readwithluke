@@ -16,33 +16,56 @@ export default function ReaderSetupPage() {
   const [avatar, setAvatar] = useState("🐸");
   const [favoriteTheme, setFavoriteTheme] = useState("Adventure");
 
-  async function handleSave(e: React.FormEvent) {
-    e.preventDefault();
+async function handleSave(e: React.FormEvent) {
+  e.preventDefault();
 
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
-    if (!user) {
-      router.push("/signup");
-      return;
-    }
+  if (!user) {
+    router.push("/signup");
+    return;
+  }
 
-    const { error } = await supabase.from("children").insert({
+  const {
+    data: child,
+    error: childError,
+  } = await supabase
+    .from("children")
+    .insert({
       user_id: user.id,
       name,
       age_range: ageRange,
       avatar,
       favorite_theme: favoriteTheme,
-    });
+    })
+    .select("id")
+    .single();
 
-    if (error) {
-      alert(error.message);
-      return;
-    }
-
-    router.push("/dashboard");
+  if (childError || !child) {
+    alert(
+      childError?.message ||
+        "Could not create reader."
+    );
+    return;
   }
+
+  const { error: profileError } =
+    await supabase
+      .from("profiles")
+      .update({
+        active_child_id: child.id,
+      })
+      .eq("id", user.id);
+
+  if (profileError) {
+    alert(profileError.message);
+    return;
+  }
+
+  router.push("/dashboard");
+}
 
   return (
     <>
