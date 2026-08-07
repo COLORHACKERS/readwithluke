@@ -8,17 +8,17 @@ const supabaseAdmin = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
-export async function POST(req: Request) {
+/* =========================================================
+   GET — LOOK UP GIFT INVITATION
+========================================================= */
+
+export async function GET(req: Request) {
   try {
-    const body = await req.json();
+    const { searchParams } =
+      new URL(req.url);
 
-    const token = String(
-      body.token || ""
-    ).trim();
-
-    const password = String(
-      body.password || ""
-    );
+    const token =
+      searchParams.get("token")?.trim();
 
     if (!token) {
       return NextResponse.json(
@@ -32,7 +32,142 @@ export async function POST(req: Request) {
       );
     }
 
-    if (password.length < 6) {
+    const {
+      data: gift,
+      error: giftError,
+    } = await supabaseAdmin
+      .from("gift_memberships")
+      .select(
+        `
+          id,
+          purchaser_name,
+          parent_email,
+          relationship,
+          progress_report_requested,
+          parent_user_id,
+          activated_at,
+          status
+        `
+      )
+      .eq(
+        "activation_token",
+        token
+      )
+      .maybeSingle();
+
+    if (giftError) {
+      throw new Error(
+        giftError.message
+      );
+    }
+
+    if (!gift) {
+      return NextResponse.json(
+        {
+          error:
+            "This gift invitation could not be found.",
+        },
+        {
+          status: 404,
+        }
+      );
+    }
+
+    if (
+      gift.status ===
+      "cancelled"
+    ) {
+      return NextResponse.json(
+        {
+          error:
+            "This gift membership is no longer active.",
+        },
+        {
+          status: 410,
+        }
+      );
+    }
+
+    return NextResponse.json({
+      success: true,
+
+      guardianEmail:
+        gift.parent_email,
+
+      gifterName:
+        gift.purchaser_name ||
+        "Someone special",
+
+      relationship:
+        gift.relationship,
+
+      progressReportRequested:
+        Boolean(
+          gift.progress_report_requested
+        ),
+
+      alreadyActivated:
+        Boolean(
+          gift.parent_user_id &&
+          gift.activated_at
+        ),
+    });
+  } catch (error) {
+    console.error(
+      "Gift lookup error:",
+      error
+    );
+
+    const message =
+      error instanceof Error
+        ? error.message
+        : "Could not load this gift.";
+
+    return NextResponse.json(
+      {
+        error: message,
+      },
+      {
+        status: 500,
+      }
+    );
+  }
+}
+
+/* =========================================================
+   POST — CREATE GUARDIAN ACCOUNT + ACTIVATE GIFT
+========================================================= */
+
+export async function POST(req: Request) {
+  try {
+    const body =
+      await req.json();
+
+    const token =
+      String(
+        body.token || ""
+      ).trim();
+
+    const password =
+      String(
+        body.password || ""
+      );
+
+    if (!token) {
+      return NextResponse.json(
+        {
+          error:
+            "Missing gift activation token.",
+        },
+        {
+          status: 400,
+        }
+      );
+    }
+
+    if (
+      password.length < 6
+    ) {
       return NextResponse.json(
         {
           error:
@@ -93,7 +228,10 @@ export async function POST(req: Request) {
       );
     }
 
-    if (gift.status === "cancelled") {
+    if (
+      gift.status ===
+      "cancelled"
+    ) {
       return NextResponse.json(
         {
           error:
@@ -134,8 +272,12 @@ export async function POST(req: Request) {
         {
           error:
             "This gift has already been activated. Please sign in with the guardian account.",
-          alreadyActivated: true,
-          email: guardianEmail,
+
+          alreadyActivated:
+            true,
+
+          email:
+            guardianEmail,
         },
         {
           status: 409,
@@ -144,19 +286,20 @@ export async function POST(req: Request) {
     }
 
     /* =====================================================
-       CHECK FOR EXISTING SUPABASE ACCOUNT
+       CHECK WHETHER GUARDIAN ALREADY HAS AN ACCOUNT
     ===================================================== */
 
     const {
       data: usersData,
       error: usersError,
     } =
-      await supabaseAdmin.auth.admin.listUsers(
-        {
+      await supabaseAdmin
+        .auth
+        .admin
+        .listUsers({
           page: 1,
           perPage: 1000,
-        }
-      );
+        });
 
     if (usersError) {
       throw new Error(
@@ -174,20 +317,19 @@ export async function POST(req: Request) {
       );
 
     /*
-     * IMPORTANT:
-     *
-     * If this email already owns a Read With Luke
-     * account, we do NOT overwrite that account's
-     * password.
-     *
-     * The guardian should sign in normally instead.
+     * Do not overwrite an existing
+     * user's password.
      */
     if (existingUser) {
       return NextResponse.json(
         {
           success: false,
+
           accountExists: true,
-          email: guardianEmail,
+
+          email:
+            guardianEmail,
+
           message:
             "An account already exists for this email. Please sign in to activate your gift.",
         },
@@ -198,15 +340,19 @@ export async function POST(req: Request) {
     }
 
     /* =====================================================
-       CREATE GUARDIAN ACCOUNT
+       CREATE GUARDIAN SUPABASE ACCOUNT
     ===================================================== */
 
     const {
-      data: createdUserData,
-      error: createUserError,
+      data:
+        createdUserData,
+      error:
+        createUserError,
     } =
-      await supabaseAdmin.auth.admin.createUser(
-        {
+      await supabaseAdmin
+        .auth
+        .admin
+        .createUser({
           email:
             guardianEmail,
 
@@ -214,8 +360,7 @@ export async function POST(req: Request) {
 
           email_confirm:
             true,
-        }
-      );
+        });
 
     if (
       createUserError ||
@@ -231,38 +376,46 @@ export async function POST(req: Request) {
       createdUserData.user;
 
     /* =====================================================
-       ATTACH GIFT TO GUARDIAN
+       ACTIVATE THE GIFT
     ===================================================== */
 
     const now =
-      new Date().toISOString();
+      new Date()
+        .toISOString();
 
     const {
-      error: activationError,
-    } = await supabaseAdmin
-      .from("gift_memberships")
-      .update({
-        parent_user_id:
-          guardianUser.id,
+      error:
+        activationError,
+    } =
+      await supabaseAdmin
+        .from(
+          "gift_memberships"
+        )
+        .update({
+          parent_user_id:
+            guardianUser.id,
 
-        status:
-          "active",
+          status:
+            "active",
 
-        activated_at:
-          now,
+          activated_at:
+            now,
 
-        /*
-         * Do NOT approve sharing automatically.
-         */
-        progress_report_approved:
-          false,
-      })
-      .eq(
-        "id",
-        gift.id
-      );
+          /*
+           * Never approve sharing
+           * automatically.
+           */
+          progress_report_approved:
+            false,
+        })
+        .eq(
+          "id",
+          gift.id
+        );
 
-    if (activationError) {
+    if (
+      activationError
+    ) {
       throw new Error(
         activationError.message
       );
@@ -273,30 +426,33 @@ export async function POST(req: Request) {
     ===================================================== */
 
     const {
-      error: profileError,
-    } = await supabaseAdmin
-      .from("profiles")
-      .upsert(
-        {
-          id:
-            guardianUser.id,
+      error:
+        profileError,
+    } =
+      await supabaseAdmin
+        .from("profiles")
+        .upsert(
+          {
+            id:
+              guardianUser.id,
 
-          email:
-            guardianEmail,
+            email:
+              guardianEmail,
 
-          membership_status:
-            "active",
+            membership_status:
+              "active",
 
-          stripe_customer_id:
-            gift.stripe_customer_id,
+            stripe_customer_id:
+              gift.stripe_customer_id,
 
-          stripe_subscription_id:
-            gift.stripe_subscription_id,
-        },
-        {
-          onConflict: "id",
-        }
-      );
+            stripe_subscription_id:
+              gift.stripe_subscription_id,
+          },
+          {
+            onConflict:
+              "id",
+          }
+        );
 
     if (profileError) {
       throw new Error(
@@ -305,7 +461,7 @@ export async function POST(req: Request) {
     }
 
     /* =====================================================
-       RETURN INFO FOR NEXT SCREEN
+       SEND RESULTS BACK TO ACTIVATION PAGE
     ===================================================== */
 
     return NextResponse.json({
