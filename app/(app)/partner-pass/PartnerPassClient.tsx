@@ -457,7 +457,7 @@ export default function PartnerPassClient({
               className="partnerPassHeroButton"
               onClick={scrollToSignup}
             >
-              Start My 30-Day Partner Pass
+              Start My 30-Day Partner Pass!
             </button>
 
             <p className="partnerPassFinePrint">
@@ -607,7 +607,7 @@ export default function PartnerPassClient({
               <>
                 <div className="partnerPassFormFields">
                   <label htmlFor="partner-email">
-                    Partner Email
+                    Your Email
                   </label>
 
                   <input
