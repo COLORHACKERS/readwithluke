@@ -30,32 +30,35 @@ function addCalendarMonths(date: Date, months: number) {
 export async function POST(req: Request) {
   try {
     const {
-      userId,
-      purchaserEmail,
-      parentEmail,
+      gifterName,
+      gifterEmail,
+      guardianEmail,
       relationship,
-      progressEmails,
-      familyConfirmed,
+      progressReportRequested,
     } = await req.json();
 
-    const secretKey = process.env.STRIPE_SECRET_KEY;
+    const secretKey =
+      process.env.STRIPE_SECRET_KEY;
 
-    // One-time $19.99 price
     const giftUpfrontPriceId =
       process.env.STRIPE_GIFT_PRICE_ID;
 
-    // Recurring $4.99/month price
     const giftMonthlyPriceId =
       process.env.STRIPE_GIFT_MONTHLY_PRICE_ID;
 
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+    const siteUrl =
+      process.env.NEXT_PUBLIC_SITE_URL;
 
     if (!secretKey) {
-      throw new Error("Missing STRIPE_SECRET_KEY");
+      throw new Error(
+        "Missing STRIPE_SECRET_KEY"
+      );
     }
 
     if (!giftUpfrontPriceId) {
-      throw new Error("Missing STRIPE_GIFT_PRICE_ID");
+      throw new Error(
+        "Missing STRIPE_GIFT_PRICE_ID"
+      );
     }
 
     if (!giftMonthlyPriceId) {
@@ -65,95 +68,142 @@ export async function POST(req: Request) {
     }
 
     if (!siteUrl) {
-      throw new Error("Missing NEXT_PUBLIC_SITE_URL");
-    }
-
-    if (!userId) {
-      throw new Error("Missing userId");
-    }
-
-    if (!purchaserEmail) {
-      throw new Error("Missing purchaser email");
-    }
-
-    if (!parentEmail) {
-      throw new Error("Missing parent email");
-    }
-
-    if (!relationship) {
-      throw new Error("Missing relationship");
-    }
-
-    if (!familyConfirmed) {
-      return NextResponse.json(
-        {
-          error: "Family confirmation is required.",
-        },
-        {
-          status: 400,
-        }
+      throw new Error(
+        "Missing NEXT_PUBLIC_SITE_URL"
       );
     }
 
-    const stripe = new Stripe(secretKey);
+    const cleanGifterName =
+      String(gifterName || "").trim();
 
-    const cleanPurchaserEmail = String(
-      purchaserEmail
-    )
-      .trim()
-      .toLowerCase();
+    const cleanGifterEmail =
+      String(gifterEmail || "")
+        .trim()
+        .toLowerCase();
 
-    const cleanParentEmail = String(parentEmail)
-      .trim()
-      .toLowerCase();
+    const cleanGuardianEmail =
+      String(guardianEmail || "")
+        .trim()
+        .toLowerCase();
 
-    const trialEnd = addCalendarMonths(
-      new Date(),
-      3
-    );
+    const cleanRelationship =
+      String(relationship || "").trim();
+
+    if (!cleanGifterName) {
+      throw new Error(
+        "Missing gifter name."
+      );
+    }
+
+    if (!cleanGifterEmail) {
+      throw new Error(
+        "Missing gifter email."
+      );
+    }
+
+    if (!cleanGuardianEmail) {
+      throw new Error(
+        "Missing guardian email."
+      );
+    }
+
+    if (!cleanRelationship) {
+      throw new Error(
+        "Missing relationship."
+      );
+    }
+
+    const stripe =
+      new Stripe(secretKey);
+
+    const trialEnd =
+      addCalendarMonths(
+        new Date(),
+        3
+      );
 
     const metadata = {
-      purchaser_user_id: String(userId),
-      purchaser_email: cleanPurchaserEmail,
-      parent_email: cleanParentEmail,
-      relationship: String(relationship),
-      progress_emails: String(
-        Boolean(progressEmails)
-      ),
-      family_confirmed: "true",
-      membership_type: "gift",
-      gift_period: "3_months",
-      renewal_price: "4.99_monthly",
+      gifter_name:
+        cleanGifterName,
+
+      gifter_email:
+        cleanGifterEmail,
+
+      guardian_email:
+        cleanGuardianEmail,
+
+      relationship:
+        cleanRelationship,
+
+      progress_report_requested:
+        String(
+          Boolean(
+            progressReportRequested
+          )
+        ),
+
+      membership_type:
+        "gift",
+
+      gift_period:
+        "3_months",
+
+      renewal_price:
+        "4.99_monthly",
     };
 
-    const cleanSiteUrl = siteUrl.replace(/\/$/, "");
+    const cleanSiteUrl =
+      siteUrl.replace(/\/$/, "");
 
     const session =
       await stripe.checkout.sessions.create({
         mode: "subscription",
 
-        customer_email: cleanPurchaserEmail,
-        payment_method_collection: "always",
-        client_reference_id: String(userId),
+        /*
+         * IMPORTANT:
+         * The GIFTER is the Stripe customer.
+         *
+         * Receipts, invoices and billing
+         * information go to this email.
+         */
+        customer_email:
+          cleanGifterEmail,
+
+        payment_method_collection:
+          "always",
 
         line_items: [
           {
-            // Charged once today: $19.99
-            price: giftUpfrontPriceId,
+            /*
+             * Charged immediately:
+             * $19.99 gift purchase
+             */
+            price:
+              giftUpfrontPriceId,
+
             quantity: 1,
           },
           {
-            // First charged after three months:
-            // $4.99/month
-            price: giftMonthlyPriceId,
+            /*
+             * Recurring:
+             * $4.99/month
+             *
+             * First charged after the
+             * 3 included months.
+             */
+            price:
+              giftMonthlyPriceId,
+
             quantity: 1,
           },
         ],
 
         subscription_data: {
-          trial_end: Math.floor(
-            trialEnd.getTime() / 1000
-          ),
+          trial_end:
+            Math.floor(
+              trialEnd.getTime() /
+                1000
+            ),
 
           metadata,
         },
@@ -161,12 +211,12 @@ export async function POST(req: Request) {
         metadata,
 
         success_url:
-          `${cleanSiteUrl}/dashboard` +
+          `${cleanSiteUrl}/gift` +
           `?gift=success` +
           `&session_id={CHECKOUT_SESSION_ID}`,
 
         cancel_url:
-          `${cleanSiteUrl}/membership` +
+          `${cleanSiteUrl}/gift` +
           `?gift=cancelled`,
       });
 
@@ -180,7 +230,10 @@ export async function POST(req: Request) {
       url: session.url,
     });
   } catch (error) {
-    console.error("Gift checkout error:", error);
+    console.error(
+      "Gift checkout error:",
+      error
+    );
 
     const message =
       error instanceof Error
