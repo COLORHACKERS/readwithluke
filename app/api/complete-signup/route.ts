@@ -13,19 +13,35 @@ const supabaseAdmin = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
-export async function POST(request: Request) {
+export async function POST(
+  request: Request
+) {
   try {
     const body = await request.json();
 
-    const sessionId =
-      String(body.sessionId || "").trim();
+    const sessionId = String(
+      body.sessionId || ""
+    ).trim();
 
-    const password =
-      String(body.password || "");
+    const email = String(
+      body.email || ""
+    )
+      .trim()
+      .toLowerCase();
+
+    const password = String(
+      body.password || ""
+    );
 
     if (!sessionId) {
       throw new Error(
         "Missing Stripe checkout session."
+      );
+    }
+
+    if (!email) {
+      throw new Error(
+        "Missing account email."
       );
     }
 
@@ -41,27 +57,47 @@ export async function POST(request: Request) {
       );
 
     if (
-      session.mode !== "subscription" ||
-      !session.subscription
+      session.mode !== "subscription"
     ) {
       throw new Error(
-        "This Stripe checkout is not a valid membership."
+        "This is not a valid membership checkout."
       );
     }
 
-    const email =
-      session.customer_details?.email ||
-      session.customer_email ||
-      session.metadata?.email;
-
-    if (!email) {
+    if (!session.subscription) {
       throw new Error(
-        "Unable to find the email for this checkout."
+        "Stripe did not create a subscription."
       );
     }
 
-    const cleanEmail =
-      email.trim().toLowerCase();
+    const stripeEmail =
+      (
+        session.customer_details?.email ||
+        session.customer_email ||
+        session.metadata?.email ||
+        ""
+      )
+        .trim()
+        .toLowerCase();
+
+    if (!stripeEmail) {
+      throw new Error(
+        "Unable to verify the Stripe email."
+      );
+    }
+
+    if (stripeEmail !== email) {
+      throw new Error(
+        "The signup email does not match the Stripe checkout."
+      );
+    }
+
+    const plan =
+      session.metadata?.plan === "partner30"
+        ? "partner30"
+        : session.metadata?.plan === "yearly"
+          ? "yearly"
+          : "monthly";
 
     const customerId =
       typeof session.customer === "string"
@@ -73,8 +109,26 @@ export async function POST(request: Request) {
         ? session.subscription
         : session.subscription?.id || null;
 
-    const plan =
-      session.metadata?.plan || "monthly";
+    if (!subscriptionId) {
+      throw new Error(
+        "Missing Stripe subscription ID."
+      );
+    }
+
+    const subscription =
+      await stripe.subscriptions.retrieve(
+        subscriptionId
+      );
+
+    const membershipStatus =
+      subscription.status;
+
+    const trialEnd =
+      subscription.trial_end
+        ? new Date(
+            subscription.trial_end * 1000
+          ).toISOString()
+        : null;
 
     const {
       data: existingUsers,
@@ -83,14 +137,16 @@ export async function POST(request: Request) {
       await supabaseAdmin.auth.admin.listUsers();
 
     if (listError) {
-      throw new Error(listError.message);
+      throw new Error(
+        listError.message
+      );
     }
 
     const existingUser =
       existingUsers.users.find(
         (user) =>
           user.email?.toLowerCase() ===
-          cleanEmail
+          email
       );
 
     let userId: string;
@@ -98,7 +154,9 @@ export async function POST(request: Request) {
     if (existingUser) {
       userId = existingUser.id;
 
-      const { error: updateUserError } =
+      const {
+        error: updateUserError,
+      } =
         await supabaseAdmin.auth.admin.updateUserById(
           existingUser.id,
           {
@@ -117,11 +175,13 @@ export async function POST(request: Request) {
         data: createdUser,
         error: createUserError,
       } =
-        await supabaseAdmin.auth.admin.createUser({
-          email: cleanEmail,
-          password,
-          email_confirm: true,
-        });
+        await supabaseAdmin.auth.admin.createUser(
+          {
+            email,
+            password,
+            email_confirm: true,
+          }
+        );
 
       if (
         createUserError ||
@@ -133,26 +193,26 @@ export async function POST(request: Request) {
         );
       }
 
-      userId = createdUser.user.id;
+      userId =
+        createdUser.user.id;
     }
 
-    const membershipStatus =
-      plan === "yearly"
-        ? "active"
-        : "trialing";
-
-    const { error: profileError } =
+    const {
+      error: profileError,
+    } =
       await supabaseAdmin
         .from("profiles")
         .upsert(
           {
             id: userId,
-            email: cleanEmail,
-            stripe_customer_id: customerId,
+            email,
+            stripe_customer_id:
+              customerId,
             stripe_subscription_id:
               subscriptionId,
             membership_status:
               membershipStatus,
+            trial_end: trialEnd,
           },
           {
             onConflict: "id",
@@ -165,21 +225,21 @@ export async function POST(request: Request) {
       );
     }
 
-    if (subscriptionId) {
-      await stripe.subscriptions.update(
-        subscriptionId,
-        {
-          metadata: {
-            ...session.metadata,
-            user_id: userId,
-            email: cleanEmail,
-          },
-        }
-      );
-    }
+    await stripe.subscriptions.update(
+      subscriptionId,
+      {
+        metadata: {
+          ...subscription.metadata,
+          user_id: userId,
+          email,
+          plan,
+        },
+      }
+    );
 
     return NextResponse.json({
       success: true,
+      userId,
       plan,
     });
   } catch (error) {
