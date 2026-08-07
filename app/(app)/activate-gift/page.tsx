@@ -1197,12 +1197,14 @@ export default function ActivateGiftPage() {
                 {message}
               </p>
 
-              <Link
-                href="/login"
-                className="activateGiftButton"
-              >
-                SIGN IN
-              </Link>
+             <Link
+  href={`/login?next=${encodeURIComponent(
+    `/activate-gift?token=${token}&claim=1`
+  )}`}
+  className="activateGiftButton"
+>
+  SIGN IN TO CLAIM GIFT
+</Link>
             </>
           )}
 
