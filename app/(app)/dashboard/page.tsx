@@ -29,9 +29,14 @@ export default function DashboardPage() {
   const [coins, setCoins] = useState(0);
   const [streak, setStreak] = useState(0);
 
-  const [continueBook, setContinueBook] = useState<SavedBook | null>(null);
-  const [favorites, setFavorites] = useState<SavedBook[]>([]);
-  const [savedBooks, setSavedBooks] = useState<SavedBook[]>([]);
+  const [continueBook, setContinueBook] =
+    useState<SavedBook | null>(null);
+
+  const [favorites, setFavorites] =
+    useState<SavedBook[]>([]);
+
+  const [savedBooks, setSavedBooks] =
+    useState<SavedBook[]>([]);
 
   useEffect(() => {
     async function loadDashboard() {
@@ -44,90 +49,294 @@ export default function DashboardPage() {
         return;
       }
 
-      const { data: child } = await supabase
-        .from("children")
-        .select("*")
-        .eq("user_id", user.id)
-        .order("created_at", { ascending: true })
-        .limit(1)
-        .single();
+      /* =====================================================
+         FIND ACTIVE CHILD
+      ===================================================== */
 
-      if (child) {
-        setReaderName(child.name || "Reader");
-        setAvatar(child.avatar || "🔥");
+      const {
+        data: profile,
+        error: profileError,
+      } = await supabase
+        .from("profiles")
+        .select("active_child_id")
+        .eq("id", user.id)
+        .maybeSingle();
+
+      if (profileError) {
+        console.error(
+          "Profile error:",
+          profileError
+        );
       }
 
-      const { data: history } = await supabase
-        .from("reading_history")
-        .select("completed_at, coins_earned")
-        .eq("user_id", user.id);
+      let activeChildId =
+        profile?.active_child_id || null;
 
-      if (history) {
-        setCompletedCount(history.length);
+      /*
+       * Older accounts may not have
+       * active_child_id yet.
+       */
+      if (!activeChildId) {
+        const {
+          data: firstChild,
+          error: firstChildError,
+        } = await supabase
+          .from("children")
+          .select("id")
+          .eq("user_id", user.id)
+          .order("created_at", {
+            ascending: true,
+          })
+          .limit(1)
+          .maybeSingle();
 
-        setCoins(
-          history.reduce((sum, item) => sum + (item.coins_earned || 1), 0)
-        );
-
-        const dates = Array.from(
-          new Set(
-            history.map((item) =>
-              new Date(item.completed_at).toISOString().slice(0, 10)
-            )
-          )
-        ).sort((a, b) => b.localeCompare(a));
-
-        let currentStreak = 0;
-        const today = new Date();
-
-        for (let i = 0; i < dates.length; i++) {
-          const checkDate = new Date(today);
-          checkDate.setDate(today.getDate() - i);
-          const expected = checkDate.toISOString().slice(0, 10);
-
-          if (dates.includes(expected)) currentStreak++;
-          else break;
+        if (firstChildError) {
+          console.error(
+            "Child lookup error:",
+            firstChildError
+          );
         }
 
-        setStreak(currentStreak);
+        if (firstChild) {
+          activeChildId =
+            firstChild.id;
+
+          await supabase
+            .from("profiles")
+            .update({
+              active_child_id:
+                firstChild.id,
+            })
+            .eq("id", user.id);
+        }
       }
 
-      const { data: bookmarks } = await supabase
+      /* =====================================================
+         ACTIVE CHILD PROFILE
+      ===================================================== */
+
+      if (activeChildId) {
+        const {
+          data: child,
+          error: childError,
+        } = await supabase
+          .from("children")
+          .select(
+            "id, name, avatar"
+          )
+          .eq(
+            "id",
+            activeChildId
+          )
+          .eq(
+            "user_id",
+            user.id
+          )
+          .maybeSingle();
+
+        if (childError) {
+          console.error(
+            "Child error:",
+            childError
+          );
+        }
+
+        if (child) {
+          setReaderName(
+            child.name || "Reader"
+          );
+
+          setAvatar(
+            child.avatar || "🔥"
+          );
+        }
+      }
+
+      /* =====================================================
+         ACTIVE CHILD READING STATS
+      ===================================================== */
+
+      if (activeChildId) {
+        const {
+          data: history,
+          error: historyError,
+        } = await supabase
+          .from("reading_history")
+          .select(
+            "completed_at, coins_earned"
+          )
+          .eq(
+            "user_id",
+            user.id
+          )
+          .eq(
+            "child_id",
+            activeChildId
+          );
+
+        if (historyError) {
+          console.error(
+            "Reading history error:",
+            historyError
+          );
+        }
+
+        if (history) {
+          setCompletedCount(
+            history.length
+          );
+
+          setCoins(
+            history.reduce(
+              (sum, item) =>
+                sum +
+                (item.coins_earned ||
+                  0),
+              0
+            )
+          );
+
+          const dates = Array.from(
+            new Set(
+              history
+                .filter(
+                  (item) =>
+                    item.completed_at
+                )
+                .map((item) =>
+                  new Date(
+                    item.completed_at
+                  )
+                    .toISOString()
+                    .slice(0, 10)
+                )
+            )
+          ).sort(
+            (a, b) =>
+              b.localeCompare(a)
+          );
+
+          let currentStreak = 0;
+
+          const today =
+            new Date();
+
+          for (
+            let i = 0;
+            i < dates.length;
+            i++
+          ) {
+            const checkDate =
+              new Date(today);
+
+            checkDate.setDate(
+              today.getDate() - i
+            );
+
+            const expected =
+              checkDate
+                .toISOString()
+                .slice(0, 10);
+
+            if (
+              dates.includes(
+                expected
+              )
+            ) {
+              currentStreak++;
+            } else {
+              break;
+            }
+          }
+
+          setStreak(
+            currentStreak
+          );
+        }
+      } else {
+        setCompletedCount(0);
+        setCoins(0);
+        setStreak(0);
+      }
+
+      /* =====================================================
+         BOOKMARKS
+      ===================================================== */
+
+      const {
+        data: bookmarks,
+      } = await supabase
         .from("book_bookmarks")
-        .select("id, page_number, books(title, slug, cover_url)")
-        .eq("user_id", user.id)
-        .order("updated_at", { ascending: false })
+        .select(
+          "id, page_number, books(title, slug, cover_url)"
+        )
+        .eq(
+          "user_id",
+          user.id
+        )
+        .order(
+          "updated_at",
+          {
+            ascending: false,
+          }
+        )
         .limit(4);
 
-    if (bookmarks) {
-  setContinueBook(bookmarks[0] || null);
-  setSavedBooks(bookmarks as SavedBook[]);
-}
+      if (bookmarks) {
+        setContinueBook(
+          bookmarks[0] || null
+        );
 
-      const { data: likes } = await supabase
+        setSavedBooks(
+          bookmarks as SavedBook[]
+        );
+      }
+
+      /* =====================================================
+         FAVORITES
+      ===================================================== */
+
+      const {
+        data: likes,
+      } = await supabase
         .from("book_likes")
-        .select("id, books(title, slug, cover_url)")
-        .eq("user_id", user.id)
+        .select(
+          "id, books(title, slug, cover_url)"
+        )
+        .eq(
+          "user_id",
+          user.id
+        )
         .limit(4);
 
       if (likes) {
-        setFavorites(likes as SavedBook[]);
+        setFavorites(
+          likes as SavedBook[]
+        );
       }
     }
 
     loadDashboard();
   }, [router]);
-const continueBookInfo = Array.isArray(continueBook?.books)
-  ? continueBook.books[0]
-  : continueBook?.books;
-  
+
+  const continueBookInfo =
+    Array.isArray(
+      continueBook?.books
+    )
+      ? continueBook.books[0]
+      : continueBook?.books;
+
   return (
     <>
       <Header />
 
       <main className="dashboardPage">
         <section className="dashboardHero">
-          <img src="/images/home-hero.png" alt="" className="dashboardBg" />
+          <img
+            src="/images/home-hero.png"
+            alt=""
+            className="dashboardBg"
+          />
 
           <div className="dashboardText">
             <h1>
@@ -137,119 +346,181 @@ const continueBookInfo = Array.isArray(continueBook?.books)
             </h1>
 
             <p>
-              Keep reading stories, collect coins,
+              Keep reading stories,
+              collect coins,
               <br />
-              build your streak, and unlock rewards.
+              build your streak, and
+              unlock rewards.
             </p>
           </div>
 
-         <div className="dashboardWelcome">
-  <div className="dashboardAvatarWrap">
-    <div className="dashboardAvatar">{avatar}</div>
-
-    <div>
-      <h2>WELCOME BACK, {readerName.toUpperCase()}!</h2>
-    </div>
-  </div>
+          <div className="dashboardWelcome">
+            <div>
+              <h2>
+                WELCOME BACK,{" "}
+                {readerName.toUpperCase()}!
+              </h2>
+            </div>
 
             <div className="dashboardStats">
               <div className="dashboardStat">
-                <strong>🪙 {coins}</strong>
+                <strong>
+                  🪙 {coins}
+                </strong>
                 <span>coins</span>
               </div>
 
               <div className="dashboardStat">
-                <strong>{completedCount}</strong>
-                <span>completed</span>
+                <strong>
+                  {completedCount}
+                </strong>
+                <span>
+                  completed
+                </span>
               </div>
 
               <div className="dashboardStat">
-                <strong>🔥 {streak}</strong>
-                <span>day streak</span>
+                <strong>
+                  🔥 {streak}
+                </strong>
+                <span>
+                  day streak
+                </span>
               </div>
             </div>
           </div>
 
           <section className="dashboardPanel">
-<div className="dashboardCard">
-  <div className="dashboardCardIcon">📖</div>
-
-  <div>
-    <h3>Continue Reading</h3>
-
-    {continueBookInfo ? (
-      <p>
-        {continueBookInfo.title}
-        <br />
-        Page {continueBook?.page_number || 1}
-      </p>
-    ) : (
-      <p>Jump into your next magical story.</p>
-    )}
-
-    {continueBookInfo ? (
-      <Link
-        href={`/books/${continueBookInfo.slug}/read?page=${
-          continueBook?.page_number || 1
-        }`}
-      >
-        Continue
-      </Link>
-    ) : (
-      <Link href="/library">Go to Library</Link>
-    )}
-  </div>
-</div>
-
             <div className="dashboardCard">
-              <div className="dashboardCardIcon">❤️</div>
+              <div className="dashboardCardIcon">
+                📖
+              </div>
 
               <div>
-                <h3>Favorites</h3>
+                <h3>
+                  Continue Reading
+                </h3>
+
+                {continueBookInfo ? (
+                  <p>
+                    {
+                      continueBookInfo.title
+                    }
+                    <br />
+                    Page{" "}
+                    {continueBook?.page_number ||
+                      1}
+                  </p>
+                ) : (
+                  <p>
+                    Jump into your
+                    next magical story.
+                  </p>
+                )}
+
+                {continueBookInfo ? (
+                  <Link
+                    href={`/books/${continueBookInfo.slug}/read?page=${
+                      continueBook?.page_number ||
+                      1
+                    }`}
+                  >
+                    Continue
+                  </Link>
+                ) : (
+                  <Link href="/library">
+                    Go to Library
+                  </Link>
+                )}
+              </div>
+            </div>
+
+            <div className="dashboardCard">
+              <div className="dashboardCardIcon">
+                ❤️
+              </div>
+
+              <div>
+                <h3>
+                  Favorites
+                </h3>
+
                 <p>
-                  {favorites.length > 0
+                  {favorites.length >
+                  0
                     ? `${favorites.length} favorite stories saved.`
                     : "Tap the heart on stories you love."}
                 </p>
 
-                <Link href="/library">View Library</Link>
+                <Link href="/library">
+                  View Library
+                </Link>
               </div>
             </div>
 
             <div className="dashboardCard">
-              <div className="dashboardCardIcon">🔖</div>
+              <div className="dashboardCardIcon">
+                🔖
+              </div>
 
               <div>
-                <h3>Saved Stories</h3>
+                <h3>
+                  Saved Stories
+                </h3>
+
                 <p>
-                  {savedBooks.length > 0
+                  {savedBooks.length >
+                  0
                     ? `${savedBooks.length} stories saved for later.`
                     : "Use the bookmark to save a story."}
                 </p>
 
-                <Link href="/library">Browse Books</Link>
+                <Link href="/library">
+                  Browse Books
+                </Link>
               </div>
             </div>
 
             <div className="dashboardCard">
-              <div className="dashboardCardIcon">🏆</div>
+              <div className="dashboardCardIcon">
+                🏆
+              </div>
 
               <div>
-                <h3>Rewards</h3>
-                <p>{avatar} Build your avatar with stickers and coins.</p>
+                <h3>
+                  Rewards
+                </h3>
 
-                <Link href="/rewards">Build Avatar</Link>
+                <p>
+                  {avatar} Build your
+                  avatar with stickers
+                  and coins.
+                </p>
+
+                <Link href="/rewards">
+                  Build Avatar
+                </Link>
               </div>
             </div>
 
             <div className="dashboardCard">
-              <div className="dashboardCardIcon">⭐</div>
+              <div className="dashboardCardIcon">
+                ⭐
+              </div>
 
               <div>
-                <h3>Stickers</h3>
-                <p>Collect fun stickers as you read and learn.</p>
+                <h3>
+                  Stickers
+                </h3>
 
-                <Link href="/rewards">View Stickers</Link>
+                <p>
+                  Collect fun stickers
+                  as you read and learn.
+                </p>
+
+                <Link href="/rewards">
+                  View Stickers
+                </Link>
               </div>
             </div>
           </section>
