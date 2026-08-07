@@ -446,18 +446,17 @@ export default function GiftReadingPage() {
               Gifter&apos;s Name
             </label>
 
-            <input
-              id="gifterName"
-              type="text"
-              placeholder="Your name"
-              value={gifterName}
-              onChange={(event) =>
-                setGifterName(
-                  event.target.value
-                )
-              }
-              autoComplete="name"
-            />
+        <input
+  id="gifterName"
+  type="text"
+  className="giftInput"
+  placeholder="Your name"
+  value={gifterName}
+  onChange={(event) =>
+    setGifterName(event.target.value)
+  }
+  autoComplete="name"
+/>
 
             <p className="giftFieldNote">
               We&apos;ll tell the guardian
@@ -611,13 +610,13 @@ export default function GiftReadingPage() {
               </strong>
             </div>
 
-            <p className="giftCheckoutRenewal">
-              Includes 3 months of Read With
-              Luke. After that, your payment
-              method will be charged
-              <strong> $4.99/month </strong>
-              unless canceled.
-            </p>
+          <p className="giftCheckoutRenewal">
+  Includes 3 months of Read With
+  Luke. After that, your payment
+  method will be charged
+  <strong> $4.99/month </strong>
+  unless canceled.
+</p>
 
             {/* CHECKOUT */}
 
