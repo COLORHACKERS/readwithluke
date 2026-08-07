@@ -532,7 +532,7 @@ const passwordsDoNotMatch =
 
                 <p className="membershipSignupNote">
                   Your card will not be charged until
-                  your 7-day free trial ends.
+                  your 7-day free trial ends, then $9.99 a month.
                 </p>
 
                 <button
