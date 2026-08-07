@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
-export default function CompleteSignupPage() {
+function CompleteSignupContent() {
   const searchParams = useSearchParams();
 
   const [status, setStatus] = useState(
@@ -60,7 +60,8 @@ export default function CompleteSignupPage() {
           }
         );
 
-        const data = await response.json();
+        const data =
+          await response.json();
 
         if (!response.ok) {
           throw new Error(
@@ -88,6 +89,11 @@ export default function CompleteSignupPage() {
         window.location.href =
           "/login?signup=success";
       } catch (error) {
+        console.error(
+          "Complete signup error:",
+          error
+        );
+
         setStatus(
           error instanceof Error
             ? error.message
@@ -133,5 +139,26 @@ export default function CompleteSignupPage() {
         <p>{status}</p>
       </div>
     </main>
+  );
+}
+
+export default function CompleteSignupPage() {
+  return (
+    <Suspense
+      fallback={
+        <main
+          style={{
+            minHeight: "100vh",
+            background: "#ffffff",
+            display: "grid",
+            placeItems: "center",
+          }}
+        >
+          <p>Finishing your account...</p>
+        </main>
+      }
+    >
+      <CompleteSignupContent />
+    </Suspense>
   );
 }
