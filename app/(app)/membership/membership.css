@@ -623,3 +623,169 @@
 .membershipFinePrint {
   max-width: 520px;
 }
+/* =========================================================
+   MEMBERSHIP SIGNUP FORM
+========================================================= */
+
+.membershipFormFields {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.membershipFormFields label {
+  margin: 16px 0 7px;
+
+  color: #171717;
+
+  font-family: "Courier New", Courier, monospace;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.membershipFormFields > input,
+.membershipPasswordField input {
+  width: 100%;
+  height: 52px;
+
+  padding: 0 16px;
+
+  border: 1px solid #cfcfcf;
+  border-radius: 10px;
+
+  background: #ffffff;
+  color: #171717;
+
+  font-family: "Courier New", Courier, monospace;
+  font-size: 14px;
+
+  box-sizing: border-box;
+  outline: none;
+}
+
+.membershipFormFields > input:focus,
+.membershipPasswordField input:focus {
+  border-color: #ff5526;
+}
+
+.membershipPasswordField {
+  position: relative;
+  width: 100%;
+}
+
+.membershipPasswordField input {
+  padding-right: 54px;
+}
+
+.membershipPasswordField button {
+  position: absolute;
+  top: 50%;
+  right: 14px;
+
+  width: 34px;
+  height: 34px;
+
+  padding: 0;
+
+  display: grid;
+  place-items: center;
+
+  transform: translateY(-50%);
+
+  border: 0;
+  background: transparent;
+  color: #535353;
+
+  cursor: pointer;
+}
+
+.membershipFormError {
+  margin: 13px 0 0;
+
+  color: #c73922;
+
+  font-family: "Courier New", Courier, monospace;
+  font-size: 12px;
+  font-weight: 900;
+  line-height: 1.4;
+}
+
+.membershipSecureBox {
+  margin-top: 20px;
+}
+
+.membershipCheckoutSummary {
+  width: 100%;
+  margin: 18px 0;
+
+  padding: 14px 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+
+  border: 1px solid #e1cda5;
+  border-radius: 14px;
+
+  background: #fff8e8;
+
+  box-sizing: border-box;
+}
+
+.membershipCheckoutSummary div {
+  min-width: 0;
+}
+
+.membershipCheckoutSummary span {
+  display: block;
+
+  margin-bottom: 4px;
+
+  font-family: "Courier New", Courier, monospace;
+  font-size: 9px;
+  font-weight: 900;
+}
+
+.membershipCheckoutSummary strong {
+  display: block;
+
+  overflow: hidden;
+
+  font-family: "Courier New", Courier, monospace;
+  font-size: 12px;
+  font-weight: 900;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.membershipCheckoutSummary button {
+  flex: 0 0 auto;
+
+  padding: 8px 12px;
+
+  border: 1px solid #ff5526;
+  border-radius: 999px;
+
+  background: #ffffff;
+  color: #ff5526;
+
+  font-family: "Courier New", Courier, monospace;
+  font-size: 10px;
+  font-weight: 900;
+
+  cursor: pointer;
+}
+
+.membershipEmbeddedStripe {
+  width: 100%;
+
+  margin-top: 14px;
+
+  overflow: hidden;
+
+  border-radius: 18px;
+
+  background: #ffffff;
+}
