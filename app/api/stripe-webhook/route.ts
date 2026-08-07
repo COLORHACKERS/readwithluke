@@ -25,14 +25,48 @@ type ReaderPlan =
   | "partner30";
 
 type GiftMetadata = {
-  purchaser_user_id: string;
-  purchaser_email: string;
-  parent_email: string;
+  gifter_name: string;
+  gifter_email: string;
+  guardian_email: string;
   relationship: string;
-  progress_emails: string;
-  family_confirmed: string;
+  progress_report_requested: string;
   membership_type: string;
+  gift_period?: string;
+  renewal_price?: string;
 };
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function escapeHtml(value: string) {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function formatRelationship(
+  relationship: string
+) {
+  const labels: Record<string, string> = {
+    grandparent: "grandparent",
+    aunt: "aunt",
+    uncle: "uncle",
+    godparent: "godparent",
+    parent: "parent",
+    family_friend: "family friend",
+    family_member: "family member",
+    other: "loved one",
+  };
+
+  return (
+    labels[relationship] ||
+    relationship.replace(/_/g, " ")
+  );
+}
 
 /* =========================================================
    REGULAR MEMBERSHIP WELCOME EMAIL
@@ -182,7 +216,7 @@ async function sendWelcomeEmail({
         </h1>
 
         <p>
-          Hi ${readerName || "Friend"},
+          Hi ${escapeHtml(readerName || "Friend")},
         </p>
 
         ${mainMessage}
@@ -206,13 +240,11 @@ async function sendWelcomeEmail({
           </a>
         </p>
 
-        <hr
-          style="
-            margin:40px 0;
-            border:none;
-            border-top:1px solid #ddd;
-          "
-        >
+        <hr style="
+          margin:40px 0;
+          border:none;
+          border-top:1px solid #ddd;
+        ">
 
         <p style="
           color:#666;
@@ -231,36 +263,38 @@ async function sendWelcomeEmail({
 }
 
 /* =========================================================
-   GIFT ACTIVATION EMAIL
+   GIFTER THANK-YOU EMAIL
 ========================================================= */
 
-async function sendGiftActivationEmail({
-  parentEmail,
-  purchaserEmail,
-  relationship,
-  activationToken,
+async function sendGifterThankYouEmail({
+  gifterEmail,
+  gifterName,
+  guardianEmail,
+  progressReportRequested,
 }: {
-  parentEmail: string;
-  purchaserEmail: string;
-  relationship: string;
-  activationToken: string;
+  gifterEmail: string;
+  gifterName: string;
+  guardianEmail: string;
+  progressReportRequested: boolean;
 }) {
   const siteUrl =
     process.env.NEXT_PUBLIC_SITE_URL ||
     "https://www.readwithluke.com";
 
-  const activationUrl =
-    `${siteUrl}/activate-gift?token=` +
-    encodeURIComponent(activationToken);
+  const safeName =
+    escapeHtml(gifterName);
+
+  const safeGuardianEmail =
+    escapeHtml(guardianEmail);
 
   await resend.emails.send({
     from:
       "Read With Luke <hello@readwithluke.com>",
 
-    to: parentEmail,
+    to: gifterEmail,
 
     subject:
-      "🎁 Your family sent you Read With Luke!",
+      "🎁 Your Read With Luke Gift Is On Its Way!",
 
     html: `
       <div style="
@@ -277,7 +311,189 @@ async function sendGiftActivationEmail({
           font-weight:bold;
           letter-spacing:.08em;
         ">
-          A FAMILY GIFT
+          THANK YOU FOR GIFTING READING
+        </p>
+
+        <h1 style="
+          color:#13294B;
+          font-size:38px;
+          line-height:1.05;
+        ">
+          Your gift is on its way!
+        </h1>
+
+        <p>
+          Hi ${safeName},
+        </p>
+
+        <p>
+          Thank you for gifting
+          <strong>Read With Luke</strong>.
+          You just gave a child three months
+          of stories, learning adventures,
+          activities and rewards.
+        </p>
+
+        <p>
+          We sent the gift invitation to:
+          <br />
+          <strong>${safeGuardianEmail}</strong>
+        </p>
+
+        <p>
+          Your gift includes
+          <strong>3 months of access</strong>.
+          After the included three months,
+          your payment method will continue
+          at <strong>$4.99/month</strong>
+          unless canceled.
+        </p>
+
+        ${
+          progressReportRequested
+            ? `
+              <div style="
+                margin:24px 0;
+                padding:18px;
+                background:#FFF3D6;
+                border-radius:16px;
+              ">
+                <strong>
+                  Monthly report card requested
+                </strong>
+
+                <p style="
+                  margin:8px 0 0;
+                  line-height:1.5;
+                ">
+                  The parent or guardian will be
+                  asked whether they approve sharing
+                  the child's monthly Read With Luke
+                  report card with you.
+                </p>
+
+                <p style="
+                  margin:8px 0 0;
+                  font-size:13px;
+                  color:#666;
+                ">
+                  Nothing will be shared unless
+                  the guardian approves.
+                </p>
+              </div>
+            `
+            : ""
+        }
+
+        <p>
+          Stripe will separately send your
+          payment receipt and billing information.
+        </p>
+
+        <p style="margin-top:32px;">
+          <a
+            href="${siteUrl}"
+            style="
+              background:#FF5526;
+              color:white;
+              text-decoration:none;
+              padding:16px 28px;
+              border-radius:999px;
+              font-weight:bold;
+              display:inline-block;
+            "
+          >
+            Visit Read With Luke →
+          </a>
+        </p>
+
+        <hr style="
+          margin:40px 0;
+          border:none;
+          border-top:1px solid #ddd;
+        ">
+
+        <p style="
+          color:#666;
+          font-size:14px;
+          line-height:1.6;
+        ">
+          Thank you for sharing the adventure. 📚
+          <br />
+          <strong>
+            The Read With Luke Team
+          </strong>
+        </p>
+      </div>
+    `,
+  });
+}
+
+/* =========================================================
+   GUARDIAN GIFT ACTIVATION EMAIL
+========================================================= */
+
+async function sendGiftActivationEmail({
+  guardianEmail,
+  gifterName,
+  relationship,
+  activationToken,
+  progressReportRequested,
+}: {
+  guardianEmail: string;
+  gifterName: string;
+  relationship: string;
+  activationToken: string;
+  progressReportRequested: boolean;
+}) {
+  const siteUrl =
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    "https://www.readwithluke.com";
+
+  const activationUrl =
+    `${siteUrl}/activate-gift?token=` +
+    encodeURIComponent(
+      activationToken
+    );
+
+  const safeGifterName =
+    escapeHtml(gifterName);
+
+  const safeGuardianEmail =
+    escapeHtml(guardianEmail);
+
+  const safeRelationship =
+    escapeHtml(
+      formatRelationship(
+        relationship
+      )
+    );
+
+  await resend.emails.send({
+    from:
+      "Read With Luke <hello@readwithluke.com>",
+
+    to: guardianEmail,
+
+    subject:
+      `🎁 ${gifterName} gifted your child Read With Luke!`,
+
+    html: `
+      <div style="
+        font-family:Arial,sans-serif;
+        max-width:600px;
+        margin:auto;
+        padding:40px;
+        background:#F8F1E6;
+        border-radius:24px;
+      ">
+        <p style="
+          color:#FF5526;
+          font-size:13px;
+          font-weight:bold;
+          letter-spacing:.08em;
+        ">
+          A SPECIAL READING GIFT
         </p>
 
         <h1 style="
@@ -289,30 +505,67 @@ async function sendGiftActivationEmail({
         </h1>
 
         <p>
-          A ${relationship.replace("_", " ")}
-          has gifted your child access to
-          Read With Luke.
+          <strong>${safeGifterName}</strong>,
+          your child's ${safeRelationship},
+          gifted your child
+          <strong>Read With Luke!</strong>
         </p>
 
         <p>
-          The gift was purchased by
-          <strong>${purchaserEmail}</strong>.
+          The gift includes
+          <strong>3 months of access</strong>
+          to illustrated stories, playful learning
+          adventures, activities, coins and rewards.
         </p>
 
         <p>
-          Your gift includes
-          <strong>3 months of Read With Luke</strong>.
-          After the included three months,
-          the membership continues at
-          <strong>$4.99 per month</strong>
-          unless canceled.
+          To get started, create your parent or
+          guardian account and choose your password.
         </p>
 
         <p>
-          Activate the gift using your parent
-          or guardian account. You will not be
-          asked for payment information.
+          <strong>
+            You will not be asked for payment
+            information.
+          </strong>
         </p>
+
+        ${
+          progressReportRequested
+            ? `
+              <div style="
+                margin:24px 0;
+                padding:18px;
+                background:#FFF3D6;
+                border-radius:16px;
+              ">
+                <strong>
+                  A monthly report card was requested
+                </strong>
+
+                <p style="
+                  margin:8px 0 0;
+                  line-height:1.5;
+                ">
+                  ${safeGifterName} requested to
+                  receive a monthly Read With Luke
+                  report card.
+                </p>
+
+                <p style="
+                  margin:8px 0 0;
+                  line-height:1.5;
+                ">
+                  After you activate the account,
+                  we'll ask whether you want to
+                  approve or decline that request.
+                  Nothing is shared without your
+                  permission.
+                </p>
+              </div>
+            `
+            : ""
+        }
 
         <p style="margin-top:32px;">
           <a
@@ -327,17 +580,15 @@ async function sendGiftActivationEmail({
               display:inline-block;
             "
           >
-            Activate Gift →
+            Activate Your Gift →
           </a>
         </p>
 
-        <hr
-          style="
-            margin:40px 0;
-            border:none;
-            border-top:1px solid #ddd;
-          "
-        >
+        <hr style="
+          margin:40px 0;
+          border:none;
+          border-top:1px solid #ddd;
+        ">
 
         <p style="
           color:#666;
@@ -345,7 +596,7 @@ async function sendGiftActivationEmail({
           line-height:1.6;
         ">
           This invitation was sent to
-          ${parentEmail}.
+          ${safeGuardianEmail}.
           <br /><br />
 
           <strong>
@@ -365,9 +616,11 @@ async function handleRegularCheckout(
   session: Stripe.Checkout.Session
 ) {
   const plan: ReaderPlan =
-    session.metadata?.plan === "partner30"
+    session.metadata?.plan ===
+    "partner30"
       ? "partner30"
-      : session.metadata?.plan === "yearly"
+      : session.metadata?.plan ===
+          "yearly"
         ? "yearly"
         : "monthly";
 
@@ -377,24 +630,14 @@ async function handleRegularCheckout(
     session.metadata?.email ||
     null;
 
-  /*
-   * NEW STRIPE-FIRST SIGNUP FLOW
-   *
-   * The customer may not have a Supabase user yet.
-   * That is expected.
-   *
-   * /complete-signup creates the Supabase account
-   * after Stripe successfully accepts the card.
-   */
   const userId =
     session.metadata?.user_id ||
     session.client_reference_id ||
     null;
 
   /*
-   * If there is no Supabase user yet, send the
-   * correct confirmation email and allow
-   * /complete-signup to finish account creation.
+   * Stripe-first signup:
+   * there may not be a Supabase user yet.
    */
   if (!userId) {
     if (email) {
@@ -412,21 +655,27 @@ async function handleRegularCheckout(
   }
 
   const customerId =
-    typeof session.customer === "string"
+    typeof session.customer ===
+    "string"
       ? session.customer
-      : session.customer?.id || null;
+      : session.customer?.id ||
+        null;
 
   const subscriptionId =
-    typeof session.subscription === "string"
+    typeof session.subscription ===
+    "string"
       ? session.subscription
-      : session.subscription?.id || null;
+      : session.subscription?.id ||
+        null;
 
   let membershipStatus =
     plan === "yearly"
       ? "active"
       : "trialing";
 
-  let trialEnd: string | null = null;
+  let trialEnd:
+    | string
+    | null = null;
 
   if (subscriptionId) {
     const subscription =
@@ -440,7 +689,8 @@ async function handleRegularCheckout(
     trialEnd =
       subscription.trial_end
         ? new Date(
-            subscription.trial_end * 1000
+            subscription.trial_end *
+              1000
           ).toISOString()
         : null;
   }
@@ -511,7 +761,7 @@ async function handleRegularCheckout(
 }
 
 /* =========================================================
-   GIFT CHECKOUT
+   NEW GIFT CHECKOUT
 ========================================================= */
 
 async function handleGiftCheckout(
@@ -526,38 +776,46 @@ async function handleGiftCheckout(
     );
   }
 
-  const purchaserUserId =
-    metadata.purchaser_user_id ||
-    session.client_reference_id;
+  const gifterName =
+    metadata.gifter_name?.trim();
 
-  const purchaserEmail =
-    metadata.purchaser_email ||
-    session.customer_details?.email ||
-    session.customer_email;
+  const gifterEmail =
+    (
+      metadata.gifter_email ||
+      session.customer_details?.email ||
+      session.customer_email ||
+      ""
+    )
+      .trim()
+      .toLowerCase();
 
-  const parentEmail =
-    metadata.parent_email
+  const guardianEmail =
+    metadata.guardian_email
       ?.trim()
       .toLowerCase();
 
   const relationship =
-    metadata.relationship;
+    metadata.relationship?.trim();
 
-  if (!purchaserUserId) {
+  const progressReportRequested =
+    metadata.progress_report_requested ===
+    "true";
+
+  if (!gifterName) {
     throw new Error(
-      "Gift checkout is missing purchaser user ID."
+      "Gift checkout is missing gifter name."
     );
   }
 
-  if (!purchaserEmail) {
+  if (!gifterEmail) {
     throw new Error(
-      "Gift checkout is missing purchaser email."
+      "Gift checkout is missing gifter email."
     );
   }
 
-  if (!parentEmail) {
+  if (!guardianEmail) {
     throw new Error(
-      "Gift checkout is missing parent email."
+      "Gift checkout is missing guardian email."
     );
   }
 
@@ -568,14 +826,18 @@ async function handleGiftCheckout(
   }
 
   const customerId =
-    typeof session.customer === "string"
+    typeof session.customer ===
+    "string"
       ? session.customer
-      : session.customer?.id || null;
+      : session.customer?.id ||
+        null;
 
   const subscriptionId =
-    typeof session.subscription === "string"
+    typeof session.subscription ===
+    "string"
       ? session.subscription
-      : session.subscription?.id || null;
+      : session.subscription?.id ||
+        null;
 
   if (!subscriptionId) {
     throw new Error(
@@ -593,26 +855,33 @@ async function handleGiftCheckout(
     .from("gift_memberships")
     .upsert(
       {
+        /*
+         * Gifter does NOT need a
+         * Read With Luke user account.
+         */
         purchaser_user_id:
-          purchaserUserId,
+          null,
+
+        purchaser_name:
+          gifterName,
 
         purchaser_email:
-          purchaserEmail
-            .trim()
-            .toLowerCase(),
+          gifterEmail,
 
         parent_email:
-          parentEmail,
+          guardianEmail,
 
         relationship,
 
-        progress_emails_enabled:
-          metadata.progress_emails ===
-          "true",
+        progress_report_requested:
+          progressReportRequested,
 
-        family_confirmed:
-          metadata.family_confirmed ===
-          "true",
+        /*
+         * Guardian must explicitly
+         * approve this later.
+         */
+        progress_report_approved:
+          false,
 
         stripe_customer_id:
           customerId,
@@ -642,12 +911,28 @@ async function handleGiftCheckout(
     );
   }
 
+  /*
+   * EMAIL #1:
+   * Thank the person who paid.
+   */
+  await sendGifterThankYouEmail({
+    gifterEmail,
+    gifterName,
+    guardianEmail,
+    progressReportRequested,
+  });
+
+  /*
+   * EMAIL #2:
+   * Invite the guardian to activate.
+   */
   await sendGiftActivationEmail({
-    parentEmail,
-    purchaserEmail,
+    guardianEmail,
+    gifterName,
     relationship,
     activationToken:
       gift.activation_token,
+    progressReportRequested,
   });
 }
 
@@ -659,7 +944,8 @@ async function updateSubscriptionStatus(
   subscription: Stripe.Subscription
 ) {
   const customerId =
-    typeof subscription.customer === "string"
+    typeof subscription.customer ===
+    "string"
       ? subscription.customer
       : subscription.customer.id;
 
@@ -716,7 +1002,8 @@ async function cancelSubscription(
   subscription: Stripe.Subscription
 ) {
   const customerId =
-    typeof subscription.customer === "string"
+    typeof subscription.customer ===
+    "string"
       ? subscription.customer
       : subscription.customer.id;
 
@@ -744,7 +1031,8 @@ async function cancelSubscription(
     await supabaseAdmin
       .from("gift_memberships")
       .update({
-        status: "cancelled",
+        status:
+          "cancelled",
       })
       .eq("id", gift.id);
 
