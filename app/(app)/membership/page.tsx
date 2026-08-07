@@ -6,14 +6,6 @@ import Footer from "@/app/components/Footer";
 import ReaderEmbeddedCheckout from "@/app/components/ReaderEmbeddedCheckout";
 import "./membership.css";
 
-const passwordsMatch =
-  confirmPassword.length > 0 &&
-  password === confirmPassword;
-
-const passwordsDoNotMatch =
-  confirmPassword.length > 0 &&
-  password !== confirmPassword;
-
 type FaqItem = {
   question: string;
   answer: string;
@@ -138,6 +130,7 @@ export default function MembershipPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] =
@@ -147,6 +140,14 @@ export default function MembershipPage() {
 
   const [showCheckout, setShowCheckout] = useState(false);
   const [checkoutEmail, setCheckoutEmail] = useState("");
+
+  const passwordsMatch =
+  confirmPassword.length > 0 &&
+  password === confirmPassword;
+
+const passwordsDoNotMatch =
+  confirmPassword.length > 0 &&
+  password !== confirmPassword;
 
   function scrollToSignup() {
     document
