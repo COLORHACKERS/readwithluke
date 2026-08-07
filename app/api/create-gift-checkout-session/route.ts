@@ -121,7 +121,7 @@ export async function POST(req: Request) {
         Boolean(progressEmails)
       ),
       family_confirmed: "true",
-      membership_type: "family_gift",
+      membership_type: "gift",
       gift_period: "3_months",
       renewal_price: "4.99_monthly",
     };
