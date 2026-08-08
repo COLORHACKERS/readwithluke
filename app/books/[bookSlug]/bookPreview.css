@@ -361,8 +361,9 @@
     gap: 12px;
   }
 
-  .previewStartButton,
-  .previewOutlineButton {
+ .previewStartButton,
+.previewOutlineButton,
+.previewWorksheetButton {
     width: auto;
     min-width: 0;
     height: 54px;
@@ -437,14 +438,15 @@
     margin-top: 16px;
   }
 
-  .previewStartButton,
-  .previewOutlineButton {
-    height: 48px;
-    min-height: 48px;
-    padding: 0 21px;
+.previewStartButton,
+.previewOutlineButton,
+.previewWorksheetButton {
+  height: 48px;
+  min-height: 48px;
+  padding: 0 21px;
 
-    font-size: 18px;
-  }
+  font-size: 18px;
+}
 
   .readerTopIcons {
     margin-top: 11px;
@@ -596,53 +598,42 @@
     text-align: right;
   }
 }
+/* =========================================================
+   PRINT WORKSHEETS BUTTON
+========================================================= */
+
 .previewWorksheetButton {
   width: fit-content;
-  min-width: 170px;
+  min-width: 190px;
   height: 56px;
-  padding: 0 18px;
+  padding: 0 20px;
 
   display: inline-flex;
   align-items: center;
   justify-content: center;
 
-  background: #fff;
+  background: #ffffff;
   color: #ff5526;
 
   border: 3px solid #ff5526;
   border-radius: 999px;
 
   font-family: "DK Woolwich", "Arial Black", sans-serif;
-  font-size: 25px;
+  font-size: 23px;
   font-weight: 400;
   line-height: 1;
 
   white-space: nowrap;
   text-align: center;
   text-decoration: none;
+  text-transform: uppercase;
+
+  transition:
+    transform 180ms ease,
+    background-color 180ms ease,
+    color 180ms ease;
 }
-.previewWorksheetButton {
-  width: fit-content;
-  min-width: 170px;
-  height: 56px;
-  padding: 0 18px;
 
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  background: #000;
-  color: #fff;
-
-  border: 3px solid #fff;
-  border-radius: 999px;
-
-  font-family: "DK Woolwich", "Arial Black", sans-serif;
-  font-size: 25px;
-  font-weight: 400;
-  line-height: 1;
-
-  white-space: nowrap;
-  text-align: center;
-  text-decoration: none;
+.previewWorksheetButton:hover {
+  transform: translateY(-3px);
 }
