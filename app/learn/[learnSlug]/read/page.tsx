@@ -152,7 +152,7 @@ const lessonCompleted = complete === "1";
 
     return (
       <LearnGate>
-        <>
+           <div className="worksheetPageShell">
           <Header />
 
           <main className="worksheetReaderPage">
@@ -344,11 +344,11 @@ const lessonCompleted = complete === "1";
 
 </main>
 
-          <Footer />
-        </>
-      </LearnGate>
-    );
-  }
+                <Footer />
+      </div>
+    </LearnGate>
+  );
+}
 
   /* =========================================================
      NORMAL LEARNING PAGE
