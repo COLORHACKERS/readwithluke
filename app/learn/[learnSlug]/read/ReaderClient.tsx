@@ -215,7 +215,7 @@ export default function ReaderClient({
           src={imageUrl}
           alt={`${title} page ${pageNumber}`}
         />
-      </div>
+    
 
       <aside className="readerPanel">
         <div className="readerDesktopTopBar">
