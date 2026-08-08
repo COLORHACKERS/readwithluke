@@ -251,7 +251,7 @@ const totalPages =
   {hasWorksheets && (
     <Link
       href={`/learn/${item.slug}/read?worksheets=1`}
-      className="previewOutlineButton"
+      className="previewWorksheetButton"
     >
       WORKSHEETS
     </Link>
