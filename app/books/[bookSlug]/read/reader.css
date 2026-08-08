@@ -934,3 +934,65 @@
     flex-shrink: 0;
   }
 }
+/* =========================================================
+   LEARN READER — DESKTOP
+========================================================= */
+
+@media (min-width: 901px) {
+  .learnReaderPage {
+    width: 100%;
+
+    height: auto !important;
+    min-height: 0 !important;
+
+    display: grid;
+    grid-template-columns: 58% 42%;
+    align-items: stretch;
+
+    overflow: hidden;
+    background: #eee8df;
+  }
+
+  /* Full image — no cropping */
+  .learnReaderPage > img {
+    width: 100%;
+    height: auto;
+
+    display: block;
+
+    object-fit: contain;
+    object-position: top center;
+
+    align-self: start;
+  }
+
+  /* Right reader panel matches image height */
+  .learnReaderPage .readerPanel {
+    width: 100%;
+    height: auto !important;
+    min-height: 0 !important;
+
+    align-self: stretch;
+
+    display: flex;
+    flex-direction: column;
+
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  /* Story stays near the top */
+  .learnReaderPage .readerStoryText {
+    flex: 0 1 auto;
+  }
+
+  /* Controls sit at the bottom edge of the image */
+  .learnReaderPage .readerControls {
+    position: static !important;
+
+    margin-top: auto;
+    margin-bottom: 0;
+
+    flex-shrink: 0;
+  }
+}
