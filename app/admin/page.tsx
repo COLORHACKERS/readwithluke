@@ -228,11 +228,12 @@ setSeoNoindex(book.seo_noindex === true);
     const loadedPages = emptyPages.map((emptyPage) => {
       const match = data?.find((p) => p.page_number === emptyPage.page_number);
 
-      return {
-        page_number: emptyPage.page_number,
-        text: match?.text || "",
-        image_url: match?.image_url || "",
-      };
+    return {
+  page_number: emptyPage.page_number,
+  text: match?.text || "",
+  image_url: match?.image_url || "",
+  audio_url: match?.audio_url || "",
+};
     });
 
     setPages(loadedPages);
