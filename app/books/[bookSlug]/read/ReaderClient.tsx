@@ -30,20 +30,50 @@ export default function ReaderClient({
   totalPages,
   imageUrl,
   text,
-  audioURL,
+  audioUrl,
 }: Props) {
   const router = useRouter();
 
+  const audioRef =
+    useRef<HTMLAudioElement | null>(null);
+
+  const [isAudioPlaying, setIsAudioPlaying] =
+    useState(false);
+
   const progress = Math.max(
     4,
-    Math.min((pageNumber / totalPages) * 100, 100)
+    Math.min(
+      (pageNumber / totalPages) * 100,
+      100
+    )
   );
 
   const isLastPage =
     pageNumber === totalPages;
 
+  /* =========================================================
+     RESET AUDIO WHEN PAGE CHANGES
+  ========================================================= */
+
   useEffect(() => {
-    saveProgress();
+    const audio = audioRef.current;
+
+    if (!audio) {
+      return;
+    }
+
+    audio.pause();
+    audio.currentTime = 0;
+
+    setIsAudioPlaying(false);
+  }, [pageNumber, audioUrl]);
+
+  /* =========================================================
+     SAVE READING PROGRESS
+  ========================================================= */
+
+  useEffect(() => {
+    void saveProgress();
   }, [pageNumber]);
 
   /* =========================================================
@@ -244,6 +274,31 @@ export default function ReaderClient({
   }
 
   /* =========================================================
+     READ ALOUD
+  ========================================================= */
+
+  async function toggleReadAloud() {
+    const audio = audioRef.current;
+
+    if (!audio || !audioUrl) {
+      return;
+    }
+
+    try {
+      if (audio.paused) {
+        await audio.play();
+      } else {
+        audio.pause();
+      }
+    } catch (error) {
+      console.error(
+        "Could not play audio:",
+        error
+      );
+    }
+  }
+
+  /* =========================================================
      SHARE
   ========================================================= */
 
@@ -276,6 +331,10 @@ export default function ReaderClient({
     alert("Link copied!");
   }
 
+  /* =========================================================
+     PAGE NAVIGATION
+  ========================================================= */
+
   function goBack() {
     if (pageNumber > 1) {
       router.push(
@@ -298,16 +357,60 @@ export default function ReaderClient({
     }
   }
 
+  /* =========================================================
+     RENDER
+  ========================================================= */
+
   return (
     <main className="readerPage">
-      <div className="readerImageSide">
+      {/* AUDIO */}
+      <audio
+        ref={audioRef}
+        src={
+          audioUrl ||
+          undefined
+        }
+        preload="metadata"
+        onPlay={() =>
+          setIsAudioPlaying(true)
+        }
+        onPause={() =>
+          setIsAudioPlaying(false)
+        }
+        onEnded={() =>
+          setIsAudioPlaying(false)
+        }
+      />
+
+      {/* IMAGE SIDE */}
+      <section className="readerImageSide">
         <img
           src={imageUrl}
           alt={`${title} page ${pageNumber}`}
         />
-      </div>
 
+        {/* AUDIO WAVE */}
+        {audioUrl && (
+          <div
+            className={`readerAudioWave ${
+              isAudioPlaying
+                ? "readerAudioWavePlaying"
+                : ""
+            }`}
+            aria-hidden="true"
+          >
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
+          </div>
+        )}
+      </section>
+
+      {/* READER PANEL */}
       <aside className="readerPanel">
+        {/* TOP BAR */}
         <div className="readerDesktopTopBar">
           <Link
             href="/"
@@ -348,6 +451,7 @@ export default function ReaderClient({
           </div>
         </div>
 
+        {/* PROGRESS */}
         <div className="readerHeaderRow">
           <div className="readerProgressRow">
             <span>
@@ -365,6 +469,11 @@ export default function ReaderClient({
             </div>
           </div>
 
+          {/* OLD MOBILE CONTROLS
+              CSS hides these now,
+              but keeping them here will
+              not hurt anything.
+          */}
           <div className="readerMenuLike">
             <LikeButton
               bookId={bookId}
@@ -379,10 +488,12 @@ export default function ReaderClient({
               src="/images/share.png"
               alt=""
             />
+
             Share
           </button>
         </div>
 
+        {/* STORY */}
         <div className="readerStoryText">
           <h1>
             {title.toUpperCase()}
@@ -394,15 +505,20 @@ export default function ReaderClient({
           </p>
         </div>
 
+        {/* BOTTOM CONTROLS */}
         <div className="readerControls">
           <button
             type="button"
             onClick={goBack}
+            disabled={
+              pageNumber === 1
+            }
             className={
               pageNumber === 1
                 ? "disabledCircle"
                 : ""
             }
+            aria-label="Previous page"
           >
             <img
               src="/images/icon-arrow-left.png"
@@ -410,39 +526,46 @@ export default function ReaderClient({
             />
           </button>
 
+          <button
+            type="button"
+            className={`readerReadAloud ${
+              isAudioPlaying
+                ? "readerReadAloudPlaying"
+                : ""
+            }`}
+            onClick={
+              toggleReadAloud
+            }
+            disabled={!audioUrl}
+          >
+            {isAudioPlaying
+              ? "PAUSE"
+              : "READ ALOUD"}
+          </button>
+
           {isLastPage ? (
             <button
               type="button"
-              className="readerFinishButton"
               onClick={
                 finishBook
               }
+              className="readerFinishCircle"
+              aria-label="Finish book"
             >
-              FINISH +1 🪙
+              ✓
             </button>
           ) : (
             <button
               type="button"
-              className="readerReadAloud"
+              onClick={goNext}
+              aria-label="Next page"
             >
-              READ ALOUD
+              <img
+                src="/images/icon-arrow-right.png"
+                alt=""
+              />
             </button>
           )}
-
-          <button
-            type="button"
-            onClick={goNext}
-            className={
-              isLastPage
-                ? "disabledCircle"
-                : ""
-            }
-          >
-            <img
-              src="/images/icon-arrow-right.png"
-              alt=""
-            />
-          </button>
         </div>
       </aside>
     </main>
