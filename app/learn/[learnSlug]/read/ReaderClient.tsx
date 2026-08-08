@@ -209,7 +209,7 @@ export default function ReaderClient({
   }
 
   return (
-    <main className="readerPage">
+    <main className="readerPage learnReaderPage">
 
         <img
           src={imageUrl}
