@@ -932,109 +932,133 @@ async function saveWorksheets(learnItemId: string) {
           )}
         </section>
 
-        <section className="adminCard">
-          <h2>Learning Pages</h2>
+      <section className="adminCard">
+  <h2>Learning Pages</h2>
 
-          <p>
-            Add 1 to 20 pages. Blank pages will not show in
-            the reader.
-          </p>
+  <p>
+    Add 1 to 20 pages. Blank pages will not show in
+    the reader.
+  </p>
 
-          {pages.map((page) => (
-            <div
-              className="pageEditor"
-              key={page.page_number}
-            >
-              <h3>Page {page.page_number}</h3>
-
-              <label
-                htmlFor={`learn-page-image-${page.page_number}`}
-              >
-                Page Image
-              </label>
-
-              <input
-                id={`learn-page-image-${page.page_number}`}
-                type="file"
-                accept="image/*"
-                onChange={(event) => {
-                  const file = event.target.files?.[0];
-
-                  if (file) {
-                    handlePageImageUpload(
-                      file,
-                      page.page_number
-                    );
-                  }
-                }}
-              />
-
-            <label
-  htmlFor={`learn-page-audio-${page.page_number}`}
->
-  Page Audio
-</label>
-
-<input
-  id={`learn-page-audio-${page.page_number}`}
-  type="file"
-  accept=".mp3,.m4a,.wav,audio/mpeg,audio/mp4,audio/x-m4a,audio/wav"
-  onChange={(event) => {
-    const file = event.target.files?.[0];
-
-    if (file) {
-      handlePageAudioUpload(
-        file,
-        page.page_number
-      );
-    }
-  }}
-/>
-
-{page.audio_url && (
-  <div className="pageAudioPreview">
-    <audio
-      src={page.audio_url}
-      controls
-      preload="metadata"
-    />
-
-    <button
-      type="button"
-      className="deleteButton"
-      onClick={() =>
-        removePageAudio(
-          page.page_number
-        )
-      }
+  {pages.map((page) => (
+    <div
+      className="pageEditor"
+      key={page.page_number}
     >
-      Remove Audio
-    </button>
-  </div>
-)}
-              )}
+      <h3>
+        Page {page.page_number}
+      </h3>
 
-              <label
-                htmlFor={`learn-page-text-${page.page_number}`}
-              >
-                Page Text
-              </label>
+      {/* =====================================================
+          PAGE IMAGE
+      ===================================================== */}
 
-              <textarea
-                id={`learn-page-text-${page.page_number}`}
-                value={page.text}
-                onChange={(event) =>
-                  updatePageText(
-                    page.page_number,
-                    event.target.value
-                  )
-                }
-                placeholder={`Text for page ${page.page_number}`}
-              />
-            </div>
-          ))}
-        </section>
+      <label
+        htmlFor={`learn-page-image-${page.page_number}`}
+      >
+        Page Image
+      </label>
 
+      <input
+        id={`learn-page-image-${page.page_number}`}
+        type="file"
+        accept="image/*"
+        onChange={(event) => {
+          const file = event.target.files?.[0];
+
+          if (file) {
+            handlePageImageUpload(
+              file,
+              page.page_number
+            );
+          }
+        }}
+      />
+
+      {page.image_url && (
+        <img
+          src={page.image_url}
+          alt={`Page ${page.page_number}`}
+          className="coverPreview"
+        />
+      )}
+
+      {/* =====================================================
+          PAGE AUDIO
+      ===================================================== */}
+
+      <label
+        htmlFor={`learn-page-audio-${page.page_number}`}
+      >
+        Page Audio
+      </label>
+
+      <input
+        id={`learn-page-audio-${page.page_number}`}
+        type="file"
+        accept=".mp3,.m4a,.wav,audio/mpeg,audio/mp4,audio/x-m4a,audio/wav"
+        onChange={async (event) => {
+          const input = event.currentTarget;
+          const file = input.files?.[0];
+
+          if (file) {
+            await handlePageAudioUpload(
+              file,
+              page.page_number
+            );
+          }
+
+          input.value = "";
+        }}
+      />
+
+      {page.audio_url && (
+        <div className="pageAudioPreview">
+          <audio
+            src={page.audio_url}
+            controls
+            preload="metadata"
+          />
+
+          <button
+            type="button"
+            className="deleteButton"
+            onClick={() =>
+              removePageAudio(
+                page.page_number
+              )
+            }
+          >
+            Remove Audio
+          </button>
+        </div>
+      )}
+
+      {/* =====================================================
+          PAGE TEXT
+      ===================================================== */}
+
+      <label
+        htmlFor={`learn-page-text-${page.page_number}`}
+      >
+        Page Text
+      </label>
+
+      <textarea
+        id={`learn-page-text-${page.page_number}`}
+        value={page.text}
+        onChange={(event) =>
+          updatePageText(
+            page.page_number,
+            event.target.value
+          )
+        }
+        placeholder={`Text for page ${page.page_number}`}
+      />
+    </div>
+  ))}
+</section>
+        
 <section className="adminCard">
   <h2>Printable Worksheets</h2>
 
