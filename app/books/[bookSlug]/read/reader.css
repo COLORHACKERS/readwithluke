@@ -1820,3 +1820,27 @@ img {
     font-size: 17px;
   }
 }
+/* =========================================================
+   TABLET + MOBILE — ONE SCROLL INDICATOR ONLY
+========================================================= */
+
+@media (max-width: 1180px) {
+  .readerStoryText,
+  .learnReaderPage .readerStoryText {
+    overflow-y: auto !important;
+
+    /* Firefox */
+    scrollbar-width: none;
+
+    /* Older Edge */
+    -ms-overflow-style: none;
+  }
+
+  /* Safari / Chrome */
+  .readerStoryText::-webkit-scrollbar,
+  .learnReaderPage .readerStoryText::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+}
