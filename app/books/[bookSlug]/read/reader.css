@@ -1481,3 +1481,313 @@
     font-size: 18px;
   }
 }
+/* =========================================================
+   FINAL MOBILE READER
+   BOOKS + LEARN WITH LUKE
+========================================================= */
+
+@media (max-width: 768px) {
+
+  /* -------------------------------------------------------
+     WHOLE READER
+  ------------------------------------------------------- */
+
+  .readerPage,
+  .learnReaderPage {
+    width: 100% !important;
+    height: 100dvh !important;
+    min-height: 100dvh !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+
+    overflow: hidden !important;
+
+    background: #eee8df;
+  }
+
+
+  /* -------------------------------------------------------
+     REGULAR BOOK IMAGE
+  ------------------------------------------------------- */
+
+  .readerPage .readerImageSide {
+    width: 100%;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+
+    aspect-ratio: 6 / 5;
+
+    flex: 0 0 auto;
+
+    overflow: hidden;
+
+    background: #eee8df;
+  }
+
+  .readerPage .readerImageSide img {
+    width: 100% !important;
+    height: 100% !important;
+
+    display: block;
+
+    object-fit: contain !important;
+    object-position: center center !important;
+  }
+
+
+  /* -------------------------------------------------------
+     LEARN IMAGE
+     ReaderClient has the image directly inside readerPage
+  ------------------------------------------------------- */
+
+  .learnReaderPage > img {
+    width: 100% !important;
+    height: auto !important;
+
+    aspect-ratio: 6 / 5;
+
+    flex: 0 0 auto;
+
+    display: block;
+
+    object-fit: contain !important;
+    object-position: top center !important;
+
+    background: #eee8df;
+  }
+
+
+  /* -------------------------------------------------------
+     TEXT PANEL
+  ------------------------------------------------------- */
+
+  .readerPage .readerPanel,
+  .learnReaderPage .readerPanel {
+    width: 100% !important;
+
+    height: auto !important;
+    min-height: 0 !important;
+
+    flex: 1 1 auto;
+
+    padding:
+      14px
+      16px
+      calc(76px + env(safe-area-inset-bottom)) !important;
+
+    box-sizing: border-box;
+
+    display: flex !important;
+    flex-direction: column !important;
+
+    gap: 12px;
+
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+
+    background: #eee8df;
+
+    -webkit-overflow-scrolling: touch;
+  }
+
+
+  /* -------------------------------------------------------
+     DESKTOP TOP BAR
+     Hide it on phone
+  ------------------------------------------------------- */
+
+  .readerDesktopTopBar {
+    display: none !important;
+  }
+
+
+  /* -------------------------------------------------------
+     PROGRESS
+  ------------------------------------------------------- */
+
+  .readerHeaderRow {
+    width: 100%;
+
+    display: block;
+
+    margin: 0 0 12px;
+  }
+
+  .readerProgressRow {
+    width: 100%;
+
+    display: grid;
+
+    gap: 7px;
+  }
+
+  .readerProgressRow span {
+    color: #050505;
+
+    font-family: "Courier New", monospace;
+    font-size: 12px;
+    font-weight: 900;
+
+    text-align: left;
+  }
+
+  .readerProgress {
+    width: 100%;
+    height: 9px;
+
+    background: #ffffff;
+
+    border-radius: 999px;
+  }
+
+
+  /* -------------------------------------------------------
+     STORY TEXT
+  ------------------------------------------------------- */
+
+  .readerStoryText,
+  .learnReaderPage .readerStoryText {
+    width: 100%;
+
+    flex: 0 0 auto;
+
+    min-height: 0;
+
+    padding: 0 !important;
+
+    overflow: visible !important;
+  }
+
+  .readerStoryText h1,
+  .learnReaderPage .readerStoryText h1 {
+    margin: 4px 0 14px;
+
+    color: #050505;
+
+    font-family: "DK Woolwich", "Arial Black", sans-serif;
+    font-size: clamp(30px, 9vw, 42px);
+    font-weight: 400;
+    line-height: 0.95;
+
+    text-align: left;
+  }
+
+  .readerStoryText p,
+  .learnReaderPage .readerStoryText p {
+    margin: 0;
+
+    color: #050505;
+
+    font-family: "Courier New", monospace;
+    font-size: 16px;
+    font-weight: 900;
+    line-height: 1.45;
+
+    white-space: pre-wrap;
+
+    overflow-wrap: break-word;
+    word-break: normal;
+  }
+
+
+  /* -------------------------------------------------------
+     MOBILE BOTTOM CONTROLS
+  ------------------------------------------------------- */
+
+  .readerControls,
+  .learnReaderPage .readerControls {
+    position: fixed !important;
+
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+
+    z-index: 100;
+
+    width: 100%;
+
+    margin: 0 !important;
+
+    padding:
+      9px
+      14px
+      calc(9px + env(safe-area-inset-bottom)) !important;
+
+    box-sizing: border-box;
+
+    display: grid !important;
+    grid-template-columns: 46px 1fr 46px;
+
+    align-items: center;
+
+    gap: 10px;
+
+    background: #eee8df;
+
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  .readerControls > button:not(.readerReadAloud):not(.readerFinishButton) {
+    width: 46px !important;
+    height: 46px !important;
+
+    padding: 0;
+
+    border-radius: 999px;
+
+    background: #ff5526;
+
+    display: grid;
+    place-items: center;
+  }
+
+  .readerControls > button:not(.readerReadAloud):not(.readerFinishButton) img {
+    width: 23px;
+    height: 23px;
+
+    object-fit: contain;
+  }
+
+  .readerReadAloud,
+  .readerFinishButton {
+    width: 100%;
+    height: 46px !important;
+
+    padding: 0 12px;
+
+    border-radius: 999px;
+
+    background: #ff5526;
+    color: #ffffff;
+
+    font-family: "Courier New", monospace;
+    font-size: 13px !important;
+    font-weight: 900;
+  }
+
+
+  /* -------------------------------------------------------
+     MOBILE MENU
+  ------------------------------------------------------- */
+
+  .readerMenu {
+    display: block;
+  }
+
+  .readerMenu summary {
+    width: 44px;
+    height: 44px;
+
+    padding: 0;
+
+    font-size: 20px;
+  }
+
+  .readerMenuPanel {
+    right: 0;
+
+    width: 185px;
+  }
+}
