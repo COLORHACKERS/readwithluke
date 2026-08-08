@@ -168,13 +168,26 @@ export default async function LearnPreviewPage({
     );
   }
 
-  const { count } = await supabase
-    .from("learn_pages")
-    .select("*", {
-      count: "exact",
-      head: true,
-    })
-    .eq("learn_item_id", item.id);
+const { count: pageCount } = await supabase
+  .from("learn_pages")
+  .select("*", {
+    count: "exact",
+    head: true,
+  })
+  .eq("learn_item_id", item.id);
+
+const { count: worksheetCount } = await supabase
+  .from("learn_worksheets")
+  .select("*", {
+    count: "exact",
+    head: true,
+  })
+  .eq("learn_item_id", item.id);
+
+const hasWorksheets = (worksheetCount || 0) > 0;
+
+const totalPages =
+  (pageCount || 1) + (hasWorksheets ? 1 : 0);
 
   const heroImage =
     item.image_url ||
@@ -206,9 +219,9 @@ export default async function LearnPreviewPage({
         <div className="bookPreviewShade" />
 
         <section className="previewContent">
-          <div className="previewProgressText">
-            Progress: Page 1 of {count || 1}
-          </div>
+        <div className="previewProgressText">
+  Progress: Page 1 of {totalPages}
+</div>
 
           <div className="previewProgressBar">
             <span />
@@ -220,21 +233,30 @@ export default async function LearnPreviewPage({
             {item.description || DEFAULT_DESCRIPTION}
           </p>
 
-          <div className="previewButtons">
-            <Link
-              href={`/learn/${item.slug}/read?page=1`}
-              className="previewStartButton"
-            >
-              START LEARNING
-            </Link>
+        <div className="previewButtons">
+  <Link
+    href={`/learn/${item.slug}/read?page=1`}
+    className="previewStartButton"
+  >
+    START LEARNING
+  </Link>
 
-            <Link
-              href="/learn"
-              className="previewOutlineButton"
-            >
-              BACK TO LEARN
-            </Link>
-          </div>
+  <Link
+    href="/learn"
+    className="previewOutlineButton"
+  >
+    BACK TO LEARN
+  </Link>
+
+  {hasWorksheets && (
+    <Link
+      href={`/learn/${item.slug}/read?worksheets=1`}
+      className="previewOutlineButton"
+    >
+      WORKSHEETS
+    </Link>
+  )}
+</div>
 
           <div className="readerTopIcons">
             <button type="button">
