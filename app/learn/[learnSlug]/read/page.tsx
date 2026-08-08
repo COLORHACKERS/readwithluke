@@ -314,37 +314,35 @@ const lessonCompleted = complete === "1";
 
               </div>
 
-              <div className="worksheetPrintNote">
-                PNG • Standard 8.5 × 11 in • Print at home
-              </div>
-
-            </section>
-
-          </main>
-
-          <div className="worksheetReaderFooter">
-
-            <Link
-              href={`/learn/${item.slug}/read?page=${pages.length}`}
-              className="worksheetArrowButton"
-            >
-              ←
-            </Link>
-
-          <div className="worksheetGreatWork">
-  {lessonCompleted
-    ? "GREAT WORK, EXPLORER! ★"
-    : "PRINTABLE ACTIVITIES"}
+            <div className="worksheetPrintNote">
+  PNG • Standard 8.5 × 11 in • Print at home
 </div>
 
-            <Link
-              href="/learn"
-              className="worksheetArrowButton"
-            >
-              →
-            </Link>
+<div className="worksheetPanelControls">
+  <Link
+    href={`/learn/${item.slug}/read?page=${pages.length}`}
+    className="worksheetArrowButton"
+  >
+    ←
+  </Link>
 
-          </div>
+  <div className="worksheetGreatWork">
+    {lessonCompleted
+      ? "GREAT WORK, EXPLORER! ★"
+      : "PRINTABLE ACTIVITIES"}
+  </div>
+
+  <Link
+    href="/learn"
+    className="worksheetArrowButton"
+  >
+    →
+  </Link>
+</div>
+
+</section>
+
+</main>
 
           <Footer />
         </>
