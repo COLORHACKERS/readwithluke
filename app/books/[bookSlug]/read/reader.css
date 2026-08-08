@@ -1884,31 +1884,32 @@
   }
 }
 /* =========================================================
-   IPAD — SHOW TOP READER BUTTONS
+   IPAD / TABLET — RESTORE TOP READER CONTROLS
 ========================================================= */
 
-@media (min-width: 769px) and (max-width: 1180px) {
+@media (min-width: 700px) and (max-width: 1180px) {
+  .readerDesktopTopBar,
   .readerPage .readerDesktopTopBar,
   .learnReaderPage .readerDesktopTopBar {
     display: grid !important;
+    visibility: visible !important;
+
+    width: 100%;
 
     grid-template-columns: auto 1fr auto;
     align-items: center;
-
     gap: 10px;
-
-    width: 100%;
 
     flex-shrink: 0;
   }
 
+  .readerMiniBtn,
   .readerPage .readerMiniBtn,
   .learnReaderPage .readerMiniBtn {
     height: 42px;
+    padding: 0 16px;
 
-    padding: 0 18px;
-
-    display: grid;
+    display: grid !important;
     place-items: center;
 
     background: #ffffff;
@@ -1916,63 +1917,58 @@
 
     border-radius: 999px;
 
-    text-decoration: none;
-    white-space: nowrap;
-
     font-family: "Courier New", monospace;
     font-size: 12px;
     font-weight: 900;
+
+    text-decoration: none;
+    white-space: nowrap;
   }
 
+  .readerTopActions,
   .readerPage .readerTopActions,
   .learnReaderPage .readerTopActions {
     display: flex !important;
+    visibility: visible !important;
+
     align-items: center;
+    justify-content: flex-end;
 
     gap: 5px;
 
     width: fit-content;
-
     padding: 5px;
 
     justify-self: end;
 
     background: #ffffff;
-
     border-radius: 999px;
   }
 
-  .readerPage .readerTopActions button,
-  .readerPage .readerTopActions .likeButton,
-  .learnReaderPage .readerTopActions button,
-  .learnReaderPage .readerTopActions .likeButton {
-    width: 40px;
-    height: 40px;
-
+  .readerTopActions button,
+  .readerTopActions .likeButton {
+    width: 38px;
+    height: 38px;
     padding: 0;
 
     border: 0;
     border-radius: 50%;
 
-    background: #ff5526;
-
     display: grid;
     place-items: center;
+
+    background: #ff5526;
   }
 
-  .readerPage .readerTopActions img,
-  .readerPage .readerTopActions .likeButton img,
-  .learnReaderPage .readerTopActions img,
-  .learnReaderPage .readerTopActions .likeButton img {
-    width: 19px;
-    height: 19px;
+  .readerTopActions img,
+  .readerTopActions .likeButton img {
+    width: 18px;
+    height: 18px;
 
     object-fit: contain;
   }
 
-  /* Hide the compact menu on iPad */
-  .readerPage .readerMenu,
-  .learnReaderPage .readerMenu {
+  .readerMenu {
     display: none !important;
   }
 }
