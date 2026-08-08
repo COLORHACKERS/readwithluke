@@ -1791,3 +1791,95 @@
     width: 185px;
   }
 }
+/* =========================================================
+   IPAD — RESTORE READER TOP BUTTONS
+========================================================= */
+
+@media (min-width: 769px) and (max-width: 1180px) {
+  .readerPage .readerDesktopTopBar,
+  .learnReaderPage .readerDesktopTopBar {
+    width: 100%;
+
+    display: grid !important;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+
+    gap: 10px;
+
+    flex-shrink: 0;
+  }
+
+  .readerPage .readerMiniBtn,
+  .learnReaderPage .readerMiniBtn {
+    height: 42px;
+
+    padding: 0 18px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 999px;
+
+    background: #ffffff;
+    color: #ff5526;
+
+    font-family: "Courier New", monospace;
+    font-size: 12px;
+    font-weight: 900;
+
+    white-space: nowrap;
+    text-decoration: none;
+  }
+
+  .readerPage .readerTopActions,
+  .learnReaderPage .readerTopActions {
+    display: flex !important;
+    align-items: center;
+
+    gap: 5px;
+
+    width: fit-content;
+
+    padding: 5px;
+
+    justify-self: end;
+
+    background: #ffffff;
+
+    border-radius: 999px;
+  }
+
+  .readerPage .readerTopActions button,
+  .readerPage .readerTopActions .likeButton,
+  .learnReaderPage .readerTopActions button,
+  .learnReaderPage .readerTopActions .likeButton {
+    width: 40px;
+    height: 40px;
+
+    padding: 0;
+
+    border: 0;
+    border-radius: 50%;
+
+    display: grid;
+    place-items: center;
+
+    background: #ff5526;
+  }
+
+  .readerPage .readerTopActions img,
+  .readerPage .readerTopActions .likeButton img,
+  .learnReaderPage .readerTopActions img,
+  .learnReaderPage .readerTopActions .likeButton img {
+    width: 19px;
+    height: 19px;
+
+    object-fit: contain;
+  }
+
+  /* We don't need the compact menu on iPad */
+  .readerPage .readerMenu,
+  .learnReaderPage .readerMenu {
+    display: none !important;
+  }
+}
