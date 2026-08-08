@@ -13,6 +13,7 @@ type Props = {
   hasWorksheets: boolean;
   imageUrl: string;
   text: string;
+  audioUrl: string;
 };
 
 export default function ReaderClient({
@@ -24,6 +25,7 @@ export default function ReaderClient({
   hasWorksheets,
   imageUrl,
   text,
+  audioUrl,
 }: Props) {
   const router = useRouter();
 
