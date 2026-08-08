@@ -14,6 +14,7 @@ type Props = {
   searchParams: Promise<{
     page?: string;
     worksheets?: string;
+    complete?: string;
   }>;
 };
 
@@ -32,10 +33,12 @@ export default async function LearnReadPage({
   const { learnSlug } = await params;
 
   const {
-    page,
-    worksheets: worksheetsParam,
-  } = await searchParams;
+  page,
+  worksheets: worksheetsParam,
+  complete,
+} = await searchParams;
 
+const lessonCompleted = complete === "1";
   const currentPage = Number(page || "1");
 
   /* =========================================================
@@ -172,9 +175,11 @@ export default async function LearnReadPage({
                   LESSON
                 </div>
 
-                <h1>
-                  COMPLETE!
-                </h1>
+               <h1>
+  {lessonCompleted
+    ? "COMPLETE!"
+    : "WORKSHEETS"}
+</h1>
 
                 <p>
                   {worksheets.length} printable{" "}
@@ -216,8 +221,10 @@ export default async function LearnReadPage({
                 </span>
 
                 <strong>
-                  COMPLETE! ★
-                </strong>
+  {lessonCompleted
+    ? "COMPLETE! ★"
+    : "PRINTABLES"}
+</strong>
 
               </div>
 
@@ -324,9 +331,11 @@ export default async function LearnReadPage({
               ←
             </Link>
 
-            <div className="worksheetGreatWork">
-              GREAT WORK, EXPLORER! ★
-            </div>
+          <div className="worksheetGreatWork">
+  {lessonCompleted
+    ? "GREAT WORK, EXPLORER! ★"
+    : "PRINTABLE ACTIVITIES"}
+</div>
 
             <Link
               href="/learn"
@@ -361,14 +370,16 @@ export default async function LearnReadPage({
 
   return (
     <LearnGate>
-      <ReaderClient
-        learnSlug={item.slug}
-        title={item.title}
-        pageNumber={pageData.page_number}
-        totalPages={totalPages}
-        imageUrl={imageUrl}
-        text={pageData.text || ""}
-      />
+     <ReaderClient
+  learnSlug={item.slug}
+  title={item.title}
+  pageNumber={pageData.page_number}
+  totalPages={totalPages}
+  lessonPageCount={pages.length}
+  hasWorksheets={hasWorksheets}
+  imageUrl={imageUrl}
+  text={pageData.text || ""}
+/>
     </LearnGate>
   );
 }
