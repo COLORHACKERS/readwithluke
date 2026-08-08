@@ -210,7 +210,7 @@ export default function ReaderClient({
 
   return (
     <main className="readerPage">
-      <div className="readerImage">
+
         <img
           src={imageUrl}
           alt={`${title} page ${pageNumber}`}
