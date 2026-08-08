@@ -253,7 +253,7 @@ const totalPages =
       href={`/learn/${item.slug}/read?worksheets=1`}
       className="previewWorksheetButton"
     >
-      WORKSHEETS
+      PRINT WORKSHEETS
     </Link>
   )}
 </div>
