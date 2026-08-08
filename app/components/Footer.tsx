@@ -19,6 +19,10 @@ function getTimeLeft() {
 
 export default function Footer() {
   const [timeLeft, setTimeLeft] = useState(getTimeLeft());
+  const [newsletterEmail, setNewsletterEmail] = useState("");
+const [newsletterStatus, setNewsletterStatus] = useState<
+  "idle" | "loading" | "success" | "error"
+>("idle");
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -27,6 +31,40 @@ export default function Footer() {
 
     return () => clearInterval(timer);
   }, []);
+
+  async function handleNewsletterSubmit(
+  e: React.FormEvent<HTMLFormElement>
+) {
+  e.preventDefault();
+
+  const email = newsletterEmail.trim().toLowerCase();
+
+  if (!email) return;
+
+  setNewsletterStatus("loading");
+
+  try {
+    const response = await fetch("/api/newsletter", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || "Unable to subscribe.");
+    }
+
+    setNewsletterEmail("");
+    setNewsletterStatus("success");
+  } catch (error) {
+    console.error("Newsletter signup error:", error);
+    setNewsletterStatus("error");
+  }
+}
 
   return (
     <footer className="rwlFooter">
@@ -49,19 +87,49 @@ export default function Footer() {
           <Link href="/leaderboard">Leaderboard</Link>
         </nav>
 
-        <div className="footerNewsletter">
-          <form className="footerEmailBar">
-            <input placeholder="email for newsletter" />
-            <button type="submit">
-              <img src="/images/icon-send.png" alt="" />
-            </button>
-          </form>
+     <div className="footerNewsletter">
+  <form
+    className="footerEmailBar"
+    onSubmit={handleNewsletterSubmit}
+  >
+    <input
+      type="email"
+      placeholder="email for newsletter"
+      value={newsletterEmail}
+      onChange={(e) => {
+        setNewsletterEmail(e.target.value);
 
-          <p>
-            Sign up for our newsletter for new books, announcements, games and
-            more!
-          </p>
-        </div>
+        if (
+          newsletterStatus === "success" ||
+          newsletterStatus === "error"
+        ) {
+          setNewsletterStatus("idle");
+        }
+      }}
+      required
+      disabled={newsletterStatus === "loading"}
+      aria-label="Email for newsletter"
+    />
+
+    <button
+      type="submit"
+      disabled={newsletterStatus === "loading"}
+      aria-label="Sign up for newsletter"
+    >
+      <img src="/images/icon-send.png" alt="" />
+    </button>
+  </form>
+
+  <p>
+    {newsletterStatus === "success"
+      ? "You're in! Watch your inbox for new stories."
+      : newsletterStatus === "error"
+      ? "Oops! We couldn't sign you up. Please try again."
+      : newsletterStatus === "loading"
+      ? "Signing you up..."
+      : "Sign up for our newsletter for new books, announcements, games and more!"}
+  </p>
+</div>
       </div>
 
       <div className="footerBottom">
