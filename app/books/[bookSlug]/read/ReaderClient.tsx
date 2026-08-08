@@ -19,6 +19,7 @@ type Props = {
   totalPages: number;
   imageUrl: string;
   text: string;
+  audioUrl: string;
 };
 
 export default function ReaderClient({
@@ -29,6 +30,7 @@ export default function ReaderClient({
   totalPages,
   imageUrl,
   text,
+  audioURL,
 }: Props) {
   const router = useRouter();
 
