@@ -1,19 +1,46 @@
 import Link from "next/link";
+import Header from "@/app/components/Header";
+import Footer from "@/app/components/Footer";
 import { supabase } from "@/lib/supabase";
 import ReaderClient from "./ReaderClient";
 import LearnGate from "./LearnGate";
 import "@/app/books/[bookSlug]/read/reader.css";
 
 type Props = {
-  params: Promise<{ learnSlug: string }>;
-  searchParams: Promise<{ page?: string }>;
+  params: Promise<{
+    learnSlug: string;
+  }>;
+
+  searchParams: Promise<{
+    page?: string;
+    worksheets?: string;
+  }>;
 };
 
-export default async function LearnReadPage({ params, searchParams }: Props) {
+type LearnWorksheet = {
+  id: string;
+  image_url: string;
+  title: string | null;
+  description: string | null;
+  sort_order: number;
+};
+
+export default async function LearnReadPage({
+  params,
+  searchParams,
+}: Props) {
   const { learnSlug } = await params;
-  const { page } = await searchParams;
+
+  const {
+    page,
+    worksheets: worksheetsParam,
+  } = await searchParams;
 
   const currentPage = Number(page || "1");
+
+  /* =========================================================
+     LOAD LEARN ITEM
+  ========================================================= */
 
   const { data: item } = await supabase
     .from("learn_items")
@@ -26,31 +53,305 @@ export default async function LearnReadPage({ params, searchParams }: Props) {
       <main className="readerPage">
         <div className="readerEmpty">
           <h1>Learning item not found.</h1>
-          <Link href="/learn">Back to Learn</Link>
+
+          <Link href="/learn">
+            Back to Learn
+          </Link>
         </div>
       </main>
     );
   }
 
+  /* =========================================================
+     LOAD NORMAL LEARNING PAGES
+  ========================================================= */
+
   const { data: pages } = await supabase
     .from("learn_pages")
     .select("*")
     .eq("learn_item_id", item.id)
-    .order("page_number", { ascending: true });
+    .order("page_number", {
+      ascending: true,
+    });
 
   if (!pages || pages.length === 0) {
     return (
       <main className="readerPage">
         <div className="readerEmpty">
           <h1>No learning pages uploaded yet.</h1>
-          <Link href="/admin/learn">Go to Learn Admin</Link>
+
+          <Link href="/admin/learn">
+            Go to Learn Admin
+          </Link>
         </div>
       </main>
     );
   }
 
+  /* =========================================================
+     LOAD WORKSHEETS
+  ========================================================= */
+
+  const { data: worksheetData } = await supabase
+    .from("learn_worksheets")
+    .select(
+      "id, image_url, title, description, sort_order"
+    )
+    .eq("learn_item_id", item.id)
+    .order("sort_order", {
+      ascending: true,
+    });
+
+  const worksheets =
+    (worksheetData as LearnWorksheet[] | null) || [];
+
+  const hasWorksheets = worksheets.length > 0;
+
+  /*
+    If the lesson has 10 normal pages:
+
+    worksheetPageNumber = 11
+    totalPages = 11
+  */
+
+  const worksheetPageNumber =
+    pages.length + 1;
+
+  const totalPages =
+    pages.length + (hasWorksheets ? 1 : 0);
+
+  /*
+    Worksheets can be reached two ways:
+
+    /read?page=11
+
+    OR
+
+    /read?worksheets=1
+  */
+
+  const showingWorksheets =
+    hasWorksheets &&
+    (
+      worksheetsParam === "1" ||
+      currentPage === worksheetPageNumber
+    );
+
+  /* =========================================================
+     PRINTABLE ACTIVITIES PAGE
+  ========================================================= */
+
+  if (showingWorksheets) {
+    const completionImage =
+      item.image_url ||
+      item.cover_url ||
+      "/images/6to5ratio.png";
+
+    return (
+      <LearnGate>
+        <>
+          <Header />
+
+          <main className="worksheetReaderPage">
+
+            {/* LEFT SIDE */}
+
+            <section className="worksheetCompleteSide">
+
+              <img
+                src={completionImage}
+                alt={item.title}
+                className="worksheetCompleteImage"
+              />
+
+              <div className="worksheetCompleteShade" />
+
+              <div className="worksheetCompleteContent">
+
+                <div className="worksheetCompleteEyebrow">
+                  LESSON
+                </div>
+
+                <h1>
+                  COMPLETE!
+                </h1>
+
+                <p>
+                  {worksheets.length} printable{" "}
+                  {worksheets.length === 1
+                    ? "activity"
+                    : "activities"}{" "}
+                  unlocked
+                </p>
+
+              </div>
+            </section>
+
+            {/* RIGHT SIDE */}
+
+            <section className="worksheetActivitiesSide">
+
+              <div className="worksheetTopNav">
+
+                <Link
+                  href={`/learn/${item.slug}/read?page=${pages.length}`}
+                  className="worksheetHomeButton"
+                >
+                  BACK
+                </Link>
+
+                <Link
+                  href={`/learn/${item.slug}`}
+                  className="worksheetBackLearnButton"
+                >
+                  BACK TO LEARN
+                </Link>
+
+              </div>
+
+              <div className="worksheetProgressRow">
+
+                <span>
+                  Page {worksheetPageNumber} of {totalPages}
+                </span>
+
+                <strong>
+                  COMPLETE! ★
+                </strong>
+
+              </div>
+
+              <div className="worksheetProgressBar">
+                <span />
+              </div>
+
+              <div className="worksheetHeading">
+
+                <h2>
+                  PRINTABLE ACTIVITIES
+                </h2>
+
+                <p>
+                  Keep the learning going with these fun
+                  activities. Download, print, and explore
+                  more with Luke!
+                </p>
+
+              </div>
+
+              <div className="worksheetCards">
+
+                {worksheets.map(
+                  (worksheet, index) => {
+
+                    const fallbackTitle =
+                      `WORKSHEET ${index + 1}`;
+
+                    const worksheetTitle =
+                      worksheet.title?.trim() ||
+                      fallbackTitle;
+
+                    const worksheetDescription =
+                      worksheet.description?.trim() ||
+                      "Print this activity and keep learning!";
+
+                    return (
+                      <article
+                        className="worksheetCard"
+                        key={worksheet.id}
+                      >
+
+                        <img
+                          src={worksheet.image_url}
+                          alt={worksheetTitle}
+                          className="worksheetCardImage"
+                        />
+
+                        <div className="worksheetCardText">
+
+                          <h3>
+                            {worksheetTitle}
+                          </h3>
+
+                          <p>
+                            {worksheetDescription}
+                          </p>
+
+                        </div>
+
+                        <div className="worksheetCardActions">
+
+                          <a
+                            href={worksheet.image_url}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="worksheetPreviewButton"
+                          >
+                            PREVIEW
+                          </a>
+
+                          <a
+                            href={worksheet.image_url}
+                            download
+                            className="worksheetDownloadButton"
+                          >
+                            ↓ DOWNLOAD
+                          </a>
+
+                        </div>
+
+                      </article>
+                    );
+                  }
+                )}
+
+              </div>
+
+              <div className="worksheetPrintNote">
+                PNG • Standard 8.5 × 11 in • Print at home
+              </div>
+
+            </section>
+
+          </main>
+
+          <div className="worksheetReaderFooter">
+
+            <Link
+              href={`/learn/${item.slug}/read?page=${pages.length}`}
+              className="worksheetArrowButton"
+            >
+              ←
+            </Link>
+
+            <div className="worksheetGreatWork">
+              GREAT WORK, EXPLORER! ★
+            </div>
+
+            <Link
+              href="/learn"
+              className="worksheetArrowButton"
+            >
+              →
+            </Link>
+
+          </div>
+
+          <Footer />
+        </>
+      </LearnGate>
+    );
+  }
+
+  /* =========================================================
+     NORMAL LEARNING PAGE
+  ========================================================= */
+
   const pageData =
-    pages.find((p) => p.page_number === currentPage) || pages[0];
+    pages.find(
+      (learnPage) =>
+        learnPage.page_number === currentPage
+    ) || pages[0];
 
   const imageUrl =
     pageData.image_url ||
@@ -58,16 +359,16 @@ export default async function LearnReadPage({ params, searchParams }: Props) {
     item.image_url ||
     "/images/6to5ratio.png";
 
-return (
-  <LearnGate>
-    <ReaderClient
-      learnSlug={item.slug}
-      title={item.title}
-      pageNumber={pageData.page_number}
-      totalPages={pages.length}
-      imageUrl={imageUrl}
-      text={pageData.text || ""}
-    />
-  </LearnGate>
-);
+  return (
+    <LearnGate>
+      <ReaderClient
+        learnSlug={item.slug}
+        title={item.title}
+        pageNumber={pageData.page_number}
+        totalPages={totalPages}
+        imageUrl={imageUrl}
+        text={pageData.text || ""}
+      />
+    </LearnGate>
+  );
 }
