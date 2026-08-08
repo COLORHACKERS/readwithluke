@@ -1,57 +1,104 @@
+/* =========================================================
+   READ WITH LUKE — READER
+========================================================= */
+
+
+/* =========================================================
+   BASE READER
+========================================================= */
+
 .readerPage {
   width: 100%;
   height: 100vh;
+  height: 100dvh;
+
   overflow: hidden;
+
   background: #eee8df;
+
   display: grid;
   grid-template-columns: 62% 38%;
 }
 
+
+/* =========================================================
+   BOOK IMAGE SIDE
+========================================================= */
+
 .readerImageSide {
   height: 100vh;
+  height: 100dvh;
+
   overflow: hidden;
+
   background: #eee8df;
 }
 
 .readerImageSide img {
   width: 100%;
   height: 100%;
+
+  display: block;
+
   object-fit: cover;
   object-position: center center;
-  display: block;
 }
 
+
+/* =========================================================
+   READER PANEL
+========================================================= */
+
 .readerPanel {
+  width: 100%;
   height: 100vh;
+  height: 100dvh;
+
   min-width: 0;
-  background: #eee8df;
+  min-height: 0;
+
   padding: 24px 38px 28px;
+
   box-sizing: border-box;
+
+  background: #eee8df;
+
   display: grid;
   grid-template-rows: auto auto 1fr auto;
   gap: 16px;
+
   overflow: hidden;
 }
 
-/* TOP BAR */
+
+/* =========================================================
+   TOP BAR
+========================================================= */
 
 .readerDesktopTopBar {
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
+
   gap: 14px;
 }
 
 .readerMiniBtn {
   height: 44px;
+
   padding: 0 22px;
+
   border-radius: 999px;
+
   background: #ffffff;
   color: #ff5526;
+
   text-decoration: none;
+
   font-family: "Courier New", monospace;
   font-size: 14px;
   font-weight: 900;
+
   display: grid;
   place-items: center;
 }
@@ -59,23 +106,33 @@
 .readerTopActions {
   display: flex;
   align-items: center;
+
   gap: 6px;
-  background: #ffffff;
-  border-radius: 999px;
-  padding: 6px;
+
   width: fit-content;
+
+  padding: 6px;
+
   justify-self: end;
+
+  background: #ffffff;
+
+  border-radius: 999px;
 }
 
 .readerTopActions button,
 .readerTopActions .likeButton {
   width: 44px;
   height: 44px;
+
   border: 0;
   border-radius: 999px;
+
   background: #ff5526;
+
   display: grid;
   place-items: center;
+
   cursor: pointer;
 }
 
@@ -83,73 +140,100 @@
 .readerTopActions .likeButton img {
   width: 20px;
   height: 20px;
+
   object-fit: contain;
 }
 
 .readerTopActions span {
-  color: white;
+  color: #ffffff;
+
   font-family: "Courier New", monospace;
   font-size: 11px;
   font-weight: 900;
 }
 
-/* HEADER ROW */
+
+/* =========================================================
+   HEADER / PROGRESS
+========================================================= */
 
 .readerHeaderRow {
   display: grid;
   grid-template-columns: 1fr auto;
+
   gap: 12px;
+
   align-items: center;
 }
 
 .readerProgressRow {
-  display: grid;
-  gap: 8px;
   width: 100%;
+
+  display: grid;
+
+  gap: 8px;
 }
 
 .readerProgressRow span {
+  color: #050505;
+
   font-family: "Courier New", monospace;
   font-size: 14px;
   font-weight: 900;
-  color: #050505;
 }
 
 .readerProgress {
   width: 100%;
   height: 13px;
-  background: #ffffff;
-  border-radius: 999px;
+
   overflow: hidden;
+
+  background: #ffffff;
+
+  border-radius: 999px;
 }
 
 .readerProgress i {
   display: block;
+
   height: 100%;
+
   background: #ff5526;
+
   border-radius: 999px;
 }
 
-/* MENU */
+
+/* =========================================================
+   READER MENU
+========================================================= */
 
 .readerMenu {
   display: none;
+
   position: relative;
   z-index: 40;
 }
 
 .readerMenu summary {
   height: 44px;
+
   padding: 0 18px;
+
   border-radius: 999px;
+
   background: #ff5526;
-  color: white;
+  color: #ffffff;
+
   display: grid;
   place-items: center;
+
   font-family: "Courier New", monospace;
   font-size: 14px;
   font-weight: 900;
+
   cursor: pointer;
+
   list-style: none;
 }
 
@@ -159,52 +243,74 @@
 
 .readerMenuPanel {
   position: absolute;
+
   top: 54px;
   right: 0;
+
   width: 190px;
+
   padding: 14px;
+
   border-radius: 22px;
+
   background: #ffffff;
+
   box-shadow: 0 18px 50px rgba(0, 0, 0, 0.22);
+
   display: grid;
+
   gap: 10px;
 }
 
 .readerMenuPanel a,
 .readerMenuPanel button {
   min-height: 42px;
+
   border: 0;
   border-radius: 999px;
+
   background: #f2eee7;
   color: #13294b;
+
   font-family: "Courier New", monospace;
   font-size: 13px;
   font-weight: 900;
+
   text-align: center;
   text-decoration: none;
+
   display: grid;
   place-items: center;
+
   cursor: pointer;
 }
 
 .readerMenuPanel button {
   grid-template-columns: 24px 1fr;
+
   gap: 8px;
 }
 
 .readerMenuPanel img {
   width: 19px;
   height: 19px;
+
   object-fit: contain;
 }
 
-/* STORY TEXT */
+
+/* =========================================================
+   STORY TEXT
+========================================================= */
 
 .readerStoryText {
   min-height: 0;
+
+  padding-right: 16px;
+
   overflow-y: auto;
   overflow-x: hidden;
-  padding-right: 16px;
+
   scrollbar-width: thin;
   scrollbar-color: #ff5526 transparent;
 }
@@ -219,56 +325,79 @@
 
 .readerStoryText::-webkit-scrollbar-thumb {
   background: #ff5526;
+
   border-radius: 999px;
 }
 
 .readerStoryText h1 {
   margin: 0 0 20px;
+
+  color: #050505;
+
   font-family: "DK Woolwich", "Arial Black", sans-serif;
   font-size: 46px;
+  font-weight: 400;
   line-height: 0.9;
-  color: #050505;
 }
 
 .readerStoryText p {
   margin: 0;
+
   max-height: none;
+
   overflow: visible;
+
   white-space: pre-wrap;
+
   word-break: break-word;
   overflow-wrap: anywhere;
+
+  color: #050505;
+
   font-family: "Courier New", monospace;
   font-size: 18px;
   line-height: 1.32;
   font-weight: 900;
-  color: #050505;
 }
 
-/* REMOVE OLD BOUNCE ARROW */
+
+/* =========================================================
+   REMOVE OLD SCROLL HINT
+========================================================= */
 
 .readerScrollHint {
   display: none;
 }
 
-/* BOTTOM CONTROLS */
+
+/* =========================================================
+   BOTTOM CONTROLS
+========================================================= */
 
 .readerControls {
   display: grid;
+
   grid-template-columns: 62px 1fr 62px;
+
   gap: 22px;
+
   align-items: center;
 }
 
 .readerControls button {
   border: 0;
+
   cursor: pointer;
 }
 
 .readerControls > button:not(.readerReadAloud):not(.readerFinishButton) {
   width: 60px;
   height: 60px;
+
   border-radius: 999px;
+
   background: #ff5526;
+
   display: grid;
   place-items: center;
 }
@@ -276,15 +405,19 @@
 .readerControls > button:not(.readerReadAloud):not(.readerFinishButton) img {
   width: 30px;
   height: 30px;
+
   object-fit: contain;
 }
 
 .readerReadAloud,
 .readerFinishButton {
   height: 60px;
+
   border-radius: 999px;
+
   background: #ff5526;
-  color: white;
+  color: #ffffff;
+
   font-family: "Courier New", monospace;
   font-size: 17px;
   font-weight: 900;
@@ -296,20 +429,30 @@
 
 .disabledCircle {
   opacity: 0.35;
+
   pointer-events: none;
 }
 
-/* EMPTY STATES */
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
 
 .readerEmpty {
   min-height: 100vh;
+
+  padding: 40px;
+
   display: grid;
   place-items: center;
+
   text-align: center;
-  padding: 40px;
 }
 
-/* TABLET */
+
+/* =========================================================
+   REGULAR READER — TABLET
+========================================================= */
 
 @media (max-width: 1180px) {
   .readerPage {
@@ -318,6 +461,7 @@
 
   .readerPanel {
     padding: 18px 28px 24px;
+
     gap: 12px;
   }
 
@@ -340,6 +484,7 @@
 
   .readerControls {
     grid-template-columns: 54px 1fr 54px;
+
     gap: 14px;
   }
 
@@ -351,47 +496,63 @@
   .readerReadAloud,
   .readerFinishButton {
     height: 54px;
+
     font-size: 15px;
   }
 }
 
-/* MOBILE */
+
+/* =========================================================
+   REGULAR READER — MOBILE
+========================================================= */
 
 @media (max-width: 768px) {
   .readerPage {
+    height: 100dvh;
+
     display: flex;
     flex-direction: column;
-    height: 100dvh;
+
     overflow: hidden;
   }
 
   .readerImageSide {
     width: 100%;
     height: 36dvh;
+
     min-height: 245px;
     max-height: 350px;
+
     flex-shrink: 0;
   }
 
   .readerImageSide img {
     width: 100%;
     height: 100%;
+
     object-fit: contain;
     object-position: center center;
   }
 
   .readerPanel {
-    flex: 1;
-    min-height: 0;
     width: 100%;
+
+    flex: 1;
+
+    min-height: 0;
+
     padding: 16px 18px 96px;
-    overflow-y: auto;
+
     display: block;
+
+    overflow-y: auto;
+
     -webkit-overflow-scrolling: touch;
   }
 
   .readerHeaderRow {
     grid-template-columns: 1fr auto;
+
     margin-bottom: 16px;
   }
 
@@ -400,8 +561,9 @@
   }
 
   .readerProgressRow span {
-    text-align: left;
     font-size: 13px;
+
+    text-align: left;
   }
 
   .readerProgress {
@@ -409,15 +571,18 @@
   }
 
   .readerStoryText {
-    overflow: visible;
     padding-right: 0;
     padding-bottom: 120px;
+
+    overflow: visible;
   }
 
   .readerStoryText h1 {
-    font-size: 30px;
-    text-align: center;
     margin-bottom: 18px;
+
+    font-size: 30px;
+
+    text-align: center;
   }
 
   .readerStoryText p {
@@ -427,15 +592,25 @@
 
   .readerControls {
     position: fixed;
+
     left: 0;
     right: 0;
     bottom: 0;
+
     z-index: 100;
-    background: #eee8df;
-    border-top: 2px solid rgba(0, 0, 0, 0.08);
-    padding: 10px 18px calc(10px + env(safe-area-inset-bottom));
+
+    padding:
+      10px
+      18px
+      calc(10px + env(safe-area-inset-bottom));
+
     grid-template-columns: 46px 1fr 46px;
+
     gap: 10px;
+
+    background: #eee8df;
+
+    border-top: 2px solid rgba(0, 0, 0, 0.08);
   }
 
   .readerControls > button:not(.readerReadAloud):not(.readerFinishButton) {
@@ -451,47 +626,474 @@
   .readerReadAloud,
   .readerFinishButton {
     height: 46px;
+
     font-size: 14px;
   }
 
   .readerMenu summary {
     width: 46px;
     height: 46px;
+
     padding: 0;
+
     font-size: 22px;
   }
 
   .readerMenuPanel {
     right: 0;
+
     width: 190px;
   }
 }
+
+
+/* =========================================================
+   SHARED READER EXTRAS
+========================================================= */
+
 .readerMenuAlways {
   display: block;
 }
+
 .bookmarkButton.bookmarked {
   background: #ffbd18;
 }
+
+.bookmarkButton.bookmarked img {
+  transform: scale(1.12);
+}
+
+
 /* =========================================================
-   LEARN PRINTABLE ACTIVITIES PAGE
+   LEARN READER — LARGE DESKTOP
 ========================================================= */
+
+@media (min-width: 1181px) {
+  .learnReaderPage {
+    width: 100%;
+
+    height: 100vh;
+    height: 100dvh;
+
+    min-height: 0;
+
+    display: grid;
+
+    /*
+      We keep the original reader feel:
+      artwork gets 62%, text gets 38%.
+
+      To fill the full browser height AND keep
+      the text panel usable, the artwork must
+      use cover on some browser shapes.
+    */
+    grid-template-columns: 62% 38%;
+
+    align-items: stretch;
+
+    overflow: hidden;
+
+    background: #eee8df;
+  }
+
+  .learnReaderPage > img {
+    width: 100%;
+    height: 100%;
+
+    min-width: 0;
+    min-height: 0;
+
+    display: block;
+
+    /*
+      Fill the entire image side vertically.
+      Anchor left so the worksheet/story title
+      on the artwork is protected from cropping.
+    */
+    object-fit: cover;
+    object-position: left center;
+  }
+
+  .learnReaderPage .readerPanel {
+    width: 100%;
+    height: 100%;
+
+    min-width: 0;
+    min-height: 0;
+
+    padding: 24px 38px 28px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 16px;
+
+    box-sizing: border-box;
+
+    overflow: hidden;
+
+    background: #eee8df;
+  }
+
+  .learnReaderPage .readerDesktopTopBar,
+  .learnReaderPage .readerHeaderRow {
+    flex-shrink: 0;
+  }
+
+  .learnReaderPage .readerStoryText {
+    flex: 1 1 auto;
+
+    min-height: 0;
+
+    overflow-y: auto;
+  }
+
+  .learnReaderPage .readerControls {
+    position: static;
+
+    width: 100%;
+
+    margin-top: auto;
+    margin-bottom: 0;
+
+    flex-shrink: 0;
+  }
+}
+
+
+/* =========================================================
+   LEARN READER — IPAD LANDSCAPE / SMALL LAPTOP
+========================================================= */
+
+@media (min-width: 769px) and (max-width: 1180px) and (orientation: landscape) {
+  .learnReaderPage {
+    width: 100%;
+
+    height: 100vh;
+    height: 100dvh;
+
+    min-height: 0;
+
+    display: grid;
+    grid-template-columns: 56% 44%;
+
+    align-items: stretch;
+
+    overflow: hidden;
+
+    background: #eee8df;
+  }
+
+  .learnReaderPage > img {
+    width: 100%;
+    height: 100%;
+
+    min-width: 0;
+    min-height: 0;
+
+    display: block;
+
+    object-fit: cover;
+    object-position: left center;
+  }
+
+  .learnReaderPage .readerPanel {
+    width: 100%;
+    height: 100%;
+
+    min-width: 0;
+    min-height: 0;
+
+    padding: 18px 24px 22px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 12px;
+
+    box-sizing: border-box;
+
+    overflow: hidden;
+
+    background: #eee8df;
+  }
+
+  .learnReaderPage .readerStoryText {
+    flex: 1 1 auto;
+
+    min-height: 0;
+
+    overflow-y: auto;
+  }
+
+  .learnReaderPage .readerStoryText h1 {
+    font-size: clamp(32px, 4vw, 42px);
+  }
+
+  .learnReaderPage .readerStoryText p {
+    font-size: clamp(14px, 1.6vw, 17px);
+    line-height: 1.38;
+  }
+
+  .learnReaderPage .readerControls {
+    position: static;
+
+    width: 100%;
+
+    margin-top: auto;
+    margin-bottom: 0;
+
+    flex-shrink: 0;
+  }
+}
+
+
+/* =========================================================
+   LEARN READER — IPAD PORTRAIT
+========================================================= */
+
+@media (min-width: 769px) and (max-width: 1180px) and (orientation: portrait) {
+  .learnReaderPage {
+    width: 100%;
+
+    height: 100dvh;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+
+    background: #eee8df;
+  }
+
+  .learnReaderPage > img {
+    width: 100%;
+    height: auto;
+
+    aspect-ratio: 6 / 5;
+
+    display: block;
+
+    object-fit: contain;
+    object-position: top center;
+
+    flex-shrink: 0;
+
+    background: #eee8df;
+  }
+
+  .learnReaderPage .readerPanel {
+    width: 100%;
+
+    flex: 1;
+
+    min-height: 0;
+
+    padding: 18px 26px 22px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 12px;
+
+    box-sizing: border-box;
+
+    overflow: hidden;
+
+    background: #eee8df;
+  }
+
+  .learnReaderPage .readerStoryText {
+    flex: 1 1 auto;
+
+    min-height: 0;
+
+    overflow-y: auto;
+  }
+
+  .learnReaderPage .readerStoryText h1 {
+    font-size: 38px;
+  }
+
+  .learnReaderPage .readerStoryText p {
+    font-size: 16px;
+    line-height: 1.4;
+  }
+
+  .learnReaderPage .readerControls {
+    position: static;
+
+    width: 100%;
+
+    margin-top: auto;
+
+    flex-shrink: 0;
+  }
+}
+
+
+/* =========================================================
+   LEARN READER — MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+  .learnReaderPage {
+    width: 100%;
+
+    height: 100dvh;
+    min-height: 100dvh;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+
+    background: #eee8df;
+  }
+
+  /*
+    On phones we show the FULL 6:5 artwork.
+    No cropping.
+  */
+  .learnReaderPage > img {
+    width: 100%;
+    height: auto;
+
+    aspect-ratio: 6 / 5;
+
+    display: block;
+
+    object-fit: contain;
+    object-position: top center;
+
+    flex-shrink: 0;
+
+    background: #eee8df;
+  }
+
+  .learnReaderPage .readerPanel {
+    width: 100%;
+
+    flex: 1;
+
+    min-height: 0;
+
+    padding:
+      16px
+      18px
+      calc(18px + env(safe-area-inset-bottom));
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 12px;
+
+    box-sizing: border-box;
+
+    overflow: hidden;
+
+    background: #eee8df;
+  }
+
+  .learnReaderPage .readerHeaderRow {
+    width: 100%;
+
+    flex-shrink: 0;
+  }
+
+  .learnReaderPage .readerStoryText {
+    flex: 1 1 auto;
+
+    min-height: 0;
+
+    padding-right: 0;
+    padding-bottom: 0;
+
+    overflow-y: auto;
+
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .learnReaderPage .readerStoryText h1 {
+    margin-bottom: 16px;
+
+    font-size: clamp(30px, 9vw, 42px);
+    line-height: 0.95;
+
+    text-align: left;
+  }
+
+  .learnReaderPage .readerStoryText p {
+    font-size: 16px;
+    line-height: 1.45;
+  }
+
+  /*
+    Override the regular book-reader fixed footer.
+    Learn mobile controls remain inside the reader.
+  */
+  .learnReaderPage .readerControls {
+    position: static;
+
+    left: auto;
+    right: auto;
+    bottom: auto;
+
+    width: 100%;
+
+    margin-top: 12px;
+
+    padding: 0;
+
+    grid-template-columns: 46px 1fr 46px;
+
+    gap: 10px;
+
+    flex-shrink: 0;
+
+    background: transparent;
+
+    border-top: 0;
+  }
+}
+
+
+/* =========================================================
+   PRINTABLE ACTIVITIES PAGE
+========================================================= */
+
+.worksheetPageShell {
+  width: 100%;
+
+  min-height: 100vh;
+
+  background: #ffffff;
+}
 
 .worksheetReaderPage {
   width: 100%;
+
   min-height: calc(100vh - 150px);
+
   display: grid;
   grid-template-columns: 52% 48%;
-  background: #fff;
+
+  background: #ffffff;
 }
+
 .worksheetCompleteSide {
   position: relative;
+
   min-height: 760px;
+
   overflow: hidden;
-  background: #111;
+
+  background: #111111;
 }
 
 .worksheetCompleteImage {
   position: absolute;
+
   inset: 0;
 
   width: 100%;
@@ -502,6 +1104,7 @@
 
 .worksheetCompleteShade {
   position: absolute;
+
   inset: 0;
 
   background:
@@ -514,12 +1117,13 @@
 
 .worksheetCompleteContent {
   position: absolute;
+
   left: 7%;
   bottom: 12%;
 
   z-index: 2;
 
-  color: white;
+  color: #ffffff;
 }
 
 .worksheetCompleteEyebrow {
@@ -531,11 +1135,11 @@
 .worksheetCompleteContent h1 {
   margin: 0;
 
+  color: #ff5526;
+
   font-family: "DK Woolwich", sans-serif;
   font-size: clamp(58px, 7vw, 110px);
   line-height: 0.88;
-
-  color: #ff5526;
 }
 
 .worksheetCompleteContent p {
@@ -548,36 +1152,40 @@
 
 .worksheetActivitiesSide {
   padding: 110px 42px 36px;
+
   box-sizing: border-box;
 
   overflow-y: auto;
-  background: #fff;
-  color: #000;
+
+  background: #ffffff;
+  color: #000000;
 }
 
 .worksheetTopNav {
+  margin-bottom: 24px;
+
   display: flex;
-  gap: 14px;
   align-items: center;
 
-  margin-bottom: 24px;
+  gap: 14px;
 }
 
 .worksheetHomeButton,
 .worksheetBackLearnButton {
   height: 44px;
 
+  padding: 0 24px;
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
 
-  padding: 0 24px;
+  background: #ffffff;
+  color: #ff5526;
 
-  background: white;
   border: 2px solid #ff5526;
   border-radius: 999px;
 
-  color: #ff5526;
   text-decoration: none;
 
   font-family: "Courier New", monospace;
@@ -590,18 +1198,19 @@
 }
 
 .worksheetProgressRow {
+  margin-bottom: 10px;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
 
   gap: 20px;
 
-  margin-bottom: 10px;
+  color: #000000;
 
   font-family: "Courier New", monospace;
   font-size: 13px;
   font-weight: 700;
-  color: #000;
 }
 
 .worksheetProgressRow strong {
@@ -612,30 +1221,34 @@
   width: 100%;
   height: 10px;
 
+  margin-bottom: 26px;
+
   overflow: hidden;
 
-  border-radius: 999px;
-  background: white;
+  background: #ffffff;
 
-  margin-bottom: 26px;
+  border-radius: 999px;
 }
 
 .worksheetProgressBar span {
   display: block;
+
   width: 100%;
   height: 100%;
 
-  border-radius: inherit;
   background: #ff5526;
+
+  border-radius: inherit;
 }
 
 .worksheetHeading h2 {
   margin: 0 0 10px;
 
+  color: #000000;
+
   font-family: "DK Woolwich", sans-serif;
   font-size: clamp(32px, 3vw, 48px);
   line-height: 1;
-  color: #000;
 }
 
 .worksheetHeading p {
@@ -643,36 +1256,38 @@
 
   margin: 0 0 24px;
 
+  color: #000000;
+
   font-family: "Courier New", monospace;
   font-size: 15px;
   line-height: 1.55;
-  color: #000;
 }
 
 .worksheetCards {
   display: grid;
+
   gap: 14px;
 }
 
 .worksheetCard {
-  display: grid;
-  grid-template-columns: 125px 1fr 145px;
-  gap: 20px;
-  align-items: center;
-
   min-height: 135px;
 
   padding: 14px;
 
   box-sizing: border-box;
 
-  background: white;
+  display: grid;
+  grid-template-columns: 125px 1fr 145px;
+  align-items: center;
+
+  gap: 20px;
+
+  background: #ffffff;
 
   border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 22px;
 
-  box-shadow:
-    0 7px 18px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 7px 18px rgba(0, 0, 0, 0.08);
 }
 
 .worksheetCardImage {
@@ -691,22 +1306,26 @@
 .worksheetCardText h3 {
   margin: 0 0 8px;
 
+  color: #000000;
+
   font-family: "DK Woolwich", sans-serif;
   font-size: 24px;
   line-height: 1;
-  color: #000;
 }
 
 .worksheetCardText p {
   margin: 0;
 
+  color: #000000;
+
   font-family: "Courier New", monospace;
   font-size: 14px;
   line-height: 1.45;
-  color: #000;
 }
+
 .worksheetCardActions {
   display: grid;
+
   gap: 9px;
 }
 
@@ -731,36 +1350,54 @@
 }
 
 .worksheetPreviewButton {
-  background: white;
+  background: #ffffff;
+  color: #ff5526;
 
   border: 2px solid #ff5526;
-
-  color: #ff5526;
 }
 
 .worksheetDownloadButton {
   background: #ff5526;
+  color: #ffffff;
 
   border: 2px solid #ff5526;
-
-  color: white;
 }
 
 .worksheetPrintNote {
   padding: 18px 0 0;
+
+  color: #000000;
 
   text-align: center;
 
   font-family: "Courier New", monospace;
   font-size: 12px;
   font-weight: 700;
-  color: #000;
 }
 
 
+/* =========================================================
+   WORKSHEET BOTTOM CONTROLS
+========================================================= */
+
+.worksheetPanelControls {
+  width: 100%;
+
+  margin-top: 22px;
+  padding-top: 16px;
+
+  box-sizing: border-box;
+
+  display: grid;
+  grid-template-columns: 54px 1fr 54px;
+  align-items: center;
+
+  gap: 18px;
+}
+
 .worksheetArrowButton {
-  width: 52px;
-  height: 52px;
+  width: 54px;
+  height: 54px;
 
   display: flex;
   align-items: center;
@@ -769,72 +1406,44 @@
   border-radius: 50%;
 
   background: #ff5526;
+  color: #ffffff;
 
-  color: white;
   text-decoration: none;
 
   font-size: 30px;
   font-weight: 700;
 }
 
-.worksheetArrowButton:last-child {
+.worksheetPanelControls .worksheetArrowButton:last-child {
   justify-self: end;
 }
 
 .worksheetGreatWork {
-  min-width: 420px;
+  width: 100%;
 
-  padding: 16px 50px;
+  min-width: 0;
+
+  padding: 16px 30px;
 
   box-sizing: border-box;
 
   border-radius: 999px;
 
   background: #ff5526;
-
-  color: white;
+  color: #ffffff;
 
   text-align: center;
 
   font-family: "DK Woolwich", sans-serif;
   font-size: 24px;
 }
-.worksheetPanelControls {
-  width: 100%;
-
-  display: grid;
-  grid-template-columns: 54px 1fr 54px;
-  align-items: center;
-  gap: 18px;
-
-  margin-top: 22px;
-  padding-top: 16px;
-
-  box-sizing: border-box;
-}
-
-.worksheetPanelControls .worksheetArrowButton {
-  width: 54px;
-  height: 54px;
-}
-
-.worksheetPanelControls .worksheetArrowButton:last-child {
-  justify-self: end;
-}
-
-.worksheetPanelControls .worksheetGreatWork {
-  width: 100%;
-  min-width: 0;
-  box-sizing: border-box;
-}
 
 
 /* =========================================================
-   WORKSHEET MOBILE
+   WORKSHEET — TABLET / MOBILE
 ========================================================= */
 
 @media (max-width: 900px) {
-
   .worksheetReaderPage {
     display: block;
   }
@@ -860,6 +1469,7 @@
 
   .worksheetCardActions {
     grid-column: 2;
+
     grid-template-columns: 1fr 1fr;
   }
 
@@ -869,360 +1479,5 @@
     padding: 14px 18px;
 
     font-size: 18px;
-  }
-}
-
-.bookmarkButton.bookmarked img {
-  transform: scale(1.12);
-}
-.worksheetPageShell {
-  width: 100%;
-  min-height: 100vh;
-  background: #fff;
-}
-/* =========================================================
-   LEARN READER — DESKTOP FULL HEIGHT
-========================================================= */
-
-@media (min-width: 901px) {
-  .learnReaderPage {
-    width: 100%;
-    height: 100dvh;
-    min-height: 100dvh;
-
-    display: grid;
-    grid-template-columns: 58% 42%;
-
-    overflow: hidden;
-    background: #eee8df;
-  }
-
- .learnReaderPage > img {
-  width: 100%;
-  height: 100%;
-  min-width: 0;
-  min-height: 0;
-
-  display: block;
-
-  object-fit: contain;
-  object-position: center center;
-
-  background: #eee8df;
-}
-  .learnReaderPage .readerPanel {
-    width: 100%;
-    height: 100%;
-    min-height: 0;
-
-    display: flex;
-    flex-direction: column;
-
-    box-sizing: border-box;
-    overflow: hidden;
-  }
-
-  .learnReaderPage .readerStoryText {
-    flex: 0 1 auto;
-  }
-
-  .learnReaderPage .readerControls {
-    position: static;
-    margin-top: auto;
-    margin-bottom: 0;
-
-    flex-shrink: 0;
-  }
-}
-/* =========================================================
-   LEARN READER — DESKTOP
-========================================================= */
-
-@media (min-width: 901px) {
-  .learnReaderPage {
-    width: 100%;
-
-    height: auto !important;
-    min-height: 0 !important;
-
-    display: grid;
-    grid-template-columns: 58% 42%;
-    align-items: stretch;
-
-    overflow: hidden;
-    background: #eee8df;
-  }
-
-  /* Full image — no cropping */
-  .learnReaderPage > img {
-    width: 100%;
-    height: auto;
-
-    display: block;
-
-    object-fit: contain;
-    object-position: top center;
-
-    align-self: start;
-  }
-
-  /* Right reader panel matches image height */
-  .learnReaderPage .readerPanel {
-    width: 100%;
-    height: auto !important;
-    min-height: 0 !important;
-
-    align-self: stretch;
-
-    display: flex;
-    flex-direction: column;
-
-    box-sizing: border-box;
-    overflow: hidden;
-  }
-
-  /* Story stays near the top */
-  .learnReaderPage .readerStoryText {
-    flex: 0 1 auto;
-  }
-
-  /* Controls sit at the bottom edge of the image */
-  .learnReaderPage .readerControls {
-    position: static !important;
-
-    margin-top: auto;
-    margin-bottom: 0;
-
-    flex-shrink: 0;
-  }
-}
-/* =========================================================
-   LEARN WITH LUKE READER
-   PRESERVE FULL 6:5 ART + STABLE TEXT PANEL
-========================================================= */
-
-/* DESKTOP */
-@media (min-width: 1181px) {
-  .learnReaderPage {
-    width: 100%;
-    height: min(
-      100dvh,
-      calc(58vw * 5 / 6)
-    );
-
-    min-height: 0 !important;
-
-    display: grid;
-    grid-template-columns: 58% 42%;
-    align-items: stretch;
-
-    overflow: hidden;
-    background: #eee8df;
-  }
-
-  /* FULL 6:5 IMAGE — NEVER CROPPED */
-  .learnReaderPage > img {
-    width: 100%;
-    height: 100%;
-
-    display: block;
-
-    object-fit: contain;
-    object-position: top left;
-
-    background: #eee8df;
-  }
-
-  /* TEXT PANEL ALWAYS KEEPS ITS WIDTH */
-  .learnReaderPage .readerPanel {
-    width: 100%;
-    height: 100%;
-
-    min-width: 0;
-    min-height: 0;
-
-    display: flex;
-    flex-direction: column;
-
-    box-sizing: border-box;
-    overflow: hidden;
-
-    background: #eee8df;
-  }
-
-  .learnReaderPage .readerDesktopTopBar,
-  .learnReaderPage .readerHeaderRow {
-    flex-shrink: 0;
-  }
-
-  .learnReaderPage .readerStoryText {
-    flex: 1 1 auto;
-    min-height: 0;
-
-    overflow-y: auto;
-  }
-
-  .learnReaderPage .readerControls {
-    position: static !important;
-
-    width: 100%;
-    margin-top: auto;
-    margin-bottom: 0;
-
-    flex-shrink: 0;
-  }
-}
-
-
-/* =========================================================
-   IPAD / SMALL LAPTOP
-========================================================= */
-
-@media (min-width: 769px) and (max-width: 1180px) {
-  .learnReaderPage {
-    width: 100%;
-    height: min(
-      100dvh,
-      calc(56vw * 5 / 6)
-    );
-
-    min-height: 0 !important;
-
-    display: grid;
-    grid-template-columns: 56% 44%;
-    align-items: stretch;
-
-    overflow: hidden;
-
-    background: #eee8df;
-  }
-
-  .learnReaderPage > img {
-    width: 100%;
-    height: 100%;
-
-    display: block;
-
-    object-fit: contain;
-    object-position: top left;
-
-    background: #eee8df;
-  }
-
-  .learnReaderPage .readerPanel {
-    width: 100%;
-    height: 100%;
-
-    min-width: 0;
-    min-height: 0;
-
-    padding-left: 24px;
-    padding-right: 24px;
-
-    display: flex;
-    flex-direction: column;
-
-    box-sizing: border-box;
-    overflow: hidden;
-
-    background: #eee8df;
-  }
-
-  .learnReaderPage .readerStoryText {
-    flex: 1 1 auto;
-    min-height: 0;
-
-    overflow-y: auto;
-  }
-
-  .learnReaderPage .readerStoryText h1 {
-    font-size: clamp(30px, 4vw, 46px);
-  }
-
-  .learnReaderPage .readerStoryText p {
-    font-size: clamp(14px, 1.6vw, 18px);
-    line-height: 1.4;
-  }
-
-  .learnReaderPage .readerControls {
-    position: static !important;
-
-    width: 100%;
-    margin-top: auto;
-    margin-bottom: 0;
-
-    flex-shrink: 0;
-  }
-}
-
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media (max-width: 768px) {
-  .learnReaderPage {
-    width: 100%;
-    height: auto !important;
-    min-height: 100dvh !important;
-
-    display: flex;
-    flex-direction: column;
-
-    overflow: visible;
-
-    background: #eee8df;
-  }
-
-  .learnReaderPage > img {
-    width: 100%;
-    height: auto;
-
-    aspect-ratio: 6 / 5;
-
-    display: block;
-
-    object-fit: contain;
-    object-position: top center;
-
-    background: #eee8df;
-  }
-
-  .learnReaderPage .readerPanel {
-    width: 100%;
-    height: auto !important;
-    min-height: 0 !important;
-
-    padding: 18px 18px 22px;
-
-    display: flex;
-    flex-direction: column;
-
-    box-sizing: border-box;
-
-    background: #eee8df;
-  }
-
-  .learnReaderPage .readerStoryText {
-    width: 100%;
-  }
-
-  .learnReaderPage .readerStoryText h1 {
-    font-size: clamp(32px, 10vw, 46px);
-    line-height: 0.95;
-  }
-
-  .learnReaderPage .readerStoryText p {
-    font-size: 16px;
-    line-height: 1.5;
-  }
-
-  .learnReaderPage .readerControls {
-    position: static !important;
-
-    width: 100%;
-
-    margin-top: 26px;
-    margin-bottom: 0;
   }
 }
