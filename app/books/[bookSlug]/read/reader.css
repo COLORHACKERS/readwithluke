@@ -1972,3 +1972,68 @@
     display: none !important;
   }
 }
+/* =========================================================
+   ALWAYS-VISIBLE READER SCROLL INDICATOR
+========================================================= */
+
+.readerStoryText {
+  position: relative;
+
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
+}
+
+/* Firefox */
+.readerStoryText {
+  scrollbar-width: thin;
+  scrollbar-color: #ff5526 rgba(0, 0, 0, 0.08);
+}
+
+/* Chrome / Safari desktop */
+.readerStoryText::-webkit-scrollbar {
+  width: 8px;
+}
+
+.readerStoryText::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 999px;
+}
+
+.readerStoryText::-webkit-scrollbar-thumb {
+  background: #ff5526;
+  border-radius: 999px;
+}
+
+
+/* =========================================================
+   IPHONE / IPAD
+   Safari hides native scrollbars, so show a permanent cue.
+========================================================= */
+
+@media (max-width: 1180px) {
+  .readerStoryText {
+    position: relative;
+
+    padding-right: 18px !important;
+  }
+
+  .readerStoryText::after {
+    content: "";
+
+    position: absolute;
+
+    top: 4px;
+    right: 3px;
+
+    width: 5px;
+    height: 64px;
+
+    border-radius: 999px;
+
+    background: #ff5526;
+
+    opacity: 0.9;
+
+    pointer-events: none;
+  }
+}
