@@ -875,4 +875,8 @@
 .bookmarkButton.bookmarked img {
   transform: scale(1.12);
 }
-
+.worksheetPageShell {
+  width: 100%;
+  min-height: 100vh;
+  background: #fff;
+}
