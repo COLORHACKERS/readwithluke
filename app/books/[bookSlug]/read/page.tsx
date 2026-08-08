@@ -77,6 +77,7 @@ return (
   totalPages={pages.length}
   imageUrl={imageUrl}
   text={pageData.text || ""}
+       audioUrl={pageData.audio_url || ""}
 />
     </ReaderGate>
   </>
