@@ -321,6 +321,33 @@ const [uploadingWorksheet, setUploadingWorksheet] = useState(false);
     setUploadingWorksheet(false);
   }
 }
+  function updateWorksheet(
+  index: number,
+  field: "title" | "description",
+  value: string
+) {
+  setWorksheets((current) =>
+    current.map((worksheet, worksheetIndex) =>
+      worksheetIndex === index
+        ? {
+            ...worksheet,
+            [field]: value,
+          }
+        : worksheet
+    )
+  );
+}
+
+function removeWorksheet(index: number) {
+  setWorksheets((current) =>
+    current
+      .filter((_, worksheetIndex) => worksheetIndex !== index)
+      .map((worksheet, worksheetIndex) => ({
+        ...worksheet,
+        sort_order: worksheetIndex + 1,
+      }))
+  );
+}
 
   async function editItem(item: LearnItem) {
     setEditingId(item.id);
@@ -825,15 +852,16 @@ async function saveWorksheets(learnItemId: string) {
     type="file"
     accept="image/png,.png"
     disabled={uploadingWorksheet}
-    onChange={async (event) => {
-      const file = event.target.files?.[0];
+  onChange={async (event) => {
+  const input = event.currentTarget;
+  const file = input.files?.[0];
 
-      if (file) {
-        await handleWorksheetUpload(file);
-      }
+  input.value = "";
 
-      event.currentTarget.value = "";
-    }}
+  if (file) {
+    await handleWorksheetUpload(file);
+  }
+}}
   />
 
   {uploadingWorksheet && (
