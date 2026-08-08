@@ -36,8 +36,22 @@ export default function ReaderClient({
   const audioRef =
     useRef<HTMLAudioElement | null>(null);
 
-  const [isAudioPlaying, setIsAudioPlaying] =
-    useState(false);
+  const storyRef =
+    useRef<HTMLDivElement | null>(null);
+
+  const [
+    isAudioPlaying,
+    setIsAudioPlaying,
+  ] = useState(false);
+
+  const [
+    scrollThumb,
+    setScrollThumb,
+  ] = useState({
+    top: 0,
+    height: 100,
+    visible: false,
+  });
 
   const progress = Math.max(
     4,
@@ -49,6 +63,89 @@ export default function ReaderClient({
 
   const progressKey =
     `rwl-learn-progress-${learnSlug}`;
+
+  /* =========================================================
+     CUSTOM STORY SCROLLBAR
+  ========================================================= */
+
+  function updateStoryScrollbar() {
+    const story = storyRef.current;
+
+    if (!story) {
+      return;
+    }
+
+    const {
+      scrollTop,
+      scrollHeight,
+      clientHeight,
+    } = story;
+
+    const maxScroll =
+      scrollHeight - clientHeight;
+
+    if (maxScroll <= 2) {
+      setScrollThumb({
+        top: 0,
+        height: 100,
+        visible: false,
+      });
+
+      return;
+    }
+
+    const thumbHeight = Math.max(
+      18,
+      (clientHeight / scrollHeight) * 100
+    );
+
+    const availableTravel =
+      100 - thumbHeight;
+
+    const thumbTop =
+      (scrollTop / maxScroll) *
+      availableTravel;
+
+    setScrollThumb({
+      top: thumbTop,
+      height: thumbHeight,
+      visible: true,
+    });
+  }
+
+  /* =========================================================
+     RESET STORY SCROLL WHEN PAGE CHANGES
+  ========================================================= */
+
+  useEffect(() => {
+    const story = storyRef.current;
+
+    if (story) {
+      story.scrollTop = 0;
+    }
+
+    const frame =
+      window.requestAnimationFrame(() => {
+        updateStoryScrollbar();
+      });
+
+    window.addEventListener(
+      "resize",
+      updateStoryScrollbar
+    );
+
+    return () => {
+      window.cancelAnimationFrame(frame);
+
+      window.removeEventListener(
+        "resize",
+        updateStoryScrollbar
+      );
+    };
+  }, [
+    pageNumber,
+    text,
+  ]);
 
   /* =========================================================
      RESET AUDIO WHEN PAGE CHANGES
@@ -65,10 +162,13 @@ export default function ReaderClient({
     audio.currentTime = 0;
 
     setIsAudioPlaying(false);
-  }, [pageNumber, audioUrl]);
+  }, [
+    pageNumber,
+    audioUrl,
+  ]);
 
   /* =========================================================
-     RECORD EACH LEARNING PAGE VISITED
+     RECORD LEARNING PAGE VISITED
   ========================================================= */
 
   useEffect(() => {
@@ -78,7 +178,6 @@ export default function ReaderClient({
       return;
     }
 
-    // Do not count the worksheet page itself.
     if (
       pageNumber < 1 ||
       pageNumber > lessonPageCount
@@ -227,7 +326,7 @@ export default function ReaderClient({
 
         return;
       } catch {
-        // User closed the share sheet.
+        // User closed share sheet.
       }
     }
 
@@ -260,10 +359,6 @@ export default function ReaderClient({
   }
 
   function goNext() {
-    /*
-     * On the final learning page,
-     * send the child to worksheets.
-     */
     if (
       hasWorksheets &&
       pageNumber === lessonPageCount
@@ -271,15 +366,11 @@ export default function ReaderClient({
       const completed =
         hasCompletedLesson();
 
-      if (completed) {
-        router.push(
-          `/learn/${learnSlug}/read?worksheets=1&complete=1`
-        );
-      } else {
-        router.push(
-          `/learn/${learnSlug}/read?worksheets=1`
-        );
-      }
+      router.push(
+        completed
+          ? `/learn/${learnSlug}/read?worksheets=1&complete=1`
+          : `/learn/${learnSlug}/read?worksheets=1`
+      );
 
       return;
     }
@@ -301,18 +392,16 @@ export default function ReaderClient({
     pageNumber === lessonPageCount;
 
   /* =========================================================
-     READER
+     RENDER
   ========================================================= */
 
   return (
     <main className="readerPage learnReaderPage">
       {/* AUDIO */}
+
       <audio
         ref={audioRef}
-        src={
-          audioUrl ||
-          undefined
-        }
+        src={audioUrl || undefined}
         preload="metadata"
         onPlay={() =>
           setIsAudioPlaying(true)
@@ -326,12 +415,14 @@ export default function ReaderClient({
       />
 
       {/* IMAGE */}
+
       <img
         src={imageUrl}
         alt={`${title} page ${pageNumber}`}
       />
 
       {/* AUDIO WAVE */}
+
       {audioUrl && (
         <div
           className={`readerAudioWave learnAudioWave ${
@@ -350,8 +441,10 @@ export default function ReaderClient({
       )}
 
       {/* READER PANEL */}
+
       <aside className="readerPanel">
         {/* TOP BAR */}
+
         <div className="readerDesktopTopBar">
           <Link
             href="/"
@@ -402,6 +495,7 @@ export default function ReaderClient({
         </div>
 
         {/* PROGRESS */}
+
         <div className="readerHeaderRow">
           <div className="readerProgressRow">
             <span>
@@ -412,27 +506,53 @@ export default function ReaderClient({
             <div className="readerProgress">
               <i
                 style={{
-                  width:
-                    `${progress}%`,
+                  width: `${progress}%`,
                 }}
               />
             </div>
           </div>
         </div>
 
-        {/* STORY */}
-        <div className="readerStoryText">
-          <h1>
-            {title.toUpperCase()}
-          </h1>
+        {/* STORY + FUNCTIONAL SCROLLBAR */}
 
-          <p>
-            {text ||
-              "This learning page is waiting for something awesome..."}
-          </p>
+        <div className="readerStoryWrap">
+          <div
+            ref={storyRef}
+            className="readerStoryText"
+            onScroll={
+              updateStoryScrollbar
+            }
+          >
+            <h1>
+              {title.toUpperCase()}
+            </h1>
+
+            <p>
+              {text ||
+                "This learning page is waiting for something awesome..."}
+            </p>
+          </div>
+
+          {scrollThumb.visible && (
+            <div
+              className="readerScrollTrack"
+              aria-hidden="true"
+            >
+              <span
+                className="readerScrollThumb"
+                style={{
+                  height:
+                    `${scrollThumb.height}%`,
+                  top:
+                    `${scrollThumb.top}%`,
+                }}
+              />
+            </div>
+          )}
         </div>
 
-        {/* CONTROLS */}
+        {/* BOTTOM CONTROLS */}
+
         <div className="readerControls">
           <button
             type="button"
@@ -473,9 +593,7 @@ export default function ReaderClient({
           <button
             type="button"
             onClick={goNext}
-            disabled={
-              disableNext
-            }
+            disabled={disableNext}
             className={
               disableNext
                 ? "disabledCircle"
