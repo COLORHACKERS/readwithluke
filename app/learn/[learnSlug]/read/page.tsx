@@ -377,6 +377,7 @@ const lessonCompleted = complete === "1";
   hasWorksheets={hasWorksheets}
   imageUrl={imageUrl}
   text={pageData.text || ""}
+       audioUrl={pageData.audio_url || ""}
 />
     </LearnGate>
   );
