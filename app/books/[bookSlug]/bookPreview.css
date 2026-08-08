@@ -596,3 +596,23 @@
     text-align: right;
   }
 }
+.previewWorksheetButton {
+  height: 66px;
+  padding: 0 28px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 999px;
+  border: 3px solid white;
+
+  background: #000;
+  color: #fff;
+
+  text-decoration: none;
+  white-space: nowrap;
+
+  font-family: "DK Woolwich", sans-serif;
+  font-size: 24px;
+}
