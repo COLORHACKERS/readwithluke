@@ -548,7 +548,7 @@
 }
 
 .worksheetActivitiesSide {
-  padding: 38px 42px 50px;
+  padding: 110px 42px 36px;
   box-sizing: border-box;
 
   overflow-y: auto;
@@ -751,21 +751,6 @@
   font-weight: 700;
 }
 
-.worksheetReaderFooter {
-  min-height: 82px;
-
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-
-  gap: 24px;
-
-  padding: 10px 36px;
-
-  background: white;
-
-  box-sizing: border-box;
-}
 
 .worksheetArrowButton {
   width: 52px;
@@ -808,6 +793,34 @@
   font-family: "DK Woolwich", sans-serif;
   font-size: 24px;
 }
+.worksheetPanelControls {
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: 54px 1fr 54px;
+  align-items: center;
+  gap: 18px;
+
+  margin-top: 22px;
+  padding-top: 16px;
+
+  box-sizing: border-box;
+}
+
+.worksheetPanelControls .worksheetArrowButton {
+  width: 54px;
+  height: 54px;
+}
+
+.worksheetPanelControls .worksheetArrowButton:last-child {
+  justify-self: end;
+}
+
+.worksheetPanelControls .worksheetGreatWork {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
 
 
 /* =========================================================
@@ -825,7 +838,7 @@
   }
 
   .worksheetActivitiesSide {
-    padding: 28px 18px 40px;
+    padding: 95px 18px 28px;
   }
 
   .worksheetCard {
@@ -842,11 +855,6 @@
   .worksheetCardActions {
     grid-column: 2;
     grid-template-columns: 1fr 1fr;
-  }
-
-  .worksheetReaderFooter {
-    grid-template-columns: auto 1fr auto;
-    padding: 10px 14px;
   }
 
   .worksheetGreatWork {
