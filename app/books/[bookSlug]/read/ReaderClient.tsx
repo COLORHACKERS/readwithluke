@@ -34,11 +34,37 @@ export default function ReaderClient({
 }: Props) {
   const router = useRouter();
 
+  /* =========================================================
+     REFS
+  ========================================================= */
+
   const audioRef =
     useRef<HTMLAudioElement | null>(null);
 
-  const [isAudioPlaying, setIsAudioPlaying] =
-    useState(false);
+  const storyRef =
+    useRef<HTMLDivElement | null>(null);
+
+  /* =========================================================
+     STATE
+  ========================================================= */
+
+  const [
+    isAudioPlaying,
+    setIsAudioPlaying,
+  ] = useState(false);
+
+  const [
+    scrollThumb,
+    setScrollThumb,
+  ] = useState({
+    top: 0,
+    height: 100,
+    visible: false,
+  });
+
+  /* =========================================================
+     PAGE VALUES
+  ========================================================= */
 
   const progress = Math.max(
     4,
@@ -52,11 +78,108 @@ export default function ReaderClient({
     pageNumber === totalPages;
 
   /* =========================================================
+     CUSTOM STORY SCROLLBAR
+  ========================================================= */
+
+  function updateStoryScrollbar() {
+    const story =
+      storyRef.current;
+
+    if (!story) {
+      return;
+    }
+
+    const {
+      scrollTop,
+      scrollHeight,
+      clientHeight,
+    } = story;
+
+    const maxScroll =
+      scrollHeight -
+      clientHeight;
+
+    if (maxScroll <= 2) {
+      setScrollThumb({
+        top: 0,
+        height: 100,
+        visible: false,
+      });
+
+      return;
+    }
+
+    const thumbHeight =
+      Math.max(
+        18,
+        (
+          clientHeight /
+          scrollHeight
+        ) * 100
+      );
+
+    const availableTravel =
+      100 - thumbHeight;
+
+    const thumbTop =
+      (
+        scrollTop /
+        maxScroll
+      ) * availableTravel;
+
+    setScrollThumb({
+      top: thumbTop,
+      height: thumbHeight,
+      visible: true,
+    });
+  }
+
+  /* =========================================================
+     RESET STORY SCROLL ON PAGE CHANGE
+  ========================================================= */
+
+  useEffect(() => {
+    const story =
+      storyRef.current;
+
+    if (story) {
+      story.scrollTop = 0;
+    }
+
+    const frame =
+      window.requestAnimationFrame(
+        () => {
+          updateStoryScrollbar();
+        }
+      );
+
+    window.addEventListener(
+      "resize",
+      updateStoryScrollbar
+    );
+
+    return () => {
+      window.cancelAnimationFrame(
+        frame
+      );
+
+      window.removeEventListener(
+        "resize",
+        updateStoryScrollbar
+      );
+    };
+  }, [
+    pageNumber,
+    text,
+  ]);
+
+  /* =========================================================
      RESET AUDIO WHEN PAGE CHANGES
   ========================================================= */
 
   useEffect(() => {
-    const audio = audioRef.current;
+    const audio =
+      audioRef.current;
 
     if (!audio) {
       return;
@@ -66,7 +189,10 @@ export default function ReaderClient({
     audio.currentTime = 0;
 
     setIsAudioPlaying(false);
-  }, [pageNumber, audioUrl]);
+  }, [
+    pageNumber,
+    audioUrl,
+  ]);
 
   /* =========================================================
      SAVE READING PROGRESS
@@ -88,8 +214,13 @@ export default function ReaderClient({
       error: profileError,
     } = await supabase
       .from("profiles")
-      .select("active_child_id")
-      .eq("id", userId)
+      .select(
+        "active_child_id"
+      )
+      .eq(
+        "id",
+        userId
+      )
       .maybeSingle();
 
     if (profileError) {
@@ -98,25 +229,35 @@ export default function ReaderClient({
       );
     }
 
-    if (profile?.active_child_id) {
-      return profile.active_child_id;
+    if (
+      profile?.active_child_id
+    ) {
+      return (
+        profile.active_child_id
+      );
     }
 
     /*
-     * Fallback for older accounts that
-     * existed before active_child_id
-     * was added.
+     * Fallback for older accounts
+     * without active_child_id.
      */
+
     const {
       data: firstChild,
       error: childError,
     } = await supabase
       .from("children")
       .select("id")
-      .eq("user_id", userId)
-      .order("created_at", {
-        ascending: true,
-      })
+      .eq(
+        "user_id",
+        userId
+      )
+      .order(
+        "created_at",
+        {
+          ascending: true,
+        }
+      )
       .limit(1)
       .maybeSingle();
 
@@ -130,10 +271,6 @@ export default function ReaderClient({
       return null;
     }
 
-    /*
-     * Make this child the active reader
-     * so we only need the fallback once.
-     */
     const {
       error: updateError,
     } = await supabase
@@ -142,7 +279,10 @@ export default function ReaderClient({
         active_child_id:
           firstChild.id,
       })
-      .eq("id", userId);
+      .eq(
+        "id",
+        userId
+      );
 
     if (updateError) {
       throw new Error(
@@ -159,12 +299,17 @@ export default function ReaderClient({
 
   async function finishBook() {
     const {
-      data: { user },
+      data: {
+        user,
+      },
     } =
       await supabase.auth.getUser();
 
     if (!user) {
-      router.push("/signup");
+      router.push(
+        "/signup"
+      );
+
       return;
     }
 
@@ -189,7 +334,9 @@ export default function ReaderClient({
       const {
         error,
       } = await supabase
-        .from("reading_history")
+        .from(
+          "reading_history"
+        )
         .upsert(
           {
             user_id:
@@ -205,7 +352,8 @@ export default function ReaderClient({
               1,
 
             completed_at:
-              new Date().toISOString(),
+              new Date()
+                .toISOString(),
           },
           {
             onConflict:
@@ -242,7 +390,9 @@ export default function ReaderClient({
 
   async function saveProgress() {
     const {
-      data: { user },
+      data: {
+        user,
+      },
     } =
       await supabase.auth.getUser();
 
@@ -251,7 +401,9 @@ export default function ReaderClient({
     }
 
     await supabase
-      .from("book_bookmarks")
+      .from(
+        "book_bookmarks"
+      )
       .upsert(
         {
           user_id:
@@ -264,7 +416,8 @@ export default function ReaderClient({
             pageNumber,
 
           updated_at:
-            new Date().toISOString(),
+            new Date()
+              .toISOString(),
         },
         {
           onConflict:
@@ -278,9 +431,13 @@ export default function ReaderClient({
   ========================================================= */
 
   async function toggleReadAloud() {
-    const audio = audioRef.current;
+    const audio =
+      audioRef.current;
 
-    if (!audio || !audioUrl) {
+    if (
+      !audio ||
+      !audioUrl
+    ) {
       return;
     }
 
@@ -314,21 +471,32 @@ export default function ReaderClient({
           title,
           text:
             `Read "${title}" with me on Read With Luke!`,
-          url:
-            shareUrl,
+          url: shareUrl,
         });
 
         return;
       } catch {
-        // User closed share sheet.
+        /*
+         * User closed the
+         * native share sheet.
+         */
       }
     }
 
-    await navigator.clipboard.writeText(
-      shareUrl
-    );
+    try {
+      await navigator.clipboard.writeText(
+        shareUrl
+      );
 
-    alert("Link copied!");
+      alert(
+        "Link copied!"
+      );
+    } catch {
+      window.prompt(
+        "Copy this link:",
+        shareUrl
+      );
+    }
   }
 
   /* =========================================================
@@ -336,7 +504,9 @@ export default function ReaderClient({
   ========================================================= */
 
   function goBack() {
-    if (pageNumber > 1) {
+    if (
+      pageNumber > 1
+    ) {
       router.push(
         `/books/${bookSlug}/read?page=${
           pageNumber - 1
@@ -347,7 +517,8 @@ export default function ReaderClient({
 
   function goNext() {
     if (
-      pageNumber < totalPages
+      pageNumber <
+      totalPages
     ) {
       router.push(
         `/books/${bookSlug}/read?page=${
@@ -363,7 +534,11 @@ export default function ReaderClient({
 
   return (
     <main className="readerPage">
-      {/* AUDIO */}
+
+      {/* =====================================================
+          AUDIO
+      ===================================================== */}
+
       <audio
         ref={audioRef}
         src={
@@ -372,17 +547,26 @@ export default function ReaderClient({
         }
         preload="metadata"
         onPlay={() =>
-          setIsAudioPlaying(true)
+          setIsAudioPlaying(
+            true
+          )
         }
         onPause={() =>
-          setIsAudioPlaying(false)
+          setIsAudioPlaying(
+            false
+          )
         }
         onEnded={() =>
-          setIsAudioPlaying(false)
+          setIsAudioPlaying(
+            false
+          )
         }
       />
 
-      {/* IMAGE SIDE */}
+      {/* =====================================================
+          IMAGE
+      ===================================================== */}
+
       <section className="readerImageSide">
         <img
           src={imageUrl}
@@ -390,6 +574,7 @@ export default function ReaderClient({
         />
 
         {/* AUDIO WAVE */}
+
         {audioUrl && (
           <div
             className={`readerAudioWave ${
@@ -408,9 +593,16 @@ export default function ReaderClient({
         )}
       </section>
 
-      {/* READER PANEL */}
+      {/* =====================================================
+          READER PANEL
+      ===================================================== */}
+
       <aside className="readerPanel">
-        {/* TOP BAR */}
+
+        {/* ===================================================
+            TOP BAR
+        =================================================== */}
+
         <div className="readerDesktopTopBar">
           <Link
             href="/"
@@ -428,11 +620,15 @@ export default function ReaderClient({
 
           <div className="readerTopActions">
             <LikeButton
-              bookId={bookId}
+              bookId={
+                bookId
+              }
             />
 
             <BookmarkButton
-              bookId={bookId}
+              bookId={
+                bookId
+              }
               pageNumber={
                 pageNumber
               }
@@ -440,7 +636,9 @@ export default function ReaderClient({
 
             <button
               type="button"
-              onClick={shareBook}
+              onClick={
+                shareBook
+              }
               aria-label="Share"
             >
               <img
@@ -451,11 +649,16 @@ export default function ReaderClient({
           </div>
         </div>
 
-        {/* PROGRESS */}
+        {/* ===================================================
+            PROGRESS
+        =================================================== */}
+
         <div className="readerHeaderRow">
           <div className="readerProgressRow">
             <span>
-              Page {pageNumber} of{" "}
+              Page{" "}
+              {pageNumber}{" "}
+              of{" "}
               {totalPages}
             </span>
 
@@ -468,48 +671,61 @@ export default function ReaderClient({
               />
             </div>
           </div>
+        </div>
 
-          {/* OLD MOBILE CONTROLS
-              CSS hides these now,
-              but keeping them here will
-              not hurt anything.
-          */}
-          <div className="readerMenuLike">
-            <LikeButton
-              bookId={bookId}
-            />
+        {/* ===================================================
+            STORY + FUNCTIONAL SCROLLBAR
+        =================================================== */}
+
+        <div className="readerStoryWrap">
+          <div
+            ref={storyRef}
+            className="readerStoryText"
+            onScroll={
+              updateStoryScrollbar
+            }
+          >
+            <h1>
+              {title.toUpperCase()}
+            </h1>
+
+            <p>
+              {text ||
+                "This page is waiting for an adventure..."}
+            </p>
           </div>
 
-          <button
-            type="button"
-            onClick={shareBook}
-          >
-            <img
-              src="/images/share.png"
-              alt=""
-            />
+          {scrollThumb.visible && (
+            <div
+              className="readerScrollTrack"
+              aria-hidden="true"
+            >
+              <span
+                className="readerScrollThumb"
+                style={{
+                  height:
+                    `${scrollThumb.height}%`,
 
-            Share
-          </button>
+                  top:
+                    `${scrollThumb.top}%`,
+                }}
+              />
+            </div>
+          )}
         </div>
 
-        {/* STORY */}
-        <div className="readerStoryText">
-          <h1>
-            {title.toUpperCase()}
-          </h1>
+        {/* ===================================================
+            BOTTOM CONTROLS
+        =================================================== */}
 
-          <p>
-            {text ||
-              "This page is waiting for an adventure..."}
-          </p>
-        </div>
-
-        {/* BOTTOM CONTROLS */}
         <div className="readerControls">
+          {/* PREVIOUS */}
+
           <button
             type="button"
-            onClick={goBack}
+            onClick={
+              goBack
+            }
             disabled={
               pageNumber === 1
             }
@@ -526,6 +742,8 @@ export default function ReaderClient({
             />
           </button>
 
+          {/* READ ALOUD */}
+
           <button
             type="button"
             className={`readerReadAloud ${
@@ -536,12 +754,16 @@ export default function ReaderClient({
             onClick={
               toggleReadAloud
             }
-            disabled={!audioUrl}
+            disabled={
+              !audioUrl
+            }
           >
             {isAudioPlaying
               ? "PAUSE"
               : "READ ALOUD"}
           </button>
+
+          {/* NEXT / FINISH */}
 
           {isLastPage ? (
             <button
@@ -557,7 +779,9 @@ export default function ReaderClient({
           ) : (
             <button
               type="button"
-              onClick={goNext}
+              onClick={
+                goNext
+              }
               aria-label="Next page"
             >
               <img
