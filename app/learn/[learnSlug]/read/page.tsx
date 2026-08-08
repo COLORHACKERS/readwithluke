@@ -33,29 +33,41 @@ export default async function LearnReadPage({
   const { learnSlug } = await params;
 
   const {
-  page,
-  worksheets: worksheetsParam,
-  complete,
-} = await searchParams;
+    page,
+    worksheets: worksheetsParam,
+    complete,
+  } = await searchParams;
 
-const lessonCompleted = complete === "1";
-  const currentPage = Number(page || "1");
+  const lessonCompleted =
+    complete === "1";
+
+  const requestedPage =
+    Number(page || "1");
+
+  const currentPage =
+    Number.isFinite(requestedPage) &&
+    requestedPage > 0
+      ? requestedPage
+      : 1;
 
   /* =========================================================
      LOAD LEARN ITEM
   ========================================================= */
 
-  const { data: item } = await supabase
-    .from("learn_items")
-    .select("*")
-    .eq("slug", learnSlug)
-    .maybeSingle();
+  const { data: item } =
+    await supabase
+      .from("learn_items")
+      .select("*")
+      .eq("slug", learnSlug)
+      .maybeSingle();
 
   if (!item) {
     return (
       <main className="readerPage">
         <div className="readerEmpty">
-          <h1>Learning item not found.</h1>
+          <h1>
+            Learning item not found.
+          </h1>
 
           <Link href="/learn">
             Back to Learn
@@ -66,22 +78,31 @@ const lessonCompleted = complete === "1";
   }
 
   /* =========================================================
-     LOAD NORMAL LEARNING PAGES
+     LOAD LEARNING PAGES
   ========================================================= */
 
-  const { data: pages } = await supabase
-    .from("learn_pages")
-    .select("*")
-    .eq("learn_item_id", item.id)
-    .order("page_number", {
-      ascending: true,
-    });
+  const { data: pages } =
+    await supabase
+      .from("learn_pages")
+      .select("*")
+      .eq(
+        "learn_item_id",
+        item.id
+      )
+      .order("page_number", {
+        ascending: true,
+      });
 
-  if (!pages || pages.length === 0) {
+  if (
+    !pages ||
+    pages.length === 0
+  ) {
     return (
       <main className="readerPage">
         <div className="readerEmpty">
-          <h1>No learning pages uploaded yet.</h1>
+          <h1>
+            No learning pages uploaded yet.
+          </h1>
 
           <Link href="/admin/learn">
             Go to Learn Admin
@@ -95,49 +116,48 @@ const lessonCompleted = complete === "1";
      LOAD WORKSHEETS
   ========================================================= */
 
-  const { data: worksheetData } = await supabase
+  const {
+    data: worksheetData,
+  } = await supabase
     .from("learn_worksheets")
     .select(
       "id, image_url, title, description, sort_order"
     )
-    .eq("learn_item_id", item.id)
+    .eq(
+      "learn_item_id",
+      item.id
+    )
     .order("sort_order", {
       ascending: true,
     });
 
   const worksheets =
-    (worksheetData as LearnWorksheet[] | null) || [];
+    (
+      worksheetData as
+        | LearnWorksheet[]
+        | null
+    ) || [];
 
-  const hasWorksheets = worksheets.length > 0;
+  const hasWorksheets =
+    worksheets.length > 0;
 
-  /*
-    If the lesson has 10 normal pages:
-
-    worksheetPageNumber = 11
-    totalPages = 11
-  */
+  /* =========================================================
+     PAGE COUNTS
+  ========================================================= */
 
   const worksheetPageNumber =
     pages.length + 1;
 
   const totalPages =
-    pages.length + (hasWorksheets ? 1 : 0);
-
-  /*
-    Worksheets can be reached two ways:
-
-    /read?page=11
-
-    OR
-
-    /read?worksheets=1
-  */
+    pages.length +
+    (hasWorksheets ? 1 : 0);
 
   const showingWorksheets =
     hasWorksheets &&
     (
       worksheetsParam === "1" ||
-      currentPage === worksheetPageNumber
+      currentPage ===
+        worksheetPageNumber
     );
 
   /* =========================================================
@@ -152,15 +172,13 @@ const lessonCompleted = complete === "1";
 
     return (
       <LearnGate>
-           <div className="worksheetPageShell">
+        <div className="worksheetPageShell">
           <Header />
 
           <main className="worksheetReaderPage">
-
             {/* LEFT SIDE */}
 
             <section className="worksheetCompleteSide">
-
               <img
                 src={completionImage}
                 alt={item.title}
@@ -170,34 +188,31 @@ const lessonCompleted = complete === "1";
               <div className="worksheetCompleteShade" />
 
               <div className="worksheetCompleteContent">
-
                 <div className="worksheetCompleteEyebrow">
                   LESSON
                 </div>
 
-               <h1>
-  {lessonCompleted
-    ? "COMPLETE!"
-    : "WORKSHEETS"}
-</h1>
+                <h1>
+                  {lessonCompleted
+                    ? "COMPLETE!"
+                    : "WORKSHEETS"}
+                </h1>
 
                 <p>
-                  {worksheets.length} printable{" "}
+                  {worksheets.length}{" "}
+                  printable{" "}
                   {worksheets.length === 1
                     ? "activity"
                     : "activities"}{" "}
                   unlocked
                 </p>
-
               </div>
             </section>
 
             {/* RIGHT SIDE */}
 
             <section className="worksheetActivitiesSide">
-
               <div className="worksheetTopNav">
-
                 <Link
                   href={`/learn/${item.slug}/read?page=${pages.length}`}
                   className="worksheetHomeButton"
@@ -211,21 +226,20 @@ const lessonCompleted = complete === "1";
                 >
                   BACK TO LEARN
                 </Link>
-
               </div>
 
               <div className="worksheetProgressRow">
-
                 <span>
-                  Page {worksheetPageNumber} of {totalPages}
+                  Page{" "}
+                  {worksheetPageNumber}{" "}
+                  of {totalPages}
                 </span>
 
                 <strong>
-  {lessonCompleted
-    ? "COMPLETE! ★"
-    : "PRINTABLES"}
-</strong>
-
+                  {lessonCompleted
+                    ? "COMPLETE! ★"
+                    : "PRINTABLES"}
+                </strong>
               </div>
 
               <div className="worksheetProgressBar">
@@ -233,26 +247,28 @@ const lessonCompleted = complete === "1";
               </div>
 
               <div className="worksheetHeading">
-
                 <h2>
                   PRINTABLE ACTIVITIES
                 </h2>
 
                 <p>
-                  Keep the learning going with these fun
-                  activities. Download, print, and explore
-                  more with Luke!
+                  Keep the learning going
+                  with these fun activities.
+                  Download, print, and
+                  explore more with Luke!
                 </p>
-
               </div>
 
               <div className="worksheetCards">
-
                 {worksheets.map(
-                  (worksheet, index) => {
-
+                  (
+                    worksheet,
+                    index
+                  ) => {
                     const fallbackTitle =
-                      `WORKSHEET ${index + 1}`;
+                      `WORKSHEET ${
+                        index + 1
+                      }`;
 
                     const worksheetTitle =
                       worksheet.title?.trim() ||
@@ -265,31 +281,39 @@ const lessonCompleted = complete === "1";
                     return (
                       <article
                         className="worksheetCard"
-                        key={worksheet.id}
+                        key={
+                          worksheet.id
+                        }
                       >
-
                         <img
-                          src={worksheet.image_url}
-                          alt={worksheetTitle}
+                          src={
+                            worksheet.image_url
+                          }
+                          alt={
+                            worksheetTitle
+                          }
                           className="worksheetCardImage"
                         />
 
                         <div className="worksheetCardText">
-
                           <h3>
-                            {worksheetTitle}
+                            {
+                              worksheetTitle
+                            }
                           </h3>
 
                           <p>
-                            {worksheetDescription}
+                            {
+                              worksheetDescription
+                            }
                           </p>
-
                         </div>
 
                         <div className="worksheetCardActions">
-
                           <a
-                            href={worksheet.image_url}
+                            href={
+                              worksheet.image_url
+                            }
                             target="_blank"
                             rel="noreferrer"
                             className="worksheetPreviewButton"
@@ -298,57 +322,59 @@ const lessonCompleted = complete === "1";
                           </a>
 
                           <a
-                            href={worksheet.image_url}
+                            href={
+                              worksheet.image_url
+                            }
                             download
                             className="worksheetDownloadButton"
                           >
                             ↓ DOWNLOAD
                           </a>
-
                         </div>
-
                       </article>
                     );
                   }
                 )}
-
               </div>
 
-            <div className="worksheetPrintNote">
-  PNG • Standard 8.5 × 11 in • Print at home
-</div>
+              <div className="worksheetPrintNote">
+                PNG • Standard 8.5 × 11
+                in • Print at home
+              </div>
 
-<div className="worksheetPanelControls">
-  <Link
-    href={`/learn/${item.slug}/read?page=${pages.length}`}
-    className="worksheetArrowButton"
-  >
-    ←
-  </Link>
+              {/* WORKSHEET PAGE CONTROLS */}
 
-  <div className="worksheetGreatWork">
-    {lessonCompleted
-      ? "GREAT WORK, EXPLORER! ★"
-      : "PRINTABLE ACTIVITIES"}
-  </div>
+              <div className="worksheetPanelControls">
+                <Link
+                  href={`/learn/${item.slug}/read?page=${pages.length}`}
+                  className="worksheetArrowButton"
+                  aria-label="Previous page"
+                >
+                  ←
+                </Link>
 
-  <Link
-    href="/learn"
-    className="worksheetArrowButton"
-  >
-    →
-  </Link>
-</div>
+                <div className="worksheetGreatWork">
+                  {lessonCompleted
+                    ? "GREAT WORK, EXPLORER! ★"
+                    : "PRINTABLE ACTIVITIES"}
+                </div>
 
-</section>
+                <Link
+                  href="/learn"
+                  className="worksheetArrowButton"
+                  aria-label="Back to Learn"
+                >
+                  →
+                </Link>
+              </div>
+            </section>
+          </main>
 
-</main>
-
-                <Footer />
-      </div>
-    </LearnGate>
-  );
-}
+          <Footer />
+        </div>
+      </LearnGate>
+    );
+  }
 
   /* =========================================================
      NORMAL LEARNING PAGE
@@ -357,7 +383,8 @@ const lessonCompleted = complete === "1";
   const pageData =
     pages.find(
       (learnPage) =>
-        learnPage.page_number === currentPage
+        learnPage.page_number ===
+        currentPage
     ) || pages[0];
 
   const imageUrl =
@@ -366,19 +393,33 @@ const lessonCompleted = complete === "1";
     item.image_url ||
     "/images/6to5ratio.png";
 
+  /* =========================================================
+     NORMAL READER
+  ========================================================= */
+
   return (
     <LearnGate>
-     <ReaderClient
-  learnSlug={item.slug}
-  title={item.title}
-  pageNumber={pageData.page_number}
-  totalPages={totalPages}
-  lessonPageCount={pages.length}
-  hasWorksheets={hasWorksheets}
-  imageUrl={imageUrl}
-  text={pageData.text || ""}
-       audioUrl={pageData.audio_url || ""}
-/>
+      <ReaderClient
+        learnSlug={item.slug}
+        title={item.title}
+        pageNumber={
+          pageData.page_number
+        }
+        totalPages={totalPages}
+        lessonPageCount={
+          pages.length
+        }
+        hasWorksheets={
+          hasWorksheets
+        }
+        imageUrl={imageUrl}
+        text={
+          pageData.text || ""
+        }
+        audioUrl={
+          pageData.audio_url || ""
+        }
+      />
     </LearnGate>
   );
 }
