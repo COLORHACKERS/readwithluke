@@ -91,13 +91,25 @@ const [uploadingWorksheet, setUploadingWorksheet] = useState(false);
       .replace(/^-+|-+$/g, "");
   }
 
-  function getErrorMessage(error: unknown) {
-    if (error instanceof Error) {
-      return error.message;
-    }
-
-    return "Something went wrong. Please try again.";
+function getErrorMessage(error: unknown) {
+  if (error instanceof Error) {
+    return error.message;
   }
+
+  if (
+    typeof error === "object" &&
+    error !== null &&
+    "message" in error
+  ) {
+    const message = (error as { message?: unknown }).message;
+
+    if (typeof message === "string") {
+      return message;
+    }
+  }
+
+  return "Unknown error. Check the browser console.";
+}
 
   async function loadItems() {
     const { data, error } = await supabase
@@ -315,9 +327,10 @@ const [uploadingWorksheet, setUploadingWorksheet] = useState(false);
     setMessage(
       "Worksheet uploaded. Add the title and description, then save the Learn Item."
     );
-  } catch (error: unknown) {
-    alert(getErrorMessage(error));
-  } finally {
+ } catch (error: unknown) {
+  console.error("LEARN SAVE ERROR:", error);
+  alert(`Save error: ${getErrorMessage(error)}`);
+} finally {
     setUploadingWorksheet(false);
   }
 }
