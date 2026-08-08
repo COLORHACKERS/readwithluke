@@ -28,6 +28,14 @@ type LearnPage = {
   image_url: string;
 };
 
+type LearnWorksheet = {
+  id?: string;
+  image_url: string;
+  title: string;
+  description: string;
+  sort_order: number;
+};
+
 const createEmptyPages = (): LearnPage[] =>
   Array.from({ length: 20 }, (_, index) => ({
     page_number: index + 1,
@@ -60,6 +68,8 @@ export default function LearnAdminPage() {
   const [isPublished, setIsPublished] = useState(false);
 
   const [pages, setPages] = useState<LearnPage[]>(createEmptyPages());
+  const [worksheets, setWorksheets] = useState<LearnWorksheet[]>([]);
+const [uploadingWorksheet, setUploadingWorksheet] = useState(false);
 
   const [seoTitle, setSeoTitle] = useState("");
   const [seoDescription, setSeoDescription] = useState("");
@@ -144,6 +154,7 @@ export default function LearnAdminPage() {
     setIsPublished(false);
 
     setPages(createEmptyPages());
+    setWorksheets([]);
 
     setSeoTitle("");
     setSeoDescription("");
@@ -152,6 +163,29 @@ export default function LearnAdminPage() {
 
     setMessage("");
   }
+
+  async function loadWorksheets(learnItemId: string) {
+  const { data, error } = await supabase
+    .from("learn_worksheets")
+    .select("id, image_url, title, description, sort_order")
+    .eq("learn_item_id", learnItemId)
+    .order("sort_order", { ascending: true });
+
+  if (error) {
+    alert(`Worksheet load error: ${error.message}`);
+    return;
+  }
+
+  setWorksheets(
+    (data || []).map((worksheet) => ({
+      id: worksheet.id,
+      image_url: worksheet.image_url || "",
+      title: worksheet.title || "",
+      description: worksheet.description || "",
+      sort_order: worksheet.sort_order || 0,
+    }))
+  );
+}
 
   async function uploadImage(file: File, folder: string) {
     const extension = file.name.split(".").pop() || "jpg";
@@ -238,6 +272,56 @@ export default function LearnAdminPage() {
     );
   }
 
+  async function handleWorksheetUpload(file: File) {
+  if (file.type !== "image/png") {
+    alert("Please upload a PNG worksheet.");
+    return;
+  }
+
+  setUploadingWorksheet(true);
+  setMessage("");
+
+  try {
+    const extension = file.name.split(".").pop() || "png";
+
+    const filePath = `worksheets/${Date.now()}-${Math.random()
+      .toString(36)
+      .slice(2)}.${extension}`;
+
+    const { error } = await supabase.storage
+      .from("worksheet-images")
+      .upload(filePath, file);
+
+    if (error) {
+      throw error;
+    }
+
+    const { data } = supabase.storage
+      .from("worksheet-images")
+      .getPublicUrl(filePath);
+
+    const worksheet: LearnWorksheet = {
+      image_url: data.publicUrl,
+      title: "",
+      description: "",
+      sort_order: worksheets.length + 1,
+    };
+
+    setWorksheets((current) => [
+      ...current,
+      worksheet,
+    ]);
+
+    setMessage(
+      "Worksheet uploaded. Add the title and description, then save the Learn Item."
+    );
+  } catch (error: unknown) {
+    alert(getErrorMessage(error));
+  } finally {
+    setUploadingWorksheet(false);
+  }
+}
+
   async function editItem(item: LearnItem) {
     setEditingId(item.id);
 
@@ -256,7 +340,10 @@ export default function LearnAdminPage() {
 
     setMessage(`Editing "${item.title}"`);
 
-    await loadPages(item.id);
+    await Promise.all([
+  loadPages(item.id),
+  loadWorksheets(item.id),
+]);
 
     window.scrollTo({
       top: 0,
@@ -361,7 +448,38 @@ export default function LearnAdminPage() {
       }
     }
   }
+async function saveWorksheets(learnItemId: string) {
+  const { error: deleteError } = await supabase
+    .from("learn_worksheets")
+    .delete()
+    .eq("learn_item_id", learnItemId);
 
+  if (deleteError) {
+    throw deleteError;
+  }
+
+  if (worksheets.length === 0) {
+    return;
+  }
+
+  const worksheetPayload = worksheets.map(
+    (worksheet, index) => ({
+      learn_item_id: learnItemId,
+      image_url: worksheet.image_url,
+      title: worksheet.title.trim() || null,
+      description: worksheet.description.trim() || null,
+      sort_order: index + 1,
+    })
+  );
+
+  const { error } = await supabase
+    .from("learn_worksheets")
+    .insert(worksheetPayload);
+
+  if (error) {
+    throw error;
+  }
+}
   async function saveItem(publishNow = false) {
     if (!title.trim() || !slug.trim()) {
       alert("Please add a title and slug.");
@@ -413,9 +531,10 @@ export default function LearnAdminPage() {
         setEditingId(data.id);
       }
 
-      if (learnItemId) {
-        await savePages(learnItemId);
-      }
+    if (learnItemId) {
+  await savePages(learnItemId);
+  await saveWorksheets(learnItemId);
+}
 
       const publishedStatus = publishNow ? true : isPublished;
 
@@ -689,6 +808,107 @@ export default function LearnAdminPage() {
           ))}
         </section>
 
+<section className="adminCard">
+  <h2>Printable Worksheets</h2>
+
+  <p>
+    Upload PNG activity sheets for this Learn With Luke story.
+    These will appear on the final Printable Activities page.
+  </p>
+
+  <label htmlFor="worksheet-upload">
+    Add Worksheet PNG
+  </label>
+
+  <input
+    id="worksheet-upload"
+    type="file"
+    accept="image/png,.png"
+    disabled={uploadingWorksheet}
+    onChange={async (event) => {
+      const file = event.target.files?.[0];
+
+      if (file) {
+        await handleWorksheetUpload(file);
+      }
+
+      event.currentTarget.value = "";
+    }}
+  />
+
+  {uploadingWorksheet && (
+    <p>Uploading worksheet...</p>
+  )}
+
+  {worksheets.length === 0 && (
+    <p>No worksheets added yet.</p>
+  )}
+
+  {worksheets.map((worksheet, index) => (
+    <div
+      className="pageEditor worksheetEditor"
+      key={`${worksheet.image_url}-${index}`}
+    >
+      <h3>Worksheet {index + 1}</h3>
+
+      {worksheet.image_url && (
+        <img
+          src={worksheet.image_url}
+          alt={
+            worksheet.title ||
+            `Worksheet ${index + 1}`
+          }
+          className="coverPreview worksheetPreview"
+        />
+      )}
+
+      <label htmlFor={`worksheet-title-${index}`}>
+        Worksheet Title
+      </label>
+
+      <input
+        id={`worksheet-title-${index}`}
+        value={worksheet.title}
+        onChange={(event) =>
+          updateWorksheet(
+            index,
+            "title",
+            event.target.value
+          )
+        }
+        placeholder="WRITE ABOUT RAINBOWS!"
+      />
+
+      <label
+        htmlFor={`worksheet-description-${index}`}
+      >
+        First Question / Description
+      </label>
+
+      <textarea
+        id={`worksheet-description-${index}`}
+        value={worksheet.description}
+        onChange={(event) =>
+          updateWorksheet(
+            index,
+            "description",
+            event.target.value
+          )
+        }
+        placeholder="What is white sunlight made of?"
+      />
+
+      <button
+        type="button"
+        className="deleteButton"
+        onClick={() => removeWorksheet(index)}
+      >
+        Remove Worksheet
+      </button>
+    </div>
+  ))}
+</section>
+        
         <SeoFields
           seoTitle={seoTitle}
           setSeoTitle={setSeoTitle}
