@@ -26,8 +26,8 @@ type LearnPage = {
   page_number: number;
   text: string;
   image_url: string;
+  audio_url: string;
 };
-
 type LearnWorksheet = {
   id?: string;
   image_url: string;
@@ -41,6 +41,7 @@ const createEmptyPages = (): LearnPage[] =>
     page_number: index + 1,
     text: "",
     image_url: "",
+    audio_url: "",
   }));
 
 const learnCategories = [
@@ -128,7 +129,9 @@ function getErrorMessage(error: unknown) {
   async function loadPages(learnItemId: string) {
     const { data, error } = await supabase
       .from("learn_pages")
-      .select("page_number, text, image_url")
+      .select(
+  "page_number, text, image_url, audio_url"
+)
       .eq("learn_item_id", learnItemId)
       .order("page_number", { ascending: true });
 
@@ -145,10 +148,11 @@ function getErrorMessage(error: unknown) {
       );
 
       return {
-        page_number: emptyPage.page_number,
-        text: matchingPage?.text || "",
-        image_url: matchingPage?.image_url || "",
-      };
+  page_number: emptyPage.page_number,
+  text: matchingPage?.text || "",
+  image_url: matchingPage?.image_url || "",
+  audio_url: matchingPage?.audio_url || "",
+};
     });
 
     setPages(mergedPages);
@@ -222,6 +226,54 @@ function getErrorMessage(error: unknown) {
     return data.publicUrl;
   }
 
+  async function uploadAudio(
+  file: File,
+  folder: string
+) {
+  const fileName = file.name.toLowerCase();
+
+  const allowed =
+    fileName.endsWith(".mp3") ||
+    fileName.endsWith(".m4a") ||
+    fileName.endsWith(".wav");
+
+  if (!allowed) {
+    alert(
+      "Please upload an MP3, M4A, or WAV audio file."
+    );
+
+    return "";
+  }
+
+  const extension =
+    file.name.split(".").pop() || "mp3";
+
+  const filePath =
+    `${folder}/${Date.now()}-${Math.random()
+      .toString(36)
+      .slice(2)}.${extension}`;
+
+  const { error } =
+    await supabase.storage
+      .from("reader-audio")
+      .upload(filePath, file);
+
+  if (error) {
+    alert(
+      `Audio upload error: ${error.message}`
+    );
+
+    return "";
+  }
+
+  const { data } =
+    supabase.storage
+      .from("reader-audio")
+      .getPublicUrl(filePath);
+
+  return data.publicUrl;
+}
+
   async function handleCoverUpload(file: File) {
     const url = await uploadImage(file, "learn-covers");
 
@@ -270,6 +322,58 @@ function getErrorMessage(error: unknown) {
       )
     );
   }
+  async function handlePageAudioUpload(
+  file: File,
+  pageNumber: number
+) {
+  setMessage(
+    `Uploading Page ${pageNumber} audio...`
+  );
+
+  const url = await uploadAudio(
+    file,
+    "learn"
+  );
+
+  if (!url) {
+    setMessage("");
+    return;
+  }
+
+  setPages((currentPages) =>
+    currentPages.map((page) =>
+      page.page_number === pageNumber
+        ? {
+            ...page,
+            audio_url: url,
+          }
+        : page
+    )
+  );
+
+  setMessage(
+    `Page ${pageNumber} audio uploaded. Click Save Draft or Publish Learn Item.`
+  );
+}
+
+function removePageAudio(
+  pageNumber: number
+) {
+  setPages((currentPages) =>
+    currentPages.map((page) =>
+      page.page_number === pageNumber
+        ? {
+            ...page,
+            audio_url: "",
+          }
+        : page
+    )
+  );
+
+  setMessage(
+    `Page ${pageNumber} audio removed. Save the Learn Item to apply the change.`
+  );
+}
 
   function updatePageText(pageNumber: number, text: string) {
     setPages((currentPages) =>
@@ -448,46 +552,92 @@ function removeWorksheet(index: number) {
   }
 }
 
-  async function savePages(learnItemId: string) {
-    const filledPages = pages.filter(
-      (page) => page.text.trim() || page.image_url.trim()
+async function savePages(
+  learnItemId: string
+) {
+  const filledPages =
+    pages.filter(
+      (page) =>
+        page.text.trim() ||
+        page.image_url.trim() ||
+        page.audio_url.trim()
     );
 
-    const emptyPageNumbers = pages
-      .filter((page) => !page.text.trim() && !page.image_url.trim())
-      .map((page) => page.page_number);
+  const emptyPageNumbers =
+    pages
+      .filter(
+        (page) =>
+          !page.text.trim() &&
+          !page.image_url.trim() &&
+          !page.audio_url.trim()
+      )
+      .map(
+        (page) =>
+          page.page_number
+      );
 
-    if (filledPages.length > 0) {
-      const pagePayload = filledPages.map((page) => ({
-        learn_item_id: learnItemId,
-        page_number: page.page_number,
-        text: page.text.trim(),
-        image_url: page.image_url.trim(),
-      }));
+  if (
+    filledPages.length > 0
+  ) {
+    const pagePayload =
+      filledPages.map(
+        (page) => ({
+          learn_item_id:
+            learnItemId,
 
-      const { error } = await supabase
+          page_number:
+            page.page_number,
+
+          text:
+            page.text.trim(),
+
+          image_url:
+            page.image_url.trim(),
+
+          audio_url:
+            page.audio_url.trim() ||
+            null,
+        })
+      );
+
+    const { error } =
+      await supabase
         .from("learn_pages")
-        .upsert(pagePayload, {
-          onConflict: "learn_item_id,page_number",
-        });
+        .upsert(
+          pagePayload,
+          {
+            onConflict:
+              "learn_item_id,page_number",
+          }
+        );
 
-      if (error) {
-        throw error;
-      }
-    }
-
-    if (emptyPageNumbers.length > 0) {
-      const { error } = await supabase
-        .from("learn_pages")
-        .delete()
-        .eq("learn_item_id", learnItemId)
-        .in("page_number", emptyPageNumbers);
-
-      if (error) {
-        throw error;
-      }
+    if (error) {
+      throw error;
     }
   }
+
+  if (
+    emptyPageNumbers.length >
+    0
+  ) {
+    const { error } =
+      await supabase
+        .from("learn_pages")
+        .delete()
+        .eq(
+          "learn_item_id",
+          learnItemId
+        )
+        .in(
+          "page_number",
+          emptyPageNumbers
+        );
+
+    if (error) {
+      throw error;
+    }
+  }
+}
 async function saveWorksheets(learnItemId: string) {
   const { error: deleteError } = await supabase
     .from("learn_worksheets")
@@ -819,12 +969,49 @@ async function saveWorksheets(learnItemId: string) {
                 }}
               />
 
-              {page.image_url && (
-                <img
-                  src={page.image_url}
-                  alt={`Page ${page.page_number}`}
-                  className="coverPreview"
-                />
+            <label
+  htmlFor={`learn-page-audio-${page.page_number}`}
+>
+  Page Audio
+</label>
+
+<input
+  id={`learn-page-audio-${page.page_number}`}
+  type="file"
+  accept=".mp3,.m4a,.wav,audio/mpeg,audio/mp4,audio/x-m4a,audio/wav"
+  onChange={(event) => {
+    const file = event.target.files?.[0];
+
+    if (file) {
+      handlePageAudioUpload(
+        file,
+        page.page_number
+      );
+    }
+  }}
+/>
+
+{page.audio_url && (
+  <div className="pageAudioPreview">
+    <audio
+      src={page.audio_url}
+      controls
+      preload="metadata"
+    />
+
+    <button
+      type="button"
+      className="deleteButton"
+      onClick={() =>
+        removePageAudio(
+          page.page_number
+        )
+      }
+    >
+      Remove Audio
+    </button>
+  </div>
+)}
               )}
 
               <label
