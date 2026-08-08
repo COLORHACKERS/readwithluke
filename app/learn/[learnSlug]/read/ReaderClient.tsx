@@ -32,25 +32,16 @@ export default function ReaderClient({
     Math.min((pageNumber / totalPages) * 100, 100)
   );
 
-  /*
-   * Each Learn story gets its own list of visited pages.
-   *
-   * Example:
-   * rwl-learn-progress-how-does-a-rainbow-form
-   */
   const progressKey = `rwl-learn-progress-${learnSlug}`;
 
   /* =========================================================
-     RECORD EACH PAGE THE CHILD VISITS
+     RECORD EACH LEARNING PAGE VISITED
   ========================================================= */
 
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    /*
-     * Only count actual learning pages.
-     * The worksheet page itself does not count.
-     */
+    // Do not count the worksheet page itself.
     if (
       pageNumber < 1 ||
       pageNumber > lessonPageCount
@@ -61,8 +52,9 @@ export default function ReaderClient({
     try {
       const saved = localStorage.getItem(progressKey);
 
-      const visitedPages: number[] =
-        saved ? JSON.parse(saved) : [];
+      const visitedPages: number[] = saved
+        ? JSON.parse(saved)
+        : [];
 
       if (!visitedPages.includes(pageNumber)) {
         const updatedPages = [
@@ -88,7 +80,7 @@ export default function ReaderClient({
   ]);
 
   /* =========================================================
-     CHECK IF EVERY LEARNING PAGE WAS VISITED
+     CHECK LESSON COMPLETION
   ========================================================= */
 
   function hasCompletedLesson() {
@@ -99,13 +91,10 @@ export default function ReaderClient({
     try {
       const saved = localStorage.getItem(progressKey);
 
-      const visitedPages: number[] =
-        saved ? JSON.parse(saved) : [];
+      const visitedPages: number[] = saved
+        ? JSON.parse(saved)
+        : [];
 
-      /*
-       * Include the current page too, just in case
-       * the child clicks NEXT immediately after it loads.
-       */
       const visitedIncludingCurrent = Array.from(
         new Set([
           ...visitedPages,
@@ -149,15 +138,16 @@ export default function ReaderClient({
 
         return;
       } catch {
-        // User closed share sheet.
+        // User closed the share sheet.
       }
     }
 
-    await navigator.clipboard.writeText(
-      shareUrl
-    );
-
-    alert("Link copied!");
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      alert("Link copied!");
+    } catch {
+      window.prompt("Copy this link:", shareUrl);
+    }
   }
 
   /* =========================================================
@@ -167,24 +157,21 @@ export default function ReaderClient({
   function goBack() {
     if (pageNumber > 1) {
       router.push(
-        `/learn/${learnSlug}/read?page=${
-          pageNumber - 1
-        }`
+        `/learn/${learnSlug}/read?page=${pageNumber - 1}`
       );
     }
   }
 
   function goNext() {
     /*
-     * If this is the final actual learning page
-     * and worksheets exist, go to the worksheet page.
+     * On the final learning page,
+     * send the child to worksheets.
      */
     if (
       hasWorksheets &&
       pageNumber === lessonPageCount
     ) {
-      const completed =
-        hasCompletedLesson();
+      const completed = hasCompletedLesson();
 
       if (completed) {
         router.push(
@@ -201,21 +188,21 @@ export default function ReaderClient({
 
     if (pageNumber < lessonPageCount) {
       router.push(
-        `/learn/${learnSlug}/read?page=${
-          pageNumber + 1
-        }`
+        `/learn/${learnSlug}/read?page=${pageNumber + 1}`
       );
     }
   }
 
+  /* =========================================================
+     READER
+  ========================================================= */
+
   return (
     <main className="readerPage learnReaderPage">
-
-        <img
-          src={imageUrl}
-          alt={`${title} page ${pageNumber}`}
-        />
-    
+      <img
+        src={imageUrl}
+        alt={`${title} page ${pageNumber}`}
+      />
 
       <aside className="readerPanel">
         <div className="readerDesktopTopBar">
@@ -270,8 +257,7 @@ export default function ReaderClient({
         <div className="readerHeaderRow">
           <div className="readerProgressRow">
             <span>
-              Page {pageNumber} of{" "}
-              {totalPages}
+              Page {pageNumber} of {totalPages}
             </span>
 
             <div className="readerProgress">
