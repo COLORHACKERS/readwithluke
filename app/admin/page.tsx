@@ -28,12 +28,14 @@ type BookPage = {
   page_number: number;
   text: string;
   image_url: string;
+  audio_url: string;
 };
 
 const emptyPages: BookPage[] = Array.from({ length: 21 }, (_, index) => ({
   page_number: index + 1,
   text: "",
   image_url: "",
+  audio_url: "",
 }));
 
 const bookCategories = [
@@ -149,6 +151,53 @@ const [seoNoindex, setSeoNoindex] = useState(false);
     const { data } = supabase.storage.from("book-images").getPublicUrl(filePath);
     return data.publicUrl;
   }
+  async function uploadAudio(
+  file: File,
+  folder: string
+) {
+  const fileName = file.name.toLowerCase();
+
+  const allowed =
+    fileName.endsWith(".mp3") ||
+    fileName.endsWith(".m4a") ||
+    fileName.endsWith(".wav");
+
+  if (!allowed) {
+    alert(
+      "Please upload an MP3, M4A, or WAV audio file."
+    );
+
+    return "";
+  }
+
+  const extension =
+    file.name.split(".").pop() || "mp3";
+
+  const filePath =
+    `${folder}/${Date.now()}-${Math.random()
+      .toString(36)
+      .slice(2)}.${extension}`;
+
+  const { error } =
+    await supabase.storage
+      .from("reader-audio")
+      .upload(filePath, file);
+
+  if (error) {
+    alert(
+      `Audio upload error: ${error.message}`
+    );
+
+    return "";
+  }
+
+  const { data } =
+    supabase.storage
+      .from("reader-audio")
+      .getPublicUrl(filePath);
+
+  return data.publicUrl;
+}
 
   async function editBook(book: Book) {
     setEditingId(book.id);
@@ -280,6 +329,57 @@ setSeoNoindex(book.seo_noindex === true);
       )
     );
   }
+  async function handlePageAudioUpload(
+  file: File,
+  index: number
+) {
+  setMessage(
+    `Uploading Page ${index + 1} audio...`
+  );
+
+  const url = await uploadAudio(
+    file,
+    "books"
+  );
+
+  if (!url) {
+    setMessage("");
+    return;
+  }
+
+  setPages((current) =>
+    current.map((page, i) =>
+      i === index
+        ? {
+            ...page,
+            audio_url: url,
+          }
+        : page
+    )
+  );
+
+  setMessage(
+    `Page ${index + 1} audio uploaded. Click Save Draft or Publish Book.`
+  );
+}
+  function removePageAudio(
+  index: number
+) {
+  setPages((current) =>
+    current.map((page, i) =>
+      i === index
+        ? {
+            ...page,
+            audio_url: "",
+          }
+        : page
+    )
+  );
+
+  setMessage(
+    `Page ${index + 1} audio removed. Save the book to apply the change.`
+  );
+}
 
   async function saveBook(publishNow = false) {
     if (!title.trim() || !slug.trim()) {
@@ -341,14 +441,20 @@ setSeoNoindex(book.seo_noindex === true);
       setEditingId(data.id);
     }
 
-    const pagesToSave = pages
-      .filter((page) => page.text.trim() || page.image_url.trim())
-      .map((page) => ({
-        book_id: bookId,
-        page_number: page.page_number,
-        text: page.text || "",
-        image_url: page.image_url || "",
-      }));
+  const pagesToSave = pages
+  .filter(
+    (page) =>
+      page.text.trim() ||
+      page.image_url.trim() ||
+      page.audio_url.trim()
+  )
+  .map((page) => ({
+    book_id: bookId,
+    page_number: page.page_number,
+    text: page.text || "",
+    image_url: page.image_url || "",
+    audio_url: page.audio_url || null,
+  }));
 
     if (pagesToSave.length > 0) {
       const { error: pagesError } = await supabase
@@ -532,11 +638,52 @@ setSeoNoindex(book.seo_noindex === true);
                 }}
               />
 
-              {page.image_url && (
-                <img src={page.image_url} alt="" className="pagePreview" />
-              )}
+             {page.image_url && (
+  <img
+    src={page.image_url}
+    alt=""
+    className="pagePreview"
+  />
+)}
 
-              <label>Page Text</label>
+<label>Page Audio</label>
+
+<input
+  type="file"
+  accept=".mp3,.m4a,.wav,audio/mpeg,audio/mp4,audio/x-m4a,audio/wav"
+  onChange={(e) => {
+    const file = e.target.files?.[0];
+
+    if (file) {
+      handlePageAudioUpload(
+        file,
+        index
+      );
+    }
+  }}
+/>
+
+{page.audio_url && (
+  <div className="pageAudioPreview">
+    <audio
+      src={page.audio_url}
+      controls
+      preload="metadata"
+    />
+
+    <button
+      type="button"
+      className="deleteButton"
+      onClick={() =>
+        removePageAudio(index)
+      }
+    >
+      Remove Audio
+    </button>
+  </div>
+)}
+
+<label>Page Text</label>
               <textarea
                 value={page.text}
                 onChange={(e) => {
