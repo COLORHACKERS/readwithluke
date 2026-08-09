@@ -1,16 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import { supabase } from "@/lib/supabase";
 import "../../home.css";
 import "./signup.css";
 
-type ReaderPlan =
-  | "monthly"
-  | "yearly"
-  | "partner30";
+type ReaderPlan = "monthly" | "partner30";
 
 const GIFT_RETURN_PATH = "/gift?resumeGift=1";
 
@@ -21,8 +17,7 @@ export default function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [loading, setLoading] =
-    useState(false);
+  const [loading, setLoading] = useState(false);
 
   const [isGiftSignup, setIsGiftSignup] =
     useState(false);
@@ -45,9 +40,7 @@ export default function SignupPage() {
 
     setIsGiftSignup(giftSignup);
 
-    if (plan === "yearly") {
-      setSelectedPlan("yearly");
-    } else if (plan === "partner30") {
+    if (plan === "partner30") {
       setSelectedPlan("partner30");
     } else {
       setSelectedPlan("monthly");
@@ -130,7 +123,7 @@ export default function SignupPage() {
   }
 
   async function handleSignup(
-    event: React.FormEvent<HTMLFormElement>
+    event: React.FormEvent
   ) {
     event.preventDefault();
 
@@ -173,9 +166,6 @@ export default function SignupPage() {
     }
   }
 
-  const isYearlyPlan =
-    selectedPlan === "yearly";
-
   const isPartnerPlan =
     selectedPlan === "partner30";
 
@@ -192,12 +182,11 @@ export default function SignupPage() {
   }
 
   function getSelectedPlanLabel() {
-
     if (isPartnerPlan) {
       return "PARTNER PASS — 30 DAYS FREE";
     }
 
-    return "MONTHLY — 7 DAYS FREE";
+    return "MONTHLY — 7 DAYS FREE, THEN $4.99/MONTH";
   }
 
   function getButtonText() {
@@ -213,21 +202,15 @@ export default function SignupPage() {
       return "CONTINUE TO GIFT CHECKOUT";
     }
 
-    if (isYearlyPlan) {
-      return "CONTINUE — $69.99/YEAR";
-    }
-
     if (isPartnerPlan) {
       return "START 30-DAY PARTNER PASS";
     }
 
-    return "CONTINUE TO SECURE CHECKOUT";
+    return "START 7-DAY FREE TRIAL";
   }
 
   return (
     <>
-      <Header />
-
       <main className="signupPage">
         <form
           className="signupCard"
@@ -245,19 +228,6 @@ export default function SignupPage() {
               <br />
               You will return to your completed
               gift form after signup.
-            </p>
-          ) : isYearlyPlan ? (
-            <p>
-              Continue to Stripe to securely
-              enter your payment information.
-              <br />
-              You will be charged{" "}
-              <strong>$69.99 today</strong> for
-              one full year of access.
-              <br />
-              You will create your Read With
-              Luke password after payment is
-              confirmed.
             </p>
           ) : isPartnerPlan ? (
             <p>
@@ -283,7 +253,9 @@ export default function SignupPage() {
               </strong>
               <br />
               You will not be charged during
-              the trial.
+              the trial. After the trial, your
+              membership is{" "}
+              <strong>$4.99/month</strong>.
               <br />
               You will create your Read With
               Luke password after Stripe
