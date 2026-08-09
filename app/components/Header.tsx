@@ -103,33 +103,28 @@ export default function Header() {
           <img src="/images/luke-intro.png" alt="Read With Luke" />
         </Link>
 
-        <nav className="mainNav">
-          <Link href="/library" className={active("/library") ? "active" : ""}>
-            Read With Luke
-          </Link>
+    <nav className="mainNav">
+  <Link
+    href="/library"
+    className={active("/library") ? "active" : ""}
+  >
+    Read With Luke
+  </Link>
 
-        <Link
-  href="/learn"
-  className={isActive("/learn") ? "active" : ""}
->
-  Learn With Luke
-</Link>
+  <Link
+    href="/learn"
+    className={isActive("/learn") ? "active" : ""}
+  >
+    Learn With Luke
+  </Link>
 
-<Link
-  href="/learn-to-read"
-  className={isActive("/learn-to-read") ? "active" : ""}
->
-  Learn To Read
-</Link>
-
-          <Link
-            href="/gift"
-            className={active("/gift") ? "giftNav active" : "giftNav"}
-          >
-            🎁 Gift Reading
-          </Link>
-        </nav>
-
+  <Link
+    href="/learn-to-read"
+    className={active("/learn-to-read") ? "active" : ""}
+  >
+    Learn To Read
+  </Link>
+</nav>
         <div className="headerRight">
           {initials ? (
             <div className="headerStatus">
@@ -146,15 +141,19 @@ export default function Header() {
               </Link>
             </div>
           ) : (
-            <div className="headerAuth">
-              <Link href="/login" className="headerLogin">
-                LOGIN
-              </Link>
+           <div className="headerAuth">
+  <Link href="/login" className="headerLogin">
+    LOGIN
+  </Link>
 
-              <Link href="/membership" className="headerSignup">
-                JOIN
-              </Link>
-            </div>
+  <Link href="/membership" className="headerSignup">
+    JOIN
+  </Link>
+
+  <Link href="/gift" className="headerGift">
+    GIFT
+  </Link>
+</div>
           )}
 
           <button
@@ -195,9 +194,9 @@ export default function Header() {
               Learn to Read
             </Link>
 
-            <Link href="/membership" onClick={() => setMenuOpen(false)}>
-              🎁 Gift Reading
-            </Link>
+           <Link href="/gift" onClick={() => setMenuOpen(false)}>
+  Gift
+</Link>
 
             {initials ? (
               <>
