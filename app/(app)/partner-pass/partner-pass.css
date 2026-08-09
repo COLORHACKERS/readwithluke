@@ -195,23 +195,28 @@
     minmax(340px, 28%);
   align-items: center;
 
-  background:
-    linear-gradient(
-      90deg,
-      #ffffff 0%,
-      #ffffff 27%,
-      rgba(255, 255, 255, 0.97) 36%,
-      rgba(255, 255, 255, 0.52) 50%,
-      rgba(255, 255, 255, 0.08) 68%,
-      rgba(255, 255, 255, 0) 100%
-    ),
-    url("/images/Luke-membership.png");
-
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background: #ffffff;
 }
 
+.partnerPassHero::before {
+  content: "";
+
+  position: absolute;
+  top: 0;
+  bottom: 0;
+
+  left: 38%;
+  right: 25%;
+
+  z-index: 1;
+
+  background-image: url("/images/Luke-membership.png");
+  background-size: contain;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+
+  pointer-events: none;
+}
 .partnerPassCopy {
   position: relative;
   z-index: 2;
