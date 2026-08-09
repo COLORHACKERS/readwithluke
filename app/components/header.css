@@ -43,7 +43,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 42px;
+  gap: 34px;
 }
 
 .mainNav a {
@@ -68,12 +68,7 @@
   background: #ff5526;
 }
 
-.giftNav {
-  color: #050505 !important;
-  background: transparent;
-  border: 0;
-  padding: 0;
-}
+
 
 .headerRight {
   height: 72px;
@@ -86,36 +81,68 @@
 .headerAuth {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .headerLogin,
-.headerSignup {
+.headerSignup,
+.headerGift {
   height: 42px;
-  min-width: 84px;
+  min-width: 78px;
+  padding: 0 16px;
+
   border-radius: 999px;
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
+
   text-decoration: none;
+
   font-family: "Courier New", monospace;
   font-size: 12px;
   font-weight: 900;
+  line-height: 1;
   letter-spacing: 0.04em;
+
+  box-sizing: border-box;
+
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    background-color 180ms ease;
 }
 
+/* LOGIN */
+
 .headerLogin {
-  background: white;
+  background: #ffffff;
   color: #ff5526;
   border: 3px solid #ff5526;
 }
 
+/* JOIN */
+
 .headerSignup {
   background: #ff5526;
-  color: white;
+  color: #ffffff;
   border: 3px solid #ff5526;
 }
 
+/* GIFT */
+
+.headerGift {
+  background: #ffbd18;
+  color: #050505;
+  border: 3px solid #ffbd18;
+}
+
+.headerLogin:hover,
+.headerSignup:hover,
+.headerGift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+}
 .headerStatus {
   height: 56px;
   padding: 0 8px 0 16px;
