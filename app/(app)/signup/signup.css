@@ -4,7 +4,7 @@
 
 .signupPage {
   width: 100%;
-  min-height: 100vh;
+  min-height: calc(100vh - 180px);
 
   display: grid;
   place-items: center;
@@ -12,11 +12,10 @@
   box-sizing: border-box;
   overflow-x: hidden;
 
-  padding: 140px 24px 80px;
+  padding: 150px 24px 55px;
 
-  background: #ffff;
+  background: #ffffff;
 }
-
 /* ==================================================
    SIGNUP CARD
 ================================================== */
@@ -215,9 +214,10 @@
 ================================================== */
 
 @media (max-width: 900px) {
-  .signupPage {
-    padding: 125px 28px 64px;
-  }
+.signupPage {
+  min-height: calc(100vh - 160px);
+  padding: 130px 28px 45px;
+}
 
   .signupCard {
     width: min(680px, 100%);
@@ -235,16 +235,16 @@
 ================================================== */
 
 @media (max-width: 600px) {
-  .signupPage {
-    min-height: 100dvh;
+ .signupPage {
+  min-height: auto;
 
-    display: block;
+  display: block;
 
-    padding:
-      104px
-      16px
-      calc(36px + env(safe-area-inset-bottom));
-  }
+  padding:
+    105px
+    16px
+    calc(32px + env(safe-area-inset-bottom));
+}
 
   .signupCard {
     width: 100%;
