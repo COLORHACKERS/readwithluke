@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import { supabase } from "@/lib/supabase";
 import "../../home.css";
@@ -211,6 +212,7 @@ export default function SignupPage() {
 
   return (
     <>
+      <Header />
       <main className="signupPage">
         <form
           className="signupCard"
