@@ -771,7 +771,7 @@ export default function PartnerPassClient({
                   charged until your 30-day
                   partner pass ends. Then
                   your membership continues
-                  at $9.99/month unless
+                  at $4.99/month unless
                   canceled.
                 </p>
 
