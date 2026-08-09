@@ -24,7 +24,7 @@ const faqItems: FaqItem[] = [
   {
     question: "When will I be charged?",
     answer:
-      "After your 30-day partner pass ends, your membership will continue at $9.99 per month unless you cancel before then.",
+      "After your 30-day partner pass ends, your membership will continue at $4.99 per month unless you cancel before then.",
   },
   {
     question: "Can I cancel before the 30 days end?",
