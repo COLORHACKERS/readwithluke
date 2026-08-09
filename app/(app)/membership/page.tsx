@@ -15,7 +15,7 @@ const faqItems: FaqItem[] = [
   {
     question: "Will I be charged today?",
     answer:
-      "No. Your card is saved securely by Stripe, but you will not be charged until your 7-day trial ends.",
+      "No. Your card is saved securely by Stripe, but you will not be charged until your 7-day trial ends. Then you'll be charged $4.99 a month.",
   },
   {
     question: "When will I be charged?",
