@@ -2025,3 +2025,109 @@ img {
       height 120ms ease;
   }
 }
+/* =========================================================
+   FINAL IMAGE ALIGNMENT + LEARN AUDIO WAVE POSITION
+========================================================= */
+
+/* Make the reader the positioning reference */
+.readerPage,
+.learnReaderPage {
+  position: relative;
+}
+
+
+/* =========================================================
+   ALL READER IMAGES — ALIGN TOP LEFT
+========================================================= */
+
+/* BOOK */
+.readerImageSide img {
+  object-position: left top !important;
+}
+
+/* LEARN */
+.learnReaderPage > img {
+  object-position: left top !important;
+}
+
+
+/* =========================================================
+   LEARN AUDIO WAVE
+   DESKTOP
+   Image = 58% of reader width
+========================================================= */
+
+@media (min-width: 1181px) {
+  .learnReaderPage .learnAudioWave {
+    left: calc(58% - 78px) !important;
+    right: auto !important;
+
+    bottom: 18px !important;
+    top: auto !important;
+  }
+}
+
+
+/* =========================================================
+   LEARN AUDIO WAVE
+   IPAD LANDSCAPE
+   Image = 60% of reader width
+========================================================= */
+
+@media (
+  min-width: 700px
+) and (
+  max-width: 1180px
+) and (
+  orientation: landscape
+) {
+  .learnReaderPage .learnAudioWave {
+    left: calc(60% - 74px) !important;
+    right: auto !important;
+
+    bottom: 14px !important;
+    top: auto !important;
+  }
+}
+
+
+/* =========================================================
+   LEARN AUDIO WAVE
+   IPAD PORTRAIT
+
+   Learn image is 43dvh tall.
+========================================================= */
+
+@media (
+  min-width: 700px
+) and (
+  max-width: 1180px
+) and (
+  orientation: portrait
+) {
+  .learnReaderPage .learnAudioWave {
+    left: auto !important;
+    right: 16px !important;
+
+    top: calc(43dvh - 52px) !important;
+    bottom: auto !important;
+  }
+}
+
+
+/* =========================================================
+   LEARN AUDIO WAVE
+   MOBILE
+
+   Mobile image is full-width 6:5.
+========================================================= */
+
+@media (max-width: 699px) {
+  .learnReaderPage .learnAudioWave {
+    left: auto !important;
+    right: 12px !important;
+
+    top: calc((100vw * 5 / 6) - 46px) !important;
+    bottom: auto !important;
+  }
+}
