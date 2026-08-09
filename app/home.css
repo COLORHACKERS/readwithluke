@@ -1815,23 +1815,23 @@ html {
   }
 }
 /* =========================================================
-   MEMBERSHIP BALANCE FIX
+   MEMBERSHIP COMPACT LAYOUT
 ========================================================= */
 
 .homeMembershipSection {
   align-items: stretch;
-  padding-top: 48px;
-  padding-bottom: 38px;
+  padding-top: 34px;
+  padding-bottom: 28px;
 }
 
-/* LEFT INTRO TEXT */
+/* LEFT INTRO */
 
 .homeMembershipIntro {
   display: flex;
   flex-direction: column;
   justify-content: center;
 
-  padding: 20px 18px 20px 12px;
+  padding: 12px 18px 12px 12px;
 }
 
 .homeMembershipIntro h2 {
@@ -1842,65 +1842,63 @@ html {
 }
 
 .membershipUnderline {
-  margin-top: 26px;
+  margin-top: 18px;
 }
 
-/* BOTH MEMBERSHIP CARDS */
+/* PLAN CARDS */
 
 .homePlanCard {
   display: flex;
   flex-direction: column;
 
-  min-height: 490px;
-  padding: 58px 28px 34px;
+  min-height: 350px;
+  padding: 48px 28px 24px;
 }
 
 .homePlanCard ul {
   display: grid;
-  gap: 20px;
+  gap: 16px;
 
-  margin: 10px 0 0;
+  margin: 8px 0 20px;
 }
 
-/* Give the paid content room to fill the card */
+.freePlanCard ul {
+  max-width: 330px;
+  width: 100%;
+
+  margin-left: auto;
+  margin-right: auto;
+}
 
 .paidPlanContent {
   flex: 1;
-  align-items: start;
+  align-items: center;
 }
 
-/* Move both buttons lower */
+.paidPlanCard ul {
+  padding-top: 0;
+}
+
+/* BUTTONS */
 
 .freePlanButton,
 .paidPlanButton {
-  min-height: 58px;
+  min-height: 54px;
 
   margin-top: auto;
-  margin-bottom: 42px;
+  margin-bottom: 0;
 
   font-size: 17px;
 }
 
-/* Keep the free-plan text from stretching too wide */
-
-.freePlanCard ul {
-  max-width: 330px;
-  margin-left: auto;
-  margin-right: auto;
-  width: 100%;
-}
-
-/* Better vertical alignment inside the paid plan */
-
-.paidPlanCard ul {
-  padding-top: 3px;
-}
+/* MONTHLY PRICE */
 
 .homePlanPrices {
   align-self: stretch;
   justify-content: center;
-  padding-top: 8px;
-  padding-bottom: 8px;
+
+  padding-top: 4px;
+  padding-bottom: 4px;
 }
 
 /* GIFT AREA */
@@ -1908,11 +1906,11 @@ html {
 .homeGiftCard {
   justify-content: center;
 
-  padding: 35px 18px 28px;
+  padding: 20px 14px;
 }
 
 .giftEmoji {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .homeGiftCard strong {
@@ -1924,23 +1922,24 @@ html {
 
 .homeGiftCard p {
   max-width: 190px;
-  margin-top: 28px;
-  margin-bottom: 28px;
+
+  margin-top: 16px;
+  margin-bottom: 18px;
 
   font-size: 13px;
   line-height: 1.45;
 }
 
-/* TABLET */
+/* LAPTOP */
 
 @media (max-width: 1240px) {
   .homePlanCard {
-    min-height: 430px;
+    min-height: 340px;
   }
 
-  .freePlanButton,
-  .paidPlanButton {
-    margin-bottom: 20px;
+  .homeMembershipIntro,
+  .homeGiftCard {
+    min-height: 0;
   }
 }
 
@@ -1948,21 +1947,22 @@ html {
 
 @media (max-width: 680px) {
   .homeMembershipSection {
-    padding-top: 40px;
+    padding-top: 34px;
+    padding-bottom: 24px;
   }
 
   .homeMembershipIntro {
-    padding: 10px 4px 25px;
+    padding: 8px 4px 20px;
   }
 
   .homePlanCard {
-    min-height: 410px;
-    padding: 55px 23px 28px;
+    min-height: 0;
+    padding: 50px 23px 24px;
   }
 
   .freePlanButton,
   .paidPlanButton {
-    margin-top: 38px;
+    margin-top: 24px;
     margin-bottom: 0;
   }
 
@@ -1971,7 +1971,8 @@ html {
   }
 
   .homeGiftCard {
-    padding-block: 35px;
+    min-height: 160px;
+    padding-block: 25px;
   }
 }
 /* CENTER SCREEN-TIME BANNER CONTENT */
