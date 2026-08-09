@@ -541,21 +541,14 @@ export default function Home() {
 
               <div className="homePlanPrices">
                 <strong>
-                  $9.99
+                  $4.99
                   <small>/month</small>
-                </strong>
-
-                <span>or</span>
-
-                <strong>
-                  $69.99
-                  <small>/year</small>
                 </strong>
               </div>
             </div>
 
             <Link href="/signup" className="paidPlanButton">
-              Join Today
+              Join Today!
             </Link>
           </div>
 
