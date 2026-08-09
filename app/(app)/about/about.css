@@ -3,6 +3,7 @@
   margin: 0 auto;
   padding: 115px 0 70px;
 
+  background: #ffffff;
   color: #172f46;
 }
 
@@ -21,11 +22,7 @@
 
   border-radius: 34px;
 
-  background:
-    linear-gradient(
-      135deg,
-      #fffaf0 0%,
-      #f8f1e6 100%
+  background: #ffffff;
     );
 }
 
