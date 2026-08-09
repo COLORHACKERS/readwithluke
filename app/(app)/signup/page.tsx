@@ -184,10 +184,6 @@ export default function SignupPage() {
       return "Create Your Gift Account!";
     }
 
-    if (isYearlyPlan) {
-      return "Start Your Yearly Membership!";
-    }
-
     if (isPartnerPlan) {
       return "Start Your 30-Day Partner Pass!";
     }
@@ -196,9 +192,6 @@ export default function SignupPage() {
   }
 
   function getSelectedPlanLabel() {
-    if (isYearlyPlan) {
-      return "YEARLY — $69.99/YEAR";
-    }
 
     if (isPartnerPlan) {
       return "PARTNER PASS — 30 DAYS FREE";
