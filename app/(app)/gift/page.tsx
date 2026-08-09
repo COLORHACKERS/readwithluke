@@ -550,10 +550,6 @@ export default function GiftReadingPage() {
                 Godparent
               </option>
 
-              <option value="parent">
-                Parent
-              </option>
-
               <option value="family_friend">
                 Family Friend
               </option>
