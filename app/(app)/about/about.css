@@ -1,0 +1,509 @@
+.aboutPage {
+  width: min(1368px, calc(100% - 44px));
+  margin: 0 auto;
+  padding: 115px 0 70px;
+
+  color: #172f46;
+}
+
+/* ==================================================
+   HERO
+================================================== */
+
+.aboutHero {
+  min-height: 650px;
+
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  align-items: center;
+
+  overflow: hidden;
+
+  border-radius: 34px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #fffaf0 0%,
+      #f8f1e6 100%
+    );
+}
+
+.aboutHeroCopy {
+  position: relative;
+  z-index: 2;
+
+  padding: 65px 30px 65px 60px;
+}
+
+.aboutEyebrow {
+  margin: 0 0 16px;
+
+  color: #ff5526;
+
+  font-family: "Courier New", monospace;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+}
+
+.aboutHero h1 {
+  margin: 0;
+
+  color: #123a60;
+
+  font-family: "DK Woolwich", Impact, sans-serif;
+  font-size: clamp(64px, 7vw, 104px);
+  font-weight: 400;
+  line-height: 0.85;
+  text-transform: uppercase;
+}
+
+.aboutHero h1 span {
+  display: block;
+  color: #ff5526;
+}
+
+.aboutHeroIntro {
+  max-width: 580px;
+  margin: 24px 0 0;
+
+  font-family: "Courier New", monospace;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.aboutHeroButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 54px;
+  margin-top: 30px;
+  padding: 0 28px;
+
+  border-radius: 999px;
+
+  color: #ffffff;
+  background: #ff5526;
+
+  font-family: "DK Woolwich", Impact, sans-serif;
+  font-size: 20px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.aboutHeroImage {
+  align-self: stretch;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+
+  overflow: hidden;
+}
+
+.aboutHeroImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+}
+
+/* ==================================================
+   STORY
+================================================== */
+
+.aboutStory {
+  padding: 75px 20px;
+}
+
+.aboutStoryHeading {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 25px;
+
+  margin-bottom: 42px;
+}
+
+.aboutStoryHeading span {
+  height: 2px;
+  background: #ff5526;
+}
+
+.aboutStoryHeading h2 {
+  margin: 0;
+
+  color: #123a60;
+
+  font-family: "DK Woolwich", Impact, sans-serif;
+  font-size: clamp(34px, 4vw, 55px);
+  font-weight: 400;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.aboutStoryGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.aboutStoryCard {
+  position: relative;
+
+  padding: 42px 34px;
+
+  border-radius: 25px;
+
+  background: #f8f1e6;
+}
+
+.aboutStoryNumber {
+  margin-bottom: 22px;
+
+  color: #ffbd18;
+
+  font-family: "DK Woolwich", Impact, sans-serif;
+  font-size: 54px;
+  line-height: 1;
+}
+
+.aboutStoryCard h3 {
+  margin: 0 0 18px;
+
+  color: #ff5526;
+
+  font-family: "DK Woolwich", Impact, sans-serif;
+  font-size: 32px;
+  font-weight: 400;
+}
+
+.aboutStoryCard p {
+  margin: 12px 0 0;
+
+  font-family: "Courier New", monospace;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+/* ==================================================
+   LUKE QUOTE
+================================================== */
+
+.aboutQuote {
+  min-height: 520px;
+
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+
+  overflow: hidden;
+
+  border-radius: 32px;
+
+  color: #ffffff;
+  background: #123a60;
+}
+
+.aboutQuoteImage {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+
+  background: #ffbd18;
+}
+
+.aboutQuoteImage img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+  object-position: center bottom;
+}
+
+.aboutQuoteCopy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  padding: 55px 60px;
+}
+
+.aboutQuoteMark {
+  margin: 0;
+
+  color: #ffbd18;
+
+  font-family: Georgia, serif;
+  font-size: 110px;
+  line-height: 0.5;
+}
+
+.aboutQuoteCopy h2 {
+  margin: 25px 0 20px;
+
+  font-family: "DK Woolwich", Impact, sans-serif;
+  font-size: clamp(42px, 5vw, 70px);
+  font-weight: 400;
+  line-height: 0.92;
+}
+
+.aboutQuoteCopy > p:not(.aboutQuoteMark) {
+  max-width: 600px;
+  margin: 0;
+
+  font-family: "Courier New", monospace;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.aboutQuoteCopy strong {
+  margin-top: 24px;
+
+  color: #ffbd18;
+
+  font-family: "Courier New", monospace;
+  font-size: 14px;
+}
+
+/* ==================================================
+   WHY
+================================================== */
+
+.aboutWhy {
+  padding: 80px 35px;
+
+  text-align: center;
+}
+
+.aboutWhy h2 {
+  margin: 0;
+
+  color: #123a60;
+
+  font-family: "DK Woolwich", Impact, sans-serif;
+  font-size: clamp(50px, 6vw, 86px);
+  font-weight: 400;
+  line-height: 0.9;
+  text-transform: uppercase;
+}
+
+.aboutWhyIntro {
+  margin: 20px auto 45px;
+
+  font-family: "Courier New", monospace;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.aboutWhyGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.aboutWhyGrid > div {
+  padding: 20px 35px;
+
+  border-right: 1px solid rgba(18, 58, 96, 0.18);
+}
+
+.aboutWhyGrid > div:last-child {
+  border-right: 0;
+}
+
+.aboutWhyGrid strong {
+  color: #ff5526;
+
+  font-family: "DK Woolwich", Impact, sans-serif;
+  font-size: 32px;
+}
+
+.aboutWhyGrid p {
+  max-width: 330px;
+  margin: 12px auto 0;
+
+  font-family: "Courier New", monospace;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.55;
+}
+
+/* ==================================================
+   CTA
+================================================== */
+
+.aboutCta {
+  padding: 48px 52px;
+
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 30px;
+
+  border-radius: 30px;
+
+  background: #ff5526;
+  color: #ffffff;
+}
+
+.aboutCta p {
+  margin: 0 0 7px;
+
+  font-family: "Courier New", monospace;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+}
+
+.aboutCta h2 {
+  margin: 0;
+
+  font-family: "DK Woolwich", Impact, sans-serif;
+  font-size: clamp(38px, 4vw, 58px);
+  font-weight: 400;
+  line-height: 0.95;
+}
+
+.aboutCtaButtons {
+  display: flex;
+  gap: 10px;
+}
+
+.aboutCtaButtons a {
+  min-height: 50px;
+  padding: 0 22px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 2px solid #ffffff;
+  border-radius: 999px;
+
+  color: #ffffff;
+
+  font-family: "DK Woolwich", Impact, sans-serif;
+  font-size: 17px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+/* ==================================================
+   TABLET
+================================================== */
+
+@media (max-width: 950px) {
+  .aboutHero {
+    grid-template-columns: 1fr;
+  }
+
+  .aboutHeroImage {
+    min-height: 400px;
+  }
+
+  .aboutStoryGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .aboutQuote {
+    grid-template-columns: 1fr;
+  }
+
+  .aboutQuoteImage {
+    min-height: 380px;
+  }
+
+  .aboutCta {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==================================================
+   MOBILE
+================================================== */
+
+@media (max-width: 650px) {
+  .aboutPage {
+    width: calc(100% - 20px);
+    padding-top: 95px;
+  }
+
+  .aboutHero {
+    border-radius: 24px;
+  }
+
+  .aboutHeroCopy {
+    padding: 42px 22px 25px;
+  }
+
+  .aboutHero h1 {
+    font-size: clamp(54px, 16vw, 78px);
+  }
+
+  .aboutHeroIntro {
+    font-size: 14px;
+  }
+
+  .aboutHeroImage {
+    min-height: 320px;
+  }
+
+  .aboutStory {
+    padding: 55px 5px;
+  }
+
+  .aboutStoryHeading {
+    grid-template-columns: 1fr;
+  }
+
+  .aboutStoryHeading span {
+    display: none;
+  }
+
+  .aboutStoryCard {
+    padding: 32px 24px;
+  }
+
+  .aboutQuote {
+    border-radius: 24px;
+  }
+
+  .aboutQuoteCopy {
+    padding: 45px 25px;
+  }
+
+  .aboutWhy {
+    padding: 55px 10px;
+  }
+
+  .aboutWhyGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .aboutWhyGrid > div {
+    padding: 25px 10px;
+
+    border-right: 0;
+    border-bottom: 1px solid rgba(18, 58, 96, 0.18);
+  }
+
+  .aboutWhyGrid > div:last-child {
+    border-bottom: 0;
+  }
+
+  .aboutCta {
+    padding: 35px 24px;
+  }
+
+  .aboutCtaButtons {
+    display: grid;
+  }
+
+  .aboutCtaButtons a {
+    width: 100%;
+  }
+}
