@@ -106,14 +106,7 @@
   letter-spacing: 0.04em;
 
   box-sizing: border-box;
-
-  transition:
-    transform 180ms ease,
-    box-shadow 180ms ease,
-    background-color 180ms ease;
 }
-
-/* LOGIN */
 
 .headerLogin {
   background: #ffffff;
@@ -121,15 +114,11 @@
   border: 3px solid #ff5526;
 }
 
-/* JOIN */
-
 .headerSignup {
   background: #ff5526;
   color: #ffffff;
   border: 3px solid #ff5526;
 }
-
-/* GIFT */
 
 .headerGift {
   background: #ffbd18;
