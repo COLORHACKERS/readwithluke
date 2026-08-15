@@ -5,6 +5,8 @@ import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import "./gift.css";
 
+type GiftPlan = "gift-monthly" | "gift-yearly";
+
 type FaqItem = {
   question: string;
   answer: string;
@@ -14,12 +16,12 @@ const faqItems: FaqItem[] = [
   {
     question: "Who is this gift for?",
     answer:
-      "Gift Reading is for anyone who wants to give a child a Read With Luke reading adventure.",
+      "Gift Reading is for anyone who wants to give a child access to Read With Luke stories and learning adventures.",
   },
   {
     question: "Who pays for the membership?",
     answer:
-      "The gifter pays for the gift and receives payment receipts and billing information.",
+      "The gifter pays for the membership and receives payment receipts and billing information.",
   },
   {
     question: "Who creates the Read With Luke account?",
@@ -32,9 +34,9 @@ const faqItems: FaqItem[] = [
       "The gifter can request a monthly Read With Luke report card. The parent or guardian must approve the request before anything is shared.",
   },
   {
-    question: "What happens after the 3 months?",
+    question: "Does the gift membership renew?",
     answer:
-      "The gift includes 3 months of access. After that, the gifter's payment method continues at $4.99 per month unless canceled.",
+      "Yes. Monthly gifts renew at $4.99 per month and yearly gifts renew at $49.99 per year until the gifter cancels.",
   },
 ];
 
@@ -42,8 +44,8 @@ const giftSteps = [
   {
     number: "1",
     image: "/images/gift-step-purchase.png",
-    title: "Purchase the Gift",
-    text: "Enter your information and the parent or guardian’s email, then securely purchase the gift.",
+    title: "Choose Your Gift",
+    text: "Choose monthly or yearly access, enter your information and securely purchase the gift.",
   },
   {
     number: "2",
@@ -55,7 +57,7 @@ const giftSteps = [
     number: "3",
     image: "/images/gift-step-adventure.png",
     title: "Share the Adventure",
-    text: "The child receives stories, learning adventures, coins and rewards for 3 included months.",
+    text: "The child gets access to stories, learning adventures, coins and rewards.",
   },
 ];
 
@@ -66,7 +68,7 @@ const giftBenefits = [
   },
   {
     image: "/images/gift-benefit-months.png",
-    title: "3 Months Included",
+    title: "Monthly or Yearly",
   },
   {
     image: "/images/benefit-coins.png",
@@ -88,6 +90,9 @@ export default function GiftReadingPage() {
   const [guardianEmail, setGuardianEmail] = useState("");
   const [relationship, setRelationship] = useState("");
 
+  const [selectedPlan, setSelectedPlan] =
+    useState<GiftPlan>("gift-monthly");
+
   const [
     progressReportRequested,
     setProgressReportRequested,
@@ -97,6 +102,15 @@ export default function GiftReadingPage() {
 
   const [openFaq, setOpenFaq] =
     useState<number | null>(0);
+
+  const isYearly =
+    selectedPlan === "gift-yearly";
+
+  const selectedPrice =
+    isYearly ? "$49.99" : "$4.99";
+
+  const selectedInterval =
+    isYearly ? "year" : "month";
 
   async function startGiftCheckout() {
     const cleanGifterName =
@@ -156,6 +170,8 @@ export default function GiftReadingPage() {
             relationship,
 
             progressReportRequested,
+
+            plan: selectedPlan,
           }),
         }
       );
@@ -225,8 +241,8 @@ export default function GiftReadingPage() {
             </h1>
 
             <p className="giftDescription">
-              Give a child three months of
-              magical stories, playful
+              Give a child unlimited access
+              to magical stories, playful
               learning adventures and a
               reading experience created
               just for kids.
@@ -234,12 +250,13 @@ export default function GiftReadingPage() {
 
             <div className="giftPrice">
               <strong>
-                $19.99
+                $4.99
               </strong>
 
               <span>
-                3 months included, then
-                $4.99/month
+                /month
+                <br />
+                or $49.99/year
               </span>
             </div>
 
@@ -250,7 +267,7 @@ export default function GiftReadingPage() {
                   alt=""
                 />
                 <span>
-                  3 Months Included
+                  Starts Today
                 </span>
               </div>
 
@@ -288,9 +305,7 @@ export default function GiftReadingPage() {
             <button
               type="button"
               className="giftHeroButton"
-              onClick={
-                scrollToGiftForm
-              }
+              onClick={scrollToGiftForm}
             >
               Gift Read With Luke
             </button>
@@ -356,9 +371,11 @@ export default function GiftReadingPage() {
           <div className="giftInformation">
             <div className="giftSectionHeading">
               <span />
+
               <h2>
                 How It Works
               </h2>
+
               <span />
             </div>
 
@@ -440,23 +457,83 @@ export default function GiftReadingPage() {
               Give a Reading Adventure
             </h2>
 
+            {/* PLAN */}
+
+            <div className="giftPlanSelector">
+              <button
+                type="button"
+                className={
+                  selectedPlan ===
+                  "gift-monthly"
+                    ? "giftPlanOption active"
+                    : "giftPlanOption"
+                }
+                onClick={() =>
+                  setSelectedPlan(
+                    "gift-monthly"
+                  )
+                }
+              >
+                <span>
+                  MONTHLY
+                </span>
+
+                <strong>
+                  $4.99
+                </strong>
+
+                <small>
+                  / month
+                </small>
+              </button>
+
+              <button
+                type="button"
+                className={
+                  selectedPlan ===
+                  "gift-yearly"
+                    ? "giftPlanOption active"
+                    : "giftPlanOption"
+                }
+                onClick={() =>
+                  setSelectedPlan(
+                    "gift-yearly"
+                  )
+                }
+              >
+                <span>
+                  YEARLY
+                </span>
+
+                <strong>
+                  $49.99
+                </strong>
+
+                <small>
+                  / year
+                </small>
+              </button>
+            </div>
+
             {/* GIFTER NAME */}
 
             <label htmlFor="gifterName">
               Gifter&apos;s Name
             </label>
 
-        <input
-  id="gifterName"
-  type="text"
-  className="giftInput"
-  placeholder="Your name"
-  value={gifterName}
-  onChange={(event) =>
-    setGifterName(event.target.value)
-  }
-  autoComplete="name"
-/>
+            <input
+              id="gifterName"
+              type="text"
+              className="giftInput"
+              placeholder="Your name"
+              value={gifterName}
+              onChange={(event) =>
+                setGifterName(
+                  event.target.value
+                )
+              }
+              autoComplete="name"
+            />
 
             <p className="giftFieldNote">
               We&apos;ll tell the guardian
@@ -563,7 +640,7 @@ export default function GiftReadingPage() {
               </option>
             </select>
 
-            {/* REPORT CARD REQUEST */}
+            {/* REPORT CARD */}
 
             <label className="giftProgressOption">
               <input
@@ -602,17 +679,19 @@ export default function GiftReadingPage() {
               </span>
 
               <strong>
-                $19.99
+                {selectedPrice}
               </strong>
             </div>
 
-          <p className="giftCheckoutRenewal">
-  Includes 3 months of Read With
-  Luke. After that, your payment
-  method will be charged
-  <strong> $4.99/month </strong>
-  unless canceled.
-</p>
+            <p className="giftCheckoutRenewal">
+              You will be charged{" "}
+              <strong>
+                {selectedPrice}
+              </strong>{" "}
+              today. This gift membership
+              renews every {selectedInterval}
+              {" "}until canceled.
+            </p>
 
             {/* CHECKOUT */}
 
@@ -629,7 +708,7 @@ export default function GiftReadingPage() {
             >
               {loading
                 ? "Opening Secure Checkout..."
-                : "Gift Read With Luke"}
+                : `Gift ${selectedPrice}/${selectedInterval}`}
             </button>
 
             <p className="giftCheckoutFinePrint">
