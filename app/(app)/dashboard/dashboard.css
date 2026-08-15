@@ -371,28 +371,64 @@
   }
 }
 /* =========================================================
-   DASHBOARD CUSTOM AVATAR
+   DASHBOARD AVATAR — RAISED WITH ARCH BACKDROP
 ========================================================= */
 
 .dashboardStatsArea {
   position: relative;
-
-  padding-top: 105px;
+  padding-top: 125px;
 }
+
+/* WHOLE AVATAR AREA */
 
 .dashboardAvatarArea {
   position: absolute;
 
-  top: -40px;
+  top: -95px;
   left: 50%;
 
   transform: translateX(-50%);
 
   z-index: 5;
 
+  width: 250px;
+  height: 235px;
+
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-end;
+}
+
+/* ARCH BEHIND AVATAR */
+
+.dashboardAvatarArea::before {
+  content: "";
+
+  position: absolute;
+
+  left: 50%;
+  bottom: 28px;
+
+  width: 220px;
+  height: 205px;
+
+  transform: translateX(-50%);
+
+  border-radius:
+    110px 110px 32px 32px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #fff3bd 0%,
+      #ffd65b 100%
+    );
+
+  z-index: -1;
+
+  box-shadow:
+    0 10px 26px rgba(18, 58, 96, 0.08);
 }
 
 /* CHARACTER */
@@ -400,12 +436,61 @@
 .dashboardCustomAvatar {
   position: relative;
 
-  width: 125px;
-  height: 150px;
+  width: 135px;
+  height: 165px;
 
-  filter: drop-shadow(
-    0 10px 12px rgba(0, 0, 0, 0.15)
-  );
+  margin-bottom: 5px;
+
+  z-index: 2;
+
+  filter:
+    drop-shadow(
+      0 8px 10px rgba(0, 0, 0, 0.12)
+    );
+}
+
+/* BUTTON */
+
+.dashboardBuildAvatarButton {
+  position: relative;
+  z-index: 4;
+
+  min-width: 190px;
+  height: 42px;
+
+  padding: 0 20px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 999px;
+
+  background: #ff5526;
+  color: #ffffff;
+
+  box-shadow:
+    0 8px 18px rgba(255, 85, 38, 0.24);
+
+  font-family:
+    "DK Woolwich",
+    Impact,
+    sans-serif;
+
+  font-size: 17px;
+  text-decoration: none;
+  text-transform: uppercase;
+
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.dashboardBuildAvatarButton:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 11px 22px rgba(255, 85, 38, 0.32);
 }
 
 /* HEAD */
