@@ -209,7 +209,7 @@ export default function Home() {
 
                   <div className="heroFeatureMeta">
                     <span>◉ 20 Page Story</span>
-                    <span>◆ {featuredBook.age_range || "Ages 5–10"}</span>
+                    <span>◆ {featuredBook.age_range || "Ages 5–10+"}</span>
                   </div>
                 </div>
               </Link>
