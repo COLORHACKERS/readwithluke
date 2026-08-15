@@ -1,31 +1,9 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 
-/**
- * Adds calendar months while preventing dates such as January 31
- * from rolling too far into the following month.
- */
-function addCalendarMonths(date: Date, months: number) {
-  const result = new Date(date);
-  const originalDay = result.getUTCDate();
-
-  result.setUTCDate(1);
-  result.setUTCMonth(result.getUTCMonth() + months);
-
-  const lastDayOfTargetMonth = new Date(
-    Date.UTC(
-      result.getUTCFullYear(),
-      result.getUTCMonth() + 1,
-      0
-    )
-  ).getUTCDate();
-
-  result.setUTCDate(
-    Math.min(originalDay, lastDayOfTargetMonth)
-  );
-
-  return result;
-}
+type GiftPlan =
+  | "gift-monthly"
+  | "gift-yearly";
 
 export async function POST(req: Request) {
   try {
@@ -35,16 +13,21 @@ export async function POST(req: Request) {
       guardianEmail,
       relationship,
       progressReportRequested,
+      plan,
     } = await req.json();
+
+    /* =========================================
+       ENVIRONMENT VARIABLES
+    ========================================= */
 
     const secretKey =
       process.env.STRIPE_SECRET_KEY;
 
-    const giftUpfrontPriceId =
-      process.env.STRIPE_GIFT_PRICE_ID;
-
     const giftMonthlyPriceId =
       process.env.STRIPE_GIFT_MONTHLY_PRICE_ID;
+
+    const giftYearlyPriceId =
+      process.env.STRIPE_GIFT_YEARLY_PRICE_ID;
 
     const siteUrl =
       process.env.NEXT_PUBLIC_SITE_URL;
@@ -55,15 +38,15 @@ export async function POST(req: Request) {
       );
     }
 
-    if (!giftUpfrontPriceId) {
-      throw new Error(
-        "Missing STRIPE_GIFT_PRICE_ID"
-      );
-    }
-
     if (!giftMonthlyPriceId) {
       throw new Error(
         "Missing STRIPE_GIFT_MONTHLY_PRICE_ID"
+      );
+    }
+
+    if (!giftYearlyPriceId) {
+      throw new Error(
+        "Missing STRIPE_GIFT_YEARLY_PRICE_ID"
       );
     }
 
@@ -72,6 +55,10 @@ export async function POST(req: Request) {
         "Missing NEXT_PUBLIC_SITE_URL"
       );
     }
+
+    /* =========================================
+       CLEAN INPUTS
+    ========================================= */
 
     const cleanGifterName =
       String(gifterName || "").trim();
@@ -88,6 +75,13 @@ export async function POST(req: Request) {
 
     const cleanRelationship =
       String(relationship || "").trim();
+
+    const cleanPlan =
+      String(plan || "") as GiftPlan;
+
+    /* =========================================
+       VALIDATION
+    ========================================= */
 
     if (!cleanGifterName) {
       throw new Error(
@@ -113,14 +107,43 @@ export async function POST(req: Request) {
       );
     }
 
+    if (
+      cleanPlan !== "gift-monthly" &&
+      cleanPlan !== "gift-yearly"
+    ) {
+      throw new Error(
+        "Invalid gift plan."
+      );
+    }
+
+    /* =========================================
+       SELECT STRIPE PRICE
+    ========================================= */
+
+    const isYearly =
+      cleanPlan === "gift-yearly";
+
+    const selectedPriceId =
+      isYearly
+        ? giftYearlyPriceId
+        : giftMonthlyPriceId;
+
+    const billingInterval =
+      isYearly
+        ? "yearly"
+        : "monthly";
+
+    const giftPrice =
+      isYearly
+        ? "49.99"
+        : "4.99";
+
+    /* =========================================
+       STRIPE
+    ========================================= */
+
     const stripe =
       new Stripe(secretKey);
-
-    const trialEnd =
-      addCalendarMonths(
-        new Date(),
-        3
-      );
 
     const metadata = {
       gifter_name:
@@ -145,69 +168,63 @@ export async function POST(req: Request) {
       membership_type:
         "gift",
 
-      gift_period:
-        "3_months",
+      gift_plan:
+        cleanPlan,
 
-      renewal_price:
-        "4.99_monthly",
+      billing_interval:
+        billingInterval,
+
+      gift_price:
+        giftPrice,
     };
 
     const cleanSiteUrl =
       siteUrl.replace(/\/$/, "");
+
+    /* =========================================
+       CREATE CHECKOUT SESSION
+
+       NO TRIAL.
+       NO $19.99 UPFRONT PRICE.
+       ONE RECURRING GIFT PRICE ONLY.
+    ========================================= */
 
     const session =
       await stripe.checkout.sessions.create({
         mode: "subscription",
 
         /*
-         * IMPORTANT:
          * The GIFTER is the Stripe customer.
-         *
-         * Receipts, invoices and billing
-         * information go to this email.
+         * Billing and receipts go to them.
          */
         customer_email:
           cleanGifterEmail,
 
-        payment_method_collection:
-          "always",
-
         line_items: [
           {
-            /*
-             * Charged immediately:
-             * $19.99 gift purchase
-             */
             price:
-              giftUpfrontPriceId,
-
-            quantity: 1,
-          },
-          {
-            /*
-             * Recurring:
-             * $4.99/month
-             *
-             * First charged after the
-             * 3 included months.
-             */
-            price:
-              giftMonthlyPriceId,
+              selectedPriceId,
 
             quantity: 1,
           },
         ],
 
+        /*
+         * Metadata here is copied
+         * onto the Stripe subscription.
+         *
+         * Notice there is NO:
+         * trial_end
+         * trial_period_days
+         */
         subscription_data: {
-          trial_end:
-            Math.floor(
-              trialEnd.getTime() /
-                1000
-            ),
-
           metadata,
         },
 
+        /*
+         * Metadata on the Checkout
+         * Session itself as well.
+         */
         metadata,
 
         success_url:
