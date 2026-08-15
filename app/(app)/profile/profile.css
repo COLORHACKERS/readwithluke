@@ -264,3 +264,17 @@
     font-size: 28px;
   }
 }
+.trialEndDate {
+  margin: -8px 0 18px;
+
+  color: #ff5526;
+
+  font-family: "Courier New", monospace;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.trialEndDate strong {
+  color: #050505;
+  font-weight: 900;
+}
