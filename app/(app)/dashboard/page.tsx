@@ -97,310 +97,289 @@ export default function DashboardPage() {
     setSavedBooks,
   ] = useState<SavedBook[]>([]);
 
-  useEffect(() => {
-    async function loadDashboard() {
-      const {
-        data: { user },
-      } =
-        await supabase.auth.getUser();
+useEffect(() => {
+  async function loadDashboard() {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
 
-      if (!user) {
-        router.push("/signup");
-        return;
-      }
+    if (!user) {
+      router.push("/signup");
+      return;
+    }
 
-      /* =====================================================
-         LOAD ALL CHILDREN
-      ===================================================== */
+    /* =====================================================
+       LOAD ALL CHILDREN
+    ===================================================== */
 
-      const {
-        data: childRows,
-        error: childrenError,
-      } = await supabase
-        .from("children")
-       .select(
-  "id, name, avatar, avatar_config"
-)
-        .eq(
-          "user_id",
-          user.id
-        )
-        .order("created_at", {
-          ascending: true,
-        });
+    const {
+      data: childRows,
+      error: childrenError,
+    } = await supabase
+      .from("children")
+      .select(
+        "id, name, avatar, avatar_config"
+      )
+      .eq(
+        "user_id",
+        user.id
+      )
+      .order("created_at", {
+        ascending: true,
+      });
 
-      if (childrenError) {
-        console.error(
-          "Children error:",
-          childrenError
-        );
-      }
-
-      const readerChildren =
-        (childRows ||
-          []) as Child[];
-
-      setChildren(
-        readerChildren
+    if (childrenError) {
+      console.error(
+        "Children error:",
+        childrenError
       );
+    }
 
-      /* =====================================================
-         FIND ACTIVE CHILD
-      ===================================================== */
+    const readerChildren =
+      (childRows || []) as Child[];
 
-      const {
-        data: profile,
-        error: profileError,
-      } = await supabase
+    setChildren(readerChildren);
+
+    /* =====================================================
+       FIND ACTIVE CHILD
+    ===================================================== */
+
+    const {
+      data: profile,
+      error: profileError,
+    } = await supabase
+      .from("profiles")
+      .select("active_child_id")
+      .eq("id", user.id)
+      .maybeSingle();
+
+    if (profileError) {
+      console.error(
+        "Profile error:",
+        profileError
+      );
+    }
+
+    let selectedChildId =
+      profile?.active_child_id || "";
+
+    if (
+      !selectedChildId &&
+      readerChildren.length > 0
+    ) {
+      selectedChildId =
+        readerChildren[0].id;
+
+      await supabase
         .from("profiles")
-        .select(
-          "active_child_id"
-        )
-        .eq("id", user.id)
-        .maybeSingle();
-
-      if (profileError) {
-        console.error(
-          "Profile error:",
-          profileError
+        .update({
+          active_child_id:
+            selectedChildId,
+        })
+        .eq(
+          "id",
+          user.id
         );
-      }
+    }
 
-      let selectedChildId =
-        profile?.active_child_id ||
-        "";
+    setActiveChildId(
+      selectedChildId
+    );
 
-      /*
-       * Older accounts may not
-       * have an active reader yet.
-       */
-      if (
-        !selectedChildId &&
-        readerChildren.length > 0
-      ) {
-        selectedChildId =
-          readerChildren[0].id;
+    /* =====================================================
+       ACTIVE CHILD DETAILS
+    ===================================================== */
 
-        await supabase
-          .from("profiles")
-          .update({
-            active_child_id:
-              selectedChildId,
-          })
-          .eq(
-            "id",
-            user.id
-          );
-      }
-
-      setActiveChildId(
-        selectedChildId
+    const activeChild =
+      readerChildren.find(
+        (child) =>
+          child.id ===
+          selectedChildId
       );
 
-      /* =====================================================
-         ACTIVE CHILD DETAILS
-      ===================================================== */
+    if (activeChild) {
+      setReaderName(
+        activeChild.name ||
+          "Reader"
+      );
 
-      const activeChild =
-        readerChildren.find(
-          (child) =>
-            child.id ===
-            selectedChildId
+      setAvatar(
+        activeChild.avatar ||
+          "🔥"
+      );
+
+      setAvatarConfig(
+        activeChild.avatar_config ||
+          DEFAULT_AVATAR
+      );
+    }
+
+    /* =====================================================
+       ACTIVE CHILD READING STATS
+    ===================================================== */
+
+    if (selectedChildId) {
+      const {
+        data: history,
+        error: historyError,
+      } = await supabase
+        .from("reading_history")
+        .select(
+          "completed_at, coins_earned"
+        )
+        .eq(
+          "user_id",
+          user.id
+        )
+        .eq(
+          "child_id",
+          selectedChildId
         );
 
-      if (activeChild) {
-       setReaderName(
-  activeChild.name ||
-    "Reader"
-);
+      if (historyError) {
+        console.error(
+          "Reading history error:",
+          historyError
+        );
+      }
 
-setAvatar(
-  activeChild.avatar ||
-    "🔥"
-);
+      if (history) {
+        setCompletedCount(
+          history.length
+        );
 
-setAvatarConfig(
-  activeChild.avatar_config ||
-    DEFAULT_AVATAR
-);
-
-      /* =====================================================
-         ACTIVE CHILD READING STATS
-      ===================================================== */
-
-      if (selectedChildId) {
-        const {
-          data: history,
-          error: historyError,
-        } = await supabase
-          .from(
-            "reading_history"
+        setCoins(
+          history.reduce(
+            (sum, item) =>
+              sum +
+              (item.coins_earned || 0),
+            0
           )
-          .select(
-            "completed_at, coins_earned"
-          )
-          .eq(
-            "user_id",
-            user.id
-          )
-          .eq(
-            "child_id",
-            selectedChildId
-          );
+        );
 
-        if (historyError) {
-          console.error(
-            "Reading history error:",
-            historyError
-          );
-        }
-
-        if (history) {
-          setCompletedCount(
-            history.length
-          );
-
-          setCoins(
-            history.reduce(
-              (sum, item) =>
-                sum +
-                (item.coins_earned ||
-                  0),
-              0
+        const dates =
+          Array.from(
+            new Set(
+              history
+                .filter(
+                  (item) =>
+                    item.completed_at
+                )
+                .map((item) =>
+                  new Date(
+                    item.completed_at
+                  )
+                    .toISOString()
+                    .slice(0, 10)
+                )
             )
+          ).sort(
+            (a, b) =>
+              b.localeCompare(a)
           );
 
-          const dates =
-            Array.from(
-              new Set(
-                history
-                  .filter(
-                    (item) =>
-                      item.completed_at
-                  )
-                  .map((item) =>
-                    new Date(
-                      item.completed_at
-                    )
-                      .toISOString()
-                      .slice(
-                        0,
-                        10
-                      )
-                  )
-              )
-            ).sort(
-              (a, b) =>
-                b.localeCompare(a)
-            );
+        let currentStreak = 0;
 
-          let currentStreak =
-            0;
+        const today =
+          new Date();
 
-          const today =
-            new Date();
+        for (
+          let i = 0;
+          i < dates.length;
+          i++
+        ) {
+          const checkDate =
+            new Date(today);
 
-          for (
-            let i = 0;
-            i < dates.length;
-            i++
+          checkDate.setDate(
+            today.getDate() - i
+          );
+
+          const expected =
+            checkDate
+              .toISOString()
+              .slice(0, 10);
+
+          if (
+            dates.includes(
+              expected
+            )
           ) {
-            const checkDate =
-              new Date(today);
-
-            checkDate.setDate(
-              today.getDate() -
-                i
-            );
-
-            const expected =
-              checkDate
-                .toISOString()
-                .slice(0, 10);
-
-            if (
-              dates.includes(
-                expected
-              )
-            ) {
-              currentStreak++;
-            } else {
-              break;
-            }
+            currentStreak++;
+          } else {
+            break;
           }
-
-          setStreak(
-            currentStreak
-          );
         }
-      } else {
-        setCompletedCount(0);
-        setCoins(0);
-        setStreak(0);
-      }
 
-      /* =====================================================
-         BOOKMARKS
-      ===================================================== */
-
-      const {
-        data: bookmarks,
-      } = await supabase
-        .from(
-          "book_bookmarks"
-        )
-        .select(
-          "id, page_number, books(title, slug, cover_url)"
-        )
-        .eq(
-          "user_id",
-          user.id
-        )
-        .order(
-          "updated_at",
-          {
-            ascending: false,
-          }
-        )
-        .limit(4);
-
-      if (bookmarks) {
-        setContinueBook(
-          bookmarks[0] ||
-            null
-        );
-
-        setSavedBooks(
-          bookmarks as SavedBook[]
+        setStreak(
+          currentStreak
         );
       }
+    } else {
+      setCompletedCount(0);
+      setCoins(0);
+      setStreak(0);
+    }
 
-      /* =====================================================
-         FAVORITES
-      ===================================================== */
+    /* =====================================================
+       BOOKMARKS
+    ===================================================== */
 
-      const {
-        data: likes,
-      } = await supabase
-        .from("book_likes")
-        .select(
-          "id, books(title, slug, cover_url)"
-        )
-        .eq(
-          "user_id",
-          user.id
-        )
-        .limit(4);
+    const {
+      data: bookmarks,
+    } = await supabase
+      .from("book_bookmarks")
+      .select(
+        "id, page_number, books(title, slug, cover_url)"
+      )
+      .eq(
+        "user_id",
+        user.id
+      )
+      .order(
+        "updated_at",
+        {
+          ascending: false,
+        }
+      )
+      .limit(4);
 
-      if (likes) {
-        setFavorites(
-          likes as SavedBook[]
-        );
-      }
+    if (bookmarks) {
+      setContinueBook(
+        bookmarks[0] || null
+      );
 
+      setSavedBooks(
+        bookmarks as SavedBook[]
+      );
+    }
 
-    loadDashboard();
-  }, [router]);
+    /* =====================================================
+       FAVORITES
+    ===================================================== */
+
+    const {
+      data: likes,
+    } = await supabase
+      .from("book_likes")
+      .select(
+        "id, books(title, slug, cover_url)"
+      )
+      .eq(
+        "user_id",
+        user.id
+      )
+      .limit(4);
+
+    if (likes) {
+      setFavorites(
+        likes as SavedBook[]
+      );
+    }
+  }
+
+  loadDashboard();
+}, [router]);
 
   /* =========================================================
      SWITCH ACTIVE READER
