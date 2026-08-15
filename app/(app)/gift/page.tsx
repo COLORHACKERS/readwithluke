@@ -248,17 +248,15 @@ export default function GiftReadingPage() {
               just for kids.
             </p>
 
-            <div className="giftPrice">
-              <strong>
-                $4.99
-              </strong>
+           <div className="giftPrice">
+  <strong>
+    $4.99
+  </strong>
 
-              <span>
-                /month
-                <br />
-                or $49.99/year
-              </span>
-            </div>
+  <span>
+    MONTHLY &nbsp; • &nbsp; $49.99/YEAR
+  </span>
+</div>
 
             <div className="giftQuickBenefits">
               <div>
