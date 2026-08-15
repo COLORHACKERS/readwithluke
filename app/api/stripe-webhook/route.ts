@@ -6,6 +6,10 @@ import { Resend } from "resend";
 
 export const runtime = "nodejs";
 
+/* =========================================================
+   CLIENTS
+========================================================= */
+
 const stripe = new Stripe(
   process.env.STRIPE_SECRET_KEY!
 );
@@ -19,10 +23,17 @@ const supabaseAdmin = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
+/* =========================================================
+   TYPES
+========================================================= */
+
 type ReaderPlan =
   | "monthly"
-  | "yearly"
   | "partner30";
+
+type GiftPlan =
+  | "gift-monthly"
+  | "gift-yearly";
 
 type GiftMetadata = {
   gifter_name: string;
@@ -31,8 +42,9 @@ type GiftMetadata = {
   relationship: string;
   progress_report_requested: string;
   membership_type: string;
-  gift_period?: string;
-  renewal_price?: string;
+  gift_plan?: string;
+  billing_interval?: string;
+  gift_price?: string;
 };
 
 /* =========================================================
@@ -122,36 +134,7 @@ async function sendWelcomeEmail({
       <p>
         Unless you cancel before the 30-day pass ends,
         your membership will automatically continue at
-        <strong>$9.99 per month</strong>.
-      </p>
-    `;
-  } else if (plan === "yearly") {
-    subject =
-      "🎉 Welcome to Your Read With Luke Yearly Membership!";
-
-    headline =
-      "Your Year of Adventures Has Started!";
-
-    mainMessage = `
-      <p>
-        <strong>
-          Your Read With Luke yearly membership is
-          officially active! 🎉
-        </strong>
-      </p>
-
-      <p>
-        Your family now has unlimited access to the
-        Read With Luke library, including beautifully
-        illustrated stories and learning adventures.
-      </p>
-    `;
-
-    billingMessage = `
-      <p>
-        Your yearly membership will renew at
-        <strong>$69.99 per year</strong> unless
-        canceled before your renewal date.
+        <strong>$4.99 per month</strong>.
       </p>
     `;
   } else {
@@ -185,7 +168,7 @@ async function sendWelcomeEmail({
       <p>
         Unless you cancel before the 7-day trial ends,
         your membership will automatically continue at
-        <strong>$9.99 per month</strong>.
+        <strong>$4.99 per month</strong>.
       </p>
     `;
   }
@@ -271,11 +254,13 @@ async function sendGifterThankYouEmail({
   gifterName,
   guardianEmail,
   progressReportRequested,
+  giftPlan,
 }: {
   gifterEmail: string;
   gifterName: string;
   guardianEmail: string;
   progressReportRequested: boolean;
+  giftPlan: GiftPlan;
 }) {
   const siteUrl =
     process.env.NEXT_PUBLIC_SITE_URL ||
@@ -286,6 +271,19 @@ async function sendGifterThankYouEmail({
 
   const safeGuardianEmail =
     escapeHtml(guardianEmail);
+
+  const isYearly =
+    giftPlan === "gift-yearly";
+
+  const priceLabel =
+    isYearly
+      ? "$49.99/year"
+      : "$4.99/month";
+
+  const planLabel =
+    isYearly
+      ? "yearly"
+      : "monthly";
 
   await resend.emails.send({
     from:
@@ -329,8 +327,8 @@ async function sendGifterThankYouEmail({
         <p>
           Thank you for gifting
           <strong>Read With Luke</strong>.
-          You just gave a child three months
-          of stories, learning adventures,
+          You just gave a child access to
+          stories, learning adventures,
           activities and rewards.
         </p>
 
@@ -341,12 +339,17 @@ async function sendGifterThankYouEmail({
         </p>
 
         <p>
-          Your gift includes
-          <strong>3 months of access</strong>.
-          After the included three months,
-          your payment method will continue
-          at <strong>$4.99/month</strong>
-          unless canceled.
+          You selected the
+          <strong>${planLabel} gift membership</strong>
+          at
+          <strong>${priceLabel}</strong>.
+        </p>
+
+        <p>
+          Your gift membership begins today and
+          will automatically renew at
+          <strong>${priceLabel}</strong>
+          until canceled.
         </p>
 
         ${
@@ -439,12 +442,14 @@ async function sendGiftActivationEmail({
   relationship,
   activationToken,
   progressReportRequested,
+  giftPlan,
 }: {
   guardianEmail: string;
   gifterName: string;
   relationship: string;
   activationToken: string;
   progressReportRequested: boolean;
+  giftPlan: GiftPlan;
 }) {
   const siteUrl =
     process.env.NEXT_PUBLIC_SITE_URL ||
@@ -468,6 +473,11 @@ async function sendGiftActivationEmail({
         relationship
       )
     );
+
+  const giftAccessText =
+    giftPlan === "gift-yearly"
+      ? "a full year of Read With Luke access"
+      : "a Read With Luke monthly membership";
 
   await resend.emails.send({
     from:
@@ -512,10 +522,11 @@ async function sendGiftActivationEmail({
         </p>
 
         <p>
-          The gift includes
-          <strong>3 months of access</strong>
-          to illustrated stories, playful learning
-          adventures, activities, coins and rewards.
+          Your child received
+          <strong>${giftAccessText}</strong>
+          with illustrated stories, playful
+          learning adventures, activities,
+          coins and rewards.
         </p>
 
         <p>
@@ -609,20 +620,16 @@ async function sendGiftActivationEmail({
 }
 
 /* =========================================================
-   REGULAR 7-DAY / 30-DAY / YEARLY CHECKOUT
+   REGULAR 7-DAY / 30-DAY CHECKOUT
 ========================================================= */
 
 async function handleRegularCheckout(
   session: Stripe.Checkout.Session
 ) {
   const plan: ReaderPlan =
-    session.metadata?.plan ===
-    "partner30"
+    session.metadata?.plan === "partner30"
       ? "partner30"
-      : session.metadata?.plan ===
-          "yearly"
-        ? "yearly"
-        : "monthly";
+      : "monthly";
 
   const email =
     session.customer_details?.email ||
@@ -655,23 +662,19 @@ async function handleRegularCheckout(
   }
 
   const customerId =
-    typeof session.customer ===
-    "string"
+    typeof session.customer === "string"
       ? session.customer
       : session.customer?.id ||
         null;
 
   const subscriptionId =
-    typeof session.subscription ===
-    "string"
+    typeof session.subscription === "string"
       ? session.subscription
       : session.subscription?.id ||
         null;
 
   let membershipStatus =
-    plan === "yearly"
-      ? "active"
-      : "trialing";
+    "trialing";
 
   let trialEnd:
     | string
@@ -746,22 +749,25 @@ async function handleRegularCheckout(
   ) {
     await sendWelcomeEmail({
       email: accountEmail,
+
       readerName:
         profile?.full_name,
+
       plan,
     });
 
     await supabaseAdmin
       .from("profiles")
       .update({
-        welcome_email_sent: true,
+        welcome_email_sent:
+          true,
       })
       .eq("id", userId);
   }
 }
 
 /* =========================================================
-   NEW GIFT CHECKOUT
+   GIFT CHECKOUT
 ========================================================= */
 
 async function handleGiftCheckout(
@@ -801,6 +807,15 @@ async function handleGiftCheckout(
     metadata.progress_report_requested ===
     "true";
 
+  const giftPlan: GiftPlan | null =
+    metadata.gift_plan ===
+    "gift-monthly"
+      ? "gift-monthly"
+      : metadata.gift_plan ===
+          "gift-yearly"
+        ? "gift-yearly"
+        : null;
+
   if (!gifterName) {
     throw new Error(
       "Gift checkout is missing gifter name."
@@ -822,6 +837,12 @@ async function handleGiftCheckout(
   if (!relationship) {
     throw new Error(
       "Gift checkout is missing relationship."
+    );
+  }
+
+  if (!giftPlan) {
+    throw new Error(
+      "Gift checkout is missing a valid gift plan."
     );
   }
 
@@ -855,10 +876,6 @@ async function handleGiftCheckout(
     .from("gift_memberships")
     .upsert(
       {
-        /*
-         * Gifter does NOT need a
-         * Read With Luke user account.
-         */
         purchaser_user_id:
           null,
 
@@ -876,10 +893,6 @@ async function handleGiftCheckout(
         progress_report_requested:
           progressReportRequested,
 
-        /*
-         * Guardian must explicitly
-         * approve this later.
-         */
         progress_report_approved:
           false,
 
@@ -911,28 +924,28 @@ async function handleGiftCheckout(
     );
   }
 
-  /*
-   * EMAIL #1:
-   * Thank the person who paid.
-   */
+  /* EMAIL #1 — GIFTER */
+
   await sendGifterThankYouEmail({
     gifterEmail,
     gifterName,
     guardianEmail,
     progressReportRequested,
+    giftPlan,
   });
 
-  /*
-   * EMAIL #2:
-   * Invite the guardian to activate.
-   */
+  /* EMAIL #2 — GUARDIAN */
+
   await sendGiftActivationEmail({
     guardianEmail,
     gifterName,
     relationship,
+
     activationToken:
       gift.activation_token,
+
     progressReportRequested,
+    giftPlan,
   });
 }
 
@@ -959,6 +972,9 @@ async function updateSubscriptionStatus(
       )
       .maybeSingle();
 
+  /*
+   * GIFT SUBSCRIPTION
+   */
   if (gift) {
     await supabaseAdmin
       .from("gift_memberships")
@@ -971,6 +987,9 @@ async function updateSubscriptionStatus(
     return;
   }
 
+  /*
+   * REGULAR MEMBERSHIP
+   */
   await supabaseAdmin
     .from("profiles")
     .update({
@@ -1017,6 +1036,9 @@ async function cancelSubscription(
       )
       .maybeSingle();
 
+  /*
+   * GIFT SUBSCRIPTION
+   */
   if (gift) {
     const {
       data: giftDetails,
@@ -1025,7 +1047,10 @@ async function cancelSubscription(
       .select(
         "id, parent_user_id"
       )
-      .eq("id", gift.id)
+      .eq(
+        "id",
+        gift.id
+      )
       .single();
 
     await supabaseAdmin
@@ -1034,7 +1059,10 @@ async function cancelSubscription(
         status:
           "cancelled",
       })
-      .eq("id", gift.id);
+      .eq(
+        "id",
+        gift.id
+      );
 
     if (
       giftDetails?.parent_user_id
@@ -1054,6 +1082,9 @@ async function cancelSubscription(
     return;
   }
 
+  /*
+   * REGULAR MEMBERSHIP
+   */
   await supabaseAdmin
     .from("profiles")
     .update({
@@ -1093,7 +1124,8 @@ export async function POST(
     );
   }
 
-  let event: Stripe.Event;
+  let event:
+    Stripe.Event;
 
   try {
     event =
@@ -1122,6 +1154,10 @@ export async function POST(
 
   try {
     switch (event.type) {
+      /* =====================================
+         CHECKOUT COMPLETED
+      ===================================== */
+
       case "checkout.session.completed": {
         const session =
           event.data
@@ -1144,6 +1180,10 @@ export async function POST(
         break;
       }
 
+      /* =====================================
+         SUBSCRIPTION UPDATED
+      ===================================== */
+
       case "customer.subscription.updated": {
         const subscription =
           event.data
@@ -1155,6 +1195,10 @@ export async function POST(
 
         break;
       }
+
+      /* =====================================
+         SUBSCRIPTION CANCELLED
+      ===================================== */
 
       case "customer.subscription.deleted": {
         const subscription =
@@ -1188,7 +1232,8 @@ export async function POST(
 
     return NextResponse.json(
       {
-        error: message,
+        error:
+          message,
       },
       {
         status: 500,
