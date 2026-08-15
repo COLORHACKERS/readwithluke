@@ -19,10 +19,29 @@ type SavedBook = {
   }[] | null;
 };
 
+type AvatarConfig = {
+  skin: string;
+  hair: string;
+  hairColor: string;
+  shirt: string;
+  pants: string;
+  accessory: string;
+};
+
+const DEFAULT_AVATAR: AvatarConfig = {
+  skin: "medium",
+  hair: "curly",
+  hairColor: "black",
+  shirt: "orange",
+  pants: "jeans",
+  accessory: "none",
+};
+
 type Child = {
   id: string;
   name: string;
   avatar: string | null;
+  avatar_config: AvatarConfig | null;
 };
 
 export default function DashboardPage() {
@@ -33,6 +52,10 @@ export default function DashboardPage() {
 
   const [avatar, setAvatar] =
     useState("🔥");
+  const [avatarConfig, setAvatarConfig] =
+  useState<AvatarConfig>(
+    DEFAULT_AVATAR
+  );
 
   const [children, setChildren] =
     useState<Child[]>([]);
@@ -95,9 +118,9 @@ export default function DashboardPage() {
         error: childrenError,
       } = await supabase
         .from("children")
-        .select(
-          "id, name, avatar"
-        )
+       .select(
+  "id, name, avatar, avatar_config"
+)
         .eq(
           "user_id",
           user.id
@@ -186,16 +209,20 @@ export default function DashboardPage() {
         );
 
       if (activeChild) {
-        setReaderName(
-          activeChild.name ||
-            "Reader"
-        );
+       setReaderName(
+  activeChild.name ||
+    "Reader"
+);
 
-        setAvatar(
-          activeChild.avatar ||
-            "🔥"
-        );
-      }
+setAvatar(
+  activeChild.avatar ||
+    "🔥"
+);
+
+setAvatarConfig(
+  activeChild.avatar_config ||
+    DEFAULT_AVATAR
+);
 
       /* =====================================================
          ACTIVE CHILD READING STATS
@@ -550,19 +577,39 @@ export default function DashboardPage() {
   </div>
 
   <div className="dashboardStatsArea">
-    <Link
-      href="/avatar-builder"
-      className="dashboardAvatarProfile"
-      aria-label="Build your avatar"
-    >
-      <div className="dashboardAvatarCharacter">
-        {avatar}
+   <div className="dashboardAvatarArea">
+  <div
+    className="dashboardCustomAvatar"
+    data-skin={avatarConfig.skin}
+    data-hair={avatarConfig.hair}
+    data-hair-color={
+      avatarConfig.hairColor
+    }
+    data-shirt={avatarConfig.shirt}
+  >
+    <div className="dashboardAvatarHair" />
+
+    <div className="dashboardAvatarHead">
+      <div className="dashboardAvatarEyes">
+        <span />
+        <span />
       </div>
 
-      <span>
-        BUILD MY AVATAR
-      </span>
-    </Link>
+      <div className="dashboardAvatarSmile" />
+    </div>
+
+    <div className="dashboardAvatarBody">
+      <div className="dashboardAvatarShirt" />
+    </div>
+  </div>
+
+  <Link
+    href="/avatar-builder"
+    className="dashboardBuildAvatarButton"
+  >
+    BUILD MY AVATAR
+  </Link>
+</div>
 
     <div className="dashboardStats">
       <div className="dashboardStat">
