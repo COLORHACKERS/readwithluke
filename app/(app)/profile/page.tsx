@@ -28,6 +28,8 @@ export default function ProfilePage() {
   const [streak, setStreak] = useState(0);
 
   const [newPassword, setNewPassword] = useState("");
+  const [membershipStatus, setMembershipStatus] = useState("");
+const [trialEnd, setTrialEnd] = useState<string | null>(null);
 
   useEffect(() => {
     async function loadProfile() {
@@ -49,10 +51,13 @@ export default function ProfilePage() {
         .eq("id", user.id)
         .single();
 
-      if (profile) {
-        setParentFirstName(profile.first_name || "");
-        setParentLastName(profile.last_name || "");
-      }
+   if (profile) {
+  setParentFirstName(profile.first_name || "");
+  setParentLastName(profile.last_name || "");
+
+  setMembershipStatus(profile.membership_status || "");
+  setTrialEnd(profile.trial_end || null);
+}
 
       const { data: child } = await supabase
         .from("children")
@@ -197,7 +202,15 @@ export default function ProfilePage() {
     await supabase.auth.signOut();
     router.push("/");
   }
+function formatTrialEnd(date: string | null) {
+  if (!date) return "";
 
+  return new Date(date).toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+}
   return (
     <>
       <Header />
@@ -315,26 +328,47 @@ export default function ProfilePage() {
                 <button onClick={updatePassword}>Update Password</button>
               </section>
 
-              <section className="settingsCard">
-                <h2>Membership & Billing</h2>
+             <section className="settingsCard">
+  <h2>Membership & Billing</h2>
 
-                <p className="planText">Current Plan: Free Trial</p>
+  <p className="planText">
+    Current Plan:{" "}
+    {membershipStatus === "trialing"
+      ? "Free Trial"
+      : membershipStatus === "active"
+        ? "Full Membership"
+        : membershipStatus === "cancelled"
+          ? "Cancelled"
+          : "Membership"}
+  </p>
 
-                <button onClick={openBillingPortal}>Manage Billing</button>
+  {membershipStatus === "trialing" && trialEnd && (
+    <p className="trialEndDate">
+      Trial Ends:{" "}
+      <strong>{formatTrialEnd(trialEnd)}</strong>
+    </p>
+  )}
 
-                <button
-                  className="secondaryButton"
-                  onClick={() => router.push("/membership")}
-                >
-                  Upgrade Membership
-                </button>
+  <button onClick={openBillingPortal}>
+    Manage Billing
+  </button>
 
-                <br />
+  <button
+    className="secondaryButton"
+    onClick={() => router.push("/membership")}
+  >
+    Upgrade Membership
+  </button>
 
-                <button className="logoutButton" onClick={logout}>
-                  Log Out
-                </button>
-              </section>
+  <br />
+
+  <button
+    className="logoutButton"
+    onClick={logout}
+  >
+    Log Out
+  </button>
+</section>
             </div>
           </div>
         </section>
