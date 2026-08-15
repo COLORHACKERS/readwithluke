@@ -502,7 +502,7 @@ export default function DashboardPage() {
             </p>
           </div>
 
-         <div className="dashboardWelcome">
+       <div className="dashboardWelcome">
   <div className="dashboardReaderSide">
     <div>
       <h2>
@@ -597,100 +597,6 @@ export default function DashboardPage() {
     </div>
   </div>
 </div>
-
-                <div>
-                  <h2>
-                    WELCOME BACK,{" "}
-                    {readerName.toUpperCase()}!
-                  </h2>
-
-                  <div className="dashboardReaderSelector">
-                    <span>
-                      CURRENT READER
-                    </span>
-
-                    <div className="dashboardReaderSelectRow">
-                      <select
-                        value={
-                          activeChildId
-                        }
-                        onChange={(
-                          event
-                        ) =>
-                          switchReader(
-                            event
-                              .target
-                              .value
-                          )
-                        }
-                        disabled={
-                          switchingReader
-                        }
-                      >
-                        {children.map(
-                          (child) => (
-                            <option
-                              key={
-                                child.id
-                              }
-                              value={
-                                child.id
-                              }
-                            >
-                              {child.avatar ||
-                                "📚"}{" "}
-                              {
-                                child.name
-                              }
-                            </option>
-                          )
-                        )}
-                      </select>
-
-                      <Link
-                        href="/reader-setup"
-                        className="dashboardAddReader"
-                      >
-                        + ADD READER
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="dashboardStats">
-              <div className="dashboardStat">
-                <strong>
-                  🪙 {coins}
-                </strong>
-
-                <span>
-                  coins
-                </span>
-              </div>
-
-              <div className="dashboardStat">
-                <strong>
-                  {completedCount}
-                </strong>
-
-                <span>
-                  completed
-                </span>
-              </div>
-
-              <div className="dashboardStat">
-                <strong>
-                  🔥 {streak}
-                </strong>
-
-                <span>
-                  day streak
-                </span>
-              </div>
-            </div>
-          </div>
 
           <section className="dashboardPanel">
             <div className="dashboardCard">
