@@ -3,23 +3,33 @@ import Stripe from "stripe";
 
 type ReaderPlan =
   | "monthly"
-  | "yearly"
   | "partner30";
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
 
-    const email = String(body.email ?? "")
+    const email = String(
+      body.email ?? ""
+    )
       .trim()
       .toLowerCase();
 
+    /* =========================================
+       PLAN
+    ========================================= */
+
     const selectedPlan: ReaderPlan =
-      body.plan === "yearly"
-        ? "yearly"
-        : body.plan === "partner30"
-          ? "partner30"
-          : "monthly";
+      body.plan === "partner30"
+        ? "partner30"
+        : "monthly";
+
+    const isPartner30 =
+      selectedPlan === "partner30";
+
+    /* =========================================
+       ENVIRONMENT VARIABLES
+    ========================================= */
 
     const secretKey =
       process.env.STRIPE_SECRET_KEY;
@@ -28,13 +38,14 @@ export async function POST(request: Request) {
       process.env.STRIPE_MONTHLY_PRICE_ID ||
       process.env.NEXT_PUBLIC_STRIPE_PRICE_ID;
 
-    const yearlyPriceId =
-      process.env.STRIPE_YEARLY_PRICE_ID;
-
     const siteUrl = (
       process.env.NEXT_PUBLIC_SITE_URL ||
       "https://www.readwithluke.com"
     ).replace(/\/$/, "");
+
+    /* =========================================
+       VALIDATION
+    ========================================= */
 
     if (!secretKey) {
       throw new Error(
@@ -55,103 +66,109 @@ export async function POST(request: Request) {
     }
 
     if (
-      selectedPlan === "yearly" &&
-      !yearlyPriceId
+      !monthlyPriceId.startsWith(
+        "price_"
+      )
     ) {
       throw new Error(
-        "Missing STRIPE_YEARLY_PRICE_ID"
+        "STRIPE_MONTHLY_PRICE_ID must contain a Stripe Price ID beginning with price_."
       );
     }
 
-    const isYearly =
-      selectedPlan === "yearly";
-
-    const isPartner30 =
-      selectedPlan === "partner30";
-
-    const priceId = isYearly
-      ? yearlyPriceId
-      : monthlyPriceId;
-
-    if (!priceId) {
-      throw new Error(
-        "Unable to determine the Stripe price."
-      );
-    }
-
-    if (!priceId.startsWith("price_")) {
-      throw new Error(
-        "The Stripe environment variable must contain a Price ID beginning with price_."
-      );
-    }
+    /* =========================================
+       STRIPE
+    ========================================= */
 
     const stripe =
       new Stripe(secretKey);
 
+    /*
+     * NORMAL MEMBER:
+     * 7 days free → $4.99/month
+     *
+     * PARTNER:
+     * 30 days free → $4.99/month
+     */
     const trialDays =
       isPartner30 ? 30 : 7;
 
     const subscriptionData: Stripe.Checkout.SessionCreateParams.SubscriptionData =
       {
+        trial_period_days:
+          trialDays,
+
         metadata: {
           email,
-          plan: selectedPlan,
+          plan:
+            selectedPlan,
         },
-
-        ...(!isYearly
-          ? {
-              trial_period_days:
-                trialDays,
-            }
-          : {}),
       };
+
+    /* =========================================
+       CREATE CHECKOUT
+    ========================================= */
 
     const session =
       await stripe.checkout.sessions.create({
         /*
-         * EMBED STRIPE DIRECTLY
-         * INSIDE READ WITH LUKE
+         * Stripe checkout is embedded
+         * directly inside Read With Luke.
          */
-        ui_mode: "embedded_page",
+        ui_mode:
+          "embedded_page",
 
-        mode: "subscription",
-
-        customer_email: email,
+        mode:
+          "subscription",
 
         /*
-         * Collect card information
-         * even though today's charge
-         * is $0 during the trial.
+         * The monthly $4.99 Stripe price
+         * is used for BOTH normal members
+         * and Partner Pass members.
+         *
+         * The only difference is
+         * the trial length.
+         */
+        line_items: [
+          {
+            price:
+              monthlyPriceId,
+
+            quantity:
+              1,
+          },
+        ],
+
+        customer_email:
+          email,
+
+        /*
+         * Collect the payment method
+         * during the free trial.
          */
         payment_method_collection:
           "always",
-
-        line_items: [
-          {
-            price: priceId,
-            quantity: 1,
-          },
-        ],
 
         subscription_data:
           subscriptionData,
 
         metadata: {
           email,
-          plan: selectedPlan,
+          plan:
+            selectedPlan,
         },
 
         /*
-         * Embedded Checkout uses
-         * return_url instead of
-         * success_url / cancel_url.
+         * After Stripe checkout,
+         * continue account creation.
          */
         return_url:
           `${siteUrl}/complete-signup` +
           `?session_id={CHECKOUT_SESSION_ID}`,
       });
 
-    if (!session.client_secret) {
+    if (
+      !session.client_secret
+    ) {
       throw new Error(
         "Stripe did not return an embedded checkout client secret."
       );
@@ -174,10 +191,12 @@ export async function POST(request: Request) {
 
     return NextResponse.json(
       {
-        error: message,
+        error:
+          message,
       },
       {
-        status: 500,
+        status:
+          500,
       }
     );
   }
