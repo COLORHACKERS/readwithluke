@@ -124,6 +124,13 @@ export default function Header() {
   >
     Learn To Read
   </Link>
+
+      <Link
+    href="/about"
+    className={active("/about") ? "active" : ""}
+  >
+    About
+  </Link>
 </nav>
         <div className="headerRight">
           {initials ? (
