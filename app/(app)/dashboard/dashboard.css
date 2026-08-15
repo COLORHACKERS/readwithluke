@@ -370,3 +370,286 @@
     min-width: 0;
   }
 }
+/* =========================================================
+   DASHBOARD CUSTOM AVATAR
+========================================================= */
+
+.dashboardStatsArea {
+  position: relative;
+
+  padding-top: 105px;
+}
+
+.dashboardAvatarArea {
+  position: absolute;
+
+  top: -40px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  z-index: 5;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* CHARACTER */
+
+.dashboardCustomAvatar {
+  position: relative;
+
+  width: 125px;
+  height: 150px;
+
+  filter: drop-shadow(
+    0 10px 12px rgba(0, 0, 0, 0.15)
+  );
+}
+
+/* HEAD */
+
+.dashboardAvatarHead {
+  position: absolute;
+
+  top: 32px;
+  left: 50%;
+
+  width: 82px;
+  height: 88px;
+
+  transform: translateX(-50%);
+
+  border-radius:
+    47% 47% 44% 44% /
+    42% 42% 54% 54%;
+
+  background: #b9774b;
+
+  z-index: 2;
+}
+
+/* SKIN */
+
+.dashboardCustomAvatar[data-skin="light"]
+.dashboardAvatarHead {
+  background: #f2c39f;
+}
+
+.dashboardCustomAvatar[data-skin="medium-light"]
+.dashboardAvatarHead {
+  background: #d99a6c;
+}
+
+.dashboardCustomAvatar[data-skin="medium"]
+.dashboardAvatarHead {
+  background: #b9774b;
+}
+
+.dashboardCustomAvatar[data-skin="medium-dark"]
+.dashboardAvatarHead {
+  background: #8a5136;
+}
+
+.dashboardCustomAvatar[data-skin="dark"]
+.dashboardAvatarHead {
+  background: #653a29;
+}
+
+/* EYES */
+
+.dashboardAvatarEyes {
+  position: absolute;
+
+  top: 35px;
+  left: 50%;
+
+  width: 44px;
+
+  display: flex;
+  justify-content: space-between;
+
+  transform: translateX(-50%);
+}
+
+.dashboardAvatarEyes span {
+  width: 10px;
+  height: 13px;
+
+  border-radius: 50%;
+
+  background: #111111;
+}
+
+/* SMILE */
+
+.dashboardAvatarSmile {
+  position: absolute;
+
+  left: 50%;
+  bottom: 18px;
+
+  width: 30px;
+  height: 13px;
+
+  transform: translateX(-50%);
+
+  border-bottom: 5px solid #401e18;
+  border-radius: 0 0 50% 50%;
+}
+
+/* HAIR */
+
+.dashboardAvatarHair {
+  position: absolute;
+
+  top: 14px;
+  left: 50%;
+
+  width: 98px;
+  height: 60px;
+
+  transform: translateX(-50%);
+
+  border-radius: 48%;
+
+  background: #171313;
+
+  z-index: 3;
+}
+
+.dashboardCustomAvatar[data-hair="short"]
+.dashboardAvatarHair {
+  height: 45px;
+  width: 88px;
+}
+
+.dashboardCustomAvatar[data-hair="waves"]
+.dashboardAvatarHair {
+  width: 95px;
+  height: 52px;
+}
+
+.dashboardCustomAvatar[data-hair="coils"]
+.dashboardAvatarHair {
+  width: 105px;
+  height: 68px;
+}
+
+.dashboardCustomAvatar[data-hair="long"]
+.dashboardAvatarHair {
+  width: 100px;
+  height: 108px;
+}
+
+/* HAIR COLOR */
+
+.dashboardCustomAvatar[data-hair-color="black"]
+.dashboardAvatarHair {
+  background: #171313;
+}
+
+.dashboardCustomAvatar[data-hair-color="brown"]
+.dashboardAvatarHair {
+  background: #5b3424;
+}
+
+.dashboardCustomAvatar[data-hair-color="blonde"]
+.dashboardAvatarHair {
+  background: #d9a835;
+}
+
+.dashboardCustomAvatar[data-hair-color="auburn"]
+.dashboardAvatarHair {
+  background: #8a3c22;
+}
+
+/* BODY */
+
+.dashboardAvatarBody {
+  position: absolute;
+
+  top: 110px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  z-index: 1;
+}
+
+.dashboardAvatarShirt {
+  width: 88px;
+  height: 52px;
+
+  border-radius: 25px 25px 10px 10px;
+
+  background: #ff5526;
+}
+
+.dashboardCustomAvatar[data-shirt="blue"]
+.dashboardAvatarShirt {
+  background: #3472ae;
+}
+
+.dashboardCustomAvatar[data-shirt="green"]
+.dashboardAvatarShirt {
+  background: #39a85a;
+}
+
+.dashboardCustomAvatar[data-shirt="space"]
+.dashboardAvatarShirt {
+  background: #162f59;
+}
+
+.dashboardCustomAvatar[data-shirt="dino"]
+.dashboardAvatarShirt {
+  background: #3b9851;
+}
+
+/* =========================================================
+   BUILD AVATAR BUTTON
+========================================================= */
+
+.dashboardBuildAvatarButton {
+  margin-top: 5px;
+
+  min-width: 175px;
+  height: 38px;
+
+  padding: 0 18px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 999px;
+
+  background: #ff5526;
+  color: #ffffff;
+
+  box-shadow:
+    0 8px 18px rgba(255, 85, 38, 0.23);
+
+  font-family:
+    "DK Woolwich",
+    Impact,
+    sans-serif;
+
+  font-size: 16px;
+  font-weight: 400;
+
+  text-decoration: none;
+  text-transform: uppercase;
+
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.dashboardBuildAvatarButton:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 11px 22px rgba(255, 85, 38, 0.3);
+}
