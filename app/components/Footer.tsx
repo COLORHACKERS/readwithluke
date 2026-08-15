@@ -137,11 +137,11 @@ const [newsletterStatus, setNewsletterStatus] = useState<
           Privacy • Terms
         </div>
 
-          <div>
-            Read With Luke © 2026
-            <br />
-            All rights reserved.
-          </div>
+       <div className="footerCopyright">
+  Read With Luke © 2026
+  <br />
+  All rights reserved.
+</div>
         </div>
 
         <div className="footerSocials">
