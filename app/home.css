@@ -156,7 +156,7 @@ html {
   margin: 0;
 
   font-family: "Courier New", Courier, monospace;
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 700;
   line-height: 1.52;
 
@@ -189,7 +189,7 @@ html {
   border-radius: 999px;
 
   font-family: "DK Woolwich", Impact, sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 400;
   line-height: 1;
   letter-spacing: 0.02em;
@@ -871,7 +871,7 @@ html {
   color: var(--home-text);
 
   font-family: "DK Woolwich", Impact, sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   text-decoration: none;
   text-transform: uppercase;
 }
@@ -1203,7 +1203,7 @@ html {
   padding-left: 27px;
 
   font-family: "Courier New", Courier, monospace;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
   line-height: 1.35;
 }
@@ -1279,7 +1279,7 @@ html {
   margin-top: 7px;
 
   font-family: "Courier New", Courier, monospace;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 
@@ -1672,7 +1672,7 @@ html {
 
 .insideBenefitItem strong {
   max-width: 145px;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.2;
 }
   .homeBookPreview {
