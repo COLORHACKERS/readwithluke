@@ -397,7 +397,7 @@ setAvatarConfig(
           likes as SavedBook[]
         );
       }
-    }
+
 
     loadDashboard();
   }, [router]);
