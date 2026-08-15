@@ -677,3 +677,76 @@
   color: #171717;
   font-size: 14px;
 }
+.giftPlanSelector {
+  width: 100%;
+  margin: 22px 0 26px;
+
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.giftPlanOption {
+  min-height: 115px;
+  padding: 16px 12px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  border: 2px solid #d8c5a8;
+  border-radius: 18px;
+
+  background: #fffaf0;
+  color: #123a60;
+
+  cursor: pointer;
+
+  transition:
+    border-color 180ms ease,
+    background 180ms ease,
+    transform 180ms ease;
+}
+
+.giftPlanOption:hover {
+  transform: translateY(-2px);
+  border-color: #ff5526;
+}
+
+.giftPlanOption.active {
+  border-color: #ff5526;
+  background: #fff1e8;
+}
+
+.giftPlanOption span {
+  margin-bottom: 5px;
+
+  color: #ff5526;
+
+  font-family: "Courier New", monospace;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+.giftPlanOption strong {
+  font-family: "DK Woolwich", Impact, sans-serif;
+  font-size: 34px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.giftPlanOption small {
+  margin-top: 4px;
+
+  font-family: "Courier New", monospace;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+@media (max-width: 600px) {
+  .giftPlanSelector {
+    grid-template-columns: 1fr;
+  }
+}
