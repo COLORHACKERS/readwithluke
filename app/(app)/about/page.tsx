@@ -41,7 +41,7 @@ export default function AboutPage() {
 
           <div className="aboutHeroImage">
             <img
-              src="/images/Luke-membership.png"
+              src="/images/luke-membership.png"
               alt="Luke from Read With Luke"
             />
           </div>
