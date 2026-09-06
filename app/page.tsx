@@ -147,9 +147,9 @@ export default function Home() {
         </div>
 
         <h1>
-          BOOKS
+          FUN BOOKS
           <br />
-          LIKE MOVIES!
+          FOR KIDS!
         </h1>
 
         <p>
