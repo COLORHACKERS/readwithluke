@@ -154,7 +154,7 @@ export default function Home() {
 
         <p>
           Cinematic stories created to make kids want to turn
-          one more page — and then one more.
+          one more page — and then one more with an audio read-along with Luke feature.
         </p>
 
         <div className="homeMovieActions">
