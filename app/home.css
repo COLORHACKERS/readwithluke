@@ -2063,30 +2063,29 @@ html {
   }
 }
 /* =========================================================
-   CINEMATIC MOVIE HERO
+   FULL-BLEED CINEMATIC HERO
 ========================================================= */
 
 .homeMovieHero {
   position: relative;
 
-  width: calc(100% - 92px);
-  max-width: 1368px;
-  height: clamp(590px, 68vw, 760px);
+  width: 100%;
+  max-width: none;
+  height: clamp(650px, 72vh, 820px);
 
-  margin: 48px auto 42px;
+  margin: 0;
 
   overflow: hidden;
 
-  border: 3px solid #ffffff;
-  border-radius: 28px;
+  border: none;
+  border-radius: 0;
 
   background: #050505;
 
-  box-shadow:
-    0 24px 70px rgba(0, 0, 0, 0.24);
+  box-shadow: none;
 }
 
-/* FULL HERO IMAGE */
+/* FULL IMAGE FILLS ENTIRE HERO */
 
 .homeMovieHeroImage {
   position: absolute;
@@ -2098,10 +2097,12 @@ html {
   object-fit: cover;
   object-position: center center;
 
+  display: block;
+
   z-index: 0;
 }
 
-/* CINEMATIC DARKENING */
+/* DARK OVERLAY SO COPY STAYS READABLE */
 
 .homeMovieHeroShade {
   position: absolute;
@@ -2112,30 +2113,29 @@ html {
   background:
     linear-gradient(
       90deg,
-      rgba(3, 13, 24, 0.96) 0%,
-      rgba(3, 13, 24, 0.82) 31%,
-      rgba(3, 13, 24, 0.42) 55%,
-      rgba(3, 13, 24, 0.08) 78%,
-      rgba(3, 13, 24, 0.14) 100%
+      rgba(2, 12, 22, 0.88) 0%,
+      rgba(2, 12, 22, 0.72) 30%,
+      rgba(2, 12, 22, 0.35) 52%,
+      rgba(2, 12, 22, 0.08) 78%,
+      rgba(2, 12, 22, 0.03) 100%
     ),
     linear-gradient(
       0deg,
-      rgba(3, 13, 24, 0.52) 0%,
-      transparent 35%
+      rgba(2, 12, 22, 0.45) 0%,
+      rgba(2, 12, 22, 0) 42%
     );
 }
-
 /* COPY */
 
 .homeMovieHeroContent {
   position: absolute;
 
-  left: clamp(36px, 5vw, 76px);
+  left: clamp(70px, 7vw, 130px);
   top: 50%;
 
   transform: translateY(-50%);
 
-  width: min(570px, 48%);
+  width: min(600px, 46%);
 
   z-index: 3;
 
@@ -2279,19 +2279,19 @@ html {
 .homeMovieBottom {
   position: absolute;
 
-  left: clamp(36px, 5vw, 76px);
-  right: clamp(36px, 5vw, 76px);
-  bottom: 26px;
+  left: clamp(70px, 7vw, 130px);
+  right: clamp(70px, 7vw, 130px);
+  bottom: 34px;
 
   z-index: 3;
 
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 28px;
 
   padding-top: 18px;
 
-  border-top: 1px solid rgba(255, 255, 255, 0.26);
+  border-top: 1px solid rgba(255, 255, 255, 0.28);
 
   font-family:
     "Courier New",
