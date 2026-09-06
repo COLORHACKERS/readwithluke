@@ -5,9 +5,20 @@
   font-style: normal;
 }
 
+/* =========================================================
+   GLOBAL VARIABLES
+========================================================= */
+
 :root {
   --home-max-width: 1368px;
-  --home-edge-space: 48px;
+
+  /*
+    IMPORTANT:
+    This is the master side spacing for the homepage.
+    Hero copy, content sections and navigation should use
+    the same max width / side spacing.
+  */
+  --home-side-space: 48px;
 
   --home-navy: #123a60;
   --home-dark-navy: #062845;
@@ -29,195 +40,386 @@ html {
 .homePage {
   width: 100%;
   min-height: 100vh;
+
   overflow-x: hidden;
+
   color: var(--home-text);
-  background: #071521;
+  background: #000000;
 }
 
 /* =========================================================
-   ONE SHARED WIDTH FOR THE ENTIRE HOMEPAGE
+   MASTER HOMEPAGE ALIGNMENT
 ========================================================= */
 
-.homeHeroInner,
+/*
+  Use .homeAlign around anything that needs to line up
+  with the navigation bar.
+
+  This is especially important for BOOKS LIKE MOVIES.
+*/
+
+.homeAlign {
+  width: calc(100% - (var(--home-side-space) * 2));
+  max-width: var(--home-max-width);
+
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Major homepage panels use the exact same outside grid */
+
 .homeContentShell,
 .homeTrustSection,
 .homeMembershipSection {
-  width: calc(100% - var(--home-edge-space));
+  width: calc(100% - (var(--home-side-space) * 2));
   max-width: var(--home-max-width);
+
   margin-left: auto;
   margin-right: auto;
 }
 
 /* =========================================================
-   HERO
+   FULL-BLEED CINEMATIC HERO
 ========================================================= */
 
-.homeHero {
+.homeMovieHero {
   position: relative;
+
   width: 100%;
-  min-height: 760px;
+  height: clamp(650px, 72vh, 820px);
+
+  margin: 0;
+
   overflow: hidden;
 
-  display: flex;
-  align-items: center;
-
-  padding: 112px 0 76px;
-   position: relative;
-  overflow: hidden;
+  background: #000000;
 }
 
-.homeHero::after {
-  content: "";
+/* FULL SUPABASE IMAGE / GIF */
 
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -1px;
-
-  height: 340px;
-
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0) 0%,
-    rgba(0, 0, 0, 0.08) 20%,
-    rgba(0, 0, 0, 0.28) 45%,
-    rgba(0, 0, 0, 0.7) 75%,
-    #000 100%
-  );
-
-  pointer-events: none;
-  z-index: 2;
-}
-
-.homeHeroBackground {
+.homeMovieHeroImage {
   position: absolute;
   inset: 0;
+
   z-index: 0;
+
+  display: block;
 
   width: 100%;
   height: 100%;
 
   object-fit: cover;
-  object-position: center center;
+
+  /*
+    Move this percentage if we need to shift
+    the character horizontally.
+  */
+  object-position: 58% center;
 }
 
-.homeHeroOverlay {
+/* LEFT-SIDE DARKENING */
+
+.homeMovieHeroShade {
   position: absolute;
   inset: 0;
+
   z-index: 1;
+
+  pointer-events: none;
 
   background:
     linear-gradient(
       90deg,
-      rgba(5, 22, 36, 0.73) 0%,
-      rgba(5, 22, 36, 0.51) 35%,
-      rgba(5, 22, 36, 0.2) 70%,
-      rgba(5, 22, 36, 0.08) 100%
-    ),
-    linear-gradient(
-      180deg,
-      rgba(3, 13, 22, 0.08) 0%,
-      rgba(3, 13, 22, 0.12) 48%,
-      rgba(3, 13, 22, 0.58) 100%
+      rgba(2, 12, 22, 0.91) 0%,
+      rgba(2, 12, 22, 0.78) 25%,
+      rgba(2, 12, 22, 0.51) 45%,
+      rgba(2, 12, 22, 0.18) 68%,
+      rgba(2, 12, 22, 0.04) 100%
     );
 }
 
-.homeHeroInner {
-  position: relative;
+/* BOTTOM BLACK FADE */
+
+.homeMovieHero::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  bottom: -1px;
+
   z-index: 2;
 
-  display: grid;
-  grid-template-columns: minmax(430px, 0.82fr) minmax(600px, 1.18fr);
-  align-items: center;
-  gap: 48px;
+  height: 300px;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.05) 18%,
+      rgba(0, 0, 0, 0.18) 38%,
+      rgba(0, 0, 0, 0.48) 67%,
+      rgba(0, 0, 0, 0.82) 86%,
+      #000000 100%
+    );
 }
 
-/* HERO LEFT SIDE */
+/* THE ALIGNMENT CONTAINER INSIDE HERO */
 
-.homeHeroCopy {
-  min-width: 0;
+.homeMovieHeroInner {
+  position: relative;
+
+  z-index: 3;
+
+  height: 100%;
+}
+
+/* =========================================================
+   HERO COPY
+========================================================= */
+
+.homeMovieHeroContent {
+  position: absolute;
+
+  /*
+    IMPORTANT:
+    left is ZERO because the PARENT is already aligned
+    to the navigation grid.
+  */
+  left: 0;
+  top: 48%;
+
+  width: min(610px, 48%);
+
+  transform: translateY(-50%);
+
   color: #ffffff;
 }
 
-.homeHeroCopy h1 {
-  width: 100%;
+/* EYEBROW */
+
+.homeMovieEyebrow {
+  display: inline-flex;
+  align-items: center;
+
+  margin-bottom: 22px;
+  padding: 10px 16px;
+
+  border-radius: 7px;
+
+  color: #071b31;
+  background: var(--home-yellow);
+
+  font-family:
+    "DK Woolwich",
+    Impact,
+    sans-serif;
+
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1;
+
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+/* MAIN HERO TITLE */
+
+.homeMovieHeroContent h1 {
   max-width: 610px;
+
   margin: 0;
 
-  font-family: "DK Woolwich", Impact, sans-serif;
-  font-size: clamp(50px, 4.25vw, 70px);
+  color: #ffffff;
+
+  font-family:
+    "DK Woolwich",
+    Impact,
+    sans-serif;
+
+  font-size: clamp(76px, 7vw, 122px);
   font-weight: 400;
-  line-height: 0.96;
-  letter-spacing: 0.005em;
+  line-height: 0.83;
+
+  letter-spacing: -0.015em;
   text-transform: uppercase;
 
   text-shadow:
-    0 4px 12px rgba(0, 0, 0, 0.28),
-    0 8px 22px rgba(0, 0, 0, 0.18);
+    0 5px 0 rgba(0, 0, 0, 0.12),
+    0 13px 32px rgba(0, 0, 0, 0.24);
 }
 
-.homeHeroUnderline {
-  width: 230px;
-  height: 10px;
-  margin: 17px 0 18px;
+/* HERO DESCRIPTION */
 
-  border-radius: 999px;
-  background: var(--home-yellow);
+.homeMovieHeroContent p {
+  max-width: 530px;
 
-  transform: rotate(-1.2deg);
+  margin: 28px 0 0;
 
-  clip-path: polygon(
-    0 30%,
-    94% 0,
-    100% 43%,
-    93% 82%,
-    7% 100%
-  );
-}
+  color: #ffffff;
 
-.homeHeroCopy > p {
-  width: 100%;
-  max-width: 540px;
-  margin: 0;
+  font-family:
+    "Courier New",
+    Courier,
+    monospace;
 
-  font-family: "Courier New", Courier, monospace;
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 700;
-  line-height: 1.52;
+  line-height: 1.55;
 
-  text-shadow: 0 2px 9px rgba(0, 0, 0, 0.55);
+  text-shadow:
+    0 2px 12px rgba(0, 0, 0, 0.48);
 }
 
-.homeHeroButtons {
+/* =========================================================
+   HERO BUTTONS
+========================================================= */
+
+.homeMovieActions {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 13px;
 
-  margin-top: 23px;
+  gap: 14px;
+
+  margin-top: 30px;
 }
 
-.homePrimaryButton,
-.homeSecondaryButton,
-.heroFeatureButton,
+.homeMoviePrimary,
+.homeMovieSecondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 50px;
+
+  padding: 0 24px;
+
+  border-radius: 999px;
+
+  font-family:
+    "DK Woolwich",
+    Impact,
+    sans-serif;
+
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1;
+
+  text-decoration: none;
+  text-transform: uppercase;
+
+  transition:
+    transform 160ms ease,
+    background-color 160ms ease,
+    color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.homeMoviePrimary {
+  border: 2px solid var(--home-orange);
+
+  color: #ffffff;
+  background: var(--home-orange);
+
+  box-shadow:
+    0 10px 24px rgba(255, 78, 43, 0.22);
+}
+
+.homeMoviePrimary:hover {
+  transform: translateY(-3px);
+
+  background: #ff6545;
+  box-shadow:
+    0 14px 28px rgba(255, 78, 43, 0.3);
+}
+
+.homeMovieSecondary {
+  border: 2px solid #ffffff;
+
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.18);
+
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.homeMovieSecondary:hover {
+  transform: translateY(-3px);
+
+  color: #071b31;
+  background: #ffffff;
+}
+
+/* =========================================================
+   HERO BOTTOM INFORMATION BAR
+========================================================= */
+
+.homeMovieBottom {
+  position: absolute;
+
+  /*
+    Also ZERO because this lives inside homeAlign.
+  */
+  left: 0;
+  right: 0;
+  bottom: 34px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 28px;
+
+  padding-top: 18px;
+
+  border-top:
+    1px solid rgba(255, 255, 255, 0.28);
+
+  color: var(--home-yellow);
+
+  font-family:
+    "Courier New",
+    Courier,
+    monospace;
+
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* =========================================================
+   SHARED BUTTON STYLES
+========================================================= */
+
 .homeWorldButton,
 .freePlanButton,
 .paidPlanButton {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+
   gap: 9px;
 
   min-height: 47px;
+
   padding: 0 20px;
 
   border-radius: 999px;
 
-  font-family: "DK Woolwich", Impact, sans-serif;
+  font-family:
+    "DK Woolwich",
+    Impact,
+    sans-serif;
+
   font-size: 16px;
   font-weight: 400;
   line-height: 1;
+
   letter-spacing: 0.02em;
+
   text-decoration: none;
   text-transform: uppercase;
 
@@ -227,227 +429,10 @@ html {
     background-color 180ms ease;
 }
 
-.homePrimaryButton {
-  border: 2px solid var(--home-orange);
-  color: #ffffff;
-  background: var(--home-orange);
-  box-shadow: 0 9px 22px rgba(111, 34, 17, 0.25);
-}
-
-.homeSecondaryButton {
-  border: 2px solid rgba(255, 255, 255, 0.95);
-  color: #ffffff;
-  background: rgba(5, 24, 39, 0.38);
-
-  backdrop-filter: blur(7px);
-  -webkit-backdrop-filter: blur(7px);
-}
-
-.homePrimaryButton:hover,
-.homeSecondaryButton:hover,
-.heroFeatureButton:hover,
 .homeWorldButton:hover,
 .freePlanButton:hover,
 .paidPlanButton:hover {
   transform: translateY(-3px);
-}
-
-.buttonIcon {
-  color: var(--home-yellow);
-  font-family: Arial, sans-serif;
-  font-size: 16px;
-  line-height: 1;
-}
-
-.playIcon {
-  display: grid;
-  place-items: center;
-  flex: 0 0 auto;
-
-  width: 25px;
-  height: 25px;
-
-  border-radius: 50%;
-
-  color: var(--home-orange);
-  background: #ffffff;
-
-  font-family: Arial, sans-serif;
-  font-size: 12px;
-}
-
-.homeHeroNote {
-  display: grid;
-  gap: 3px;
-
-  margin-top: 15px;
-
-  font-family: "Courier New", Courier, monospace;
-  font-size: 14px;
-  font-weight: 700;
-  line-height: 1.35;
-
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.58);
-}
-
-.homeHeroNote strong {
-  color: var(--home-yellow);
-}
-
-.homeHeroNote span {
-  color: rgba(255, 255, 255, 0.94);
-}
-
-/* HERO FEATURED BOOK */
-
-.heroFeaturedBook {
-  position: relative;
-  display: block;
-
-  width: 100%;
-  min-height: 500px;
-  overflow: hidden;
-
-  border: 3px solid rgba(255, 255, 255, 0.96);
-  border-radius: 26px;
-
-  color: #ffffff;
-  text-decoration: none;
-  background: #07131e;
-
-  box-shadow:
-    0 27px 58px rgba(0, 0, 0, 0.37),
-    0 7px 18px rgba(0, 0, 0, 0.18);
-
-  isolation: isolate;
-}
-
-.heroFeaturedBook > img {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-
-  width: 100%;
-  height: 100%;
-
-  object-fit: cover;
-  object-position: center center;
-
-  transition: transform 650ms ease;
-}
-
-.heroFeaturedBook:hover > img {
-  transform: scale(1.025);
-}
-
-.heroFeaturedShade {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-
-  background:
-    linear-gradient(
-      90deg,
-      rgba(3, 11, 17, 0.98) 0%,
-      rgba(3, 11, 17, 0.91) 31%,
-      rgba(3, 11, 17, 0.66) 48%,
-      rgba(3, 11, 17, 0.18) 72%,
-      rgba(3, 11, 17, 0.03) 100%
-    ),
-    linear-gradient(
-      180deg,
-      rgba(0, 0, 0, 0.02) 35%,
-      rgba(0, 0, 0, 0.58) 100%
-    );
-}
-
-.heroFeaturedContent {
-  position: relative;
-  z-index: 2;
-
-  width: 49%;
-  min-width: 315px;
-  padding: 32px 0 30px 32px;
-}
-
-.heroFeatureBadge {
-  display: inline-flex;
-  align-items: center;
-
-  max-width: 100%;
-  margin-bottom: 19px;
-  padding: 7px 13px;
-
-  border-radius: 4px;
-
-  color: #161616;
-  background: var(--home-yellow);
-
-  font-family: "DK Woolwich", Impact, sans-serif;
-  font-size: 14px;
-  line-height: 1;
-  letter-spacing: 0.025em;
-  text-transform: uppercase;
-}
-
-.heroFeaturedContent h2 {
-  max-width: 410px;
-  margin: 0;
-
-  font-family: "DK Woolwich", Impact, sans-serif;
-  font-size: clamp(36px, 3.15vw, 53px);
-  font-weight: 400;
-  line-height: 0.95;
-  letter-spacing: 0.005em;
-  text-transform: uppercase;
-
-  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.46);
-}
-
-.heroFeaturedContent p {
-  max-width: 365px;
-  margin: 18px 0 19px;
-
-  font-family: "Courier New", Courier, monospace;
-  font-size: 14px;
-  font-weight: 700;
-  line-height: 1.5;
-
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.65);
-}
-
-.heroFeatureButton {
-  min-height: 44px;
-  padding: 0 19px;
-
-  color: #ffffff;
-  background: var(--home-orange);
-
-  font-size: 13px;
-
-  box-shadow: 0 8px 18px rgba(114, 33, 16, 0.28);
-}
-
-.heroFeatureMeta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 14px;
-
-  margin-top: 16px;
-
-  font-family: "Courier New", Courier, monospace;
-  font-size: 12px;
-  font-weight: 700;
-  line-height: 1.3;
-}
-
-.heroFeatureMeta span:first-child {
-  color: var(--home-yellow);
-}
-
-.heroFeatureMeta span:last-child {
-  color: rgba(255, 255, 255, 0.95);
 }
 
 /* =========================================================
@@ -455,11 +440,15 @@ html {
 ========================================================= */
 
 .homeContentShell {
-  width: min(1368px, calc(100% - 44px));
-  margin: -40px auto 0;
-  padding: 42px 24px 70px;
   position: relative;
-  z-index: 3;
+
+  z-index: 4;
+
+  margin-top: -38px;
+
+  padding: 42px 24px 70px;
+
+  border-radius: 38px;
 
   background:
     linear-gradient(
@@ -468,9 +457,6 @@ html {
       #f8f1e6 55%,
       #f3e8d5 100%
     );
-
-  border-radius: 38px;
-  box-sizing: border-box;
 }
 
 /* =========================================================
@@ -485,6 +471,7 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
+
   gap: 13px;
 
   margin-bottom: 19px;
@@ -494,38 +481,49 @@ html {
 
 .homeCenteredHeading span {
   color: var(--home-yellow);
+
   font-size: 22px;
 }
 
 .homeCenteredHeading h2 {
   margin: 0;
 
-  font-family: "DK Woolwich", Impact, sans-serif;
+  font-family:
+    "DK Woolwich",
+    Impact,
+    sans-serif;
+
   font-size: clamp(29px, 2.8vw, 43px);
   font-weight: 400;
   line-height: 1;
+
   text-align: center;
   text-transform: uppercase;
 }
 
 .homeWorldGrid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
   gap: 14px;
 }
 
 .homeWorldCard {
   position: relative;
+
   display: block;
 
   min-height: 285px;
+
   overflow: hidden;
 
   border-radius: 21px;
 
   color: #ffffff;
-  text-decoration: none;
   background: var(--home-dark-navy);
+
+  text-decoration: none;
 }
 
 .homeWorldCard > img {
@@ -538,7 +536,8 @@ html {
   object-fit: cover;
   object-position: center;
 
-  transition: transform 600ms ease;
+  transition:
+    transform 600ms ease;
 }
 
 .homeWorldCard:hover > img {
@@ -565,6 +564,7 @@ html {
 
 .homeWorldContent {
   position: relative;
+
   z-index: 2;
 
   width: 56%;
@@ -576,17 +576,26 @@ html {
 .homeWorldContent h3 {
   margin: 0 0 12px;
 
-  font-family: "DK Woolwich", Impact, sans-serif;
+  font-family:
+    "DK Woolwich",
+    Impact,
+    sans-serif;
+
   font-size: clamp(33px, 3vw, 47px);
   font-weight: 400;
   line-height: 0.95;
+
   text-transform: uppercase;
 }
 
 .homeWorldContent p {
   margin: 0 0 20px;
 
-  font-family: "Courier New", Courier, monospace;
+  font-family:
+    "Courier New",
+    Courier,
+    monospace;
+
   font-size: 15px;
   font-weight: 700;
   line-height: 1.5;
@@ -594,6 +603,7 @@ html {
 
 .homeWorldButton {
   min-height: 43px;
+
   padding: 0 18px;
 
   color: #ffffff;
@@ -608,8 +618,13 @@ html {
 
 .homeInsideSection {
   display: grid;
-  grid-template-columns: minmax(330px, 0.72fr) minmax(570px, 1.28fr);
+
+  grid-template-columns:
+    minmax(330px, 0.72fr)
+    minmax(570px, 1.28fr);
+
   align-items: center;
+
   gap: 36px;
 
   padding: 31px 12px 30px;
@@ -620,49 +635,64 @@ html {
 
   color: var(--home-navy);
 
-  font-family: "DK Woolwich", Impact, sans-serif;
+  font-family:
+    "DK Woolwich",
+    Impact,
+    sans-serif;
+
   font-size: clamp(34px, 3.45vw, 52px);
   font-weight: 400;
   line-height: 0.96;
+
   text-transform: uppercase;
 }
 
 .homeInsideCopy > p {
   max-width: 530px;
+
   margin: 15px 0 20px;
 
-  font-family: "Courier New", Courier, monospace;
+  font-family:
+    "Courier New",
+    Courier,
+    monospace;
+
   font-size: 15px;
   font-weight: 700;
   line-height: 1.48;
 }
 
 /* =========================================================
-   READER PREVIEW BENEFIT ICONS
+   READER BENEFITS
 ========================================================= */
 
 .homeInsideBenefits {
   width: 100%;
+
   margin-top: 26px;
 
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
   align-items: start;
 }
 
 .insideBenefitItem {
   min-width: 0;
+
   padding: 6px 18px 4px;
 
   display: flex;
   flex-direction: column;
+
   align-items: center;
   justify-content: flex-start;
 
-  border-right: 1px solid rgba(18, 18, 18, 0.18);
+  border-right:
+    1px solid rgba(18, 18, 18, 0.18);
 
   text-align: center;
-  box-sizing: border-box;
 }
 
 .insideBenefitItem:first-child {
@@ -671,6 +701,7 @@ html {
 
 .insideBenefitItem:last-child {
   padding-right: 0;
+
   border-right: 0;
 }
 
@@ -679,6 +710,7 @@ html {
 
   width: 118px;
   height: 118px;
+
   margin: 0 auto 6px;
 
   object-fit: contain;
@@ -690,11 +722,16 @@ html {
 
   width: 100%;
   max-width: 175px;
+
   margin: 0 auto;
 
   color: #172033;
 
-  font-family: "Courier New", Courier, monospace;
+  font-family:
+    "Courier New",
+    Courier,
+    monospace;
+
   font-size: 16px;
   font-weight: 900;
   line-height: 1.18;
@@ -705,10 +742,14 @@ html {
 .insideStoryButton {
   margin-top: 28px;
 }
-/* OPEN BOOK */
+
+/* =========================================================
+   OPEN BOOK PREVIEW
+========================================================= */
 
 .homeBookPreview {
   position: relative;
+
   overflow: hidden;
 
   padding: 10px 11px 14px;
@@ -727,12 +768,17 @@ html {
   position: relative;
 
   display: grid;
-  grid-template-columns: 1fr 10px 1fr;
+
+  grid-template-columns:
+    1fr 10px 1fr;
 
   height: 310px;
+
   overflow: hidden;
 
-  border-radius: 10px 10px 2px 2px;
+  border-radius:
+    10px 10px 2px 2px;
+
   background: #ffffff;
 }
 
@@ -743,11 +789,13 @@ html {
 .homeBookImagePage img {
   width: 100%;
   height: 100%;
+
   object-fit: cover;
 }
 
 .homeBookSpine {
   position: relative;
+
   z-index: 2;
 
   background:
@@ -758,13 +806,14 @@ html {
       rgba(0, 0, 0, 0.26)
     );
 
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.35);
+  box-shadow:
+    0 0 12px rgba(0, 0, 0, 0.35);
 }
 
 .homeBookTextPage {
   position: relative;
 
-  padding: 35px 35px;
+  padding: 35px;
 
   background:
     linear-gradient(
@@ -774,7 +823,11 @@ html {
     ),
     #fffefa;
 
-  font-family: "Courier New", Courier, monospace;
+  font-family:
+    "Courier New",
+    Courier,
+    monospace;
+
   font-size: 14px;
   font-weight: 700;
   line-height: 1.65;
@@ -786,10 +839,12 @@ html {
 
 .homeBookPawprints {
   position: absolute;
+
   right: 28px;
   bottom: 22px;
 
   display: flex;
+
   gap: 9px;
 
   color: #6f3e27;
@@ -803,8 +858,12 @@ html {
 
 .homeBookControls {
   display: grid;
-  grid-template-columns: 38px 1fr auto 38px;
+
+  grid-template-columns:
+    38px 1fr auto 38px;
+
   align-items: center;
+
   gap: 13px;
 
   padding: 14px 4px 0;
@@ -816,6 +875,7 @@ html {
 
   width: 35px;
   height: 35px;
+
   padding: 0;
 
   border: 0;
@@ -827,14 +887,17 @@ html {
   font-size: 27px;
   line-height: 1;
 
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+  box-shadow:
+    0 3px 8px rgba(0, 0, 0, 0.15);
 }
 
 .homeBookProgress {
   height: 4px;
+
   overflow: hidden;
 
   border-radius: 999px;
+
   background: #d3d2ce;
 }
 
@@ -851,19 +914,25 @@ html {
   padding: 7px 13px;
 
   border-radius: 999px;
+
   background: #ffffff;
 
-  font-family: "Courier New", Courier, monospace;
+  font-family:
+    "Courier New",
+    Courier,
+    monospace;
+
   font-size: 12px;
   font-weight: 700;
 }
 
 /* =========================================================
-   BOOK AND LEARNING RAILS
+   BOOK + LEARNING RAILS
 ========================================================= */
 
 .homeRailSection {
   width: 100%;
+
   padding: 13px 0 17px;
 }
 
@@ -871,6 +940,7 @@ html {
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   gap: 18px;
 
   padding: 0 3px 12px;
@@ -881,36 +951,51 @@ html {
 
   color: var(--home-navy);
 
-  font-family: "DK Woolwich", Impact, sans-serif;
+  font-family:
+    "DK Woolwich",
+    Impact,
+    sans-serif;
+
   font-size: clamp(28px, 2.8vw, 42px);
   font-weight: 400;
   line-height: 1;
+
   text-transform: uppercase;
 }
 
 .homeRailHeading a {
   display: inline-flex;
   align-items: center;
+
   gap: 8px;
 
   color: var(--home-text);
 
-  font-family: "DK Woolwich", Impact, sans-serif;
+  font-family:
+    "DK Woolwich",
+    Impact,
+    sans-serif;
+
   font-size: 16px;
+
   text-decoration: none;
   text-transform: uppercase;
 }
 
 .homeRailWindow {
   width: 100%;
+
   overflow: hidden;
 }
 
 .homeRailTrack {
   display: flex;
+
   width: max-content;
 
-  animation: homeRailScroll 38s linear infinite;
+  animation:
+    homeRailScroll 38s linear infinite;
+
   will-change: transform;
 }
 
@@ -925,6 +1010,7 @@ html {
 
 .homeRailSet {
   display: flex;
+
   gap: 14px;
 
   padding-right: 14px;
@@ -932,19 +1018,23 @@ html {
 
 .homeRailCard {
   position: relative;
+
   flex: 0 0 190px;
 
   height: 275px;
+
   overflow: hidden;
 
   border: 5px solid #ffffff;
   border-radius: 13px;
 
   color: #ffffff;
-  text-decoration: none;
   background: #1a3147;
 
-  box-shadow: 0 7px 16px rgba(21, 37, 50, 0.18);
+  text-decoration: none;
+
+  box-shadow:
+    0 7px 16px rgba(21, 37, 50, 0.18);
 
   transition:
     transform 180ms ease,
@@ -952,8 +1042,12 @@ html {
 }
 
 .homeRailCard:hover {
-  transform: translateY(-6px) rotate(-0.5deg);
-  box-shadow: 0 13px 23px rgba(21, 37, 50, 0.28);
+  transform:
+    translateY(-6px)
+    rotate(-0.5deg);
+
+  box-shadow:
+    0 13px 23px rgba(21, 37, 50, 0.28);
 }
 
 .homeRailCard img {
@@ -964,14 +1058,17 @@ html {
   object-position: center;
 }
 
-
 .homeRailCategory {
   position: absolute;
+
   top: 9px;
   left: 50%;
+
   z-index: 3;
 
-  max-width: calc(100% - 18px);
+  max-width:
+    calc(100% - 18px);
+
   padding: 5px 10px;
 
   overflow: hidden;
@@ -981,21 +1078,27 @@ html {
   color: #ffffff;
   background: #3364a3;
 
-  font-family: "DK Woolwich", Impact, sans-serif;
+  font-family:
+    "DK Woolwich",
+    Impact,
+    sans-serif;
+
   font-size: 12px;
   line-height: 1;
+
   text-align: center;
   text-overflow: ellipsis;
   text-transform: uppercase;
+
   white-space: nowrap;
 
-  transform: translateX(-50%);
+  transform:
+    translateX(-50%);
 }
 
 .learningCategory {
   background: #815c9f;
 }
-
 
 .homeLearningRailSection {
   padding-top: 24px;
@@ -1003,28 +1106,35 @@ html {
 
 @keyframes homeRailScroll {
   from {
-    transform: translateX(0);
+    transform:
+      translateX(0);
   }
 
   to {
-    transform: translateX(-50%);
+    transform:
+      translateX(-50%);
   }
 }
 
 /* =========================================================
-   BLUE BENEFITS SECTION
+   SCREEN TIME / BENEFITS BANNER
 ========================================================= */
 
 .homeTrustSection {
   position: relative;
+
   z-index: 4;
 
-  margin-top: 0;
-  padding: 34px 36px 38px;
-  overflow: hidden;
-  min-height: 280px;
+  min-height: 360px;
 
-  border-radius: 0;
+  margin-top: 0;
+
+  padding: 40px 48px;
+
+  display: flex;
+  align-items: center;
+
+  overflow: hidden;
 
   color: #ffffff;
 
@@ -1040,78 +1150,114 @@ html {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+}
 
-  box-shadow: none;
+.homeTrustInner {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  transform:
+    translateY(10px);
 }
 
 .homeTrustSection h2 {
-  margin: 0 0 27px;
+  margin: 0 0 42px;
 
   color: #ffffff;
 
-  font-family: "DK Woolwich", Impact, sans-serif;
+  font-family:
+    "DK Woolwich",
+    Impact,
+    sans-serif;
+
   font-size: clamp(30px, 3.4vw, 49px);
   font-weight: 400;
   line-height: 1;
+
   text-align: center;
   text-transform: uppercase;
 
-  text-shadow: 0 3px 14px rgba(0, 0, 0, 0.35);
+  text-shadow:
+    0 3px 14px rgba(0, 0, 0, 0.35);
 }
 
 .homeTrustGrid {
+  width: 100%;
+
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+
+  grid-template-columns:
+    repeat(5, minmax(0, 1fr));
+
+  align-items: center;
+
   gap: 22px;
 }
-
 
 .homeTrustItem {
   display: flex;
   align-items: center;
+
   gap: 11px;
 }
 
 .homeTrustItem > span {
   display: grid;
   place-items: center;
+
   flex: 0 0 auto;
 
   width: 38px;
   height: 38px;
 
-  border: 3px solid var(--home-yellow);
+  border:
+    3px solid var(--home-yellow);
+
   border-radius: 50%;
 
   color: var(--home-yellow);
 
   font-family: Arial, sans-serif;
+
   font-size: 17px;
   font-weight: 900;
 }
 
 .homeTrustItem:nth-child(2) > span {
   color: var(--home-orange);
-  border-color: var(--home-orange);
+
+  border-color:
+    var(--home-orange);
 }
 
 .homeTrustItem:nth-child(3) > span,
 .homeTrustItem:nth-child(4) > span,
 .homeTrustItem:nth-child(5) > span {
   color: #6cb8f3;
+
   border-color: #6cb8f3;
 }
 
 .homeTrustItem p {
   display: grid;
+
   gap: 2px;
+
   margin: 0;
 
-  font-family: "Courier New", Courier, monospace;
+  font-family:
+    "Courier New",
+    Courier,
+    monospace;
+
   font-size: 12px;
   line-height: 1.3;
 
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+  text-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.35);
 }
 
 .homeTrustItem strong {
@@ -1119,18 +1265,21 @@ html {
 }
 
 /* =========================================================
-   MEMBERSHIP SECTION
+   MEMBERSHIP
 ========================================================= */
 
 .homeMembershipSection {
   position: relative;
+
   z-index: 3;
 
   margin-top: -5px;
   margin-bottom: 55px;
-  padding: 38px 31px 30px;
+
+  padding: 34px 31px 28px;
 
   display: grid;
+
   grid-template-columns:
     minmax(245px, 0.8fr)
     minmax(225px, 0.7fr)
@@ -1138,9 +1287,11 @@ html {
     minmax(145px, 0.4fr);
 
   align-items: stretch;
+
   gap: 18px;
 
-  border-radius: 0 0 28px 28px;
+  border-radius:
+    0 0 28px 28px;
 
   background:
     radial-gradient(
@@ -1150,54 +1301,85 @@ html {
     ),
     var(--home-cream);
 
-  box-shadow: 0 19px 35px rgba(34, 35, 34, 0.2);
+  box-shadow:
+    0 19px 35px rgba(34, 35, 34, 0.2);
 }
+
+/* MEMBERSHIP INTRO */
 
 .homeMembershipIntro {
   display: flex;
   flex-direction: column;
   justify-content: center;
+
+  padding:
+    12px 18px 12px 12px;
 }
 
 .homeMembershipIntro h2 {
+  max-width: 390px;
+
   margin: 0;
+
   color: var(--home-navy);
 
-  font-family: "DK Woolwich", Impact, sans-serif;
-  font-size: clamp(38px, 3.3vw, 54px);
+  font-family:
+    "DK Woolwich",
+    Impact,
+    sans-serif;
+
+  font-size:
+    clamp(38px, 3.1vw, 51px);
+
   font-weight: 400;
-  line-height: 0.98;
+  line-height: 0.99;
+
   text-transform: uppercase;
 }
 
 .membershipUnderline {
   width: 140px;
   height: 8px;
+
   margin-top: 18px;
 
   border-radius: 999px;
-  background: var(--home-yellow);
 
-  transform: rotate(-2deg);
+  background:
+    var(--home-yellow);
+
+  transform:
+    rotate(-2deg);
 }
+
+/* MEMBERSHIP PLAN CARDS */
 
 .homePlanCard {
   position: relative;
 
-  padding: 34px 19px 18px;
+  display: flex;
+  flex-direction: column;
+
+  min-height: 350px;
+
+  padding:
+    48px 28px 24px;
 
   border: 2px solid #39659a;
   border-radius: 17px;
 
-  background: rgba(255, 255, 255, 0.55);
+  background:
+    rgba(255, 255, 255, 0.55);
 }
 
 .homePlanLabel {
   position: absolute;
+
   top: -19px;
   left: 50%;
 
   min-width: 180px;
+
   padding: 11px 20px;
 
   border-radius: 8px;
@@ -1205,165 +1387,330 @@ html {
   color: #ffffff;
   background: #32649f;
 
-  font-family: "DK Woolwich", Impact, sans-serif;
+  font-family:
+    "DK Woolwich",
+    Impact,
+    sans-serif;
+
   font-size: 20px;
+
   text-align: center;
   text-transform: uppercase;
 
-  transform: translateX(-50%);
+  transform:
+    translateX(-50%);
 }
 
 .homePlanCard ul {
   display: grid;
-  gap: 12px;
+
+  gap: 16px;
+
+  margin: 8px 0 20px;
 
   padding: 0;
-  margin: 7px 0 21px;
 
   list-style: none;
 }
 
+.freePlanCard ul {
+  width: 100%;
+  max-width: 330px;
+
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .homePlanCard li {
   position: relative;
+
   padding-left: 27px;
 
-  font-family: "Courier New", Courier, monospace;
+  font-family:
+    "Courier New",
+    Courier,
+    monospace;
+
   font-size: 16px;
   font-weight: 700;
   line-height: 1.35;
 }
 
-
 .homePlanCard li::before {
   content: "✓";
 
   position: absolute;
+
   top: -2px;
   left: 0;
 
   color: #3471ae;
 
   font-family: Arial, sans-serif;
+
   font-size: 21px;
   font-weight: 900;
 }
 
+.paidPlanCard {
+  border-color:
+    var(--home-orange);
+}
+
+.paidPlanCard .homePlanLabel {
+  background:
+    var(--home-orange);
+}
+
+.paidPlanCard li::before {
+  color:
+    var(--home-orange);
+}
+
+.paidPlanContent {
+  flex: 1;
+
+  display: grid;
+
+  grid-template-columns:
+    1fr 130px;
+
+  align-items: center;
+
+  gap: 15px;
+}
+
+.paidPlanCard ul {
+  padding-top: 0;
+}
+
+/* MEMBERSHIP BUTTONS */
 
 .freePlanButton,
 .paidPlanButton {
   width: 100%;
   min-height: 54px;
+
+  margin-top: auto;
+  margin-bottom: 0;
+
   padding: 0 18px;
 
   color: #ffffff;
   background: #32649f;
 
-  font-size: 16px;
+  font-size: 17px;
 }
 
-
-.paidPlanCard {
-  border-color: var(--home-orange);
+.paidPlanButton {
+  background:
+    var(--home-orange);
 }
 
-.paidPlanCard .homePlanLabel {
-  background: var(--home-orange);
-}
-
-.paidPlanCard li::before {
-  color: var(--home-orange);
-}
-
-.paidPlanContent {
-  display: grid;
-  grid-template-columns: 1fr 130px;
-  gap: 15px;
-}
+/* MEMBERSHIP PRICE */
 
 .homePlanPrices {
+  align-self: stretch;
+
   display: flex;
   flex-direction: column;
+
   align-items: center;
   justify-content: center;
 
-  padding-left: 15px;
+  padding:
+    4px 0 4px 15px;
 
-  border-left: 1px solid rgba(255, 78, 39, 0.35);
+  border-left:
+    1px solid rgba(255, 78, 39, 0.35);
 
-  color: var(--home-orange);
+  color:
+    var(--home-orange);
+
   text-align: center;
 }
 
 .homePlanPrices strong {
-  font-family: "DK Woolwich", Impact, sans-serif;
+  font-family:
+    "DK Woolwich",
+    Impact,
+    sans-serif;
+
   font-size: 43px;
   line-height: 0.86;
 }
+
 .homePlanPrices small {
   display: block;
+
   margin-top: 7px;
 
-  font-family: "Courier New", Courier, monospace;
+  font-family:
+    "Courier New",
+    Courier,
+    monospace;
+
   font-size: 16px;
 }
-
 
 .homePlanPrices > span {
   margin: 12px 0;
 
-  color: var(--home-text);
+  color:
+    var(--home-text);
 
-  font-family: "Courier New", Courier, monospace;
+  font-family:
+    "Courier New",
+    Courier,
+    monospace;
+
   font-size: 14px;
 }
 
-.paidPlanButton {
-  background: var(--home-orange);
-}
+/* GIFT */
 
 .homeGiftCard {
   display: flex;
   flex-direction: column;
+
   align-items: center;
   justify-content: center;
 
-  padding: 18px 11px;
+  padding: 20px 14px;
 
-  color: var(--home-text);
+  color:
+    var(--home-text);
+
   text-align: center;
   text-decoration: none;
 }
 
 .giftEmoji {
-  margin-bottom: 5px;
+  margin-bottom: 10px;
+
   font-size: 37px;
 }
 
 .homeGiftCard strong {
-  color: var(--home-orange);
+  max-width: 190px;
 
-  font-family: "DK Woolwich", Impact, sans-serif;
+  color:
+    var(--home-orange);
+
+  font-family:
+    "DK Woolwich",
+    Impact,
+    sans-serif;
+
   font-size: 31px;
+  line-height: 1.05;
+
   text-transform: uppercase;
 }
 
 .homeGiftCard p {
-  margin: 12px 0 17px;
+  max-width: 190px;
 
-  font-family: "Courier New", Courier, monospace;
+  margin:
+    16px 0 18px;
+
+  font-family:
+    "Courier New",
+    Courier,
+    monospace;
+
   font-size: 13px;
   font-weight: 700;
-  line-height: 1.4;
+  line-height: 1.45;
 }
-
 
 .homeGiftCard > span:last-child {
   display: flex;
+
   gap: 8px;
 
-  font-family: "DK Woolwich", Impact, sans-serif;
+  font-family:
+    "DK Woolwich",
+    Impact,
+    sans-serif;
+
   font-size: 16px;
+
   text-transform: uppercase;
+}
+
+/* =========================================================
+   FREE STORY CTA
+========================================================= */
+
+.homeFreeStoryButton {
+  width: fit-content;
+  min-height: 62px;
+
+  margin-top: 26px;
+
+  padding: 16px 30px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 14px;
+
+  border:
+    2px solid #ff4b2e;
+
+  border-radius: 999px;
+
+  color: #ffffff;
+  background: #ff4b2e;
+
+  font-family:
+    "DK Woolwich",
+    Impact,
+    sans-serif;
+
+  font-size:
+    clamp(18px, 1.5vw, 25px);
+
+  font-weight: 400;
+  line-height: 1;
+
+  letter-spacing: 0.02em;
+
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+
+  box-shadow:
+    0 12px 28px rgba(255, 75, 46, 0.25);
+
+  transition:
+    transform 180ms ease,
+    background-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.homeFreeStoryButton span {
+  font-family: Arial, sans-serif;
+
+  font-size: 27px;
+  line-height: 1;
+}
+
+.homeFreeStoryButton:hover {
+  transform:
+    translateY(-3px);
+
+  background: #e93d24;
+
+  box-shadow:
+    0 16px 34px rgba(255, 75, 46, 0.32);
+}
+
+.homeFreeStoryButton:active {
+  transform:
+    translateY(0);
 }
 
 /* =========================================================
@@ -1372,39 +1719,20 @@ html {
 
 @media (max-width: 1240px) {
   :root {
-    --home-edge-space: 40px;
+    --home-side-space: 40px;
   }
 
-  .homeHero {
-    min-height: 720px;
-    padding-top: 105px;
+  .homeMovieHero {
+    height: 700px;
   }
 
-  .homeHeroInner {
-    grid-template-columns: minmax(390px, 0.87fr) minmax(500px, 1.13fr);
-    gap: 32px;
+  .homeMovieHeroContent {
+    width: 52%;
   }
 
-  .homeHeroCopy h1 {
-    font-size: clamp(46px, 4.7vw, 59px);
-  }
-
-  .homeHeroCopy > p {
-    font-size: 13px;
-  }
-
-  .heroFeaturedBook {
-    min-height: 455px;
-  }
-
-  .heroFeaturedContent {
-    width: 53%;
-    min-width: 285px;
-    padding: 27px 0 27px 27px;
-  }
-
-  .heroFeaturedContent h2 {
-    font-size: clamp(32px, 3.2vw, 44px);
+  .homeMovieHeroContent h1 {
+    font-size:
+      clamp(68px, 8vw, 100px);
   }
 
   .homeInsideSection {
@@ -1420,16 +1748,22 @@ html {
   }
 
   .homeTrustGrid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns:
+      repeat(3, 1fr);
   }
 
   .homeMembershipSection {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .homePlanCard {
+    min-height: 340px;
   }
 
   .homeMembershipIntro,
   .homeGiftCard {
-    min-height: 220px;
+    min-height: 0;
   }
 }
 
@@ -1439,59 +1773,25 @@ html {
 
 @media (max-width: 980px) {
   :root {
-    --home-edge-space: 32px;
+    --home-side-space: 32px;
   }
 
-  .homeHero {
-    min-height: auto;
-    padding: 118px 0 72px;
+  .homeMovieHero {
+    height: 720px;
   }
 
-  .homeHeroBackground {
-    object-position: 42% center;
+  .homeMovieHeroImage {
+    object-position:
+      62% center;
   }
 
-  .homeHeroOverlay {
-    background:
-      linear-gradient(
-        180deg,
-        rgba(3, 16, 27, 0.36) 0%,
-        rgba(3, 16, 27, 0.44) 48%,
-        rgba(3, 16, 27, 0.74) 100%
-      ),
-      linear-gradient(
-        90deg,
-        rgba(3, 16, 27, 0.58) 0%,
-        rgba(3, 16, 27, 0.15) 100%
-      );
+  .homeMovieHeroContent {
+    width: 58%;
   }
 
-  .homeHeroInner {
-    grid-template-columns: 1fr;
-    gap: 38px;
-  }
-
-  .homeHeroCopy {
-    max-width: 680px;
-  }
-
-  .homeHeroCopy h1 {
-    max-width: 650px;
-    font-size: clamp(51px, 7.7vw, 72px);
-  }
-
-  .heroFeaturedBook {
-    min-height: 500px;
-  }
-
-  .heroFeaturedContent {
-    width: 49%;
-    min-width: 310px;
-    padding: 31px 0 31px 31px;
-  }
-
-  .heroFeaturedContent h2 {
-    font-size: clamp(38px, 5vw, 53px);
+  .homeMovieHeroContent h1 {
+    font-size:
+      clamp(65px, 9vw, 90px);
   }
 
   .homeWorldGrid {
@@ -1503,26 +1803,29 @@ html {
   }
 
   .homeTrustGrid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns:
+      repeat(2, 1fr);
   }
-  
- .homeInsideBenefits {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 26px 0;
-}
 
-.insideBenefitItem:nth-child(2) {
-  border-right: 0;
-}
+  .homeInsideBenefits {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
 
-.insideBenefitImage {
-  width: 104px;
-  height: 104px;
-}
+    gap: 26px 0;
+  }
 
-.insideBenefitItem strong {
-  font-size: 15px;
-}
+  .insideBenefitItem:nth-child(2) {
+    border-right: 0;
+  }
+
+  .insideBenefitImage {
+    width: 104px;
+    height: 104px;
+  }
+
+  .insideBenefitItem strong {
+    font-size: 15px;
+  }
 }
 
 /* =========================================================
@@ -1531,103 +1834,119 @@ html {
 
 @media (max-width: 680px) {
   :root {
-    --home-edge-space: 16px;
+    --home-side-space: 22px;
   }
 
-  .homeHero {
-    padding: 105px 0 57px;
-  }
+  /* HERO STAYS FULL WIDTH */
 
-  .homeHeroBackground {
-    object-position: 38% center;
-  }
-
-  .homeHeroInner {
-    gap: 30px;
-  }
-
-  .homeHeroCopy h1 {
-    max-width: 100%;
-    font-size: clamp(40px, 12.3vw, 57px);
-    line-height: 0.98;
-  }
-
-  .homeHeroUnderline {
-    width: 185px;
-    height: 8px;
-    margin: 14px 0 16px;
-  }
-
-  .homeHeroCopy > p {
-    max-width: 100%;
-    font-size: 13px;
-  }
-
-  .homeHeroButtons {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 10px;
-  }
-
-  .homePrimaryButton,
-  .homeSecondaryButton {
+  .homeMovieHero {
     width: 100%;
+    height: 720px;
+
+    margin: 0;
+
+    border-radius: 0;
   }
 
-  .heroFeaturedBook {
-    min-height: 500px;
-    border-width: 2px;
-    border-radius: 21px;
+  .homeMovieHeroImage {
+    object-position:
+      64% center;
   }
 
-  .heroFeaturedBook > img {
-    object-position: 60% center;
-  }
-
-  .heroFeaturedShade {
+  .homeMovieHeroShade {
     background:
       linear-gradient(
         180deg,
-        rgba(3, 11, 17, 0.05) 0%,
-        rgba(3, 11, 17, 0.2) 31%,
-        rgba(3, 11, 17, 0.78) 61%,
-        rgba(3, 11, 17, 0.98) 100%
+        rgba(3, 13, 24, 0.08) 0%,
+        rgba(3, 13, 24, 0.2) 30%,
+        rgba(3, 13, 24, 0.72) 58%,
+        rgba(3, 13, 24, 0.94) 100%
       );
   }
 
-  .heroFeaturedContent {
-    position: absolute;
-    right: 0;
-    bottom: 0;
+  .homeMovieHero::after {
+    height: 300px;
+  }
+
+  .homeMovieHeroContent {
+    top: auto;
+
     left: 0;
+    right: 0;
+    bottom: 112px;
 
     width: auto;
-    min-width: 0;
-    padding: 23px;
+
+    transform: none;
   }
 
-  .heroFeatureBadge {
-    margin-bottom: 13px;
-    padding: 6px 10px;
-    font-size: 10px;
+  .homeMovieEyebrow {
+    margin-bottom: 15px;
+
+    padding: 8px 12px;
+
+    font-size: 12px;
   }
 
-  .heroFeaturedContent h2 {
+  .homeMovieHeroContent h1 {
     max-width: 100%;
-    font-size: clamp(35px, 10.4vw, 46px);
+
+    font-size:
+      clamp(56px, 17vw, 79px);
+
+    line-height: 0.85;
   }
 
-  .heroFeaturedContent p {
+  .homeMovieHeroContent p {
     max-width: 100%;
-    margin: 13px 0 15px;
-    font-size: 10px;
+
+    margin-top: 20px;
+
+    font-size: 15px;
+    line-height: 1.45;
   }
+
+  .homeMovieActions {
+    margin-top: 22px;
+  }
+
+  .homeMoviePrimary,
+  .homeMovieSecondary {
+    min-height: 46px;
+
+    padding: 0 19px;
+
+    font-size: 14px;
+  }
+
+  .homeMovieBottom {
+    left: 0;
+    right: 0;
+    bottom: 24px;
+
+    gap: 10px;
+
+    overflow: hidden;
+
+    font-size: 10px;
+
+    white-space: nowrap;
+  }
+
+  .homeMovieBottom span:nth-child(3) {
+    display: none;
+  }
+
+  /* CONTENT */
 
   .homeContentShell {
     margin-top: -17px;
-    padding: 22px 9px 24px;
 
-    border-radius: 22px 22px 0 0;
+    padding:
+      22px 9px 24px;
+
+    border-radius:
+      22px 22px 0 0;
   }
 
   .homeCenteredHeading {
@@ -1654,12 +1973,14 @@ html {
 
   .homeWorldContent {
     position: absolute;
+
     right: 0;
     bottom: 0;
     left: 0;
 
     width: auto;
     min-width: 0;
+
     padding: 23px;
   }
 
@@ -1667,52 +1988,69 @@ html {
     font-size: 39px;
   }
 
+  /* READER PREVIEW */
+
   .homeInsideSection {
-    padding: 29px 4px 25px;
+    padding:
+      29px 4px 25px;
   }
 
   .homeInsideCopy h2 {
     font-size: 36px;
   }
 
- .homeInsideBenefits {
-  margin-top: 24px;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 24px 0;
-}
+  .homeInsideBenefits {
+    margin-top: 24px;
 
-.insideBenefitItem {
-  padding: 4px 12px;
-}
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
 
-.insideBenefitItem:nth-child(2) {
-  border-right: 0;
-}
+    gap: 24px 0;
+  }
 
-.insideBenefitImage {
-  width: 92px;
-  height: 92px;
-  margin-bottom: 5px;
-}
+  .insideBenefitItem {
+    padding: 4px 12px;
+  }
 
-.insideBenefitItem strong {
-  max-width: 145px;
-  font-size: 16px;
-  line-height: 1.2;
-}
+  .insideBenefitItem:nth-child(2) {
+    border-right: 0;
+  }
+
+  .insideBenefitImage {
+    width: 92px;
+    height: 92px;
+
+    margin-bottom: 5px;
+  }
+
+  .insideBenefitItem strong {
+    max-width: 145px;
+
+    font-size: 16px;
+    line-height: 1.2;
+  }
+
+  /* BOOK */
+
   .homeBookPreview {
-    padding: 7px 7px 12px;
+    padding:
+      7px 7px 12px;
+
     border-width: 5px;
     border-radius: 18px;
   }
 
   .homeBookPages {
     height: 245px;
-    grid-template-columns: 1fr 6px 1fr;
+
+    grid-template-columns:
+      1fr 6px 1fr;
   }
 
   .homeBookTextPage {
-    padding: 22px 16px;
+    padding:
+      22px 16px;
+
     font-size: 9px;
     line-height: 1.5;
   }
@@ -1722,9 +2060,13 @@ html {
   }
 
   .homeBookControls {
-    grid-template-columns: 34px 1fr auto 34px;
+    grid-template-columns:
+      34px 1fr auto 34px;
+
     gap: 8px;
   }
+
+  /* RAILS */
 
   .homeRailHeading {
     align-items: flex-end;
@@ -1732,6 +2074,7 @@ html {
 
   .homeRailHeading h2 {
     max-width: 75%;
+
     font-size: 29px;
   }
 
@@ -1741,17 +2084,23 @@ html {
 
   .homeRailCard {
     flex-basis: 154px;
+
     height: 225px;
   }
 
- 
- .homeTrustSection {
+  /* TRUST */
+
+  .homeTrustSection {
     min-height: auto;
-    padding: 45px 22px;
+
+    padding:
+      45px 22px;
   }
- .homeTrustInner {
+
+  .homeTrustInner {
     transform: none;
   }
+
   .homeTrustSection h2 {
     font-size: 32px;
   }
@@ -1760,16 +2109,23 @@ html {
     grid-template-columns: 1fr;
   }
 
+  /* MEMBERSHIP */
+
   .homeMembershipSection {
-    padding: 35px 17px 25px;
+    padding:
+      34px 17px 24px;
+
     grid-template-columns: 1fr;
 
-    border-radius: 0 0 22px 22px;
+    border-radius:
+      0 0 22px 22px;
   }
 
   .homeMembershipIntro {
     min-height: auto;
-    padding-bottom: 20px;
+
+    padding:
+      8px 4px 20px;
   }
 
   .homeMembershipIntro h2 {
@@ -1777,22 +2133,50 @@ html {
   }
 
   .homePlanCard {
+    min-height: 0;
+
     margin-top: 16px;
+
+    padding:
+      50px 23px 24px;
+  }
+
+  .freePlanButton,
+  .paidPlanButton {
+    margin-top: 24px;
   }
 
   .paidPlanContent {
+    flex: initial;
+
     grid-template-columns: 1fr;
   }
 
   .homePlanPrices {
-    padding: 18px 0 0;
+    padding:
+      18px 0 0;
 
-    border-top: 1px solid rgba(255, 78, 39, 0.35);
+    border-top:
+      1px solid rgba(255, 78, 39, 0.35);
+
     border-left: 0;
   }
 
   .homeGiftCard {
-    min-height: 190px;
+    min-height: 160px;
+
+    padding-block: 25px;
+  }
+
+  .homeFreeStoryButton {
+    width: 100%;
+
+    min-height: 58px;
+
+    padding:
+      15px 20px;
+
+    font-size: 18px;
   }
 }
 
@@ -1801,20 +2185,21 @@ html {
 ========================================================= */
 
 @media (max-width: 420px) {
-  .homeHeroCopy h1 {
-    font-size: 39px;
+  :root {
+    --home-side-space: 18px;
   }
 
-  .heroFeaturedBook {
-    min-height: 475px;
+  .homeMovieHeroContent h1 {
+    font-size:
+      clamp(50px, 16vw, 66px);
   }
 
-  .heroFeaturedContent {
-    padding: 20px;
+  .homeMovieHeroContent p {
+    font-size: 14px;
   }
 
-  .heroFeaturedContent h2 {
-    font-size: 34px;
+  .homeMovieBottom {
+    font-size: 9px;
   }
 }
 
@@ -1827,614 +2212,14 @@ html {
     animation: none;
   }
 
-  .heroFeaturedBook > img,
   .homeWorldCard > img,
   .homeRailCard,
-  .homePrimaryButton,
-  .homeSecondaryButton,
-  .heroFeatureButton,
+  .homeMoviePrimary,
+  .homeMovieSecondary,
   .homeWorldButton,
   .freePlanButton,
-  .paidPlanButton {
-    transition: none;
-  }
-}
-/* =========================================================
-   MEMBERSHIP COMPACT LAYOUT
-========================================================= */
-
-.homeMembershipSection {
-  align-items: stretch;
-  padding-top: 34px;
-  padding-bottom: 28px;
-}
-
-/* LEFT INTRO */
-
-.homeMembershipIntro {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-
-  padding: 12px 18px 12px 12px;
-}
-
-.homeMembershipIntro h2 {
-  max-width: 390px;
-
-  font-size: clamp(38px, 3.1vw, 51px);
-  line-height: 0.99;
-}
-
-.membershipUnderline {
-  margin-top: 18px;
-}
-
-/* PLAN CARDS */
-
-.homePlanCard {
-  display: flex;
-  flex-direction: column;
-
-  min-height: 350px;
-  padding: 48px 28px 24px;
-}
-
-.homePlanCard ul {
-  display: grid;
-  gap: 16px;
-
-  margin: 8px 0 20px;
-}
-
-.freePlanCard ul {
-  max-width: 330px;
-  width: 100%;
-
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.paidPlanContent {
-  flex: 1;
-  align-items: center;
-}
-
-.paidPlanCard ul {
-  padding-top: 0;
-}
-
-/* BUTTONS */
-
-.freePlanButton,
-.paidPlanButton {
-  min-height: 54px;
-
-  margin-top: auto;
-  margin-bottom: 0;
-
-  font-size: 17px;
-}
-
-/* MONTHLY PRICE */
-
-.homePlanPrices {
-  align-self: stretch;
-  justify-content: center;
-
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
-/* GIFT AREA */
-
-.homeGiftCard {
-  justify-content: center;
-
-  padding: 20px 14px;
-}
-
-.giftEmoji {
-  margin-bottom: 10px;
-}
-
-.homeGiftCard strong {
-  max-width: 190px;
-
-  font-size: 31px;
-  line-height: 1.05;
-}
-
-.homeGiftCard p {
-  max-width: 190px;
-
-  margin-top: 16px;
-  margin-bottom: 18px;
-
-  font-size: 13px;
-  line-height: 1.45;
-}
-
-/* LAPTOP */
-
-@media (max-width: 1240px) {
-  .homePlanCard {
-    min-height: 340px;
-  }
-
-  .homeMembershipIntro,
-  .homeGiftCard {
-    min-height: 0;
-  }
-}
-
-/* MOBILE */
-
-@media (max-width: 680px) {
-  .homeMembershipSection {
-    padding-top: 34px;
-    padding-bottom: 24px;
-  }
-
-  .homeMembershipIntro {
-    padding: 8px 4px 20px;
-  }
-
-  .homePlanCard {
-    min-height: 0;
-    padding: 50px 23px 24px;
-  }
-
-  .freePlanButton,
-  .paidPlanButton {
-    margin-top: 24px;
-    margin-bottom: 0;
-  }
-
-  .paidPlanContent {
-    flex: initial;
-  }
-
-  .homeGiftCard {
-    min-height: 160px;
-    padding-block: 25px;
-  }
-}
-/* CENTER SCREEN-TIME BANNER CONTENT */
-
-.homeTrustSection {
-  min-height: 360px;
-
-  display: flex;
-  align-items: center;
-
-  padding: 40px 48px;
-}
-
-.homeTrustInner {
-  width: 100%;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-
-  transform: translateY(10px);
-}
-
-.homeTrustSection h2 {
-  margin: 0 0 42px;
-}
-
-.homeTrustGrid {
-  width: 100%;
-  align-items: center;
-}
-.homeFreeStoryButton {
-  width: fit-content;
-  min-height: 62px;
-  margin-top: 26px;
-  padding: 16px 30px;
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 14px;
-
-  border: 2px solid #ff4b2e;
-  border-radius: 999px;
-
-  color: #ffffff;
-  background: #ff4b2e;
-
-  font-family: "DK Woolwich", Impact, sans-serif;
-  font-size: clamp(18px, 1.5vw, 25px);
-  font-weight: 400;
-  line-height: 1;
-  letter-spacing: 0.02em;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-
-  box-shadow: 0 12px 28px rgba(255, 75, 46, 0.25);
-
-  transition:
-    transform 180ms ease,
-    background 180ms ease,
-    box-shadow 180ms ease;
-}
-
-.homeFreeStoryButton span {
-  font-family: Arial, sans-serif;
-  font-size: 27px;
-  line-height: 1;
-}
-
-.homeFreeStoryButton:hover {
-  transform: translateY(-3px);
-  background: #e93d24;
-  box-shadow: 0 16px 34px rgba(255, 75, 46, 0.32);
-}
-
-.homeFreeStoryButton:active {
-  transform: translateY(0);
-}
-
-@media (max-width: 700px) {
+  .paidPlanButton,
   .homeFreeStoryButton {
-    width: 100%;
-    min-height: 58px;
-    padding: 15px 20px;
-    font-size: 18px;
-  }
-}
-/* =========================================================
-   FULL-BLEED CINEMATIC HERO
-========================================================= */
-
-.homeMovieHero {
-  position: relative;
-
-  width: 100%;
-  max-width: none;
-  height: clamp(650px, 72vh, 820px);
-
-  margin: 0;
-
-  overflow: hidden;
-
-  border: none;
-  border-radius: 0;
-
-  background: #050505;
-
-  box-shadow: none;
-}
-
-/* FULL IMAGE FILLS ENTIRE HERO */
-
-.homeMovieHeroImage {
-  position: absolute;
-  inset: 0;
-
-  width: 100%;
-  height: 100%;
-
-  object-fit: cover;
-  object-position: center center;
-
-  display: block;
-
-  z-index: 0;
-}
-
-/* DARK OVERLAY SO COPY STAYS READABLE */
-
-.homeMovieHeroShade {
-  position: absolute;
-  inset: 0;
-
-  z-index: 1;
-
-  background:
-    linear-gradient(
-      90deg,
-      rgba(2, 12, 22, 0.88) 0%,
-      rgba(2, 12, 22, 0.72) 30%,
-      rgba(2, 12, 22, 0.35) 52%,
-      rgba(2, 12, 22, 0.08) 78%,
-      rgba(2, 12, 22, 0.03) 100%
-    ),
-    linear-gradient(
-      0deg,
-      rgba(2, 12, 22, 0.45) 0%,
-      rgba(2, 12, 22, 0) 42%
-    );
-}
-/* COPY */
-
-.homeMovieHeroContent {
-  position: absolute;
-
-  left: clamp(70px, 7vw, 130px);
-  top: 50%;
-
-  transform: translateY(-50%);
-
-  width: min(600px, 46%);
-
-  z-index: 3;
-
-  color: #ffffff;
-}
-
-.homeMovieEyebrow {
-  display: inline-flex;
-  align-items: center;
-
-  margin-bottom: 20px;
-
-  padding: 10px 16px;
-
-  border-radius: 7px;
-
-  background: #ffc82e;
-  color: #071b31;
-
-  font-family:
-    "DK Woolwich",
-    Impact,
-    sans-serif;
-
-  font-size: 15px;
-  line-height: 1;
-
-  letter-spacing: 0.02em;
-}
-
-/* GIANT HEADLINE */
-
-.homeMovieHeroContent h1 {
-  margin: 0;
-
-  max-width: 600px;
-
-  font-family:
-    "DK Woolwich",
-    Impact,
-    sans-serif;
-
-  font-size: clamp(76px, 7.1vw, 126px);
-  line-height: 0.82;
-
-  letter-spacing: -0.02em;
-
-  color: #ffffff;
-
-  text-shadow:
-    0 5px 0 rgba(0, 0, 0, 0.14),
-    0 12px 30px rgba(0, 0, 0, 0.22);
-}
-
-.homeMovieHeroContent p {
-  max-width: 520px;
-
-  margin: 28px 0 0;
-
-  font-family:
-    "Courier New",
-    Courier,
-    monospace;
-
-  font-size: 18px;
-  font-weight: 700;
-  line-height: 1.55;
-
-  color: #ffffff;
-}
-
-/* BUTTONS */
-
-.homeMovieActions {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-
-  gap: 14px;
-
-  margin-top: 30px;
-}
-
-.homeMoviePrimary,
-.homeMovieSecondary {
-  min-height: 50px;
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  padding: 0 24px;
-
-  border-radius: 999px;
-
-  font-family:
-    "DK Woolwich",
-    Impact,
-    sans-serif;
-
-  font-size: 17px;
-  text-decoration: none;
-
-  transition:
-    transform 160ms ease,
-    background 160ms ease,
-    color 160ms ease;
-}
-
-.homeMoviePrimary {
-  background: #ff5526;
-  border: 2px solid #ff5526;
-
-  color: #ffffff;
-}
-
-.homeMoviePrimary:hover {
-  transform: translateY(-2px);
-
-  background: #ff6a40;
-}
-
-.homeMovieSecondary {
-  border: 2px solid #ffffff;
-
-  color: #ffffff;
-  background: rgba(5, 5, 5, 0.18);
-
-  backdrop-filter: blur(5px);
-}
-
-.homeMovieSecondary:hover {
-  transform: translateY(-2px);
-
-  background: #ffffff;
-  color: #071b31;
-}
-
-/* SMALL INFO BAR */
-
-.homeMovieBottom {
-  position: absolute;
-
-  left: clamp(70px, 7vw, 130px);
-  right: clamp(70px, 7vw, 130px);
-  bottom: 34px;
-
-  z-index: 3;
-
-  display: flex;
-  align-items: center;
-  gap: 28px;
-
-  padding-top: 18px;
-
-  border-top: 1px solid rgba(255, 255, 255, 0.28);
-
-  font-family:
-    "Courier New",
-    Courier,
-    monospace;
-
-  font-size: 13px;
-  font-weight: 700;
-
-  color: #ffc82e;
-}
-
-/* =========================================================
-   TABLET
-========================================================= */
-
-@media (max-width: 1050px) {
-  .homeMovieHero {
-    width: calc(100% - 48px);
-    height: 680px;
-
-    margin-top: 30px;
-  }
-
-  .homeMovieHeroContent {
-    width: 58%;
-  }
-
-  .homeMovieHeroContent h1 {
-    font-size: clamp(70px, 9vw, 100px);
-  }
-}
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media (max-width: 760px) {
-  .homeMovieHero {
-    width: calc(100% - 28px);
-    height: 720px;
-
-    margin: 18px auto 30px;
-
-    border-radius: 22px;
-  }
-
-  .homeMovieHeroImage {
-    object-position: 62% center;
-  }
-
-  .homeMovieHeroShade {
-    background:
-      linear-gradient(
-        0deg,
-        rgba(3, 13, 24, 0.98) 0%,
-        rgba(3, 13, 24, 0.84) 42%,
-        rgba(3, 13, 24, 0.22) 74%,
-        rgba(3, 13, 24, 0.1) 100%
-      );
-  }
-
-  .homeMovieHeroContent {
-    top: auto;
-    left: 24px;
-    right: 24px;
-    bottom: 112px;
-
-    width: auto;
-
-    transform: none;
-  }
-
-  .homeMovieEyebrow {
-    margin-bottom: 15px;
-
-    font-size: 12px;
-  }
-
-  .homeMovieHeroContent h1 {
-    font-size: clamp(58px, 19vw, 82px);
-    line-height: 0.84;
-  }
-
-  .homeMovieHeroContent p {
-    margin-top: 20px;
-
-    font-size: 15px;
-    line-height: 1.45;
-  }
-
-  .homeMovieActions {
-    margin-top: 22px;
-  }
-
-  .homeMoviePrimary,
-  .homeMovieSecondary {
-    min-height: 46px;
-
-    padding: 0 19px;
-
-    font-size: 14px;
-  }
-
-  .homeMovieBottom {
-    left: 24px;
-    right: 24px;
-    bottom: 24px;
-
-    gap: 10px;
-
-    overflow: hidden;
-
-    font-size: 10px;
-    white-space: nowrap;
-  }
-
-  .homeMovieBottom span:nth-child(3) {
-    display: none;
+    transition: none;
   }
 }
