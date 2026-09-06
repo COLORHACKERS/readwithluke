@@ -129,6 +129,54 @@ export default function Home() {
   return (
     <>
       <Header />
+      <section className="homeMovieHero">
+  <img
+    src="/images/home-character-hero.jpg"
+    alt="Read With Luke cinematic reading adventure"
+    className="homeMovieHeroImage"
+  />
+
+  <div className="homeMovieHeroShade" />
+
+  <div className="homeMovieHeroContent">
+    <div className="homeMovieEyebrow">
+      ★ ORIGINAL READING ADVENTURES
+    </div>
+
+    <h1>
+      BOOKS
+      <br />
+      LIKE MOVIES!
+    </h1>
+
+    <p>
+      Cinematic stories created to make kids want to turn
+      one more page — and then one more.
+    </p>
+
+    <div className="homeMovieActions">
+      <Link
+        href="/library"
+        className="homeMoviePrimary"
+      >
+        START READING →
+      </Link>
+
+      <Link
+        href="/free-reads"
+        className="homeMovieSecondary"
+      >
+        READ ONE FREE
+      </Link>
+    </div>
+  </div>
+
+  <div className="homeMovieBottom">
+    <span>● CINEMATIC STORIES</span>
+    <span>◆ AGES 5–10</span>
+    <span>★ NEW ADVENTURES ADDED</span>
+  </div>
+</section>
 
       <main className="homePage">
         {/* HERO */}
