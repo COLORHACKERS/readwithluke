@@ -2062,3 +2062,354 @@ html {
     font-size: 18px;
   }
 }
+/* =========================================================
+   CINEMATIC MOVIE HERO
+========================================================= */
+
+.homeMovieHero {
+  position: relative;
+
+  width: calc(100% - 92px);
+  max-width: 1368px;
+  height: clamp(590px, 68vw, 760px);
+
+  margin: 48px auto 42px;
+
+  overflow: hidden;
+
+  border: 3px solid #ffffff;
+  border-radius: 28px;
+
+  background: #050505;
+
+  box-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.24);
+}
+
+/* FULL HERO IMAGE */
+
+.homeMovieHeroImage {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center center;
+
+  z-index: 0;
+}
+
+/* CINEMATIC DARKENING */
+
+.homeMovieHeroShade {
+  position: absolute;
+  inset: 0;
+
+  z-index: 1;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(3, 13, 24, 0.96) 0%,
+      rgba(3, 13, 24, 0.82) 31%,
+      rgba(3, 13, 24, 0.42) 55%,
+      rgba(3, 13, 24, 0.08) 78%,
+      rgba(3, 13, 24, 0.14) 100%
+    ),
+    linear-gradient(
+      0deg,
+      rgba(3, 13, 24, 0.52) 0%,
+      transparent 35%
+    );
+}
+
+/* COPY */
+
+.homeMovieHeroContent {
+  position: absolute;
+
+  left: clamp(36px, 5vw, 76px);
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  width: min(570px, 48%);
+
+  z-index: 3;
+
+  color: #ffffff;
+}
+
+.homeMovieEyebrow {
+  display: inline-flex;
+  align-items: center;
+
+  margin-bottom: 20px;
+
+  padding: 10px 16px;
+
+  border-radius: 7px;
+
+  background: #ffc82e;
+  color: #071b31;
+
+  font-family:
+    "DK Woolwich",
+    Impact,
+    sans-serif;
+
+  font-size: 15px;
+  line-height: 1;
+
+  letter-spacing: 0.02em;
+}
+
+/* GIANT HEADLINE */
+
+.homeMovieHeroContent h1 {
+  margin: 0;
+
+  max-width: 600px;
+
+  font-family:
+    "DK Woolwich",
+    Impact,
+    sans-serif;
+
+  font-size: clamp(76px, 7.1vw, 126px);
+  line-height: 0.82;
+
+  letter-spacing: -0.02em;
+
+  color: #ffffff;
+
+  text-shadow:
+    0 5px 0 rgba(0, 0, 0, 0.14),
+    0 12px 30px rgba(0, 0, 0, 0.22);
+}
+
+.homeMovieHeroContent p {
+  max-width: 520px;
+
+  margin: 28px 0 0;
+
+  font-family:
+    "Courier New",
+    Courier,
+    monospace;
+
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.55;
+
+  color: #ffffff;
+}
+
+/* BUTTONS */
+
+.homeMovieActions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+
+  gap: 14px;
+
+  margin-top: 30px;
+}
+
+.homeMoviePrimary,
+.homeMovieSecondary {
+  min-height: 50px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 24px;
+
+  border-radius: 999px;
+
+  font-family:
+    "DK Woolwich",
+    Impact,
+    sans-serif;
+
+  font-size: 17px;
+  text-decoration: none;
+
+  transition:
+    transform 160ms ease,
+    background 160ms ease,
+    color 160ms ease;
+}
+
+.homeMoviePrimary {
+  background: #ff5526;
+  border: 2px solid #ff5526;
+
+  color: #ffffff;
+}
+
+.homeMoviePrimary:hover {
+  transform: translateY(-2px);
+
+  background: #ff6a40;
+}
+
+.homeMovieSecondary {
+  border: 2px solid #ffffff;
+
+  color: #ffffff;
+  background: rgba(5, 5, 5, 0.18);
+
+  backdrop-filter: blur(5px);
+}
+
+.homeMovieSecondary:hover {
+  transform: translateY(-2px);
+
+  background: #ffffff;
+  color: #071b31;
+}
+
+/* SMALL INFO BAR */
+
+.homeMovieBottom {
+  position: absolute;
+
+  left: clamp(36px, 5vw, 76px);
+  right: clamp(36px, 5vw, 76px);
+  bottom: 26px;
+
+  z-index: 3;
+
+  display: flex;
+  align-items: center;
+  gap: 24px;
+
+  padding-top: 18px;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.26);
+
+  font-family:
+    "Courier New",
+    Courier,
+    monospace;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  color: #ffc82e;
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1050px) {
+  .homeMovieHero {
+    width: calc(100% - 48px);
+    height: 680px;
+
+    margin-top: 30px;
+  }
+
+  .homeMovieHeroContent {
+    width: 58%;
+  }
+
+  .homeMovieHeroContent h1 {
+    font-size: clamp(70px, 9vw, 100px);
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 760px) {
+  .homeMovieHero {
+    width: calc(100% - 28px);
+    height: 720px;
+
+    margin: 18px auto 30px;
+
+    border-radius: 22px;
+  }
+
+  .homeMovieHeroImage {
+    object-position: 62% center;
+  }
+
+  .homeMovieHeroShade {
+    background:
+      linear-gradient(
+        0deg,
+        rgba(3, 13, 24, 0.98) 0%,
+        rgba(3, 13, 24, 0.84) 42%,
+        rgba(3, 13, 24, 0.22) 74%,
+        rgba(3, 13, 24, 0.1) 100%
+      );
+  }
+
+  .homeMovieHeroContent {
+    top: auto;
+    left: 24px;
+    right: 24px;
+    bottom: 112px;
+
+    width: auto;
+
+    transform: none;
+  }
+
+  .homeMovieEyebrow {
+    margin-bottom: 15px;
+
+    font-size: 12px;
+  }
+
+  .homeMovieHeroContent h1 {
+    font-size: clamp(58px, 19vw, 82px);
+    line-height: 0.84;
+  }
+
+  .homeMovieHeroContent p {
+    margin-top: 20px;
+
+    font-size: 15px;
+    line-height: 1.45;
+  }
+
+  .homeMovieActions {
+    margin-top: 22px;
+  }
+
+  .homeMoviePrimary,
+  .homeMovieSecondary {
+    min-height: 46px;
+
+    padding: 0 19px;
+
+    font-size: 14px;
+  }
+
+  .homeMovieBottom {
+    left: 24px;
+    right: 24px;
+    bottom: 24px;
+
+    gap: 10px;
+
+    overflow: hidden;
+
+    font-size: 10px;
+    white-space: nowrap;
+  }
+
+  .homeMovieBottom span:nth-child(3) {
+    display: none;
+  }
+}
