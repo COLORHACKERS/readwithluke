@@ -137,6 +137,7 @@ export default function Home() {
 />
 
   <div className="homeMovieHeroShade" />
+        <div className="homeAlign homeMovieHeroInner">
 
   <div className="homeMovieHeroContent">
     <div className="homeMovieEyebrow">
