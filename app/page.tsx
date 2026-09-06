@@ -131,10 +131,10 @@ export default function Home() {
       <Header />
       <section className="homeMovieHero">
   <img
-    src="/images/home-character-hero.jpg"
-    alt="Read With Luke cinematic reading adventure"
-    className="homeMovieHeroImage"
-  />
+  src="https://elfwdmgutfsdigijpfae.supabase.co/storage/v1/object/public/book-images/gateway/1787962304326-e7u2mqtx2xr.gif"
+  alt="Read With Luke cinematic reading adventure"
+  className="homeMovieHeroImage"
+/>
 
   <div className="homeMovieHeroShade" />
 
