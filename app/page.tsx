@@ -129,142 +129,60 @@ export default function Home() {
   return (
     <>
       <Header />
-      <section className="homeMovieHero">
-  <img
-  src="https://elfwdmgutfsdigijpfae.supabase.co/storage/v1/object/public/book-images/gateway/1787962304326-e7u2mqtx2xr.gif"
-  alt="Read With Luke cinematic reading adventure"
-  className="homeMovieHeroImage"
-/>
+<main className="homePage">
+  {/* NEW CINEMATIC HERO */}
+  <section className="homeMovieHero">
+    <img
+      src="https://elfwdmgutfsdigijpfae.supabase.co/storage/v1/object/public/book-images/gateway/1787962304326-e7u2mqtx2xr.gif"
+      alt="Read With Luke cinematic reading adventure"
+      className="homeMovieHeroImage"
+    />
 
-  <div className="homeMovieHeroShade" />
-        <div className="homeAlign homeMovieHeroInner">
+    <div className="homeMovieHeroShade" />
 
-  <div className="homeMovieHeroContent">
-    <div className="homeMovieEyebrow">
-      ★ ORIGINAL READING ADVENTURES
+    <div className="homeAlign homeMovieHeroInner">
+      <div className="homeMovieHeroContent">
+        <div className="homeMovieEyebrow">
+          ★ ORIGINAL READING ADVENTURES
+        </div>
+
+        <h1>
+          BOOKS
+          <br />
+          LIKE MOVIES!
+        </h1>
+
+        <p>
+          Cinematic stories created to make kids want to turn
+          one more page — and then one more.
+        </p>
+
+        <div className="homeMovieActions">
+          <Link
+            href="/library"
+            className="homeMoviePrimary"
+          >
+            START READING →
+          </Link>
+
+          <Link
+            href="/free-reads"
+            className="homeMovieSecondary"
+          >
+            READ ONE FREE
+          </Link>
+        </div>
+      </div>
+
+      <div className="homeMovieBottom">
+        <span>● CINEMATIC STORIES</span>
+        <span>◆ AGES 5–10</span>
+        <span>★ NEW ADVENTURES ADDED</span>
+      </div>
     </div>
+  </section>
 
-    <h1>
-      BOOKS
-      <br />
-      LIKE MOVIES!
-    </h1>
-
-    <p>
-      Cinematic stories created to make kids want to turn
-      one more page — and then one more.
-    </p>
-
-    <div className="homeMovieActions">
-      <Link
-        href="/library"
-        className="homeMoviePrimary"
-      >
-        START READING →
-      </Link>
-
-      <Link
-        href="/free-reads"
-        className="homeMovieSecondary"
-      >
-        READ ONE FREE
-      </Link>
-    </div>
-  </div>
-
-  <div className="homeMovieBottom">
-    <span>● CINEMATIC STORIES</span>
-    <span>◆ AGES 5–10</span>
-    <span>★ NEW ADVENTURES ADDED</span>
-  </div>
-</section>
-
-      <main className="homePage">
-        {/* HERO */}
-        <section className="homeHero">
-          <img
-            src="/images/home-hero.png"
-            alt=""
-            className="homeHeroBackground"
-          />
-
-          <div className="homeHeroOverlay" />
-
-          <div className="homeHeroInner">
-            <div className="homeHeroCopy">
-              <h1>
-                TURN “<strong>DO I</strong>
-                <br />
-                HAVE TO READ?”
-                <br />
-                INTO “<strong>CAN I</strong> READ
-                <br />
-                ONE MORE?”
-              </h1>
-
-              <div className="homeHeroUnderline" />
-
-              <p>
-                Original cinematic stories and fascinating learning adventures
-                for curious kids designed to make reading feel less
-                like an assignment and more like an adventure.
-              </p>
-
-              <div className="homeHeroButtons">
-                <Link href="/learn/the-moon-s-secret-powers-part-2/read?page=1" className="homePrimaryButton">
-                  <span className="buttonIcon">▣</span>
-                  Read a Free Adventure
-                </Link>
-
-                <a href="#inside" className="homeSecondaryButton">
-                  <span className="playIcon">▶</span>
-                  See What’s Inside
-                </a>
-              </div>
-
-              <div className="homeHeroNote">
-                <strong>
-                  One learning adventure to read for FREE!
-                </strong>
-                <span>No card required.</span>
-              </div>
-            </div>
-
-            {featuredBook && (
-              <Link
-                href={`/books/${featuredBook.slug}`}
-                className="heroFeaturedBook"
-              >
-                <img
-                  src={getBookFeatureImage(featuredBook)}
-                  alt={featuredBook.title}
-                />
-
-                <div className="heroFeaturedShade" />
-
-                <div className="heroFeaturedContent">
-                  <span className="heroFeatureBadge">
-                    ★ NEW READING ADVENTURE
-                  </span>
-
-                  <h2>{featuredBook.title}</h2>
-
-                  <p>{featuredBookDescription}</p>
-
-                  <span className="heroFeatureButton">
-                    Start the Mystery
-                    <span aria-hidden="true">→</span>
-                  </span>
-
-                  <div className="heroFeatureMeta">
-                    <span>◉ 20 Page Story</span>
-                    <span>◆ {featuredBook.age_range || "Ages 5–10+"}</span>
-                  </div>
-                </div>
-              </Link>
-            )}
-          </div>
-        </section>
+  {/* LARGE CREAM HOMEPAGE PANEL */}
 
         {/* LARGE CREAM HOMEPAGE PANEL */}
         <div className="homeContentShell">
