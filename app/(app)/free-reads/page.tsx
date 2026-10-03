@@ -1,10 +1,9 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import Link from "next/link";
+import ContentImage from "@/app/components/ContentImage";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
-import { supabase } from "@/lib/supabase";
+import { getPublishedItem } from "@/lib/public-catalog";
+import { pageMetadata } from "@/lib/seo";
 import "./free-reads.css";
 
 type FreeReadItem = {
@@ -22,62 +21,12 @@ const FREE_BOOK_SLUG =
 const FREE_LEARN_SLUG =
   "the-moon-s-secret-powers-part-2";
 
-export default function FreeReadsPage() {
-  const [book, setBook] =
-    useState<FreeReadItem | null>(null);
+export const metadata = pageMetadata("Free Online Stories for Kids", "Read a complete children's story and a learning adventure free. No signup or payment information required.", "/free-reads");
 
-  const [learnItem, setLearnItem] =
-    useState<FreeReadItem | null>(null);
-
-  const [loading, setLoading] =
-    useState(true);
-
-  useEffect(() => {
-    async function loadFreeReads() {
-      const [bookResponse, learnResponse] =
-        await Promise.all([
-          supabase
-            .from("books")
-            .select(
-              "id, title, slug, description, cover_url, image_url"
-            )
-            .eq("slug", FREE_BOOK_SLUG)
-            .eq("is_published", true)
-            .maybeSingle<FreeReadItem>(),
-
-          supabase
-            .from("learn_items")
-            .select(
-              "id, title, slug, description, cover_url, image_url"
-            )
-            .eq("slug", FREE_LEARN_SLUG)
-            .eq("is_published", true)
-            .maybeSingle<FreeReadItem>(),
-        ]);
-
-      if (bookResponse.error) {
-        console.error(
-          "Unable to load free book:",
-          bookResponse.error
-        );
-      } else {
-        setBook(bookResponse.data);
-      }
-
-      if (learnResponse.error) {
-        console.error(
-          "Unable to load free learning story:",
-          learnResponse.error
-        );
-      } else {
-        setLearnItem(learnResponse.data);
-      }
-
-      setLoading(false);
-    }
-
-    loadFreeReads();
-  }, []);
+export default async function FreeReadsPage() {
+  const [book, learnItem] = await Promise.all([
+    getPublishedItem("books", FREE_BOOK_SLUG), getPublishedItem("learn_items", FREE_LEARN_SLUG),
+  ]);
 
   function getImage(item: FreeReadItem) {
     return (
@@ -98,8 +47,8 @@ export default function FreeReadsPage() {
           </p>
 
           <h1>
-            Two Free Adventures
-            <span>Waiting for You!</span>
+            Free Stories for Kids
+            <span>Two Adventures to Try!</span>
           </h1>
 
           <p className="freeReadsIntro">
@@ -116,16 +65,16 @@ export default function FreeReadsPage() {
           </div>
         </section>
 
-        {loading ? (
+        {!book && !learnItem ? (
           <div className="freeReadsLoading">
-            Loading your free adventures...
+            Free adventures are currently unavailable. Please check back soon.
           </div>
         ) : (
           <section className="freeReadsGrid">
             {book && (
               <article className="freeReadCard">
                 <div className="freeReadImageWrap">
-                  <img
+                  <ContentImage fill sizes="(max-width:700px) 100vw, 50vw" loading="lazy"
                     src={getImage(book)}
                     alt={book.title}
                   />
@@ -161,7 +110,7 @@ export default function FreeReadsPage() {
             {learnItem && (
               <article className="freeReadCard">
                 <div className="freeReadImageWrap">
-                  <img
+                  <ContentImage fill sizes="(max-width:700px) 100vw, 50vw" loading="lazy"
                     src={getImage(learnItem)}
                     alt={learnItem.title}
                   />
