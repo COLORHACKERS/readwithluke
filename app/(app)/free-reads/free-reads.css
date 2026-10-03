@@ -305,3 +305,10 @@
     box-sizing: border-box;
   }
 }
+
+/* Bring the actual free adventures closer to the top. */
+.freeReadsHero { max-width: 860px; margin-bottom: 36px; }
+.freeReadsHero h1 { font-size: clamp(42px,6vw,76px); line-height: 1.02; }
+.freeReadsEyebrow { color: #825300; }
+.freeReadCard { box-shadow: 0 12px 32px rgba(0,0,0,.1); border-radius: 24px; }
+@media(max-width:600px) { .freeReadsMain { padding-top: 115px; } .freeReadsIntro { font-size: 15px; } }
