@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SITE_URL, jsonLd } from "@/lib/seo";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import "./about.css";
@@ -9,6 +10,7 @@ export default function AboutPage() {
       <Header />
 
       <main className="aboutPage">
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd({ "@context": "https://schema.org", "@type": "Organization", "@id": `${SITE_URL}/#organization`, name: "Read With Luke", url: SITE_URL, logo: `${SITE_URL}/images/luke-intro.png` }) }} />
         {/* HERO */}
         <section className="aboutHero">
           <div className="aboutHeroCopy">
