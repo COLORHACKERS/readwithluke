@@ -1,10 +1,9 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import Link from "next/link";
+import ContentImage from "./components/ContentImage";
 import Header from "./components/Header";
 import Footer from "@/app/components/Footer";
-import { supabase } from "@/lib/supabase";
+import { getCatalog } from "@/lib/public-catalog";
+import { pageMetadata, SITE_DESCRIPTION, SITE_URL, jsonLd } from "@/lib/seo";
 import "./home.css";
 
 type Book = {
@@ -75,46 +74,12 @@ function getLearnCover(item: LearnItem) {
     "/images/6to5ratio.png"
   );
 }
-export default function Home() {
-  const [books, setBooks] = useState<Book[]>([]);
-  const [learnItems, setLearnItems] = useState<LearnItem[]>([]);
+export const metadata = pageMetadata("Online Books & Read-Along Stories for Kids", SITE_DESCRIPTION, "/");
 
-  useEffect(() => {
-    loadHomepage();
-  }, []);
-
-  async function loadHomepage() {
-    const [booksResponse, learnResponse] = await Promise.all([
-      supabase
-        .from("books")
-        .select("*")
-        .eq("is_published", true)
-        .order("created_at", { ascending: false })
-        .limit(6),
-
-      supabase
-        .from("learn_items")
-        .select("*")
-        .eq("is_published", true)
-        .order("created_at", { ascending: false })
-        .limit(6),
-    ]);
-
-    if (booksResponse.error) {
-      console.error("Unable to load homepage books:", booksResponse.error);
-    } else {
-      setBooks(booksResponse.data || []);
-    }
-
-    if (learnResponse.error) {
-      console.error(
-        "Unable to load homepage learning posts:",
-        learnResponse.error
-      );
-    } else {
-      setLearnItems(learnResponse.data || []);
-    }
-  }
+export default async function Home() {
+  const [allBooks, allLearnItems] = await Promise.all([getCatalog("books"), getCatalog("learn_items")]);
+  const books = allBooks.slice(0, 6);
+  const learnItems = allLearnItems.slice(0, 6);
 
   const featuredBook = books[0];
   const featuredLearn = learnItems[0];
@@ -122,14 +87,14 @@ export default function Home() {
   const marqueeBooks = fillToSix(books);
   const marqueeLearnItems = fillToSix(learnItems);
 
-  const featuredBookDescription =
-    featuredBook?.description ||
-    "Something strange is happening, and Luke and his friends are following the clues. Can they uncover the truth before the mysterious bandit strikes again?";
-
   return (
     <>
       <Header />
 <main className="homePage">
+  <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd({
+    "@context": "https://schema.org", "@type": "WebSite", name: "Read With Luke", url: SITE_URL,
+    description: SITE_DESCRIPTION, inLanguage: "en"
+  }) }} />
   {/* NEW CINEMATIC HERO */}
   <section className="homeMovieHero">
     <img
@@ -147,29 +112,29 @@ export default function Home() {
         </div>
 
         <h1>
-          FUN BOOKS
+          ONLINE BOOKS
           <br />
           FOR KIDS!
         </h1>
 
         <p>
-          Cinematic stories created to make kids want to turn
-          one more page — and then one more with an audio read-along with Luke feature.
+          Original stories for ages 5–10, with cinematic artwork and audio read-along.
+          Read together, listen with Luke, and discover something new.
         </p>
 
         <div className="homeMovieActions">
           <Link
-            href="/library"
+            href="/free-reads"
             className="homeMoviePrimary"
           >
-            START READING →
+            READ FREE →
           </Link>
 
           <Link
-            href="/free-reads"
+            href="/library"
             className="homeMovieSecondary"
           >
-            READ ONE FREE
+            EXPLORE BOOKS
           </Link>
         </div>
       </div>
@@ -197,7 +162,7 @@ export default function Home() {
             <div className="homeWorldGrid">
               {featuredBook && (
                 <Link href="/library" className="homeWorldCard">
-                  <img
+                  <img loading="lazy" decoding="async"
                     src={getBookFeatureImage(featuredBook)}
                     alt="Read With Luke"
                   />
@@ -222,7 +187,7 @@ export default function Home() {
 
               {featuredLearn && (
          <Link href="/learn" className="homeWorldCard">
-  <img
+  <img loading="lazy" decoding="async"
     src={getLearnImage(featuredLearn)}
     alt={featuredLearn.title}
   />
@@ -264,7 +229,7 @@ export default function Home() {
 
    <div className="homeInsideBenefits">
   <div className="insideBenefitItem">
-    <img
+    <img loading="lazy" decoding="async"
       src="/images/icon-cinematic-reading.png"
       alt="Open magical storybook icon"
       className="insideBenefitImage"
@@ -273,7 +238,7 @@ export default function Home() {
   </div>
 
   <div className="insideBenefitItem">
-    <img
+    <img loading="lazy" decoding="async"
       src="/images/icon-easy-to-read.png"
       alt="Easy-to-read letter card icon"
       className="insideBenefitImage"
@@ -282,7 +247,7 @@ export default function Home() {
   </div>
 
   <div className="insideBenefitItem">
-    <img
+    <img loading="lazy" decoding="async"
       src="/images/icon-fun-rewards.png"
       alt="Reward coins and badge icon"
       className="insideBenefitImage"
@@ -291,7 +256,7 @@ export default function Home() {
   </div>
 
   <div className="insideBenefitItem">
-    <img
+    <img loading="lazy" decoding="async"
       src="/images/icon-safe-ad-free.png"
       alt="Shield with heart icon for safe ad-free environment"
       className="insideBenefitImage"
@@ -312,7 +277,7 @@ export default function Home() {
   </div>
 
   <div className="homeIpadImageWrap">
-    <img
+    <img loading="lazy" decoding="async"
       src="/images/ipad002.png"
       alt="Read With Luke interactive story reader"
       className="homeIpadImage"
@@ -350,7 +315,7 @@ export default function Home() {
                         >
                        
 
-                          <img
+                          <ContentImage width={400} height={600} sizes="(max-width:600px) 65vw, 260px" loading="lazy"
                             src={getBookCover(book)}
                             alt={setNumber === 0 ? book.title : ""}
                           />
@@ -389,12 +354,12 @@ export default function Home() {
                     >
                    {marqueeLearnItems.map((item, index) => (
   <Link
-    href={`/learn/${item.slug}/read`}
+    href={`/learn/${item.slug}`}
     className="homeRailCard"
     key={`${setNumber}-${item.id}-${index}`}
     tabIndex={setNumber === 1 ? -1 : undefined}
   >
-    <img
+    <ContentImage width={400} height={600} sizes="(max-width:600px) 65vw, 260px" loading="lazy"
       src={getLearnCover(item)}
       alt={setNumber === 0 ? item.title : ""}
     />
