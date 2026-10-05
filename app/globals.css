@@ -1,11 +1,12 @@
+@import "tailwindcss";
+
 @font-face {
   font-family: "DK Woolwich";
-  src: url("/fonts/DK Woolwich.otf") format("woff2"),
-       url("/fonts/DK Woolwich.otf") format("opentype");
+  src: url("/fonts/dk-woolwich.otf") format("opentype");
+  font-display: swap;
   font-weight: normal;
   font-style: normal;
 }
-@import "tailwindcss";
 
 :root {
   --background: #ffffff;
@@ -98,3 +99,13 @@ body {
   color: #b3261e;
   font-weight: 700;
 }
+
+/* Shared keyboard access and public-page fallbacks. */
+a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visible { outline: 3px solid #e67e00; outline-offset: 5px; }
+.siteStatus { min-height: 70vh; padding: 160px 24px 80px; text-align: center; color: #123a60; background: #f8f1e6; }
+.siteStatus h1 { font: 400 clamp(36px,6vw,64px)/1.1 "DK Woolwich",Impact,sans-serif; }
+.siteStatus p { margin: 20px auto; max-width: 540px; line-height: 1.6; }
+.siteStatus a, .siteStatus button { display: inline-block; padding: 14px 22px; margin: 8px; border-radius: 999px; background: #123a60; color: white; }
+.previewBreadcrumb { font: 700 13px/1.6 "Courier New",monospace; margin-bottom: 20px; }
+.previewBreadcrumb a { color: inherit; text-decoration: underline; text-underline-offset: 4px; }
+@media(prefers-reduced-motion:reduce) { html { scroll-behavior: auto; } }
