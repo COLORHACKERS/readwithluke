@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SITE_URL, SITE_DESCRIPTION } from "@/lib/seo";
 import { Geist, Geist_Mono } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/next";
@@ -15,24 +16,25 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
+  robots: { "max-image-preview": "large" },
   title: {
     default: "READ WITH LUKE",
     template: "%s | Read With Luke",
   },
-  description: "Fun stories, adventure and learning for curious kids!",
+  description: SITE_DESCRIPTION,
   icons: {
     icon: "/favicon.ico",
   },
   openGraph: {
     title: "READ WITH LUKE",
-    description: "Fun stories, adventure and learning for curious kids!",
-    url: "https://readwithluke.com",
+    description: SITE_DESCRIPTION,
+    url: SITE_URL,
     siteName: "Read With Luke",
     images: [
       {
         url: "/images/share-hero.png",
-        width: 1200,
-        height: 630,
+        width: 1200, height: 630,
         alt: "Read With Luke",
       },
     ],
@@ -41,7 +43,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "READ WITH LUKE",
-    description: "Fun stories, adventure and learning for curious kids!",
+    description: SITE_DESCRIPTION,
     images: ["/images/share-hero.png"],
   },
 };
@@ -59,9 +61,9 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         {children}
         <Analytics />
+        <GoogleAnalytics gaId="G-JBRLDLGXG7" />
       </body>
 
-      <GoogleAnalytics gaId="G-JBRLDLGXG7" />
     </html>
   );
 }
