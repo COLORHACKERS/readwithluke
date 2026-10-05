@@ -1,40 +1,18 @@
 "use client";
-
-type Props = {
-  title: string;
-  text: string;
-  url: string;
-};
-
-export default function ShareButton({
-  title,
-  text,
-  url,
-}: Props) {
+import { useState } from "react";
+import { Share2 } from "lucide-react";
+type Props = { title: string; text: string; url: string };
+export default function ShareButton({ title, text, url }: Props) {
+  const [message, setMessage] = useState("");
   async function handleShare() {
-    const shareUrl =
-      typeof window !== "undefined"
-        ? `${window.location.origin}${url}`
-        : url;
-
+    const shareUrl = new URL(url, window.location.origin).toString();
+    setMessage("");
     if (navigator.share) {
-      try {
-        await navigator.share({
-          title,
-          text,
-          url: shareUrl,
-        });
-        return;
-      } catch {}
+      try { await navigator.share({ title, text, url: shareUrl }); return; }
+      catch (error) { if (error instanceof Error && error.name === "AbortError") return; }
     }
-
-    await navigator.clipboard.writeText(shareUrl);
-    alert("Link copied!");
+    try { await navigator.clipboard.writeText(shareUrl); setMessage("Link copied!"); }
+    catch { setMessage("Copy the address from your browser to share this adventure."); }
   }
-
-  return (
-    <button onClick={handleShare}>
-      <img src="/images/share.png" alt="Share" />
-    </button>
-  );
+  return <><button type="button" onClick={handleShare} aria-label={`Share ${title}`}><Share2 aria-hidden="true" size={20} color="#123a60" /></button><span role="status" aria-live="polite" style={{ marginLeft: 12, fontSize: 13 }}>{message}</span></>;
 }
