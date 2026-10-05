@@ -3,6 +3,7 @@
   src: url("/fonts/dk-woolwich.otf") format("opentype");
   font-weight: 400;
   font-style: normal;
+  font-display: swap;
 }
 
 /* =========================================================
@@ -2219,3 +2220,12 @@ html {
     transition: none;
   }
 }
+
+/* Public homepage refinement: preserve the established artwork and typography. */
+.homePage .homeMovieHeroContent h1 { font-size: clamp(48px,7vw,88px); line-height: .98; }
+.homePage .homeMovieHeroContent > p { max-width: 540px; line-height: 1.6; }
+.homePage .homeRailWindow:focus-within .homeRailTrack { animation-play-state: paused; }
+.homePage .homeRailTrack { animation: none; }
+.homePage .homeRailSet[aria-hidden="true"] { display: none; }
+.homePage .homeRailWindow { overflow-x: auto; scrollbar-width: thin; padding-bottom: 12px; }
+@media(max-width:600px) { .homePage .homeMovieHeroContent h1 { font-size: 48px; } }
