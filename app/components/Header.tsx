@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { supabase } from "@/lib/supabase";
@@ -16,6 +16,33 @@ export default function Header() {
   const [coins, setCoins] = useState(0);
   const [streak, setStreak] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!menuOpen) return;
+    const previousFocus = document.activeElement as HTMLElement | null;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    menuRef.current?.querySelector<HTMLButtonElement>("button")?.focus();
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") { setMenuOpen(false); return; }
+      if (event.key !== "Tab") return;
+      const controls = menuRef.current?.querySelectorAll<HTMLElement>("a[href], button");
+      if (!controls?.length) return;
+      const first = controls[0], last = controls[controls.length - 1];
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+    }
+    const breakpoint = window.matchMedia("(min-width: 769px)");
+    const closeOnDesktop = () => { if (breakpoint.matches) setMenuOpen(false); };
+    breakpoint.addEventListener("change", closeOnDesktop);
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      breakpoint.removeEventListener("change", closeOnDesktop);
+      document.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = previousOverflow;
+      previousFocus?.focus();
+    };
+  }, [menuOpen]);
 
   function active(path: string) {
     if (path === "/library") {
@@ -103,26 +130,26 @@ export default function Header() {
           <img src="/images/luke-intro.png" alt="Read With Luke" />
         </Link>
 
-    <nav className="mainNav">
+    <nav className="mainNav" aria-label="Main navigation">
   <Link
     href="/library"
     className={active("/library") ? "active" : ""}
   >
-    Read With Luke
+    Books
   </Link>
 
   <Link
     href="/learn"
     className={isActive("/learn") ? "active" : ""}
   >
-    Learn With Luke
+    Learning
   </Link>
 
   <Link
-    href="/learn-to-read"
-    className={active("/learn-to-read") ? "active" : ""}
+    href="/free-reads"
+    className={active("/free-reads") ? "active" : ""}
   >
-    Learn To Read
+    Read Free
   </Link>
 
       <Link
@@ -167,6 +194,8 @@ export default function Header() {
             className="mobileMenuButton"
             onClick={() => setMenuOpen(true)}
             aria-label="Open menu"
+            aria-expanded={menuOpen}
+            aria-controls="mobile-navigation"
             type="button"
           >
             ☰
@@ -175,9 +204,11 @@ export default function Header() {
       </header>
 
       {menuOpen && (
-        <div className="mobileMenuOverlay" onClick={() => setMenuOpen(false)}>
+        <div className="mobileMenuOverlay" ref={menuRef} role="dialog" aria-modal="true" aria-label="Navigation" onClick={() => setMenuOpen(false)}>
           <nav
             className="mobileMenu"
+            id="mobile-navigation"
+            aria-label="Mobile navigation"
             onClick={(event) => event.stopPropagation()}
           >
             <button
@@ -190,15 +221,15 @@ export default function Header() {
             </button>
 
             <Link href="/library" onClick={() => setMenuOpen(false)}>
-              Read With Luke
+              Books
             </Link>
 
             <Link href="/learn" onClick={() => setMenuOpen(false)}>
-              Learn With Luke
+              Learning
             </Link>
 
-            <Link href="/learn-to-read" onClick={() => setMenuOpen(false)}>
-              Learn to Read
+            <Link href="/free-reads" onClick={() => setMenuOpen(false)}>
+              Read Free
             </Link>
 
            <Link href="/gift" onClick={() => setMenuOpen(false)}>
@@ -221,7 +252,7 @@ export default function Header() {
                   Login
                 </Link>
 
-                <Link href="/signup" onClick={() => setMenuOpen(false)}>
+                <Link href="/membership" onClick={() => setMenuOpen(false)}>
                   Join
                 </Link>
               </>
