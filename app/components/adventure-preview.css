@@ -1,0 +1,47 @@
+.adventurePage { color: #102e44; background: #f8f1e6; }
+.adventurePage * { box-sizing: border-box; }
+.adventureHero { position: relative; isolation: isolate; background: #080f18; color: white; padding: 125px 24px 64px; }
+.adventureArt { position: absolute; inset: 0; z-index: -1; overflow: hidden; }
+.adventureArt img { object-fit: cover; object-position: center; opacity: .48; }
+.adventureArt::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg,rgba(3,12,22,.94),rgba(3,12,22,.25)),linear-gradient(0deg,#080f18,transparent 70%); }
+.adventureHeroInner,.adventureDetails { max-width: 1180px; margin: auto; }
+.adventureBreadcrumb { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; font: 700 12px/1.6 "Courier New",monospace; color: #eee9df; margin-bottom: 36px; }
+.adventureBreadcrumb a { color: inherit; text-underline-offset: 4px; }
+.adventureHeroGrid { display: grid; grid-template-columns: minmax(0,1.65fr) minmax(220px,1fr); gap: 60px; align-items: center; }
+.adventureEyebrow { font: 700 12px/1.6 "Courier New",monospace; letter-spacing: .1em; color: #ffcc49; margin: 0 0 18px; }
+.adventureCopy h1 { font: 400 clamp(42px,6vw,78px)/1.02 "DK Woolwich",Impact,sans-serif; margin: 0 0 24px; text-wrap: balance; }
+.adventureSummary { font: 700 17px/1.65 "Courier New",monospace; max-width: 650px; }
+.adventureFacts { list-style: none; padding: 0; margin: 24px 0; display: flex; flex-wrap: wrap; gap: 10px; }
+.adventureFacts li { padding: 8px 12px; border: 1px solid #9babb8; border-radius: 8px; font: 700 12px/1.4 "Courier New",monospace; }
+.adventureActions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.adventureActions a { min-height: 50px; display: inline-flex; align-items: center; justify-content: center; padding: 14px 23px; border-radius: 999px; font: 700 14px/1.4 "Courier New",monospace; text-decoration: none; }
+.adventurePrimary { color: white; background: #d93b13; border: 2px solid #d93b13; }
+.adventureSecondary { color: white; border: 2px solid white; }
+.adventureWorksheet { display: inline-block; margin-top: 20px; color: white; font: 700 14px/1.5 "Courier New",monospace; }
+.adventureShare { margin-top: 20px; }
+.adventureShare button { display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; border: 1px solid white; border-radius: 50%; background: white; cursor: pointer; }
+.adventureShare img { width: 23px; height: 23px; object-fit: contain; }
+.adventureCover { width: min(100%,320px); justify-self: center; border: 3px solid white; border-radius: 16px; overflow: hidden; box-shadow: 0 16px 46px #0008; }
+.adventureCover img { display: block; width: 100%; height: auto; aspect-ratio: 2/3; object-fit: cover; }
+.adventureDetails { padding: 64px 24px 80px; }
+.adventureDetails h2 { font: 400 clamp(28px,3vw,38px)/1.1 "DK Woolwich",Impact,sans-serif; margin: 0 0 20px; }
+.adventureDetails p,.adventureDetails li { font: 700 15px/1.75 "Courier New",monospace; }
+.adventureDetails a { color: #123a60; text-underline-offset: 4px; }
+.adventureDetailGrid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 64px; }
+.adventureDetails .adventureEyebrow { color: #795000; font-size: 12px; }
+.adventureDetailGrid aside { padding: 28px; background: #fffaf2; border: 1px solid #d8d0c5; border-radius: 20px; }
+.adventureDetailGrid aside ul { padding-left: 22px; margin-bottom: 0; }
+.adventureDetailGrid aside li + li { margin-top: 12px; }
+.adventureThemes { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: 24px 0 0; }
+.adventureThemes li { padding: 5px 12px; background: #e9e0d1; border-radius: 999px; font-size: 12px; }
+.adventureFaq { margin-top: 64px; }
+.adventureFaq details { padding: 20px 0; border-bottom: 1px solid #cfc6b8; }
+.adventureFaq summary { cursor: pointer; font: 700 16px/1.6 "Courier New",monospace; }
+.adventureFaq details p { max-width: 860px; }
+.adventureRelated { margin-top: 64px; }
+.adventureRelatedHeading { display: flex; justify-content: space-between; align-items: baseline; gap: 20px; }
+.adventureRelatedGrid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 22px; }
+.adventureRelatedGrid a { text-decoration: none; min-width: 0; }
+.adventureRelatedGrid img { display: block; width: 100%; height: auto; aspect-ratio: 2/3; object-fit: cover; border: 3px solid white; border-radius: 14px; }
+.adventureRelatedGrid h3 { font: 700 14px/1.5 "Courier New",monospace; margin: 12px 0; }
+@media(max-width:700px) { .adventureHero { padding: 105px 20px 40px; } .adventureHeroGrid { grid-template-columns: 1fr; gap: 30px; } .adventureCover { max-width: 220px; } .adventureSummary { font-size: 15px; } .adventureDetailGrid { grid-template-columns: 1fr; gap: 28px; } .adventureDetails { padding: 40px 20px 56px; } .adventureRelatedGrid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 18px; } .adventureFaq,.adventureRelated { margin-top: 40px; } }
