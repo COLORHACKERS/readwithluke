@@ -1,36 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import "./footer.css";
 
-function getTimeLeft() {
-  const launchDate = new Date("2026-09-16T00:00:00");
-  const now = new Date();
-
-  const diff = Math.max(launchDate.getTime() - now.getTime(), 0);
-
-  return {
-    days: Math.floor(diff / (1000 * 60 * 60 * 24)),
-    hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
-    minutes: Math.floor((diff / (1000 * 60)) % 60),
-  };
-}
-
 export default function Footer() {
-  const [timeLeft, setTimeLeft] = useState(getTimeLeft());
   const [newsletterEmail, setNewsletterEmail] = useState("");
 const [newsletterStatus, setNewsletterStatus] = useState<
   "idle" | "loading" | "success" | "error"
 >("idle");
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTimeLeft(getTimeLeft());
-    }, 60000);
-
-    return () => clearInterval(timer);
-  }, []);
 
   async function handleNewsletterSubmit(
   e: React.FormEvent<HTMLFormElement>
@@ -84,7 +62,8 @@ const [newsletterStatus, setNewsletterStatus] = useState<
           <Link href="/">Home</Link>
           <Link href="/library">Library</Link>
           <Link href="/learn">Learn with Luke</Link>
-          <Link href="/leaderboard">Leaderboard</Link>
+          <Link href="/free-reads">Read Free</Link>
+          <Link href="/about">About</Link>
         </nav>
 
      <div className="footerNewsletter">
@@ -120,7 +99,7 @@ const [newsletterStatus, setNewsletterStatus] = useState<
     </button>
   </form>
 
-  <p>
+  <p role="status" aria-live="polite">
     {newsletterStatus === "success"
       ? "You're in! Watch your inbox for new stories."
       : newsletterStatus === "error"
@@ -144,19 +123,6 @@ const [newsletterStatus, setNewsletterStatus] = useState<
 </div>
         </div>
 
-        <div className="footerSocials">
-          <button>
-            <img src="/images/icon-facebook.png" alt="" />
-          </button>
-
-          <button>
-            <img src="/images/icon-instagram.png" alt="" />
-          </button>
-
-          <button>
-            <img src="/images/icon-youtube.png" alt="" />
-          </button>
-        </div>
     </footer>
   );
 }
