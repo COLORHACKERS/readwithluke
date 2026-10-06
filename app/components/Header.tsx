@@ -135,21 +135,21 @@ export default function Header() {
     href="/library"
     className={active("/library") ? "active" : ""}
   >
-    Books
+    READ WITH LUKE
   </Link>
 
   <Link
     href="/learn"
     className={isActive("/learn") ? "active" : ""}
   >
-    Learning
+    LEARN WITH LUKE
   </Link>
 
   <Link
-    href="/free-reads"
-    className={active("/free-reads") ? "active" : ""}
+    href="/learn-to-read"
+    className={active("/learn-to-read") ? "active" : ""}
   >
-    Read Free
+    Learn To Read
   </Link>
 
       <Link
@@ -221,15 +221,15 @@ export default function Header() {
             </button>
 
             <Link href="/library" onClick={() => setMenuOpen(false)}>
-              Books
+              READ WITH LUKE
             </Link>
 
             <Link href="/learn" onClick={() => setMenuOpen(false)}>
-              Learning
+              LEARN WITH LUKE
             </Link>
 
-            <Link href="/free-reads" onClick={() => setMenuOpen(false)}>
-              Read Free
+            <Link href="/learn-to-read" onClick={() => setMenuOpen(false)}>
+              Learn To Read
             </Link>
 
            <Link href="/gift" onClick={() => setMenuOpen(false)}>
