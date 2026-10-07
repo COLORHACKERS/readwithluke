@@ -2131,3 +2131,14 @@ img {
     bottom: auto !important;
   }
 }
+/* Desktop: show the complete book and learning artwork */
+@media (min-width: 1181px) {
+  .readerImageSide > img,
+  .learnReaderPage > img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain !important;
+    object-position: center center !important;
+    background: #050505;
+  }
+}
