@@ -15,17 +15,19 @@ type FreeReadItem = {
   image_url?: string | null;
 };
 
-const FREE_BOOK_SLUG =
-  "the-great-frog-croak-off";
+const FREE_BOOK_SLUG = "the-great-frog-croak-off";
+const FREE_LEARN_SLUG = "the-moon-s-secret-powers-part-2";
 
-const FREE_LEARN_SLUG =
-  "the-moon-s-secret-powers-part-2";
-
-export const metadata = pageMetadata("Free Online Stories for Kids", "Read a complete children's story and a learning adventure free. No signup or payment information required.", "/free-reads");
+export const metadata = pageMetadata(
+  "Free Online Stories for Kids Ages 5–10",
+  "Read a complete illustrated story and explore a free learning adventure for kids ages 5–10. No signup or payment needed. Start reading with Luke.",
+  "/free-reads"
+);
 
 export default async function FreeReadsPage() {
   const [book, learnItem] = await Promise.all([
-    getPublishedItem("books", FREE_BOOK_SLUG), getPublishedItem("learn_items", FREE_LEARN_SLUG),
+    getPublishedItem("books", FREE_BOOK_SLUG),
+    getPublishedItem("learn_items", FREE_LEARN_SLUG),
   ]);
 
   function getImage(item: FreeReadItem) {
@@ -52,10 +54,11 @@ export default async function FreeReadsPage() {
           </h1>
 
           <p className="freeReadsIntro">
-            Read one complete story and one complete
-            learning adventure with Luke. These two
-            adventures are completely free and do not
-            require an account.
+            Discover free online reading for kids ages 5–10.
+            Read one complete illustrated story and explore
+            one complete learning adventure with Luke.
+            Both adventures are free, with no account or
+            payment information required.
           </p>
 
           <div className="freeReadsHighlights">
@@ -67,14 +70,18 @@ export default async function FreeReadsPage() {
 
         {!book && !learnItem ? (
           <div className="freeReadsLoading">
-            Free adventures are currently unavailable. Please check back soon.
+            Free adventures are currently unavailable.
+            Please check back soon.
           </div>
         ) : (
           <section className="freeReadsGrid">
             {book && (
               <article className="freeReadCard">
                 <div className="freeReadImageWrap">
-                  <ContentImage fill sizes="(max-width:700px) 100vw, 50vw" loading="lazy"
+                  <ContentImage
+                    fill
+                    sizes="(max-width:700px) 100vw, 50vw"
+                    loading="lazy"
                     src={getImage(book)}
                     alt={book.title}
                   />
@@ -110,7 +117,10 @@ export default async function FreeReadsPage() {
             {learnItem && (
               <article className="freeReadCard">
                 <div className="freeReadImageWrap">
-                  <ContentImage fill sizes="(max-width:700px) 100vw, 50vw" loading="lazy"
+                  <ContentImage
+                    fill
+                    sizes="(max-width:700px) 100vw, 50vw"
+                    loading="lazy"
                     src={getImage(learnItem)}
                     alt={learnItem.title}
                   />
